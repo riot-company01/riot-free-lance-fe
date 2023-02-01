@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["esnext", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"],
+      "next/router": ["src/@types/next-router"]
+    },
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "outDir": "build",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noImplicitReturns": true, // 未使用の関数が存在する場合エラーにする
+    "noUnusedLocals": true, // 未使用の変数が存在する場合にエラーにする
+    "noUnusedParameters": true, // 未使用の仮引数が存在する場合にエラーにする
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
+  "exclude": ["node_modules", "src/lib/graphql.ts"]
+}
