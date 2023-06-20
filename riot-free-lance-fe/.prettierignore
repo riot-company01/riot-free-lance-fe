@@ -1,0 +1,9 @@
+out
+build
+.next
+node_modules
+coverage
+public
+new-schema.graphql
+old-schema.graphql
+src/lib/graphql.ts
