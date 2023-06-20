@@ -1,0 +1,14 @@
+# app
+src/@types
+src/lib/graphql.ts
+out
+.next
+public
+coverage
+
+.eslintrc.js
+eslint-configs/*.js
+server.js
+env-config.js
+jest.config.js
+next.config.js
