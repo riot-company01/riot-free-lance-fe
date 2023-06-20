@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "deploy": "next build && next start",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -11,6 +12,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.15",
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-brands-svg-icons": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@emotion/styled": "^11.10.5",
     "@graphql-codegen/cli": "^4.0.1",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@types/node": "20.3.1",

@@ -1,10 +1,18 @@
-import { ProjectContent } from "components/project/list/item";
+import { GetProjectList } from "@/lib/graphql";
+import { MyQueryQuery } from "@/lib/graphql/graphql";
+import { useQuery } from "@apollo/client";
 import React from "react";
+import { ProjectContent } from "./item";
 import * as Styles from "./styles";
 
 export const ProjectList = () => {
+  console.log("aaaa");
+  const {data} = useQuery<MyQueryQuery>(GetProjectList)
+  console.log("bbbbb");
+  console.log(data);
   return (
     <Styles.Wrap>
+      <div></div>
       <Styles.SideBar>
         <Styles.DivFilter></Styles.DivFilter>
       </Styles.SideBar>
