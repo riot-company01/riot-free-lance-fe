@@ -18,10 +18,10 @@ export const DivKeywordWrapper = styled.div`
   margin: 16px;
 `;
 
-// export const DivBasicInfo = styled.div`
-//   border: solid 4px #edf4fc;
-//   margin-bottom: 16px;
-// `;
+export const DivBasicInfo = styled.div`
+  border: solid 4px #edf4fc;
+  margin-bottom: 16px;
+`;
 
 export const SecBasicInfoWrapper = styled.section`
   height: 48px;
