@@ -35,24 +35,24 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           <KeywordTag key={idx}>{item}</KeywordTag>
         ))}
       </Styles.DivKeywordWrapper>
-      {/* <Styles.DivBasicInfo> */}
-      <Styles.SecBasicInfoWrapper>
-        <Styles.HeadBasicInfo>単価</Styles.HeadBasicInfo>
-        <Styles.PerBasicInfo>{`${projectDetailData.price}/月`}</Styles.PerBasicInfo>
-      </Styles.SecBasicInfoWrapper>
-      {/* <Styles.SecBasicInfoWrapper>
-        <Styles.HeadBasicInfo>契約形態</Styles.HeadBasicInfo>
-        <Styles.PerBasicInfo>業務委託（フリーランス）</Styles.PerBasicInfo>
-      </Styles.SecBasicInfoWrapper>
-      <Styles.SecBasicInfoWrapper>
-        <Styles.HeadBasicInfo>最寄駅</Styles.HeadBasicInfo>
-        <Styles.PerBasicInfo>六本木・リモート作業可能</Styles.PerBasicInfo>
-      </Styles.SecBasicInfoWrapper>
-      <Styles.SecBasicInfoWrapper>
-        <Styles.HeadBasicInfo>職種・ポジション</Styles.HeadBasicInfo>
-        <Styles.PerBasicInfo>そもそも何かが必要！！！</Styles.PerBasicInfo>
-      </Styles.SecBasicInfoWrapper> */}
-      {/* </Styles.DivBasicInfo> */}
+      <Styles.DivBasicInfo>
+        <Styles.SecBasicInfoWrapper>
+          <Styles.HeadBasicInfo>単価</Styles.HeadBasicInfo>
+          <Styles.PerBasicInfo>{`${projectDetailData.price}/月`}</Styles.PerBasicInfo>
+        </Styles.SecBasicInfoWrapper>
+        <Styles.SecBasicInfoWrapper>
+          <Styles.HeadBasicInfo>契約形態</Styles.HeadBasicInfo>
+          <Styles.PerBasicInfo>業務委託（フリーランス）</Styles.PerBasicInfo>
+        </Styles.SecBasicInfoWrapper>
+        <Styles.SecBasicInfoWrapper>
+          <Styles.HeadBasicInfo>最寄駅</Styles.HeadBasicInfo>
+          <Styles.PerBasicInfo>六本木・リモート作業可能</Styles.PerBasicInfo>
+        </Styles.SecBasicInfoWrapper>
+        <Styles.SecBasicInfoWrapper>
+          <Styles.HeadBasicInfo>職種・ポジション</Styles.HeadBasicInfo>
+          <Styles.PerBasicInfo>そもそも何かが必要！！！</Styles.PerBasicInfo>
+        </Styles.SecBasicInfoWrapper>
+      </Styles.DivBasicInfo>
       <Description projectDetailData={projectDetailData} />
 
       <Styles.DivButtonWrapper>
