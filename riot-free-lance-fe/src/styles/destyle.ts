@@ -37,8 +37,6 @@ export const destyle = css`
   h4,
   h5,
   h6 {
-    font-size: inherit;
-    font-weight: inherit;
     margin: 0;
   }
   ul,

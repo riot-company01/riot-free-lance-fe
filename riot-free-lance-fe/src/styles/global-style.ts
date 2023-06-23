@@ -20,5 +20,6 @@ export const GLOBAL_STYLE = css`
     font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     line-height: 1.6;
     overscroll-behavior: none;
+    //font-weight: 300;
   }
 `;

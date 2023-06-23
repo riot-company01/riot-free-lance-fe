@@ -1,4 +1,5 @@
 export const SCREEN_SIZE = {
-  isSPsSize: "599px",
-  isTabletSize: "768px",
+  isSPsSizeMax: "599px",
+  isTabletSize: "600px",
+  isPcSize: "1024px",
 };

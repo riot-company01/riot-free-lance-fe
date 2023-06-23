@@ -40,7 +40,7 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
         <Styles.HeadBasicInfo>単価</Styles.HeadBasicInfo>
         <Styles.PerBasicInfo>{`${projectDetailData.price}/月`}</Styles.PerBasicInfo>
       </Styles.SecBasicInfoWrapper>
-      <Styles.SecBasicInfoWrapper>
+      {/* <Styles.SecBasicInfoWrapper>
         <Styles.HeadBasicInfo>契約形態</Styles.HeadBasicInfo>
         <Styles.PerBasicInfo>業務委託（フリーランス）</Styles.PerBasicInfo>
       </Styles.SecBasicInfoWrapper>
@@ -51,7 +51,7 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
       <Styles.SecBasicInfoWrapper>
         <Styles.HeadBasicInfo>職種・ポジション</Styles.HeadBasicInfo>
         <Styles.PerBasicInfo>そもそも何かが必要！！！</Styles.PerBasicInfo>
-      </Styles.SecBasicInfoWrapper>
+      </Styles.SecBasicInfoWrapper> */}
       {/* </Styles.DivBasicInfo> */}
       <Description projectDetailData={projectDetailData} />
 
@@ -60,9 +60,16 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           text="この案件に応募する"
           borderColor={"#8dc1fc"}
           backGroundCalor="#8dc1fc"
+          hoverColor={"#5a85fa"}
           onClick={onClickApplication}
         />
-        <Button text="案件一覧にもどる" borderColor={"#fc8d93"} backGroundCalor="#fc8d93" onClick={onClickBackToList} />
+        <Button
+          text="案件一覧にもどる"
+          borderColor={"#fc8d93"}
+          backGroundCalor="#fc8d93"
+          hoverColor={"#fa5a5a"}
+          onClick={onClickBackToList}
+        />
       </Styles.DivButtonWrapper>
     </Styles.DivWrapper>
   );

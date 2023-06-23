@@ -1,3 +1,4 @@
+import { SCREEN_SIZE } from "@/const/screen-size";
 import styled from "@emotion/styled";
 
 export const DivWrapper = styled.div`
@@ -58,6 +59,8 @@ export const DivButtonWrapper = styled.div`
   }
 
   @media (min-width: 600px) {
+    margin: auto;
+    width: 432px;
     display: flex;
     justify-content: space-around;
   }
