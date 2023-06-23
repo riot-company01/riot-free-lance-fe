@@ -1,3 +1,4 @@
+import { SCREEN_SIZE } from "@/const/screen-size";
 import styled from "@emotion/styled";
 
 export const ButtonWrapper = styled.button<{ borderColor: string; backGroundColor: string; hoverColor: string }>`
@@ -5,10 +6,11 @@ export const ButtonWrapper = styled.button<{ borderColor: string; backGroundColo
   border: ${({ borderColor }) => borderColor && `2px solid ${borderColor}`};
   border-radius: 28px;
   width: 200px;
+  padding: 8px;
 
-  @media (max-width: 599px) {
+  @media (max-width: ${SCREEN_SIZE.isSpSize}) {
+    width: 90%;
     margin-bottom: 16px;
-    width: 100%;
   }
 
   &:hover {

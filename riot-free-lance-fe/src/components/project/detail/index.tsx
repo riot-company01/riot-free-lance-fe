@@ -38,7 +38,14 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
       <Styles.DivBasicInfo>
         <Styles.SecBasicInfoWrapper>
           <Styles.HeadBasicInfo>単価</Styles.HeadBasicInfo>
-          <Styles.PerBasicInfo>{`${projectDetailData.price}/月`}</Styles.PerBasicInfo>
+
+          {projectDetailData.price === "応相談" ? (
+            <Styles.PerBasicInfo>{projectDetailData.price}</Styles.PerBasicInfo>
+          ) : (
+            <Styles.PerBasicInfo>
+              〜 <Styles.SpanPriceColor>{projectDetailData.price}</Styles.SpanPriceColor> 円/月
+            </Styles.PerBasicInfo>
+          )}
         </Styles.SecBasicInfoWrapper>
         <Styles.SecBasicInfoWrapper>
           <Styles.HeadBasicInfo>契約形態</Styles.HeadBasicInfo>
@@ -49,7 +56,7 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           <Styles.PerBasicInfo>六本木・リモート作業可能</Styles.PerBasicInfo>
         </Styles.SecBasicInfoWrapper>
         <Styles.SecBasicInfoWrapper>
-          <Styles.HeadBasicInfo>職種・ポジション</Styles.HeadBasicInfo>
+          <Styles.HeadBasicInfo>職種</Styles.HeadBasicInfo>
           <Styles.PerBasicInfo>そもそも何かが必要！！！</Styles.PerBasicInfo>
         </Styles.SecBasicInfoWrapper>
       </Styles.DivBasicInfo>
