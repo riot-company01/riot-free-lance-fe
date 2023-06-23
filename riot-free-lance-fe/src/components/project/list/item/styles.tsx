@@ -6,7 +6,7 @@ export const DivContent = styled.div`
   margin: 8px 16px;
   display: flex;
   flex-direction: column;
-  border-bottom: solid 6px #a7aeb6;
+  border-bottom: solid 6px #edf4fc;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
   border-radius: 9px;
 `;
@@ -20,17 +20,6 @@ export const SecContentWrap = styled.section`
   display: flex;
   flex-wrap: wrap;
   margin: 0 16px;
-`;
-
-export const PerKeyword = styled.p`
-  text-align: center;
-  margin: 4px;
-  padding: 4px 8px;
-  background-color: rgba(0, 133, 148, 1);
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: bold;
-  color: white;
 `;
 
 export const SecContent = styled.section`

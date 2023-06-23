@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Queries } from "./hrefs";
+import { Queries } from "../../const/hrefs";
 
 type EmptyObject = { [key: string]: never };
 

@@ -1,5 +1,5 @@
 export const PATHS = {
-  PROJECT: "/project/",
+  PROJECT: "/project",
 };
 
 export type PathsMap = typeof PATHS;

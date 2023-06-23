@@ -1,35 +1,40 @@
+import { NextLink } from "@/components/common/next-link";
+import { PATHS } from "@/const/paths";
+import { GetAllProjectQuery } from "@/lib/graphql/graphql";
 import { faYenSign, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { KeywordTag } from "../../common/keyword-tag";
 
 import * as Styles from "./styles";
 
-export const ProjectContent = () => {
+type Props = { item: GetAllProjectQuery["project"][0] };
+
+export const ProjectContent = ({ item }: Props) => {
+  const { id, price, projectName } = item;
   return (
-    <Styles.DivContent>
-      <Styles.HederContent>
-        モバイルゲーム向け プラットフォーム
-        <br />
-        開発案件
-      </Styles.HederContent>
-      <Styles.SecContent>
-        <div>
-          <Styles.SpanIcon>
-            <FontAwesomeIcon icon={faYenSign} size={"xl"} />
-          </Styles.SpanIcon>
-          800000~
-        </div>
-        <div>
-          <Styles.SpanIcon>
-            <FontAwesomeIcon icon={faLocationDot} size={"xl"} />
-          </Styles.SpanIcon>
-          六本木
-        </div>
-      </Styles.SecContent>
-      <Styles.SecContentWrap>
-        {[...Array(8)].map((_, idx) => (
-          <Styles.PerKeyword key={idx}>キーワード</Styles.PerKeyword>
-        ))}
-      </Styles.SecContentWrap>
-    </Styles.DivContent>
+    <NextLink href={{ pathname: PATHS.PROJECT, query: { id } }}>
+      <Styles.DivContent>
+        <Styles.HederContent>{projectName}</Styles.HederContent>
+        <Styles.SecContent>
+          <div>
+            <Styles.SpanIcon>
+              <FontAwesomeIcon icon={faYenSign} size={"xl"} />
+            </Styles.SpanIcon>
+            {price}
+          </div>
+          <div>
+            <Styles.SpanIcon>
+              <FontAwesomeIcon icon={faLocationDot} size={"xl"} />
+            </Styles.SpanIcon>
+            六本木
+          </div>
+        </Styles.SecContent>
+        <Styles.SecContentWrap>
+          {item.keyword.map((item: string, idx: number) => (
+            <KeywordTag key={idx}>{item}</KeywordTag>
+          ))}
+        </Styles.SecContentWrap>
+      </Styles.DivContent>
+    </NextLink>
   );
 };

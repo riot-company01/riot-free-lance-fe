@@ -1,5 +1,26 @@
-query MyQuery {
+query GetAllProject @cached {
   project {
     id
+    keyword
+    projectName
+    price
+  }
+}
+
+query GetDetailProject($id: Int) @cached {
+  project(where: { id: { _eq: $id } }) {
+    id
+    businessContent
+    contentBusiness
+    developmentEnvironment
+    keyword
+    personnelSought
+    price
+    projectName
+    recruitmentBackground
+    recruitmentNumber
+    requiredSkills
+    welcomeSkills
+    workingConditions
   }
 }
