@@ -27,7 +27,8 @@ export const DivFilter = styled.div`
 export const DivWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100% - 160px);
+  //width: calc(100% - 160px);
+
   overflow: scroll;
 `;
 
