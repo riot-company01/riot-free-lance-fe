@@ -40,7 +40,9 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           <Styles.HeadBasicInfo>単価</Styles.HeadBasicInfo>
 
           {projectDetailData.price === "応相談" ? (
-            <Styles.PerBasicInfo>{projectDetailData.price}</Styles.PerBasicInfo>
+            <Styles.PerBasicInfo>
+              <Styles.SpanPriceColor>{projectDetailData.price}</Styles.SpanPriceColor>
+            </Styles.PerBasicInfo>
           ) : (
             <Styles.PerBasicInfo>
               〜 <Styles.SpanPriceColor>{projectDetailData.price}</Styles.SpanPriceColor> 円/月

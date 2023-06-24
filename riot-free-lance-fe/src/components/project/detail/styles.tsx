@@ -14,6 +14,7 @@ export const DivWrapper = styled.div`
   @media (min-width: ${SCREEN_SIZE.isTabletSizeMin}) {
     margin: 40px;
     padding: 36px;
+    background-color: white;
   }
 `;
 

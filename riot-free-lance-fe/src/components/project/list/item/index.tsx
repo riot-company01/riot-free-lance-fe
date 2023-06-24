@@ -12,29 +12,37 @@ type Props = { item: GetAllProjectQuery["project"][0] };
 export const ProjectContent = ({ item }: Props) => {
   const { id, price, projectName } = item;
   return (
-    <NextLink href={{ pathname: PATHS.PROJECT, query: { id } }}>
-      <Styles.DivContent>
-        <Styles.HederContent>{projectName}</Styles.HederContent>
-        <Styles.SecContent>
-          <div>
-            <Styles.SpanIcon>
-              <FontAwesomeIcon icon={faYenSign} size={"xl"} />
-            </Styles.SpanIcon>
-            {price}
-          </div>
-          <div>
-            <Styles.SpanIcon>
-              <FontAwesomeIcon icon={faLocationDot} size={"xl"} />
-            </Styles.SpanIcon>
-            六本木
-          </div>
-        </Styles.SecContent>
-        <Styles.SecContentWrap>
-          {item.keyword.map((item: string, idx: number) => (
-            <KeywordTag key={idx}>{item}</KeywordTag>
-          ))}
-        </Styles.SecContentWrap>
-      </Styles.DivContent>
-    </NextLink>
+    <Styles.DivListItemWrapper>
+      <NextLink href={{ pathname: PATHS.PROJECT, query: { id } }}>
+        <Styles.DivContent>
+          <Styles.HederContent>{projectName}</Styles.HederContent>
+          <Styles.SecContent>
+            <Styles.DivPriceWrapper>
+              <Styles.SpanIcon>
+                <FontAwesomeIcon icon={faYenSign} size={"xl"} />
+              </Styles.SpanIcon>
+              {price === "応相談" ? (
+                <p>{price}</p>
+              ) : (
+                <Styles.PerPrice>
+                  〜 <Styles.SpanPriceColor>{price}</Styles.SpanPriceColor> 円/月
+                </Styles.PerPrice>
+              )}
+            </Styles.DivPriceWrapper>
+            <Styles.DivPriceWrapper>
+              <Styles.SpanIcon>
+                <FontAwesomeIcon icon={faLocationDot} size={"xl"} />
+              </Styles.SpanIcon>
+              六本木
+            </Styles.DivPriceWrapper>
+          </Styles.SecContent>
+          <Styles.SecContentWrap>
+            {item.keyword.map((item: string, idx: number) => (
+              <KeywordTag key={idx}>{item}</KeywordTag>
+            ))}
+          </Styles.SecContentWrap>
+        </Styles.DivContent>
+      </NextLink>
+    </Styles.DivListItemWrapper>
   );
 };
