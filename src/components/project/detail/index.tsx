@@ -7,14 +7,14 @@ import { Description } from "./Description";
 import * as Styles from "./styles";
 
 type ProjectDetailType = {
-  projectId: number;
+  projectId: string | string[] | undefined;
 };
 
 export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
   const { push } = useRouter();
   const { data } = useGetDetailProjectQuery({
     variables: {
-      id: projectId,
+      id: Number(projectId),
     },
   });
 

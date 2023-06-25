@@ -14,7 +14,7 @@ export const ProjectContent = ({ item }: Props) => {
   const { id, price, projectName } = item;
   return (
     <Styles.DivListItemWrapper>
-      <NextLink href={{ pathname: PATHS.PROJECT, query: { id } }}>
+      <Link href={`/project/detail/${id}`}>
         <Styles.DivContent>
           <Styles.HederContent>{projectName}</Styles.HederContent>
           <Styles.SecContent>
@@ -44,7 +44,7 @@ export const ProjectContent = ({ item }: Props) => {
             ))}
           </Styles.SecContentWrap>
         </Styles.DivContent>
-      </NextLink>
+      </Link>
     </Styles.DivListItemWrapper>
   );
 };
