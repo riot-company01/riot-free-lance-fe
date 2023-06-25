@@ -40,6 +40,15 @@ export const HederContent = styled.h3`
     font-weight: bold;
     font-size: 24px;
   }
+
+  @media (min-width: 865px) {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  @media (min-width: ${SCREEN_SIZE.isPcSize}) {
+    font-weight: bold;
+    font-size: 20px;
+  }
 `;
 
 export const SecContentWrap = styled.section`
