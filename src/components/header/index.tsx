@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import * as Styles from "./styles";
 
 const Header: FC = () => {
   const { user, error, isLoading } = useUser();
@@ -10,16 +11,21 @@ const Header: FC = () => {
 
   if (user) {
     return (
-      <header>
-        Welcome {user.name}! <Link href="/api/auth/logout">Logout</Link>
-      </header>
+      <Styles.HeaderContainer>
+        <Styles.ListContainer>
+          <Styles.ListItem>{user.name}</Styles.ListItem>
+          <Styles.ListItem>        
+             <Link href="/api/auth/logout">Logout</Link>
+          </Styles.ListItem>
+        </Styles.ListContainer>
+      </Styles.HeaderContainer>
     );
   }
 
   return (
-    <header>
+    <Styles.HeaderContainer>
       <Link href="/api/auth/login">Login</Link>
-    </header>
+    </Styles.HeaderContainer>
   );
 };
 

@@ -1,3 +1,4 @@
+import Header from "@/components/header";
 import { useQueryString } from "@/components/hooks/use-query-string";
 import { ProjectDetail } from "@/components/project/detail";
 import { ProjectList } from "@/components/project/list";
@@ -10,6 +11,7 @@ export default function ProjectPage() {
 
   return (
     <>
+      <Header />
       {router.asPath.includes("id") && <ProjectDetail projectId={Number(query?.id)} />}
       {router.asPath === PATHS.PROJECT && <ProjectList />}
     </>
