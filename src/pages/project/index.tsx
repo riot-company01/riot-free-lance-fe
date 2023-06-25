@@ -10,7 +10,9 @@ export default function ProjectPage() {
 
   return (
     <>
-      {router.asPath.includes("id") && <ProjectDetail projectId={Number(query?.id)} />}
+      {router.asPath.includes("id") && (
+        <ProjectDetail projectId={Number(query?.id)} />
+      )}
       {router.asPath === PATHS.PROJECT && <ProjectList />}
     </>
   );

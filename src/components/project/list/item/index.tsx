@@ -3,6 +3,7 @@ import { PATHS } from "@/const/paths";
 import { GetAllProjectQuery } from "@/lib/graphql/graphql";
 import { faYenSign, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import { KeywordTag } from "../../common/keyword-tag";
 
 import * as Styles from "./styles";
@@ -25,7 +26,8 @@ export const ProjectContent = ({ item }: Props) => {
                 <p>{price}</p>
               ) : (
                 <Styles.PerPrice>
-                  〜 <Styles.SpanPriceColor>{price}</Styles.SpanPriceColor> 円/月
+                  〜 <Styles.SpanPriceColor>{price}</Styles.SpanPriceColor>
+                  円/月
                 </Styles.PerPrice>
               )}
             </Styles.DivPriceWrapper>
