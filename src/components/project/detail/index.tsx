@@ -1,3 +1,4 @@
+import { slackUrlVar } from "@/components/store";
 import { PATHS } from "@/const/paths";
 import { useGetDetailProjectQuery } from "@/lib/graphql/graphql";
 import { useRouter } from "next/router";
@@ -20,7 +21,9 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
   const projectDetailData = data?.project[0];
 
-  const onClickApplication = () => {};
+  const onClickApplication = () => {
+    slackUrlVar();
+  };
   const onClickBackToList = () => {
     push(PATHS.PROJECT);
   };
