@@ -5,6 +5,7 @@ export const DivWrapper = styled.div`
   border-bottom: solid 6px #edf4fc;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
   border-radius: 9px;
+  background-color: white;
 
   @media (max-width: ${SCREEN_SIZE.isSpSize}) {
     margin: 16px;
@@ -63,7 +64,7 @@ export const HeadBasicInfo = styled.h3`
 
   @media (min-width: ${SCREEN_SIZE.isTabletSizeMin}) {
     width: 164px;
-    padding: 8px;
+    padding: 20px;
   }
 `;
 
