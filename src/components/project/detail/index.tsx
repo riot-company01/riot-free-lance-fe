@@ -1,3 +1,4 @@
+import { slackUrlVar } from "@/components/store";
 import { PATHS } from "@/const/paths";
 import { useGetDetailProjectQuery } from "@/lib/graphql/graphql";
 import { useRouter } from "next/router";
@@ -7,20 +8,22 @@ import { Description } from "./Description";
 import * as Styles from "./styles";
 
 type ProjectDetailType = {
-  projectId: number;
+  projectId: string | string[] | undefined;
 };
 
 export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
   const { push } = useRouter();
   const { data } = useGetDetailProjectQuery({
     variables: {
-      id: projectId,
+      id: Number(projectId),
     },
   });
 
   const projectDetailData = data?.project[0];
 
-  const onClickApplication = () => {};
+  const onClickApplication = () => {
+    slackUrlVar();
+  };
   const onClickBackToList = () => {
     push(PATHS.PROJECT);
   };
@@ -29,7 +32,9 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
   return (
     <Styles.DivWrapper>
-      <Styles.HeadProjectName>{projectDetailData.projectName}</Styles.HeadProjectName>
+      <Styles.HeadProjectName>
+        {projectDetailData.projectName}
+      </Styles.HeadProjectName>
       <Styles.DivKeywordWrapper>
         {projectDetailData.keyword.map((item, idx) => (
           <KeywordTag key={idx}>{item}</KeywordTag>
@@ -41,11 +46,17 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
           {projectDetailData.price === "応相談" ? (
             <Styles.PerBasicInfo>
-              <Styles.SpanPriceColor>{projectDetailData.price}</Styles.SpanPriceColor>
+              <Styles.SpanPriceColor>
+                {projectDetailData.price}
+              </Styles.SpanPriceColor>
             </Styles.PerBasicInfo>
           ) : (
             <Styles.PerBasicInfo>
-              〜 <Styles.SpanPriceColor>{projectDetailData.price}</Styles.SpanPriceColor> 円/月
+              〜
+              <Styles.SpanPriceColor>
+                {projectDetailData.price}
+              </Styles.SpanPriceColor>
+              円/月
             </Styles.PerBasicInfo>
           )}
         </Styles.SecBasicInfoWrapper>
@@ -67,16 +78,14 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
       <Styles.DivButtonWrapper>
         <Button
           text="この案件に応募する"
-          borderColor={"#8dc1fc"}
-          backGroundCalor="#8dc1fc"
-          hoverColor={"#5a85fa"}
+          borderColor={"#5a85fa"}
+          backGroundCalor="#5a85fa"
           onClick={onClickApplication}
         />
         <Button
           text="案件一覧にもどる"
-          borderColor={"#fc8d93"}
-          backGroundCalor="#fc8d93"
-          hoverColor={"#fa5a5a"}
+          borderColor={"#fa5a5a"}
+          backGroundCalor="#fa5a5a"
           onClick={onClickBackToList}
         />
       </Styles.DivButtonWrapper>
