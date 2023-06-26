@@ -1,6 +1,6 @@
 import { useGetAllProjectQuery } from "@/lib/graphql/graphql";
 import React from "react";
-import { Loading } from "../common/loading";
+import { Loading } from "../../common/loading";
 import { ProjectContent } from "./item";
 import * as Styles from "./styles";
 

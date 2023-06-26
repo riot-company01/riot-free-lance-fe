@@ -1,11 +1,11 @@
-import { slackUrlVar } from "@/components/store";
 import { PATHS } from "@/const/paths";
 import { useGetDetailProjectQuery } from "@/lib/graphql/graphql";
 import { useRouter } from "next/router";
 import { KeywordTag } from "../common/keyword-tag";
-import { Button } from "./button";
+import { Button } from "../../common/button";
 import { Description } from "./Description";
 import * as Styles from "./styles";
+import { slackUrlVar } from "@/components/store";
 
 type ProjectDetailType = {
   projectId: string | string[] | undefined;
