@@ -5,7 +5,10 @@ import { Login } from "../../components/login";
 
 export default function ProjectPage() {
   const { user } = useUser();
+
   console.log(user);
+  if (user) {
+  }
   return (
     <>
       {user ? (

@@ -1,16 +1,27 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never;
+    };
 const defaultOptions = {} as const;
-
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string };
@@ -368,7 +379,13 @@ export type GetAllProjectQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllProjectQuery = {
   __typename?: "query_root";
-  project: Array<{ __typename?: "project"; id: number; keyword: any; projectName: string; price: string }>;
+  project: Array<{
+    __typename?: "project";
+    id: number;
+    keyword: any;
+    projectName: string;
+    price: string;
+  }>;
 };
 
 export type GetDetailProjectQueryVariables = Exact<{
@@ -422,20 +439,39 @@ export const GetAllProjectDocument = gql`
  * });
  */
 export function useGetAllProjectQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetAllProjectQuery, GetAllProjectQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllProjectQuery,
+    GetAllProjectQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(GetAllProjectDocument, options);
+  return Apollo.useQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(
+    GetAllProjectDocument,
+    options
+  );
 }
 export function useGetAllProjectLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetAllProjectQuery, GetAllProjectQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllProjectQuery,
+    GetAllProjectQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(GetAllProjectDocument, options);
+  return Apollo.useLazyQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(
+    GetAllProjectDocument,
+    options
+  );
 }
-export type GetAllProjectQueryHookResult = ReturnType<typeof useGetAllProjectQuery>;
-export type GetAllProjectLazyQueryHookResult = ReturnType<typeof useGetAllProjectLazyQuery>;
-export type GetAllProjectQueryResult = Apollo.QueryResult<GetAllProjectQuery, GetAllProjectQueryVariables>;
+export type GetAllProjectQueryHookResult = ReturnType<
+  typeof useGetAllProjectQuery
+>;
+export type GetAllProjectLazyQueryHookResult = ReturnType<
+  typeof useGetAllProjectLazyQuery
+>;
+export type GetAllProjectQueryResult = Apollo.QueryResult<
+  GetAllProjectQuery,
+  GetAllProjectQueryVariables
+>;
 export const GetDetailProjectDocument = gql`
   query GetDetailProject($id: Int) @cached {
     project(where: { id: { _eq: $id } }) {
@@ -473,17 +509,36 @@ export const GetDetailProjectDocument = gql`
  * });
  */
 export function useGetDetailProjectQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetDetailProjectQuery, GetDetailProjectQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetDetailProjectQuery,
+    GetDetailProjectQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetDetailProjectQuery, GetDetailProjectQueryVariables>(GetDetailProjectDocument, options);
+  return Apollo.useQuery<GetDetailProjectQuery, GetDetailProjectQueryVariables>(
+    GetDetailProjectDocument,
+    options
+  );
 }
 export function useGetDetailProjectLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetDetailProjectQuery, GetDetailProjectQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetDetailProjectQuery,
+    GetDetailProjectQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetDetailProjectQuery, GetDetailProjectQueryVariables>(GetDetailProjectDocument, options);
+  return Apollo.useLazyQuery<
+    GetDetailProjectQuery,
+    GetDetailProjectQueryVariables
+  >(GetDetailProjectDocument, options);
 }
-export type GetDetailProjectQueryHookResult = ReturnType<typeof useGetDetailProjectQuery>;
-export type GetDetailProjectLazyQueryHookResult = ReturnType<typeof useGetDetailProjectLazyQuery>;
-export type GetDetailProjectQueryResult = Apollo.QueryResult<GetDetailProjectQuery, GetDetailProjectQueryVariables>;
+export type GetDetailProjectQueryHookResult = ReturnType<
+  typeof useGetDetailProjectQuery
+>;
+export type GetDetailProjectLazyQueryHookResult = ReturnType<
+  typeof useGetDetailProjectLazyQuery
+>;
+export type GetDetailProjectQueryResult = Apollo.QueryResult<
+  GetDetailProjectQuery,
+  GetDetailProjectQueryVariables
+>;

@@ -5,7 +5,6 @@ import { KeywordTag } from "../common/keyword-tag";
 import { Button } from "../../common/button";
 import { Description } from "./Description";
 import * as Styles from "./styles";
-import { slackUrlVar } from "@/components/store";
 
 type ProjectDetailType = {
   projectId: string | string[] | undefined;
@@ -21,9 +20,7 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
   const projectDetailData = data?.project[0];
 
-  const onClickApplication = () => {
-    slackUrlVar();
-  };
+  const onClickApplication = () => {};
   const onClickBackToList = () => {
     push(PATHS.PROJECT);
   };
