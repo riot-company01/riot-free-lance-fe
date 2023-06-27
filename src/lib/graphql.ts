@@ -39,14 +39,3 @@ export const GetDetailProject = gql`
     }
   }
 `;
-
-export const GetUser = gql`
-  query GetUser($id: String) @cached {
-    users(where: { id: { _eq: $id } }) {
-      id
-      name
-      last_seen
-      slackUrl
-    }
-  }
-`;
