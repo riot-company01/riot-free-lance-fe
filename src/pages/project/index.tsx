@@ -3,7 +3,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { Header } from "@/components/header";
 import { Login } from "../../components/login";
 import { useGetUserQuery } from "@/lib/graphql/graphql";
-import { slackUrlVar } from "@/components/store";
+import { slackUrlVar } from "@/stores";
 
 export default function ProjectPage() {
   const { user } = useUser();
