@@ -5,6 +5,8 @@ import { KeywordTag } from "../common/keyword-tag";
 import { Button } from "../../common/button";
 import { Description } from "./Description";
 import * as Styles from "./styles";
+import { useReactiveVar } from "@apollo/client";
+import { slackUrlVar } from "@/components/store";
 
 type ProjectDetailType = {
   projectId: string | string[] | undefined;
@@ -17,10 +19,16 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
       id: Number(projectId),
     },
   });
-
+  const slackUrl = useReactiveVar(slackUrlVar);
   const projectDetailData = data?.project[0];
 
-  const onClickApplication = () => {};
+  const onClickApplication = () => {
+    if (slackUrl) {
+      location.assign(slackUrl);
+    } else {
+      alert("担当営業にURLを送ってください！");
+    }
+  };
   const onClickBackToList = () => {
     push(PATHS.PROJECT);
   };

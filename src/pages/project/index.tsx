@@ -2,18 +2,19 @@ import { ProjectList } from "@/components/project/list";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Header } from "@/components/header";
 import { Login } from "../../components/login";
+import { useGetUserQuery } from "@/lib/graphql/graphql";
+import { slackUrlVar } from "@/components/store";
 
 export default function ProjectPage() {
   const { user } = useUser();
+  const { data } = useGetUserQuery({ variables: { id: user?.sub } });
+  slackUrlVar(data?.users[0].slackUrl);
 
-  console.log(user);
-  if (user) {
-  }
   return (
     <>
       {user ? (
         <>
-          <Header />
+          <Header name={data?.users[0].name} />
           <ProjectList />
         </>
       ) : (
