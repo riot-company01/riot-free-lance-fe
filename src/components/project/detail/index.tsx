@@ -6,7 +6,7 @@ import { Button } from "../../common/button";
 import { Description } from "./Description";
 import * as Styles from "./styles";
 import { useReactiveVar } from "@apollo/client";
-import { slackUrlVar } from "@/components/store";
+import { slackUrlVar } from "@/stores";
 
 type ProjectDetailType = {
   projectId: string | string[] | undefined;
