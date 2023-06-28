@@ -8,8 +8,9 @@ import Loading from "react-loading";
 function ProjectPage() {
   const { user } = useUser();
   const { data } = useGetUserQuery({ variables: { id: user?.sub } });
+  console.log(data);
   slackUrlVar(data?.users[0].slackUrl);
-
+  // return <>{user && <ProjectList />};</>;
   return (
     <>
       {user ? (
