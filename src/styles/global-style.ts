@@ -22,6 +22,6 @@ export const GLOBAL_STYLE = css`
     line-height: 1.6;
     overscroll-behavior: none;
     font-weight: 300;
-    background-color: #f5f5f5;
+    background-color: #cdf5fa;
   }
 `;
