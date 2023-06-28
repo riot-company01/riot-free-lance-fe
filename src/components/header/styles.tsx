@@ -2,16 +2,10 @@ import styled from "@emotion/styled";
 
 export const HeaderContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   background-color: #f5f5f5;
   padding: 20px;
-`;
-
-export const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: bold;
 `;
 
 export const ListContainer = styled.ul`
