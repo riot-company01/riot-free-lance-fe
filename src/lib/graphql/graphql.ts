@@ -1,14 +1,26 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never;
+    };
 const defaultOptions = {} as const;
 
 /** All built-in and custom scalars, mapped to their actual values */
@@ -19,6 +31,7 @@ export type Scalars = {
   Int: { input: number; output: number };
   Float: { input: number; output: number };
   _name: { input: any; output: any };
+  timestamptz: { input: any; output: any };
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
@@ -149,6 +162,7 @@ export type Project = {
   recruitmentNumber: Scalars["String"]["output"];
   /** 必須スキル */
   requiredSkills: Scalars["String"]["output"];
+  riotDetail?: Maybe<Scalars["String"]["output"]>;
   /** 歓迎スキル */
   welcomeSkills: Scalars["String"]["output"];
   /** 稼働条件 */
@@ -171,6 +185,7 @@ export type Project_Bool_Exp = {
   recruitmentBackground?: InputMaybe<String_Comparison_Exp>;
   recruitmentNumber?: InputMaybe<String_Comparison_Exp>;
   requiredSkills?: InputMaybe<String_Comparison_Exp>;
+  riotDetail?: InputMaybe<String_Comparison_Exp>;
   welcomeSkills?: InputMaybe<String_Comparison_Exp>;
   workingConditions?: InputMaybe<String_Comparison_Exp>;
 };
@@ -239,6 +254,7 @@ export type Project_Order_By = {
   recruitmentBackground?: InputMaybe<Order_By>;
   recruitmentNumber?: InputMaybe<Order_By>;
   requiredSkills?: InputMaybe<Order_By>;
+  riotDetail?: InputMaybe<Order_By>;
   welcomeSkills?: InputMaybe<Order_By>;
   workingConditions?: InputMaybe<Order_By>;
 };
@@ -267,6 +283,8 @@ export enum Project_Select_Column {
   RecruitmentNumber = "recruitmentNumber",
   /** column name */
   RequiredSkills = "requiredSkills",
+  /** column name */
+  RiotDetail = "riotDetail",
   /** column name */
   WelcomeSkills = "welcomeSkills",
   /** column name */
@@ -304,6 +322,7 @@ export type Project_Stream_Cursor_Value_Input = {
   recruitmentNumber?: InputMaybe<Scalars["String"]["input"]>;
   /** 必須スキル */
   requiredSkills?: InputMaybe<Scalars["String"]["input"]>;
+  riotDetail?: InputMaybe<Scalars["String"]["input"]>;
   /** 歓迎スキル */
   welcomeSkills?: InputMaybe<Scalars["String"]["input"]>;
   /** 稼働条件 */
@@ -322,6 +341,10 @@ export type Query_Root = {
   project: Array<Project>;
   /** fetch data from the table: "project" using primary key columns */
   project_by_pk?: Maybe<Project>;
+  /** fetch data from the table: "users" */
+  users: Array<Users>;
+  /** fetch data from the table: "users" using primary key columns */
+  users_by_pk?: Maybe<Users>;
 };
 
 export type Query_RootProjectArgs = {
@@ -336,6 +359,18 @@ export type Query_RootProject_By_PkArgs = {
   id: Scalars["Int"]["input"];
 };
 
+export type Query_RootUsersArgs = {
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+export type Query_RootUsers_By_PkArgs = {
+  id: Scalars["String"]["input"];
+};
+
 export type Subscription_Root = {
   __typename?: "subscription_root";
   /** fetch data from the table: "project" */
@@ -344,6 +379,12 @@ export type Subscription_Root = {
   project_by_pk?: Maybe<Project>;
   /** fetch data from the table in a streaming manner: "project" */
   project_stream: Array<Project>;
+  /** fetch data from the table: "users" */
+  users: Array<Users>;
+  /** fetch data from the table: "users" using primary key columns */
+  users_by_pk?: Maybe<Users>;
+  /** fetch data from the table in a streaming manner: "users" */
+  users_stream: Array<Users>;
 };
 
 export type Subscription_RootProjectArgs = {
@@ -364,11 +405,104 @@ export type Subscription_RootProject_StreamArgs = {
   where?: InputMaybe<Project_Bool_Exp>;
 };
 
+export type Subscription_RootUsersArgs = {
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+export type Subscription_RootUsers_By_PkArgs = {
+  id: Scalars["String"]["input"];
+};
+
+export type Subscription_RootUsers_StreamArgs = {
+  batch_size: Scalars["Int"]["input"];
+  cursor: Array<InputMaybe<Users_Stream_Cursor_Input>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars["timestamptz"]["input"]>;
+  _gt?: InputMaybe<Scalars["timestamptz"]["input"]>;
+  _gte?: InputMaybe<Scalars["timestamptz"]["input"]>;
+  _in?: InputMaybe<Array<Scalars["timestamptz"]["input"]>>;
+  _is_null?: InputMaybe<Scalars["Boolean"]["input"]>;
+  _lt?: InputMaybe<Scalars["timestamptz"]["input"]>;
+  _lte?: InputMaybe<Scalars["timestamptz"]["input"]>;
+  _neq?: InputMaybe<Scalars["timestamptz"]["input"]>;
+  _nin?: InputMaybe<Array<Scalars["timestamptz"]["input"]>>;
+};
+
+/** columns and relationships of "users" */
+export type Users = {
+  __typename?: "users";
+  id: Scalars["String"]["output"];
+  last_seen: Scalars["timestamptz"]["output"];
+  name: Scalars["String"]["output"];
+  slackUrl?: Maybe<Scalars["String"]["output"]>;
+};
+
+/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
+export type Users_Bool_Exp = {
+  _and?: InputMaybe<Array<Users_Bool_Exp>>;
+  _not?: InputMaybe<Users_Bool_Exp>;
+  _or?: InputMaybe<Array<Users_Bool_Exp>>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  last_seen?: InputMaybe<Timestamptz_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  slackUrl?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** Ordering options when selecting data from "users". */
+export type Users_Order_By = {
+  id?: InputMaybe<Order_By>;
+  last_seen?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  slackUrl?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "users" */
+export enum Users_Select_Column {
+  /** column name */
+  Id = "id",
+  /** column name */
+  LastSeen = "last_seen",
+  /** column name */
+  Name = "name",
+  /** column name */
+  SlackUrl = "slackUrl",
+}
+
+/** Streaming cursor of the table "users" */
+export type Users_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Users_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Users_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  last_seen?: InputMaybe<Scalars["timestamptz"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+  slackUrl?: InputMaybe<Scalars["String"]["input"]>;
+};
+
 export type GetAllProjectQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllProjectQuery = {
   __typename?: "query_root";
-  project: Array<{ __typename?: "project"; id: number; keyword: any; projectName: string; price: string }>;
+  project: Array<{
+    __typename?: "project";
+    id: number;
+    keyword: any;
+    projectName: string;
+    price: string;
+  }>;
 };
 
 export type GetDetailProjectQueryVariables = Exact<{
@@ -392,6 +526,21 @@ export type GetDetailProjectQuery = {
     requiredSkills: string;
     welcomeSkills: string;
     workingConditions: string;
+  }>;
+};
+
+export type GetUserQueryVariables = Exact<{
+  id?: InputMaybe<Scalars["String"]["input"]>;
+}>;
+
+export type GetUserQuery = {
+  __typename?: "query_root";
+  users: Array<{
+    __typename?: "users";
+    id: string;
+    name: string;
+    last_seen: any;
+    slackUrl?: string | null;
   }>;
 };
 
@@ -422,20 +571,39 @@ export const GetAllProjectDocument = gql`
  * });
  */
 export function useGetAllProjectQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetAllProjectQuery, GetAllProjectQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllProjectQuery,
+    GetAllProjectQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(GetAllProjectDocument, options);
+  return Apollo.useQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(
+    GetAllProjectDocument,
+    options
+  );
 }
 export function useGetAllProjectLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetAllProjectQuery, GetAllProjectQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllProjectQuery,
+    GetAllProjectQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(GetAllProjectDocument, options);
+  return Apollo.useLazyQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(
+    GetAllProjectDocument,
+    options
+  );
 }
-export type GetAllProjectQueryHookResult = ReturnType<typeof useGetAllProjectQuery>;
-export type GetAllProjectLazyQueryHookResult = ReturnType<typeof useGetAllProjectLazyQuery>;
-export type GetAllProjectQueryResult = Apollo.QueryResult<GetAllProjectQuery, GetAllProjectQueryVariables>;
+export type GetAllProjectQueryHookResult = ReturnType<
+  typeof useGetAllProjectQuery
+>;
+export type GetAllProjectLazyQueryHookResult = ReturnType<
+  typeof useGetAllProjectLazyQuery
+>;
+export type GetAllProjectQueryResult = Apollo.QueryResult<
+  GetAllProjectQuery,
+  GetAllProjectQueryVariables
+>;
 export const GetDetailProjectDocument = gql`
   query GetDetailProject($id: Int) @cached {
     project(where: { id: { _eq: $id } }) {
@@ -473,17 +641,87 @@ export const GetDetailProjectDocument = gql`
  * });
  */
 export function useGetDetailProjectQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetDetailProjectQuery, GetDetailProjectQueryVariables>
+  baseOptions?: Apollo.QueryHookOptions<
+    GetDetailProjectQuery,
+    GetDetailProjectQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetDetailProjectQuery, GetDetailProjectQueryVariables>(GetDetailProjectDocument, options);
+  return Apollo.useQuery<GetDetailProjectQuery, GetDetailProjectQueryVariables>(
+    GetDetailProjectDocument,
+    options
+  );
 }
 export function useGetDetailProjectLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetDetailProjectQuery, GetDetailProjectQueryVariables>
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetDetailProjectQuery,
+    GetDetailProjectQueryVariables
+  >
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetDetailProjectQuery, GetDetailProjectQueryVariables>(GetDetailProjectDocument, options);
+  return Apollo.useLazyQuery<
+    GetDetailProjectQuery,
+    GetDetailProjectQueryVariables
+  >(GetDetailProjectDocument, options);
 }
-export type GetDetailProjectQueryHookResult = ReturnType<typeof useGetDetailProjectQuery>;
-export type GetDetailProjectLazyQueryHookResult = ReturnType<typeof useGetDetailProjectLazyQuery>;
-export type GetDetailProjectQueryResult = Apollo.QueryResult<GetDetailProjectQuery, GetDetailProjectQueryVariables>;
+export type GetDetailProjectQueryHookResult = ReturnType<
+  typeof useGetDetailProjectQuery
+>;
+export type GetDetailProjectLazyQueryHookResult = ReturnType<
+  typeof useGetDetailProjectLazyQuery
+>;
+export type GetDetailProjectQueryResult = Apollo.QueryResult<
+  GetDetailProjectQuery,
+  GetDetailProjectQueryVariables
+>;
+export const GetUserDocument = gql`
+  query GetUser($id: String) {
+    users(where: { id: { _eq: $id } }) {
+      id
+      name
+      last_seen
+      slackUrl
+    }
+  }
+`;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(
+    GetUserDocument,
+    options
+  );
+}
+export function useGetUserLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(
+    GetUserDocument,
+    options
+  );
+}
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<
+  GetUserQuery,
+  GetUserQueryVariables
+>;

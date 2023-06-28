@@ -1,0 +1,8 @@
+query GetUser($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    id
+    name
+    last_seen
+    slackUrl
+  }
+}

@@ -1,11 +1,12 @@
-import { slackUrlVar } from "@/components/store";
 import { PATHS } from "@/const/paths";
 import { useGetDetailProjectQuery } from "@/lib/graphql/graphql";
 import { useRouter } from "next/router";
 import { KeywordTag } from "../common/keyword-tag";
-import { Button } from "./button";
+import { Button } from "../../common/button";
 import { Description } from "./Description";
 import * as Styles from "./styles";
+import { useReactiveVar } from "@apollo/client";
+import { slackUrlVar } from "@/stores";
 
 type ProjectDetailType = {
   projectId: string | string[] | undefined;
@@ -18,11 +19,15 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
       id: Number(projectId),
     },
   });
-
+  const slackUrl = useReactiveVar(slackUrlVar);
   const projectDetailData = data?.project[0];
 
   const onClickApplication = () => {
-    slackUrlVar();
+    if (slackUrl) {
+      location.assign(slackUrl);
+    } else {
+      alert("担当営業にURLを送ってください！");
+    }
   };
   const onClickBackToList = () => {
     push(PATHS.PROJECT);
