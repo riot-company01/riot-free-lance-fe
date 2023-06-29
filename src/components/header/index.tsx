@@ -2,7 +2,7 @@ import Link from "next/link";
 import * as Styles from "./styles";
 
 type Props = {
-  name?: string;
+  name?: string | null;
 };
 
 export const Header = ({ name }: Props) => {
