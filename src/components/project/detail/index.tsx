@@ -94,8 +94,8 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
         />
         <Button
           text="案件のURLをコピーする"
-          borderColor={"#77f865"}
-          backGroundCalor="#77f865"
+          borderColor={"#949793"}
+          backGroundCalor="#949793"
           onClick={copyUrlHandler}
         />
         <Button
