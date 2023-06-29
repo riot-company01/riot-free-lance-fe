@@ -29,6 +29,11 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
       alert("担当営業にURLを送ってください！");
     }
   };
+
+  const copyUrlHandler = async () => {
+    const currentUrl = location.href;
+    await navigator.clipboard.writeText(currentUrl);
+  };
   const onClickBackToList = () => {
     push(PATHS.PROJECT);
   };
@@ -86,6 +91,12 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           borderColor={"#5a85fa"}
           backGroundCalor="#5a85fa"
           onClick={onClickApplication}
+        />
+        <Button
+          text="案件のURLをコピーする"
+          borderColor={"#77f865"}
+          backGroundCalor="#77f865"
+          onClick={copyUrlHandler}
         />
         <Button
           text="案件一覧にもどる"
