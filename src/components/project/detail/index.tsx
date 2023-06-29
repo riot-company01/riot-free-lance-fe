@@ -24,7 +24,7 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
   const onClickApplication = () => {
     if (slackUrl) {
-      location.assign(slackUrl);
+      window.open(slackUrl);
     } else {
       alert("担当営業にURLを送ってください！");
     }
