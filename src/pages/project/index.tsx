@@ -14,7 +14,7 @@ function ProjectPage() {
     <>
       {user ? (
         <>
-          <Header name={data?.users[0].name} />
+          <Header name={user.name} />
           <ProjectList />
         </>
       ) : (

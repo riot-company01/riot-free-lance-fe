@@ -24,10 +24,16 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
   const onClickApplication = () => {
     if (slackUrl) {
-      location.assign(slackUrl);
+      window.open(slackUrl);
     } else {
       alert("担当営業にURLを送ってください！");
     }
+  };
+
+  const copyUrlHandler = async () => {
+    const currentUrl = location.href;
+    await navigator.clipboard.writeText(currentUrl);
+    alert("urlがコピーされました");
   };
   const onClickBackToList = () => {
     push(PATHS.PROJECT);
@@ -86,6 +92,12 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           borderColor={"#5a85fa"}
           backGroundCalor="#5a85fa"
           onClick={onClickApplication}
+        />
+        <Button
+          text="案件のURLをコピーする"
+          borderColor={"#949793"}
+          backGroundCalor="#949793"
+          onClick={copyUrlHandler}
         />
         <Button
           text="案件一覧にもどる"

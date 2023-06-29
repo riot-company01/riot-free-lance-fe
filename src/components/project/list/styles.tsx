@@ -51,7 +51,7 @@ export const DivWrapper = styled.div`
 export const DivWrapperList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   @media (min-width: 865px) {
     margin: 0 40px 40px 40px;
   }

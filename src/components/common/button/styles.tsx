@@ -15,6 +15,10 @@ export const ButtonWrapper = styled.button<{
     width: 90%;
     margin-bottom: 16px;
   }
+  @media (min-width: ${SCREEN_SIZE.isTabletSizeMin}) and (max-width: ${SCREEN_SIZE.isTabletSizeMax}) {
+    width: 60%;
+    margin-bottom: 16px;
+  }
 
   &:hover {
     cursor: pointer;
