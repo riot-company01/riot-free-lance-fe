@@ -79,10 +79,10 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           <Styles.HeadBasicInfo>最寄駅</Styles.HeadBasicInfo>
           <Styles.PerBasicInfo>六本木・リモート作業可能</Styles.PerBasicInfo>
         </Styles.SecBasicInfoWrapper>
-        <Styles.SecBasicInfoWrapper>
+        {/* <Styles.SecBasicInfoWrapper>
           <Styles.HeadBasicInfo>職種</Styles.HeadBasicInfo>
           <Styles.PerBasicInfo>そもそも何かが必要！！！</Styles.PerBasicInfo>
-        </Styles.SecBasicInfoWrapper>
+        </Styles.SecBasicInfoWrapper> */}
       </Styles.DivBasicInfo>
       <Description projectDetailData={projectDetailData} />
 
