@@ -85,22 +85,21 @@ export const SpanPriceColor = styled.span`
 `;
 
 export const DivButtonWrapper = styled.div`
-  @media (max-width: ${SCREEN_SIZE.isSpSize}) {
+  @media (max-width: ${SCREEN_SIZE.isTabletSizeMax}) {
     display: flex;
     align-items: center;
     flex-direction: column;
   }
 
   @media (min-width: ${SCREEN_SIZE.isTabletSizeMin}) and (max-width: ${SCREEN_SIZE.isTabletSizeMax}) {
-    margin: auto;
-    width: 432px;
     display: flex;
-    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
   }
 
   @media (min-width: ${SCREEN_SIZE.isTabletSizeMax}) {
     margin: auto;
-    width: 600px;
+    width: 650px;
     display: flex;
     justify-content: space-around;
   }
