@@ -67,7 +67,7 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
               <Styles.SpanPriceColor>
                 {projectDetailData.price}
               </Styles.SpanPriceColor>
-              円/月
+              万円/月
             </Styles.PerBasicInfo>
           )}
         </Styles.SecBasicInfoWrapper>

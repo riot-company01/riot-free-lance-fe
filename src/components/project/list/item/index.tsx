@@ -27,7 +27,7 @@ export const ProjectContent = ({ item }: Props) => {
               ) : (
                 <Styles.PerPrice>
                   〜 <Styles.SpanPriceColor>{price}</Styles.SpanPriceColor>
-                  円/月
+                  万円/月
                 </Styles.PerPrice>
               )}
             </Styles.DivPriceWrapper>
