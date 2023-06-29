@@ -33,6 +33,7 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
   const copyUrlHandler = async () => {
     const currentUrl = location.href;
     await navigator.clipboard.writeText(currentUrl);
+    alert("urlがコピーされました");
   };
   const onClickBackToList = () => {
     push(PATHS.PROJECT);
