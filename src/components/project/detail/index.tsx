@@ -92,17 +92,20 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           borderColor={"#5a85fa"}
           backGroundCalor="#5a85fa"
           onClick={onClickApplication}
+          borderRadius={28}
         />
         <Button
           text="案件のURLをコピーする"
           borderColor={"#949793"}
           backGroundCalor="#949793"
+          borderRadius={28}
           onClick={copyUrlHandler}
         />
         <Button
           text="案件一覧にもどる"
           borderColor={"#fa5a5a"}
           backGroundCalor="#fa5a5a"
+          borderRadius={28}
           onClick={onClickBackToList}
         />
       </Styles.DivButtonWrapper>

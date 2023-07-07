@@ -4,10 +4,12 @@ import styled from "@emotion/styled";
 export const ButtonWrapper = styled.button<{
   borderColor: string;
   backGroundColor: string;
+  borderRadius?: number;
 }>`
   background-color: ${({ backGroundColor }) => backGroundColor};
   border: ${({ borderColor }) => borderColor && `2px solid ${borderColor}`};
-  border-radius: 28px;
+  border-radius: ${({ borderRadius }) =>
+    borderRadius ? `${borderRadius}px` : "0px"};
   width: 200px;
   padding: 8px;
 
