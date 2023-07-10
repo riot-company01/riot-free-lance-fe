@@ -5,11 +5,21 @@ type Props = {
   borderColor: string;
   backGroundCalor: string;
   borderRadius?: number;
+  height?: number;
+  width?: number;
   onClick: () => void;
 };
 
 export const Button = (props: Props) => {
-  const { text, borderColor, backGroundCalor, borderRadius, onClick } = props;
+  const {
+    text,
+    borderColor,
+    backGroundCalor,
+    borderRadius,
+    height,
+    width,
+    onClick,
+  } = props;
 
   return (
     <Styles.ButtonWrapper
@@ -17,6 +27,8 @@ export const Button = (props: Props) => {
       borderColor={borderColor}
       backGroundColor={backGroundCalor}
       borderRadius={borderRadius}
+      height={height}
+      width={width}
       onClick={onClick}
     >
       <Styles.ParText>{text}</Styles.ParText>

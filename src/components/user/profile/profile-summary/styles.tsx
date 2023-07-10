@@ -1,19 +1,28 @@
+import { SCREEN_SIZE } from "@/const/screen-size";
 import styled from "@emotion/styled";
 
+export const DivProfileSummaryWrapper = styled.div`
+  width: 280px;
+  @media (min-width: ${SCREEN_SIZE.isSpSize}) {
+    margin-right: 16px;
+  }
+`;
+
 export const DivWrapper = styled.div`
-  border: 1px solid black;
-  padding: 8px;
-  margin-top: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
 `;
 
 export const DivHeadFlex = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 8px 0 8px 0;
+  margin-bottom: 16px;
 `;
 
 export const HeadName = styled.h3`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 `;
 
@@ -31,10 +40,23 @@ export const AnchorItem = styled.a`
 `;
 
 export const DivItem = styled.div`
-  margin: 8px 0 8px 0;
+  margin: 8px 0 8px 16px;
+`;
+
+export const PerMargin = styled.p`
+  margin: 8px 0;
+`;
+
+export const DivTitle = styled.div`
+  margin: 16px 0;
 `;
 
 export const DivWrpperSituation = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const Hr = styled.hr`
+  border: none;
+  border-top: 2px dotted #a1a1a1;
 `;

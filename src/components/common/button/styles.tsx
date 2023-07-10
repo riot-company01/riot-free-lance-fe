@@ -5,12 +5,15 @@ export const ButtonWrapper = styled.button<{
   borderColor: string;
   backGroundColor: string;
   borderRadius?: number;
+  height?: number;
+  width?: number;
 }>`
   background-color: ${({ backGroundColor }) => backGroundColor};
   border: ${({ borderColor }) => borderColor && `2px solid ${borderColor}`};
   border-radius: ${({ borderRadius }) =>
     borderRadius ? `${borderRadius}px` : "0px"};
-  width: 200px;
+  height: ${({ height }) => height && `${height}px`};
+  width: ${({ width }) => (width ? `${width}px` : "200px")};
   padding: 8px;
 
   @media (max-width: ${SCREEN_SIZE.isSpSize}) {

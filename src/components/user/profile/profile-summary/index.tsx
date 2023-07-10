@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const ProfileSummary = () => {
   return (
-    <div>
+    <Styles.DivProfileSummaryWrapper>
       <FileUpload />
 
       <Styles.DivWrapper>
@@ -23,8 +23,8 @@ export const ProfileSummary = () => {
           </Styles.AnchorItem>
         </Styles.DivHeadFlex>
         <Styles.DivItem>
-          <p>経験職種</p>
-          <p>最寄り駅</p>
+          <Styles.PerMargin>経験職種</Styles.PerMargin>
+          <Styles.PerMargin>最寄り駅</Styles.PerMargin>
         </Styles.DivItem>
         <Styles.DivAddSkill>
           <Styles.AnchorItem href="">
@@ -38,15 +38,19 @@ export const ProfileSummary = () => {
             開発経験スキルを追加
           </Styles.AnchorItem>
         </Styles.DivAddSkill>
-        <hr />
-        <Styles.DivItem>
+        <Styles.Hr />
+        <Styles.DivTitle>
           <Styles.HeadName>仕事探し状況</Styles.HeadName>
-        </Styles.DivItem>
+        </Styles.DivTitle>
         <Styles.DivWrpperSituation>
-          <Styles.AnchorItem href="">気になる案件</Styles.AnchorItem>
-          <Styles.AnchorItem href="">応募済み案件</Styles.AnchorItem>
+          <Styles.DivItem>
+            <Styles.AnchorItem href="">気になる案件</Styles.AnchorItem>
+          </Styles.DivItem>
+          <Styles.DivItem>
+            <Styles.AnchorItem href="">応募済み案件</Styles.AnchorItem>
+          </Styles.DivItem>
         </Styles.DivWrpperSituation>
       </Styles.DivWrapper>
-    </div>
+    </Styles.DivProfileSummaryWrapper>
   );
 };
