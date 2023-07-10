@@ -77,6 +77,7 @@ const Wrapper = styled.div`
   top: 0;
   justify-content: space-between;
   width: 100%;
+  background-color: #f5f5f5;
 `;
 
 export function CustomizedInputBase() {
