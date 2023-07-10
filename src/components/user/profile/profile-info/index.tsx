@@ -56,7 +56,7 @@ export const ProfileInfo = () => {
       <div>
         <Styles.DivHeadItem>
           <Styles.HeadName>開発スキル・経験</Styles.HeadName>
-          <Styles.AnchorItem href="">
+          <Styles.AnchorItem href="/user/edit-skill">
             <Styles.SpanIcon>
               <FontAwesomeIcon
                 icon={faPen}

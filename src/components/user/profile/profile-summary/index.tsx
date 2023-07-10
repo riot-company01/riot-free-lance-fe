@@ -27,7 +27,7 @@ export const ProfileSummary = () => {
           <Styles.PerMargin>最寄り駅</Styles.PerMargin>
         </Styles.DivItem>
         <Styles.DivAddSkill>
-          <Styles.AnchorItem href="/user/edit/skill">
+          <Styles.AnchorItem href="/user/edit-skill">
             <Styles.SpanIcon>
               <FontAwesomeIcon
                 icon={faPen}

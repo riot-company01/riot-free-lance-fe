@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { PROFESSIONAL_EXPERIENCE } from "./const";
+import { INDUSTRY } from "./const";
 
 import * as Styles from "./styles";
 
-export const ProfessionalExperience = () => {
+export const Industry = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleButtonClick = (option: string) => {
@@ -16,7 +16,7 @@ export const ProfessionalExperience = () => {
 
   return (
     <>
-      {PROFESSIONAL_EXPERIENCE.map((item) => {
+      {INDUSTRY.map((item) => {
         return (
           <Styles.ButtonWrapper
             name="selectedFullTimeEmployeeButton"
