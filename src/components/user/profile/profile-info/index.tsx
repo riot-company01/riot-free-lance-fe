@@ -8,7 +8,7 @@ export const ProfileInfo = () => {
       <div>
         <Styles.DivHeadItem>
           <Styles.HeadName>基本情報</Styles.HeadName>
-          <Styles.AnchorItem href="">
+          <Styles.AnchorItem href={"/user/edit"}>
             <Styles.SpanIcon>
               <FontAwesomeIcon
                 icon={faPen}

@@ -11,7 +11,7 @@ export const ProfileSummary = () => {
       <Styles.DivWrapper>
         <Styles.DivHeadFlex>
           <Styles.HeadName>名前</Styles.HeadName>
-          <Styles.AnchorItem href="">
+          <Styles.AnchorItem href={"/user/edit"}>
             <Styles.SpanIcon>
               <FontAwesomeIcon
                 icon={faPen}
@@ -27,7 +27,7 @@ export const ProfileSummary = () => {
           <Styles.PerMargin>最寄り駅</Styles.PerMargin>
         </Styles.DivItem>
         <Styles.DivAddSkill>
-          <Styles.AnchorItem href="">
+          <Styles.AnchorItem href="/user/edit/skill">
             <Styles.SpanIcon>
               <FontAwesomeIcon
                 icon={faPen}
