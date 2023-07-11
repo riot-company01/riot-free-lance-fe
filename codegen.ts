@@ -5,9 +5,8 @@ const config: CodegenConfig = {
   schema: "https://famous-walrus-45.hasura.app/v1/graphql",
   documents: "src/schemas/**/*.graphql",
   generates: {
-    "src/gql/": {
+    "src/lib/graphql/": {
       preset: "client",
-      plugins: [],
     },
   },
 };

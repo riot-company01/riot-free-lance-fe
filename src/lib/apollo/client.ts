@@ -1,9 +1,5 @@
-import {
-  ApolloClient,
-  HttpLink,
-  InMemoryCache,
-  NormalizedCacheObject,
-} from "@apollo/client";
+import type { NormalizedCacheObject } from "@apollo/client";
+import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import deepMerge from "deepmerge";
 import isEqual from "lodash-es/isEqual";
 import "cross-fetch/polyfill";
@@ -27,9 +23,7 @@ export const initializeApollo = (initialState?: unknown) => {
     const data = deepMerge(initialState, existingCache, {
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,
-        ...destinationArray.filter((d) =>
-          sourceArray.every((s) => !isEqual(d, s))
-        ),
+        ...destinationArray.filter((d) => sourceArray.every((s) => !isEqual(d, s))),
       ],
     });
 

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import type { GetSkillsQuery, GetSkillsQueryVariables } from "@/gql/graphql";
-import { GetSkillsDocument } from "@/gql/graphql";
 import { initializeApollo } from "@/lib/apollo/client";
+import type { GetSkillsQuery, GetSkillsQueryVariables } from "@/lib/graphql/graphql";
+import { GetSkillsDocument } from "@/lib/graphql/graphql";
 
 const category = [
   "おすすめ",
