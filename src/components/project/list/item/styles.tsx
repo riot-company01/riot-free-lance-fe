@@ -2,8 +2,9 @@ import { SCREEN_SIZE } from "@/const/screen-size";
 import styled from "@emotion/styled";
 
 export const DivListItemWrapper = styled.div`
-  width: 35vw;
+    width: 100%;
 @media (min-width: 865px) {
+    width: 35vw;
     min-width: 375px;
   }
   @media (min-width: ${SCREEN_SIZE.isPcSize}) {
