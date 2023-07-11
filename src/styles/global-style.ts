@@ -15,6 +15,10 @@ export const GLOBAL_STYLE = css`
     padding: var(--sat) var(--sar) var(--sab) var(--sal);
   }
 
+  #__next {
+    padding-top: 78px;
+  }
+
   html,
   body {
     font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo,
