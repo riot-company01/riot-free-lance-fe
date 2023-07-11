@@ -1,4 +1,6 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
+import type { ChangeEvent } from "react";
+import { PREFECTURES } from "./const";
 import * as Styles from "./styles";
 
 type Props = {

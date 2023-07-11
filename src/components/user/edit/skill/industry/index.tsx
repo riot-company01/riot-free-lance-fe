@@ -16,16 +16,15 @@ export const Industry = () => {
 
   return (
     <>
-      {INDUSTRY.map((item) => {
+      {INDUSTRY.map((item, idx) => {
         return (
           <Styles.ButtonWrapper
+            key={idx}
             name="selectedFullTimeEmployeeButton"
             onClick={() => handleButtonClick(item)}
             isSelected={selectedOptions.includes(item)}
           >
-            <Styles.ParText isSelected={selectedOptions.includes(item)}>
-              {item}
-            </Styles.ParText>
+            <Styles.ParText isSelected={selectedOptions.includes(item)}>{item}</Styles.ParText>
           </Styles.ButtonWrapper>
         );
       })}

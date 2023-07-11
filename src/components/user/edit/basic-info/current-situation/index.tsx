@@ -11,16 +11,15 @@ export const CurrentSituation = () => {
 
   return (
     <>
-      {CURRENT_SITUATION.map((item) => {
+      {CURRENT_SITUATION.map((item, idx) => {
         return (
           <Styles.ButtonWrapper
+            key={idx}
             name="selectedFreeLanceButton"
             onClick={() => handleButtonClick(item)}
             isSelected={selectedOption === item}
           >
-            <Styles.ParText isSelected={selectedOption === item}>
-              {item}
-            </Styles.ParText>
+            <Styles.ParText isSelected={selectedOption === item}>{item}</Styles.ParText>
           </Styles.ButtonWrapper>
         );
       })}

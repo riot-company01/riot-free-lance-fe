@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 import * as Styles from "./styles";
 
 export type InputProps = {

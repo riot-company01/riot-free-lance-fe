@@ -1,4 +1,5 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
+import type { ChangeEvent } from "react";
 
 export const useBasicInfo = () => {
   const [userFirstName, setUserFirstName] = useState("");
@@ -12,15 +13,9 @@ export const useBasicInfo = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [selectedPrefecture, setSelectedPrefecture] = useState("");
 
-  const onChangeUserFirstName = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setUserFirstName(e.target.value),
-    []
-  );
+  const onChangeUserFirstName = useCallback((e: ChangeEvent<HTMLInputElement>) => setUserFirstName(e.target.value), []);
 
-  const onChangeUserLastName = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setUserLastName(e.target.value),
-    []
-  );
+  const onChangeUserLastName = useCallback((e: ChangeEvent<HTMLInputElement>) => setUserLastName(e.target.value), []);
   const onChangeUserFirstNameKana = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => setUserFirstNameKana(e.target.value),
     []
@@ -42,15 +37,9 @@ export const useBasicInfo = () => {
     setSelectedDay(e.target.value);
   };
 
-  const onChangeMailAddress = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setMailAddress(e.target.value),
-    []
-  );
+  const onChangeMailAddress = useCallback((e: ChangeEvent<HTMLInputElement>) => setMailAddress(e.target.value), []);
 
-  const onChangePhoneNumber = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value),
-    []
-  );
+  const onChangePhoneNumber = useCallback((e: ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value), []);
 
   const selectPrefecture = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedPrefecture(e.target.value);

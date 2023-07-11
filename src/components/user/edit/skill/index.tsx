@@ -1,20 +1,16 @@
-import { Input } from "@/components/common/input";
-import { PATHS } from "@/const/paths";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { TextareaAutosize } from "@mui/material";
 import { useRouter } from "next/router";
-import { Tag } from "../common/tag";
 import * as Styles from "./styles";
-import { useEditSkill } from "./hooks/use-edit-skill";
-import { CurrentSituation } from "../basic-info/current-situation";
-import SelectPrefecture from "../basic-info/select-prefecture";
-import { ProfessionalExperience } from "./professional-experience";
-import { Industry } from "./industry";
-import { TextareaAutosize } from "@mui/base";
+import { Input } from "@/components/common/input";
+import { Tag } from "@/components/user/edit/common/tag";
+import { useEditSkill } from "@/components/user/edit/skill/hooks/use-edit-skill";
+import { Industry } from "@/components/user/edit/skill/industry";
+import { ProfessionalExperience } from "@/components/user/edit/skill/professional-experience";
+import { PATHS } from "@/const/paths";
 
 export const EditSkill = () => {
-  const { user } = useUser();
   const { push } = useRouter();
-  const { portfolio, onChangePortfolio } = useEditSkill();
+  const { portfolio, textArea, onChangePortfolio, onChangeTextArea } = useEditSkill();
 
   const portfolioUrl = "http://localhost:3000/user/edit-skill";
 
@@ -92,7 +88,13 @@ export const EditSkill = () => {
             <h3>自己PR</h3>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <TextareaAutosize />
+          <TextareaAutosize
+            minRows={3} // 最小の行数
+            maxRows={6} // 最大の行数
+            value={textArea}
+            onChange={onChangeTextArea}
+            style={{ width: "100%" }}
+          />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
@@ -107,16 +109,10 @@ export const EditSkill = () => {
       </Styles.DivItem>
 
       <Styles.DivButtonWrapper>
-        <Styles.CancelButtonWrapper
-          name="selectedFreeLanceButton"
-          onClick={() => handleCancelButtonClick()}
-        >
+        <Styles.CancelButtonWrapper name="selectedFreeLanceButton" onClick={() => handleCancelButtonClick()}>
           <Styles.ParCancelText>キャンセル</Styles.ParCancelText>
         </Styles.CancelButtonWrapper>
-        <Styles.KeepButtonWrapper
-          name="selectedFreeLanceButton"
-          onClick={() => handleKeepButtonClick()}
-        >
+        <Styles.KeepButtonWrapper name="selectedFreeLanceButton" onClick={() => handleKeepButtonClick()}>
           <Styles.ParKeepText>保存する</Styles.ParKeepText>
         </Styles.KeepButtonWrapper>
       </Styles.DivButtonWrapper>

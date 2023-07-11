@@ -1,7 +1,8 @@
-import * as Styles from "./styles";
-import { FileUpload } from "../common/file-upload";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as Styles from "./styles";
+
+import { FileUpload } from "@/components/user/profile/common/file-upload";
 
 export const ProfileSummary = () => {
   return (
@@ -13,11 +14,7 @@ export const ProfileSummary = () => {
           <Styles.HeadName>名前</Styles.HeadName>
           <Styles.AnchorItem href={"/user/edit"}>
             <Styles.SpanIcon>
-              <FontAwesomeIcon
-                icon={faPen}
-                size={"1x"}
-                style={{ color: "#20b2aa" }}
-              />
+              <FontAwesomeIcon icon={faPen} size={"1x"} style={{ color: "#20b2aa" }} />
             </Styles.SpanIcon>
             編集
           </Styles.AnchorItem>
@@ -29,11 +26,7 @@ export const ProfileSummary = () => {
         <Styles.DivAddSkill>
           <Styles.AnchorItem href="/user/edit-skill">
             <Styles.SpanIcon>
-              <FontAwesomeIcon
-                icon={faPen}
-                size={"1x"}
-                style={{ color: "#20b2aa" }}
-              />
+              <FontAwesomeIcon icon={faPen} size={"1x"} style={{ color: "#20b2aa" }} />
             </Styles.SpanIcon>
             開発経験スキルを追加
           </Styles.AnchorItem>

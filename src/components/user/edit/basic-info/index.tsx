@@ -1,5 +1,3 @@
-import { Input } from "@/components/common/input";
-import { PATHS } from "@/const/paths";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import { Tag } from "../common/tag";
@@ -7,6 +5,8 @@ import { CurrentSituation } from "./current-situation";
 import { useBasicInfo } from "./hooks/use-basic-info";
 import SelectPrefecture from "./select-prefecture";
 import * as Styles from "./styles";
+import { Input } from "@/components/common/input";
+import { PATHS } from "@/const/paths";
 
 export const EditBasicInfo = () => {
   const { user } = useUser();
@@ -203,10 +203,7 @@ export const EditBasicInfo = () => {
           <h3>お住まいの地域</h3>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
-        <SelectPrefecture
-          value={selectedPrefecture}
-          onChange={selectPrefecture}
-        />
+        <SelectPrefecture value={selectedPrefecture} onChange={selectPrefecture} />
       </Styles.DivWrpper>
       <Styles.DivWrpper>
         <Styles.DivTitleWrapper>
@@ -216,16 +213,10 @@ export const EditBasicInfo = () => {
         <CurrentSituation />
       </Styles.DivWrpper>
       <Styles.DivButtonWrapper>
-        <Styles.CancelButtonWrapper
-          name="selectedFreeLanceButton"
-          onClick={() => handleCancelButtonClick()}
-        >
+        <Styles.CancelButtonWrapper name="selectedFreeLanceButton" onClick={() => handleCancelButtonClick()}>
           <Styles.ParCancelText>キャンセル</Styles.ParCancelText>
         </Styles.CancelButtonWrapper>
-        <Styles.KeepButtonWrapper
-          name="selectedFreeLanceButton"
-          onClick={() => handleKeepButtonClick()}
-        >
+        <Styles.KeepButtonWrapper name="selectedFreeLanceButton" onClick={() => handleKeepButtonClick()}>
           <Styles.ParKeepText>保存する</Styles.ParKeepText>
         </Styles.KeepButtonWrapper>
       </Styles.DivButtonWrapper>

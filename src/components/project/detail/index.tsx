@@ -95,7 +95,6 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           borderRadius={28}
           onClick={copyUrlHandler}
         />
-<<<<<<< HEAD
         <Button
           text="案件一覧にもどる"
           borderColor={"#fa5a5a"}
@@ -103,9 +102,6 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           borderRadius={28}
           onClick={onClickBackToList}
         />
-=======
-        <Button text="案件一覧にもどる" borderColor={"#fa5a5a"} backGroundCalor="#fa5a5a" onClick={onClickBackToList} />
->>>>>>> riot-free-lance
       </Styles.DivButtonWrapper>
     </Styles.DivWrapper>
   );
