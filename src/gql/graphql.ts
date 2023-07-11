@@ -2,24 +2,11 @@
 import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
-export type MakeEmpty<
-  T extends { [key: string]: unknown },
-  K extends keyof T
-> = { [_ in K]?: never };
-export type Incremental<T> =
-  | T
-  | {
-      [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never;
-    };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string };
@@ -92,6 +79,10 @@ export type Mutation_Root = {
   insert_project?: Maybe<Project_Mutation_Response>;
   /** insert a single row into the table: "project" */
   insert_project_one?: Maybe<Project>;
+  /** insert data into the table: "skills" */
+  insert_skills?: Maybe<Skills_Mutation_Response>;
+  /** insert a single row into the table: "skills" */
+  insert_skills_one?: Maybe<Skills>;
 };
 
 /** mutation root */
@@ -104,6 +95,18 @@ export type Mutation_RootInsert_ProjectArgs = {
 export type Mutation_RootInsert_Project_OneArgs = {
   object: Project_Insert_Input;
   on_conflict?: InputMaybe<Project_On_Conflict>;
+};
+
+/** mutation root */
+export type Mutation_RootInsert_SkillsArgs = {
+  objects: Array<Skills_Insert_Input>;
+  on_conflict?: InputMaybe<Skills_On_Conflict>;
+};
+
+/** mutation root */
+export type Mutation_RootInsert_Skills_OneArgs = {
+  object: Skills_Insert_Input;
+  on_conflict?: InputMaybe<Skills_On_Conflict>;
 };
 
 /** Boolean expression to compare columns of type "name". All fields are combined with logical 'AND'. */
@@ -342,6 +345,10 @@ export type Query_Root = {
   project: Array<Project>;
   /** fetch data from the table: "project" using primary key columns */
   project_by_pk?: Maybe<Project>;
+  /** fetch data from the table: "skills" */
+  skills: Array<Skills>;
+  /** fetch data from the table: "skills" using primary key columns */
+  skills_by_pk?: Maybe<Skills>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch data from the table: "users" using primary key columns */
@@ -360,6 +367,18 @@ export type Query_RootProject_By_PkArgs = {
   id: Scalars["Int"]["input"];
 };
 
+export type Query_RootSkillsArgs = {
+  distinct_on?: InputMaybe<Array<Skills_Select_Column>>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  order_by?: InputMaybe<Array<Skills_Order_By>>;
+  where?: InputMaybe<Skills_Bool_Exp>;
+};
+
+export type Query_RootSkills_By_PkArgs = {
+  id: Scalars["Int"]["input"];
+};
+
 export type Query_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars["Int"]["input"]>;
@@ -372,6 +391,91 @@ export type Query_RootUsers_By_PkArgs = {
   id: Scalars["String"]["input"];
 };
 
+/** スキル */
+export type Skills = {
+  __typename?: "skills";
+  id: Scalars["Int"]["output"];
+  name?: Maybe<Scalars["String"]["output"]>;
+  type?: Maybe<Scalars["String"]["output"]>;
+};
+
+/** Boolean expression to filter rows from the table "skills". All fields are combined with a logical 'AND'. */
+export type Skills_Bool_Exp = {
+  _and?: InputMaybe<Array<Skills_Bool_Exp>>;
+  _not?: InputMaybe<Skills_Bool_Exp>;
+  _or?: InputMaybe<Array<Skills_Bool_Exp>>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "skills" */
+export enum Skills_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  SkillsPkey = "skills_pkey",
+}
+
+/** input type for inserting data into table "skills" */
+export type Skills_Insert_Input = {
+  id?: InputMaybe<Scalars["Int"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+  type?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+/** response of any mutation on the table "skills" */
+export type Skills_Mutation_Response = {
+  __typename?: "skills_mutation_response";
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars["Int"]["output"];
+  /** data from the rows affected by the mutation */
+  returning: Array<Skills>;
+};
+
+/** on_conflict condition type for table "skills" */
+export type Skills_On_Conflict = {
+  constraint: Skills_Constraint;
+  update_columns?: Array<Skills_Update_Column>;
+  where?: InputMaybe<Skills_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "skills". */
+export type Skills_Order_By = {
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "skills" */
+export enum Skills_Select_Column {
+  /** column name */
+  Id = "id",
+  /** column name */
+  Name = "name",
+  /** column name */
+  Type = "type",
+}
+
+/** Streaming cursor of the table "skills" */
+export type Skills_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Skills_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Skills_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars["Int"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+  type?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+/** placeholder for update columns of table "skills" (current role has no relevant permissions) */
+export enum Skills_Update_Column {
+  /** placeholder (do not use) */
+  Placeholder = "_PLACEHOLDER",
+}
+
 export type Subscription_Root = {
   __typename?: "subscription_root";
   /** fetch data from the table: "project" */
@@ -380,6 +484,12 @@ export type Subscription_Root = {
   project_by_pk?: Maybe<Project>;
   /** fetch data from the table in a streaming manner: "project" */
   project_stream: Array<Project>;
+  /** fetch data from the table: "skills" */
+  skills: Array<Skills>;
+  /** fetch data from the table: "skills" using primary key columns */
+  skills_by_pk?: Maybe<Skills>;
+  /** fetch data from the table in a streaming manner: "skills" */
+  skills_stream: Array<Skills>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch data from the table: "users" using primary key columns */
@@ -404,6 +514,24 @@ export type Subscription_RootProject_StreamArgs = {
   batch_size: Scalars["Int"]["input"];
   cursor: Array<InputMaybe<Project_Stream_Cursor_Input>>;
   where?: InputMaybe<Project_Bool_Exp>;
+};
+
+export type Subscription_RootSkillsArgs = {
+  distinct_on?: InputMaybe<Array<Skills_Select_Column>>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  order_by?: InputMaybe<Array<Skills_Order_By>>;
+  where?: InputMaybe<Skills_Bool_Exp>;
+};
+
+export type Subscription_RootSkills_By_PkArgs = {
+  id: Scalars["Int"]["input"];
+};
+
+export type Subscription_RootSkills_StreamArgs = {
+  batch_size: Scalars["Int"]["input"];
+  cursor: Array<InputMaybe<Skills_Stream_Cursor_Input>>;
+  where?: InputMaybe<Skills_Bool_Exp>;
 };
 
 export type Subscription_RootUsersArgs = {
@@ -497,13 +625,7 @@ export type GetAllProjectQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetAllProjectQuery = {
   __typename?: "query_root";
-  project: Array<{
-    __typename?: "project";
-    id: number;
-    keyword: Array<any>;
-    projectName: string;
-    price: string;
-  }>;
+  project: Array<{ __typename?: "project"; id: number; keyword: Array<any>; projectName: string; price: string }>;
 };
 
 export type GetDetailProjectQueryVariables = Exact<{
@@ -530,19 +652,20 @@ export type GetDetailProjectQuery = {
   }>;
 };
 
+export type GetSkillsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetSkillsQuery = {
+  __typename?: "query_root";
+  skills: Array<{ __typename?: "skills"; id: number; name?: string | null; type?: string | null }>;
+};
+
 export type GetUserQueryVariables = Exact<{
   id?: InputMaybe<Scalars["String"]["input"]>;
 }>;
 
 export type GetUserQuery = {
   __typename?: "query_root";
-  users: Array<{
-    __typename?: "users";
-    id: string;
-    name: string;
-    last_seen: any;
-    slackUrl?: string | null;
-  }>;
+  users: Array<{ __typename?: "users"; id: string; name: string; last_seen: any; slackUrl?: string | null }>;
 };
 
 export const GetAllProjectDocument = {
@@ -552,9 +675,7 @@ export const GetAllProjectDocument = {
       kind: "OperationDefinition",
       operation: "query",
       name: { kind: "Name", value: "GetAllProject" },
-      directives: [
-        { kind: "Directive", name: { kind: "Name", value: "cached" } },
-      ],
+      directives: [{ kind: "Directive", name: { kind: "Name", value: "cached" } }],
       selectionSet: {
         kind: "SelectionSet",
         selections: [
@@ -590,9 +711,7 @@ export const GetDetailProjectDocument = {
           type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
         },
       ],
-      directives: [
-        { kind: "Directive", name: { kind: "Name", value: "cached" } },
-      ],
+      directives: [{ kind: "Directive", name: { kind: "Name", value: "cached" } }],
       selectionSet: {
         kind: "SelectionSet",
         selections: [
@@ -615,10 +734,7 @@ export const GetDetailProjectDocument = {
                           {
                             kind: "ObjectField",
                             name: { kind: "Name", value: "_eq" },
-                            value: {
-                              kind: "Variable",
-                              name: { kind: "Name", value: "id" },
-                            },
+                            value: { kind: "Variable", name: { kind: "Name", value: "id" } },
                           },
                         ],
                       },
@@ -631,45 +747,18 @@ export const GetDetailProjectDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "businessContent" },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "contentBusiness" },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "developmentEnvironment" },
-                },
+                { kind: "Field", name: { kind: "Name", value: "businessContent" } },
+                { kind: "Field", name: { kind: "Name", value: "contentBusiness" } },
+                { kind: "Field", name: { kind: "Name", value: "developmentEnvironment" } },
                 { kind: "Field", name: { kind: "Name", value: "keyword" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "personnelSought" },
-                },
+                { kind: "Field", name: { kind: "Name", value: "personnelSought" } },
                 { kind: "Field", name: { kind: "Name", value: "price" } },
                 { kind: "Field", name: { kind: "Name", value: "projectName" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "recruitmentBackground" },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "recruitmentNumber" },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "requiredSkills" },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "welcomeSkills" },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "workingConditions" },
-                },
+                { kind: "Field", name: { kind: "Name", value: "recruitmentBackground" } },
+                { kind: "Field", name: { kind: "Name", value: "recruitmentNumber" } },
+                { kind: "Field", name: { kind: "Name", value: "requiredSkills" } },
+                { kind: "Field", name: { kind: "Name", value: "welcomeSkills" } },
+                { kind: "Field", name: { kind: "Name", value: "workingConditions" } },
               ],
             },
           },
@@ -677,10 +766,34 @@ export const GetDetailProjectDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<
-  GetDetailProjectQuery,
-  GetDetailProjectQueryVariables
->;
+} as unknown as DocumentNode<GetDetailProjectQuery, GetDetailProjectQueryVariables>;
+export const GetSkillsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "GetSkills" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "skills" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "type" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetSkillsQuery, GetSkillsQueryVariables>;
 export const GetUserDocument = {
   kind: "Document",
   definitions: [
@@ -717,10 +830,7 @@ export const GetUserDocument = {
                           {
                             kind: "ObjectField",
                             name: { kind: "Name", value: "_eq" },
-                            value: {
-                              kind: "Variable",
-                              name: { kind: "Name", value: "id" },
-                            },
+                            value: { kind: "Variable", name: { kind: "Name", value: "id" } },
                           },
                         ],
                       },

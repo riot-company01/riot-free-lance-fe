@@ -1,4 +1,7 @@
 import styled from "@emotion/styled";
+import type { GetSkillsQuery, GetSkillsQueryVariables } from "@/gql/graphql";
+import { GetSkillsDocument } from "@/gql/graphql";
+import { initializeApollo } from "@/lib/apollo/client";
 
 const category = [
   "おすすめ",
@@ -13,21 +16,22 @@ const category = [
   "単価",
 ];
 
-function Search() {
+function Search({ data }: { data: GetSkillsQuery }) {
+  console.log(data);
   return (
     <Wrapper>
       <Head1>ジャンル一覧</Head1>
       <FlexContainer>
-        {category.map((i) => {
-          return <FlexItem>{i}</FlexItem>;
+        {category.map((value, idx) => {
+          return <FlexItem key={idx}>{value}</FlexItem>;
         })}
       </FlexContainer>
 
       {/* TODO APIのデータに差し替え */}
-      {category.map((i) => {
+      {category.map((i, idx) => {
         return (
-          <Head2>
-            {i}
+          <Head2 key={idx}>
+            {/* {i}
             <Grid>
               {mock.map((i) => {
                 return (
@@ -38,7 +42,7 @@ function Search() {
                   </>
                 );
               })}
-            </Grid>
+            </Grid> */}
           </Head2>
         );
       })}
@@ -74,98 +78,25 @@ const Head2 = styled.div`
   font-size: 20px;
 `;
 
-const KeywordLabel = styled.div`
-  padding: 9px 16px;
-  display: flex;
-  border: 1px solid rgb(224, 224, 224);
-  font-size: 14px;
-  align-items: center;
-`;
+// const KeywordLabel = styled.div`
+//   padding: 9px 16px;
+//   display: flex;
+//   border: 1px solid rgb(224, 224, 224);
+//   font-size: 14px;
+//   align-items: center;
+// `;
 
-const Grid = styled.div`
-  display: grid;
-  padding-top: 8px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-`;
+// const Grid = styled.div`
+//   display: grid;
+//   padding-top: 8px;
+//   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+// `;
 
-const mock = [
-  {
-    title: "おすすめ",
-    words: [
-      "JavaScript",
-      "PHP",
-      "Ruby",
-      "Java",
-      "Python",
-      "Go",
-      "Kotlin",
-      "Swift",
-    ],
-  },
-  {
-    title: "おすすめ",
-    words: [
-      "JavaScript",
-      "PHP",
-      "Ruby",
-      "Java",
-      "Python",
-      "Go",
-      "Kotlin",
-      "Swift",
-    ],
-  },
-  {
-    title: "開発言語",
-    words: [
-      "JavaScript",
-      "PHP",
-      "Ruby",
-      "Java",
-      "Python",
-      "Go",
-      "Kotlin",
-      "Swift",
-      "Node.js",
-    ],
-  },
-  {
-    title: "フレームワーク/ライブラリ",
-    words: [
-      "Next.js",
-      "React.js",
-      "Ruby on Rails",
-      "NuxtJS",
-      "Vue.js",
-      "Laravel",
-      "Zend Framework",
-      "FuelPHP",
-    ],
-  },
-  {
-    title: "インフラ系",
-    words: [
-      "AWS",
-      "Linux",
-      "Azure",
-      "Oracle",
-      "GCP",
-      "Fargate",
-      "Linux",
-      "UNIX",
-    ],
-  },
-  {
-    title: "おすすめ",
-    words: [
-      "JavaScript",
-      "PHP",
-      "Ruby",
-      "Java",
-      "Python",
-      "Go",
-      "Kotlin",
-      "Swift",
-    ],
-  },
-];
+export async function getServerSideProps() {
+  const { data } = await initializeApollo().query<GetSkillsQuery, GetSkillsQueryVariables>({
+    query: GetSkillsDocument,
+  });
+  return {
+    props: { data },
+  };
+}
