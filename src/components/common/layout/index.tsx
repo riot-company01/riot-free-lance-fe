@@ -5,20 +5,33 @@ import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import NextLink from "next/link";
 
-export const Layout: React.FC = () => {
+type Props = {
+  name?: string | null;
+};
+
+export const Layout: React.FC<Props> = ({ name }) => {
   return (
     <Wrapper>
       <FlexContainer>
-        <NextLink href="#">
-          <List>
-            <Logo src="images/company-logo.png" alt="ライオット" />
-          </List>
-        </NextLink>
-
         <List>
+          <NextLink href="#">
+            <Logo src="images/company-logo.png" alt="ライオット" />
+          </NextLink>
+        </List>
+      </FlexContainer>
+
+      <FlexContainer>
+        <NextLink href="/api/auth/logout">
+          <List>{name}</List>
+        </NextLink>
+        <NextLink href="/api/auth/logout">
+          <LastList>ログアウト</LastList>
+        </NextLink>
+      </FlexContainer>
+
+      {/* <List>
           <CustomizedInputBase />
         </List>
-
         <NextLink href="#">
           <List>検索履歴</List>
         </NextLink>
@@ -45,7 +58,7 @@ export const Layout: React.FC = () => {
         <NextLink href="#">
           <LastList>新規登録</LastList>
         </NextLink>
-      </FlexContainer>
+      </FlexContainer> */}
     </Wrapper>
   );
 };
@@ -70,7 +83,7 @@ const LastList = styled.div`
 `;
 
 const Wrapper = styled.div`
-  position: fixed;
+  position: sticky;
   height: 78px;
   display: flex;
   top: 0;

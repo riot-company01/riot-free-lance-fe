@@ -2,8 +2,8 @@ import { SCREEN_SIZE } from "@/const/screen-size";
 import styled from "@emotion/styled";
 
 export const DivListItemWrapper = styled.div`
-    width: 100%;
-@media (min-width: 865px) {
+  width: 100%;
+  @media (min-width: 865px) {
     width: 35vw;
     min-width: 375px;
   }
@@ -60,9 +60,9 @@ export const SecContentWrap = styled.section`
 export const SecContent = styled.section`
   display: flex;
   justify-content: space-around;
-  aline-items:center;
+  aline-items: center;
   margin: 0 16px;
-  height:40px;
+  height: 40px;
 `;
 
 export const DivPriceWrapper = styled.div`
