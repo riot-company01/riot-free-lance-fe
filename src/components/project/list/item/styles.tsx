@@ -1,5 +1,5 @@
-import { SCREEN_SIZE } from "@/const/screen-size";
 import styled from "@emotion/styled";
+import { SCREEN_SIZE } from "@/const/screen-size";
 
 export const DivListItemWrapper = styled.div`
   width: 100%;

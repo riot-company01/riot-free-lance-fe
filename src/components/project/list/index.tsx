@@ -1,11 +1,13 @@
-import { useGetAllProjectQuery } from "@/lib/graphql/graphql";
+import { useQuery } from "@apollo/client";
 import React from "react";
 import { Loading } from "../../common/loading";
 import { ProjectContent } from "./item";
 import * as Styles from "./styles";
+import type { GetAllProjectQuery, GetAllProjectQueryVariables } from "@/lib/graphql/graphql";
+import { GetAllProjectDocument } from "@/lib/graphql/graphql";
 
 export const ProjectList = () => {
-  const { data, loading } = useGetAllProjectQuery();
+  const { data, loading } = useQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(GetAllProjectDocument);
 
   return (
     <>

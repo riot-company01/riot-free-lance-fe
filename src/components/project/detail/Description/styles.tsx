@@ -1,5 +1,5 @@
-import { SCREEN_SIZE } from "@/const/screen-size";
 import styled from "@emotion/styled";
+import { SCREEN_SIZE } from "@/const/screen-size";
 
 export const DivDescriptionWrpper = styled.div`
   margin: 32px 0 32px 0;

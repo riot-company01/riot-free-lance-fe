@@ -1,11 +1,12 @@
-import { PATHS } from "@/const/paths";
-import { useGetDetailProjectQuery } from "@/lib/graphql/graphql";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import { useRouter } from "next/router";
-import { KeywordTag } from "../common/keyword-tag";
 import { Button } from "../../common/button";
+import { KeywordTag } from "../common/keyword-tag";
 import { Description } from "./Description";
 import * as Styles from "./styles";
-import { useReactiveVar } from "@apollo/client";
+import { PATHS } from "@/const/paths";
+import type { GetDetailProjectQuery, GetDetailProjectQueryVariables } from "@/lib/graphql/graphql";
+import { GetDetailProjectDocument } from "@/lib/graphql/graphql";
 import { slackUrlVar } from "@/stores";
 
 type ProjectDetailType = {
@@ -14,7 +15,7 @@ type ProjectDetailType = {
 
 export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
   const { push } = useRouter();
-  const { data } = useGetDetailProjectQuery({
+  const { data } = useQuery<GetDetailProjectQuery, GetDetailProjectQueryVariables>(GetDetailProjectDocument, {
     variables: {
       id: Number(projectId),
     },
@@ -43,9 +44,7 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
   return (
     <Styles.DivWrapper>
-      <Styles.HeadProjectName>
-        {projectDetailData.projectName}
-      </Styles.HeadProjectName>
+      <Styles.HeadProjectName>{projectDetailData.projectName}</Styles.HeadProjectName>
       <Styles.DivKeywordWrapper>
         {projectDetailData.keyword.map((item, idx) => (
           <KeywordTag key={idx}>{item}</KeywordTag>
@@ -57,16 +56,11 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
           {projectDetailData.price === "応相談" ? (
             <Styles.PerBasicInfo>
-              <Styles.SpanPriceColor>
-                {projectDetailData.price}
-              </Styles.SpanPriceColor>
+              <Styles.SpanPriceColor>{projectDetailData.price}</Styles.SpanPriceColor>
             </Styles.PerBasicInfo>
           ) : (
             <Styles.PerBasicInfo>
-              〜
-              <Styles.SpanPriceColor>
-                {projectDetailData.price}
-              </Styles.SpanPriceColor>
+              〜<Styles.SpanPriceColor>{projectDetailData.price}</Styles.SpanPriceColor>
               万円/月
             </Styles.PerBasicInfo>
           )}
@@ -101,6 +95,7 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           borderRadius={28}
           onClick={copyUrlHandler}
         />
+<<<<<<< HEAD
         <Button
           text="案件一覧にもどる"
           borderColor={"#fa5a5a"}
@@ -108,6 +103,9 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
           borderRadius={28}
           onClick={onClickBackToList}
         />
+=======
+        <Button text="案件一覧にもどる" borderColor={"#fa5a5a"} backGroundCalor="#fa5a5a" onClick={onClickBackToList} />
+>>>>>>> riot-free-lance
       </Styles.DivButtonWrapper>
     </Styles.DivWrapper>
   );

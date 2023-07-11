@@ -1,12 +1,10 @@
-import { NextLink } from "@/components/common/next-link";
-import { PATHS } from "@/const/paths";
-import { GetAllProjectQuery } from "@/lib/graphql/graphql";
 import { faYenSign, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { KeywordTag } from "../../common/keyword-tag";
 
 import * as Styles from "./styles";
+import type { GetAllProjectQuery } from "@/lib/graphql/graphql";
 
 type Props = { item: GetAllProjectQuery["project"][0] };
 

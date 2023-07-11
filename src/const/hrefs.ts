@@ -1,4 +1,4 @@
-import { Paths, PathsMap } from "./paths";
+import type { Paths, PathsMap } from "./paths";
 
 export type ProjectMap = {
   list: {

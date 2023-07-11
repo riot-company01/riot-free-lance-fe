@@ -1,5 +1,5 @@
-import { GetDetailProjectQuery } from "@/lib/graphql/graphql";
 import * as Styles from "./styles";
+import type { GetDetailProjectQuery } from "@/lib/graphql/graphql";
 
 type Props = {
   projectDetailData: GetDetailProjectQuery["project"][0];
@@ -7,6 +7,7 @@ type Props = {
 
 export const Description = ({ projectDetailData }: Props) => {
   const detailDescription = Object.fromEntries(
+    // eslint-disable-next-line unused-imports/no-unused-vars
     Object.entries(projectDetailData).filter(([key, value]) => value !== null)
   );
 
