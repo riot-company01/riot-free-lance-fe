@@ -15,7 +15,7 @@ const category = [
 
 function Search() {
   return (
-    <div>
+    <Wrapper>
       <Head1>ジャンル一覧</Head1>
       <FlexContainer>
         {category.map((i) => {
@@ -42,11 +42,15 @@ function Search() {
           </Head2>
         );
       })}
-    </div>
+    </Wrapper>
   );
 }
 
 export default Search;
+
+const Wrapper = styled.div`
+  padding: 0 16px;
+`;
 
 const FlexContainer = styled.div`
   display: flex;
@@ -56,16 +60,18 @@ const FlexContainer = styled.div`
 
 const FlexItem = styled.div`
   padding: 0px 16px;
+  :first-of-type {
+    padding: 0px;
+    padding-right: 16px;
+  }
 `;
 
 const Head1 = styled.div`
   font-size: 24px;
-  padding-left: 16px;
 `;
 
 const Head2 = styled.div`
   font-size: 20px;
-  padding-left: 16px;
 `;
 
 const KeywordLabel = styled.div`
