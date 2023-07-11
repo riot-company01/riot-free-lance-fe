@@ -10,8 +10,7 @@ export const ButtonWrapper = styled.button<{
 }>`
   background-color: ${({ backGroundColor }) => backGroundColor};
   border: ${({ borderColor }) => borderColor && `2px solid ${borderColor}`};
-  border-radius: ${({ borderRadius }) =>
-    borderRadius ? `${borderRadius}px` : "0px"};
+  border-radius: ${({ borderRadius }) => (borderRadius ? `${borderRadius}px` : "0px")};
   height: ${({ height }) => height && `${height}px`};
   width: ${({ width }) => (width ? `${width}px` : "200px")};
   padding: 8px;
@@ -27,9 +26,11 @@ export const ButtonWrapper = styled.button<{
 
   &:hover {
     cursor: pointer;
+    text-align: center;
   }
 `;
 
 export const ParText = styled.p`
   color: white;
+  text-align: center;
 `;

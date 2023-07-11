@@ -25,4 +25,5 @@ export const ButtonWrapper = styled.button<{
 
 export const ParText = styled.p<{ isSelected: boolean }>`
   color: ${({ isSelected }) => (isSelected ? "white" : "#a1a1a1")};
+  text-align: center;
 `;
