@@ -72,6 +72,7 @@ export const CancelButtonWrapper = styled.button`
 
 export const ParCancelText = styled.p`
   color: "#a1a1a1";
+  text-align: center;
 `;
 
 export const KeepButtonWrapper = styled.button`
@@ -90,4 +91,5 @@ export const KeepButtonWrapper = styled.button`
 
 export const ParKeepText = styled.p`
   color: "white";
+  text-align: center;
 `;
