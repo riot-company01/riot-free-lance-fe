@@ -2,9 +2,8 @@ import { SCREEN_SIZE } from "@/const/screen-size";
 import styled from "@emotion/styled";
 
 export const DivListItemWrapper = styled.div`
-  width: 100%;
-  @media (min-width: 865px) {
-    width: 45%;
+  width: 35vw;
+@media (min-width: 865px) {
     min-width: 375px;
   }
   @media (min-width: ${SCREEN_SIZE.isPcSize}) {
@@ -25,7 +24,7 @@ export const DivContent = styled.div`
 
   @media (min-width: ${SCREEN_SIZE.isTabletSizeMin}) {
     margin: 8px;
-    height: 220px;
+    height: 225px;
   }
 `;
 
@@ -60,7 +59,9 @@ export const SecContentWrap = styled.section`
 export const SecContent = styled.section`
   display: flex;
   justify-content: space-around;
+  aline-items:center;
   margin: 0 16px;
+  height:40px;
 `;
 
 export const DivPriceWrapper = styled.div`

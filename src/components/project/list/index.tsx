@@ -18,7 +18,7 @@ export const ProjectList = () => {
         </Styles.SideBar> */}
           <Styles.DivWrapper>
             <Styles.ProjectListHeader>
-              <Styles.HeadListTitle>案件一覧</Styles.HeadListTitle>
+              {/* <Styles.HeadListTitle>案件一覧</Styles.HeadListTitle> */}
             </Styles.ProjectListHeader>
             <Styles.DivWrapperList>
               {data?.project.map((item) => (
