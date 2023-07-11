@@ -1,10 +1,9 @@
 import styled from "@emotion/styled";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-import Link from "@mui/material/Link";
-import NextLink from "next/link";
 import SearchIcon from "@mui/icons-material/Search";
+import IconButton from "@mui/material/IconButton";
+import InputBase from "@mui/material/InputBase";
+import Paper from "@mui/material/Paper";
+import NextLink from "next/link";
 
 export const Layout: React.FC = () => {
   return (
@@ -17,7 +16,7 @@ export const Layout: React.FC = () => {
         </NextLink>
 
         <List>
-          <CustomizedInputBase></CustomizedInputBase>
+          <CustomizedInputBase />
         </List>
 
         <NextLink href="#">
@@ -82,10 +81,7 @@ const Wrapper = styled.div`
 
 export function CustomizedInputBase() {
   return (
-    <Paper
-      component="form"
-      sx={{ display: "flex", alignItems: "center", width: 300 }}
-    >
+    <Paper component="form" sx={{ display: "flex", alignItems: "center", width: 300 }}>
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         placeholder="キーワード検索 例:React"

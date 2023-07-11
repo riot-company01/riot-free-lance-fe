@@ -1,8 +1,8 @@
-import { Href } from "@/const/hrefs";
 import type { LinkProps } from "next/dist/client/link";
 
 import _NextLink from "next/link";
 import type { ReactNode } from "react";
+import type { Href } from "@/const/hrefs";
 
 type NextLinkProps = {
   children: ReactNode;

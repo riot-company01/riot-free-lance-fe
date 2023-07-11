@@ -1,114 +1,90 @@
 /* eslint-disable */
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
-export type MakeEmpty<
-  T extends { [key: string]: unknown },
-  K extends keyof T
-> = { [_ in K]?: never };
-export type Incremental<T> =
-  | T
-  | {
-      [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never;
-    };
-const defaultOptions = {} as const;
-
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
-  _name: { input: any; output: any };
-  timestamptz: { input: any; output: any };
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  name: { input: any; output: any; }
+  timestamptz: { input: any; output: any; }
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars["Int"]["input"]>;
-  _gt?: InputMaybe<Scalars["Int"]["input"]>;
-  _gte?: InputMaybe<Scalars["Int"]["input"]>;
-  _in?: InputMaybe<Array<Scalars["Int"]["input"]>>;
-  _is_null?: InputMaybe<Scalars["Boolean"]["input"]>;
-  _lt?: InputMaybe<Scalars["Int"]["input"]>;
-  _lte?: InputMaybe<Scalars["Int"]["input"]>;
-  _neq?: InputMaybe<Scalars["Int"]["input"]>;
-  _nin?: InputMaybe<Array<Scalars["Int"]["input"]>>;
+  _eq?: InputMaybe<Scalars['Int']['input']>;
+  _gt?: InputMaybe<Scalars['Int']['input']>;
+  _gte?: InputMaybe<Scalars['Int']['input']>;
+  _in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['Int']['input']>;
+  _lte?: InputMaybe<Scalars['Int']['input']>;
+  _neq?: InputMaybe<Scalars['Int']['input']>;
+  _nin?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars["String"]["input"]>;
-  _gt?: InputMaybe<Scalars["String"]["input"]>;
-  _gte?: InputMaybe<Scalars["String"]["input"]>;
+  _eq?: InputMaybe<Scalars['String']['input']>;
+  _gt?: InputMaybe<Scalars['String']['input']>;
+  _gte?: InputMaybe<Scalars['String']['input']>;
   /** does the column match the given case-insensitive pattern */
-  _ilike?: InputMaybe<Scalars["String"]["input"]>;
-  _in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  _ilike?: InputMaybe<Scalars['String']['input']>;
+  _in?: InputMaybe<Array<Scalars['String']['input']>>;
   /** does the column match the given POSIX regular expression, case insensitive */
-  _iregex?: InputMaybe<Scalars["String"]["input"]>;
-  _is_null?: InputMaybe<Scalars["Boolean"]["input"]>;
+  _iregex?: InputMaybe<Scalars['String']['input']>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
   /** does the column match the given pattern */
-  _like?: InputMaybe<Scalars["String"]["input"]>;
-  _lt?: InputMaybe<Scalars["String"]["input"]>;
-  _lte?: InputMaybe<Scalars["String"]["input"]>;
-  _neq?: InputMaybe<Scalars["String"]["input"]>;
+  _like?: InputMaybe<Scalars['String']['input']>;
+  _lt?: InputMaybe<Scalars['String']['input']>;
+  _lte?: InputMaybe<Scalars['String']['input']>;
+  _neq?: InputMaybe<Scalars['String']['input']>;
   /** does the column NOT match the given case-insensitive pattern */
-  _nilike?: InputMaybe<Scalars["String"]["input"]>;
-  _nin?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  _nilike?: InputMaybe<Scalars['String']['input']>;
+  _nin?: InputMaybe<Array<Scalars['String']['input']>>;
   /** does the column NOT match the given POSIX regular expression, case insensitive */
-  _niregex?: InputMaybe<Scalars["String"]["input"]>;
+  _niregex?: InputMaybe<Scalars['String']['input']>;
   /** does the column NOT match the given pattern */
-  _nlike?: InputMaybe<Scalars["String"]["input"]>;
+  _nlike?: InputMaybe<Scalars['String']['input']>;
   /** does the column NOT match the given POSIX regular expression, case sensitive */
-  _nregex?: InputMaybe<Scalars["String"]["input"]>;
+  _nregex?: InputMaybe<Scalars['String']['input']>;
   /** does the column NOT match the given SQL regular expression */
-  _nsimilar?: InputMaybe<Scalars["String"]["input"]>;
+  _nsimilar?: InputMaybe<Scalars['String']['input']>;
   /** does the column match the given POSIX regular expression, case sensitive */
-  _regex?: InputMaybe<Scalars["String"]["input"]>;
+  _regex?: InputMaybe<Scalars['String']['input']>;
   /** does the column match the given SQL regular expression */
-  _similar?: InputMaybe<Scalars["String"]["input"]>;
-};
-
-/** Boolean expression to compare columns of type "_name". All fields are combined with logical 'AND'. */
-export type _Name_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars["_name"]["input"]>;
-  _gt?: InputMaybe<Scalars["_name"]["input"]>;
-  _gte?: InputMaybe<Scalars["_name"]["input"]>;
-  _in?: InputMaybe<Array<Scalars["_name"]["input"]>>;
-  _is_null?: InputMaybe<Scalars["Boolean"]["input"]>;
-  _lt?: InputMaybe<Scalars["_name"]["input"]>;
-  _lte?: InputMaybe<Scalars["_name"]["input"]>;
-  _neq?: InputMaybe<Scalars["_name"]["input"]>;
-  _nin?: InputMaybe<Array<Scalars["_name"]["input"]>>;
+  _similar?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** ordering argument of a cursor */
 export enum Cursor_Ordering {
   /** ascending ordering of the cursor */
-  Asc = "ASC",
+  Asc = 'ASC',
   /** descending ordering of the cursor */
-  Desc = "DESC",
+  Desc = 'DESC'
 }
 
 /** mutation root */
 export type Mutation_Root = {
-  __typename?: "mutation_root";
+  __typename?: 'mutation_root';
   /** insert data into the table: "project" */
   insert_project?: Maybe<Project_Mutation_Response>;
   /** insert a single row into the table: "project" */
   insert_project_one?: Maybe<Project>;
+  /** insert data into the table: "skills" */
+  insert_skills?: Maybe<Skills_Mutation_Response>;
+  /** insert a single row into the table: "skills" */
+  insert_skills_one?: Maybe<Skills>;
 };
+
 
 /** mutation root */
 export type Mutation_RootInsert_ProjectArgs = {
@@ -116,57 +92,89 @@ export type Mutation_RootInsert_ProjectArgs = {
   on_conflict?: InputMaybe<Project_On_Conflict>;
 };
 
+
 /** mutation root */
 export type Mutation_RootInsert_Project_OneArgs = {
   object: Project_Insert_Input;
   on_conflict?: InputMaybe<Project_On_Conflict>;
 };
 
+
+/** mutation root */
+export type Mutation_RootInsert_SkillsArgs = {
+  objects: Array<Skills_Insert_Input>;
+  on_conflict?: InputMaybe<Skills_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Skills_OneArgs = {
+  object: Skills_Insert_Input;
+  on_conflict?: InputMaybe<Skills_On_Conflict>;
+};
+
+/** Boolean expression to compare columns of type "name". All fields are combined with logical 'AND'. */
+export type Name_Array_Comparison_Exp = {
+  /** is the array contained in the given array value */
+  _contained_in?: InputMaybe<Array<Scalars['name']['input']>>;
+  /** does the array contain the given value */
+  _contains?: InputMaybe<Array<Scalars['name']['input']>>;
+  _eq?: InputMaybe<Array<Scalars['name']['input']>>;
+  _gt?: InputMaybe<Array<Scalars['name']['input']>>;
+  _gte?: InputMaybe<Array<Scalars['name']['input']>>;
+  _in?: InputMaybe<Array<Array<Scalars['name']['input']>>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Array<Scalars['name']['input']>>;
+  _lte?: InputMaybe<Array<Scalars['name']['input']>>;
+  _neq?: InputMaybe<Array<Scalars['name']['input']>>;
+  _nin?: InputMaybe<Array<Array<Scalars['name']['input']>>>;
+};
+
 /** column ordering options */
 export enum Order_By {
   /** in ascending order, nulls last */
-  Asc = "asc",
+  Asc = 'asc',
   /** in ascending order, nulls first */
-  AscNullsFirst = "asc_nulls_first",
+  AscNullsFirst = 'asc_nulls_first',
   /** in ascending order, nulls last */
-  AscNullsLast = "asc_nulls_last",
+  AscNullsLast = 'asc_nulls_last',
   /** in descending order, nulls first */
-  Desc = "desc",
+  Desc = 'desc',
   /** in descending order, nulls first */
-  DescNullsFirst = "desc_nulls_first",
+  DescNullsFirst = 'desc_nulls_first',
   /** in descending order, nulls last */
-  DescNullsLast = "desc_nulls_last",
+  DescNullsLast = 'desc_nulls_last'
 }
 
 /** 案件情報 */
 export type Project = {
-  __typename?: "project";
+  __typename?: 'project';
   /** 業務内容 */
-  businessContent?: Maybe<Scalars["String"]["output"]>;
+  businessContent?: Maybe<Scalars['String']['output']>;
   /** 事業内容 */
-  contentBusiness?: Maybe<Scalars["String"]["output"]>;
+  contentBusiness?: Maybe<Scalars['String']['output']>;
   /** 開発環境 */
-  developmentEnvironment?: Maybe<Scalars["String"]["output"]>;
-  id: Scalars["Int"]["output"];
+  developmentEnvironment?: Maybe<Scalars['String']['output']>;
+  id: Scalars['Int']['output'];
   /** キーワード */
-  keyword: Scalars["_name"]["output"];
+  keyword: Array<Scalars['name']['output']>;
   /** 求める人材 */
-  personnelSought: Scalars["String"]["output"];
+  personnelSought: Scalars['String']['output'];
   /** 単価 */
-  price: Scalars["String"]["output"];
+  price: Scalars['String']['output'];
   /** 案件名 */
-  projectName: Scalars["String"]["output"];
+  projectName: Scalars['String']['output'];
   /** 募集背景 */
-  recruitmentBackground?: Maybe<Scalars["String"]["output"]>;
+  recruitmentBackground?: Maybe<Scalars['String']['output']>;
   /** 募集人数 */
-  recruitmentNumber: Scalars["String"]["output"];
+  recruitmentNumber: Scalars['String']['output'];
   /** 必須スキル */
-  requiredSkills: Scalars["String"]["output"];
-  riotDetail?: Maybe<Scalars["String"]["output"]>;
+  requiredSkills: Scalars['String']['output'];
+  riotDetail?: Maybe<Scalars['String']['output']>;
   /** 歓迎スキル */
-  welcomeSkills: Scalars["String"]["output"];
+  welcomeSkills: Scalars['String']['output'];
   /** 稼働条件 */
-  workingConditions: Scalars["String"]["output"];
+  workingConditions: Scalars['String']['output'];
 };
 
 /** Boolean expression to filter rows from the table "project". All fields are combined with a logical 'AND'. */
@@ -178,7 +186,7 @@ export type Project_Bool_Exp = {
   contentBusiness?: InputMaybe<String_Comparison_Exp>;
   developmentEnvironment?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
-  keyword?: InputMaybe<_Name_Comparison_Exp>;
+  keyword?: InputMaybe<Name_Array_Comparison_Exp>;
   personnelSought?: InputMaybe<String_Comparison_Exp>;
   price?: InputMaybe<String_Comparison_Exp>;
   projectName?: InputMaybe<String_Comparison_Exp>;
@@ -193,43 +201,43 @@ export type Project_Bool_Exp = {
 /** unique or primary key constraints on table "project" */
 export enum Project_Constraint {
   /** unique or primary key constraint on columns "id" */
-  ProjectPkey = "project_pkey",
+  ProjectPkey = 'project_pkey'
 }
 
 /** input type for inserting data into table "project" */
 export type Project_Insert_Input = {
   /** 業務内容 */
-  businessContent?: InputMaybe<Scalars["String"]["input"]>;
+  businessContent?: InputMaybe<Scalars['String']['input']>;
   /** 事業内容 */
-  contentBusiness?: InputMaybe<Scalars["String"]["input"]>;
+  contentBusiness?: InputMaybe<Scalars['String']['input']>;
   /** 開発環境 */
-  developmentEnvironment?: InputMaybe<Scalars["String"]["input"]>;
-  id?: InputMaybe<Scalars["Int"]["input"]>;
+  developmentEnvironment?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** キーワード */
-  keyword?: InputMaybe<Scalars["_name"]["input"]>;
+  keyword?: InputMaybe<Array<Scalars['name']['input']>>;
   /** 求める人材 */
-  personnelSought?: InputMaybe<Scalars["String"]["input"]>;
+  personnelSought?: InputMaybe<Scalars['String']['input']>;
   /** 単価 */
-  price?: InputMaybe<Scalars["String"]["input"]>;
+  price?: InputMaybe<Scalars['String']['input']>;
   /** 案件名 */
-  projectName?: InputMaybe<Scalars["String"]["input"]>;
+  projectName?: InputMaybe<Scalars['String']['input']>;
   /** 募集背景 */
-  recruitmentBackground?: InputMaybe<Scalars["String"]["input"]>;
+  recruitmentBackground?: InputMaybe<Scalars['String']['input']>;
   /** 募集人数 */
-  recruitmentNumber?: InputMaybe<Scalars["String"]["input"]>;
+  recruitmentNumber?: InputMaybe<Scalars['String']['input']>;
   /** 必須スキル */
-  requiredSkills?: InputMaybe<Scalars["String"]["input"]>;
+  requiredSkills?: InputMaybe<Scalars['String']['input']>;
   /** 歓迎スキル */
-  welcomeSkills?: InputMaybe<Scalars["String"]["input"]>;
+  welcomeSkills?: InputMaybe<Scalars['String']['input']>;
   /** 稼働条件 */
-  workingConditions?: InputMaybe<Scalars["String"]["input"]>;
+  workingConditions?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** response of any mutation on the table "project" */
 export type Project_Mutation_Response = {
-  __typename?: "project_mutation_response";
+  __typename?: 'project_mutation_response';
   /** number of rows affected by the mutation */
-  affected_rows: Scalars["Int"]["output"];
+  affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<Project>;
 };
@@ -262,33 +270,33 @@ export type Project_Order_By = {
 /** select columns of table "project" */
 export enum Project_Select_Column {
   /** column name */
-  BusinessContent = "businessContent",
+  BusinessContent = 'businessContent',
   /** column name */
-  ContentBusiness = "contentBusiness",
+  ContentBusiness = 'contentBusiness',
   /** column name */
-  DevelopmentEnvironment = "developmentEnvironment",
+  DevelopmentEnvironment = 'developmentEnvironment',
   /** column name */
-  Id = "id",
+  Id = 'id',
   /** column name */
-  Keyword = "keyword",
+  Keyword = 'keyword',
   /** column name */
-  PersonnelSought = "personnelSought",
+  PersonnelSought = 'personnelSought',
   /** column name */
-  Price = "price",
+  Price = 'price',
   /** column name */
-  ProjectName = "projectName",
+  ProjectName = 'projectName',
   /** column name */
-  RecruitmentBackground = "recruitmentBackground",
+  RecruitmentBackground = 'recruitmentBackground',
   /** column name */
-  RecruitmentNumber = "recruitmentNumber",
+  RecruitmentNumber = 'recruitmentNumber',
   /** column name */
-  RequiredSkills = "requiredSkills",
+  RequiredSkills = 'requiredSkills',
   /** column name */
-  RiotDetail = "riotDetail",
+  RiotDetail = 'riotDetail',
   /** column name */
-  WelcomeSkills = "welcomeSkills",
+  WelcomeSkills = 'welcomeSkills',
   /** column name */
-  WorkingConditions = "workingConditions",
+  WorkingConditions = 'workingConditions'
 }
 
 /** Streaming cursor of the table "project" */
@@ -302,83 +310,196 @@ export type Project_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Project_Stream_Cursor_Value_Input = {
   /** 業務内容 */
-  businessContent?: InputMaybe<Scalars["String"]["input"]>;
+  businessContent?: InputMaybe<Scalars['String']['input']>;
   /** 事業内容 */
-  contentBusiness?: InputMaybe<Scalars["String"]["input"]>;
+  contentBusiness?: InputMaybe<Scalars['String']['input']>;
   /** 開発環境 */
-  developmentEnvironment?: InputMaybe<Scalars["String"]["input"]>;
-  id?: InputMaybe<Scalars["Int"]["input"]>;
+  developmentEnvironment?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** キーワード */
-  keyword?: InputMaybe<Scalars["_name"]["input"]>;
+  keyword?: InputMaybe<Array<Scalars['name']['input']>>;
   /** 求める人材 */
-  personnelSought?: InputMaybe<Scalars["String"]["input"]>;
+  personnelSought?: InputMaybe<Scalars['String']['input']>;
   /** 単価 */
-  price?: InputMaybe<Scalars["String"]["input"]>;
+  price?: InputMaybe<Scalars['String']['input']>;
   /** 案件名 */
-  projectName?: InputMaybe<Scalars["String"]["input"]>;
+  projectName?: InputMaybe<Scalars['String']['input']>;
   /** 募集背景 */
-  recruitmentBackground?: InputMaybe<Scalars["String"]["input"]>;
+  recruitmentBackground?: InputMaybe<Scalars['String']['input']>;
   /** 募集人数 */
-  recruitmentNumber?: InputMaybe<Scalars["String"]["input"]>;
+  recruitmentNumber?: InputMaybe<Scalars['String']['input']>;
   /** 必須スキル */
-  requiredSkills?: InputMaybe<Scalars["String"]["input"]>;
-  riotDetail?: InputMaybe<Scalars["String"]["input"]>;
+  requiredSkills?: InputMaybe<Scalars['String']['input']>;
+  riotDetail?: InputMaybe<Scalars['String']['input']>;
   /** 歓迎スキル */
-  welcomeSkills?: InputMaybe<Scalars["String"]["input"]>;
+  welcomeSkills?: InputMaybe<Scalars['String']['input']>;
   /** 稼働条件 */
-  workingConditions?: InputMaybe<Scalars["String"]["input"]>;
+  workingConditions?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** placeholder for update columns of table "project" (current role has no relevant permissions) */
 export enum Project_Update_Column {
   /** placeholder (do not use) */
-  Placeholder = "_PLACEHOLDER",
+  Placeholder = '_PLACEHOLDER'
 }
 
 export type Query_Root = {
-  __typename?: "query_root";
+  __typename?: 'query_root';
   /** fetch data from the table: "project" */
   project: Array<Project>;
   /** fetch data from the table: "project" using primary key columns */
   project_by_pk?: Maybe<Project>;
+  /** fetch data from the table: "skills" */
+  skills: Array<Skills>;
+  /** fetch data from the table: "skills" using primary key columns */
+  skills_by_pk?: Maybe<Skills>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
 };
 
+
 export type Query_RootProjectArgs = {
   distinct_on?: InputMaybe<Array<Project_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Project_Order_By>>;
   where?: InputMaybe<Project_Bool_Exp>;
 };
 
+
 export type Query_RootProject_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
+
+
+export type Query_RootSkillsArgs = {
+  distinct_on?: InputMaybe<Array<Skills_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Skills_Order_By>>;
+  where?: InputMaybe<Skills_Bool_Exp>;
+};
+
+
+export type Query_RootSkills_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
 
 export type Query_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Users_Order_By>>;
   where?: InputMaybe<Users_Bool_Exp>;
 };
 
+
 export type Query_RootUsers_By_PkArgs = {
-  id: Scalars["String"]["input"];
+  id: Scalars['String']['input'];
 };
 
+/** スキル */
+export type Skills = {
+  __typename?: 'skills';
+  id: Scalars['Int']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "skills". All fields are combined with a logical 'AND'. */
+export type Skills_Bool_Exp = {
+  _and?: InputMaybe<Array<Skills_Bool_Exp>>;
+  _not?: InputMaybe<Skills_Bool_Exp>;
+  _or?: InputMaybe<Array<Skills_Bool_Exp>>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "skills" */
+export enum Skills_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  SkillsPkey = 'skills_pkey'
+}
+
+/** input type for inserting data into table "skills" */
+export type Skills_Insert_Input = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** response of any mutation on the table "skills" */
+export type Skills_Mutation_Response = {
+  __typename?: 'skills_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Skills>;
+};
+
+/** on_conflict condition type for table "skills" */
+export type Skills_On_Conflict = {
+  constraint: Skills_Constraint;
+  update_columns?: Array<Skills_Update_Column>;
+  where?: InputMaybe<Skills_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "skills". */
+export type Skills_Order_By = {
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "skills" */
+export enum Skills_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  Type = 'type'
+}
+
+/** Streaming cursor of the table "skills" */
+export type Skills_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Skills_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Skills_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** placeholder for update columns of table "skills" (current role has no relevant permissions) */
+export enum Skills_Update_Column {
+  /** placeholder (do not use) */
+  Placeholder = '_PLACEHOLDER'
+}
+
 export type Subscription_Root = {
-  __typename?: "subscription_root";
+  __typename?: 'subscription_root';
   /** fetch data from the table: "project" */
   project: Array<Project>;
   /** fetch data from the table: "project" using primary key columns */
   project_by_pk?: Maybe<Project>;
   /** fetch data from the table in a streaming manner: "project" */
   project_stream: Array<Project>;
+  /** fetch data from the table: "skills" */
+  skills: Array<Skills>;
+  /** fetch data from the table: "skills" using primary key columns */
+  skills_by_pk?: Maybe<Skills>;
+  /** fetch data from the table in a streaming manner: "skills" */
+  skills_stream: Array<Skills>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch data from the table: "users" using primary key columns */
@@ -387,62 +508,89 @@ export type Subscription_Root = {
   users_stream: Array<Users>;
 };
 
+
 export type Subscription_RootProjectArgs = {
   distinct_on?: InputMaybe<Array<Project_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Project_Order_By>>;
   where?: InputMaybe<Project_Bool_Exp>;
 };
 
+
 export type Subscription_RootProject_By_PkArgs = {
-  id: Scalars["Int"]["input"];
+  id: Scalars['Int']['input'];
 };
 
+
 export type Subscription_RootProject_StreamArgs = {
-  batch_size: Scalars["Int"]["input"];
+  batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Project_Stream_Cursor_Input>>;
   where?: InputMaybe<Project_Bool_Exp>;
 };
 
+
+export type Subscription_RootSkillsArgs = {
+  distinct_on?: InputMaybe<Array<Skills_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Skills_Order_By>>;
+  where?: InputMaybe<Skills_Bool_Exp>;
+};
+
+
+export type Subscription_RootSkills_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootSkills_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Skills_Stream_Cursor_Input>>;
+  where?: InputMaybe<Skills_Bool_Exp>;
+};
+
+
 export type Subscription_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
-  limit?: InputMaybe<Scalars["Int"]["input"]>;
-  offset?: InputMaybe<Scalars["Int"]["input"]>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Users_Order_By>>;
   where?: InputMaybe<Users_Bool_Exp>;
 };
 
+
 export type Subscription_RootUsers_By_PkArgs = {
-  id: Scalars["String"]["input"];
+  id: Scalars['String']['input'];
 };
 
+
 export type Subscription_RootUsers_StreamArgs = {
-  batch_size: Scalars["Int"]["input"];
+  batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Users_Stream_Cursor_Input>>;
   where?: InputMaybe<Users_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars["timestamptz"]["input"]>;
-  _gt?: InputMaybe<Scalars["timestamptz"]["input"]>;
-  _gte?: InputMaybe<Scalars["timestamptz"]["input"]>;
-  _in?: InputMaybe<Array<Scalars["timestamptz"]["input"]>>;
-  _is_null?: InputMaybe<Scalars["Boolean"]["input"]>;
-  _lt?: InputMaybe<Scalars["timestamptz"]["input"]>;
-  _lte?: InputMaybe<Scalars["timestamptz"]["input"]>;
-  _neq?: InputMaybe<Scalars["timestamptz"]["input"]>;
-  _nin?: InputMaybe<Array<Scalars["timestamptz"]["input"]>>;
+  _eq?: InputMaybe<Scalars['timestamptz']['input']>;
+  _gt?: InputMaybe<Scalars['timestamptz']['input']>;
+  _gte?: InputMaybe<Scalars['timestamptz']['input']>;
+  _in?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['timestamptz']['input']>;
+  _lte?: InputMaybe<Scalars['timestamptz']['input']>;
+  _neq?: InputMaybe<Scalars['timestamptz']['input']>;
+  _nin?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
 };
 
 /** columns and relationships of "users" */
 export type Users = {
-  __typename?: "users";
-  id: Scalars["String"]["output"];
-  last_seen: Scalars["timestamptz"]["output"];
-  name: Scalars["String"]["output"];
-  slackUrl?: Maybe<Scalars["String"]["output"]>;
+  __typename?: 'users';
+  id: Scalars['String']['output'];
+  last_seen: Scalars['timestamptz']['output'];
+  name: Scalars['String']['output'];
+  slackUrl?: Maybe<Scalars['String']['output']>;
 };
 
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
@@ -467,13 +615,13 @@ export type Users_Order_By = {
 /** select columns of table "users" */
 export enum Users_Select_Column {
   /** column name */
-  Id = "id",
+  Id = 'id',
   /** column name */
-  LastSeen = "last_seen",
+  LastSeen = 'last_seen',
   /** column name */
-  Name = "name",
+  Name = 'name',
   /** column name */
-  SlackUrl = "slackUrl",
+  SlackUrl = 'slackUrl'
 }
 
 /** Streaming cursor of the table "users" */
@@ -486,242 +634,38 @@ export type Users_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Users_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars["String"]["input"]>;
-  last_seen?: InputMaybe<Scalars["timestamptz"]["input"]>;
-  name?: InputMaybe<Scalars["String"]["input"]>;
-  slackUrl?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  last_seen?: InputMaybe<Scalars['timestamptz']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  slackUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type GetAllProjectQueryVariables = Exact<{ [key: string]: never }>;
+export type GetAllProjectQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAllProjectQuery = {
-  __typename?: "query_root";
-  project: Array<{
-    __typename?: "project";
-    id: number;
-    keyword: any;
-    projectName: string;
-    price: string;
-  }>;
-};
+
+export type GetAllProjectQuery = { __typename?: 'query_root', project: Array<{ __typename?: 'project', id: number, keyword: Array<any>, projectName: string, price: string }> };
 
 export type GetDetailProjectQueryVariables = Exact<{
-  id?: InputMaybe<Scalars["Int"]["input"]>;
+  id?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
-export type GetDetailProjectQuery = {
-  __typename?: "query_root";
-  project: Array<{
-    __typename?: "project";
-    id: number;
-    businessContent?: string | null;
-    contentBusiness?: string | null;
-    developmentEnvironment?: string | null;
-    keyword: string[];
-    personnelSought: string;
-    price: string;
-    projectName: string;
-    recruitmentBackground?: string | null;
-    recruitmentNumber: string;
-    requiredSkills: string;
-    welcomeSkills: string;
-    workingConditions: string;
-  }>;
-};
+
+export type GetDetailProjectQuery = { __typename?: 'query_root', project: Array<{ __typename?: 'project', id: number, businessContent?: string | null, contentBusiness?: string | null, developmentEnvironment?: string | null, keyword: Array<any>, personnelSought: string, price: string, projectName: string, recruitmentBackground?: string | null, recruitmentNumber: string, requiredSkills: string, welcomeSkills: string, workingConditions: string }> };
+
+export type GetSkillsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSkillsQuery = { __typename?: 'query_root', skills: Array<{ __typename?: 'skills', id: number, name?: string | null, type?: string | null }> };
 
 export type GetUserQueryVariables = Exact<{
-  id?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-export type GetUserQuery = {
-  __typename?: "query_root";
-  users: Array<{
-    __typename?: "users";
-    id: string;
-    name: string;
-    last_seen: any;
-    slackUrl?: string | null;
-  }>;
-};
 
-export const GetAllProjectDocument = gql`
-  query GetAllProject @cached {
-    project {
-      id
-      keyword
-      projectName
-      price
-    }
-  }
-`;
+export type GetUserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, name: string, last_seen: any, slackUrl?: string | null }> };
 
-/**
- * __useGetAllProjectQuery__
- *
- * To run a query within a React component, call `useGetAllProjectQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllProjectQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetAllProjectQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetAllProjectQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetAllProjectQuery,
-    GetAllProjectQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(
-    GetAllProjectDocument,
-    options
-  );
-}
-export function useGetAllProjectLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetAllProjectQuery,
-    GetAllProjectQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetAllProjectQuery, GetAllProjectQueryVariables>(
-    GetAllProjectDocument,
-    options
-  );
-}
-export type GetAllProjectQueryHookResult = ReturnType<
-  typeof useGetAllProjectQuery
->;
-export type GetAllProjectLazyQueryHookResult = ReturnType<
-  typeof useGetAllProjectLazyQuery
->;
-export type GetAllProjectQueryResult = Apollo.QueryResult<
-  GetAllProjectQuery,
-  GetAllProjectQueryVariables
->;
-export const GetDetailProjectDocument = gql`
-  query GetDetailProject($id: Int) @cached {
-    project(where: { id: { _eq: $id } }) {
-      id
-      businessContent
-      contentBusiness
-      developmentEnvironment
-      keyword
-      personnelSought
-      price
-      projectName
-      recruitmentBackground
-      recruitmentNumber
-      requiredSkills
-      welcomeSkills
-      workingConditions
-    }
-  }
-`;
 
-/**
- * __useGetDetailProjectQuery__
- *
- * To run a query within a React component, call `useGetDetailProjectQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetDetailProjectQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetDetailProjectQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetDetailProjectQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetDetailProjectQuery,
-    GetDetailProjectQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetDetailProjectQuery, GetDetailProjectQueryVariables>(
-    GetDetailProjectDocument,
-    options
-  );
-}
-export function useGetDetailProjectLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetDetailProjectQuery,
-    GetDetailProjectQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetDetailProjectQuery,
-    GetDetailProjectQueryVariables
-  >(GetDetailProjectDocument, options);
-}
-export type GetDetailProjectQueryHookResult = ReturnType<
-  typeof useGetDetailProjectQuery
->;
-export type GetDetailProjectLazyQueryHookResult = ReturnType<
-  typeof useGetDetailProjectLazyQuery
->;
-export type GetDetailProjectQueryResult = Apollo.QueryResult<
-  GetDetailProjectQuery,
-  GetDetailProjectQueryVariables
->;
-export const GetUserDocument = gql`
-  query GetUser($id: String) {
-    users(where: { id: { _eq: $id } }) {
-      id
-      name
-      last_seen
-      slackUrl
-    }
-  }
-`;
-
-/**
- * __useGetUserQuery__
- *
- * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGetUserQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(
-    GetUserDocument,
-    options
-  );
-}
-export function useGetUserLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(
-    GetUserDocument,
-    options
-  );
-}
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserQueryResult = Apollo.QueryResult<
-  GetUserQuery,
-  GetUserQueryVariables
->;
+export const GetAllProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllProject"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"keyword"}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllProjectQuery, GetAllProjectQueryVariables>;
+export const GetDetailProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDetailProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"businessContent"}},{"kind":"Field","name":{"kind":"Name","value":"contentBusiness"}},{"kind":"Field","name":{"kind":"Name","value":"developmentEnvironment"}},{"kind":"Field","name":{"kind":"Name","value":"keyword"}},{"kind":"Field","name":{"kind":"Name","value":"personnelSought"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentBackground"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNumber"}},{"kind":"Field","name":{"kind":"Name","value":"requiredSkills"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeSkills"}},{"kind":"Field","name":{"kind":"Name","value":"workingConditions"}}]}}]}}]} as unknown as DocumentNode<GetDetailProjectQuery, GetDetailProjectQueryVariables>;
+export const GetSkillsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSkills"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skills"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]} as unknown as DocumentNode<GetSkillsQuery, GetSkillsQueryVariables>;
+export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"last_seen"}},{"kind":"Field","name":{"kind":"Name","value":"slackUrl"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;

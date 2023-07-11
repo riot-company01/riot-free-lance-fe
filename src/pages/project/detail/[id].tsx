@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { ProjectDetail } from "@/components/project/detail";
 
 export default function ProjectDetailPage() {
