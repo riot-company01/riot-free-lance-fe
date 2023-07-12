@@ -3,8 +3,8 @@ import { ApolloProvider } from "@apollo/client";
 import { initializeApollo } from "@/lib/apollo/client";
 import { Global } from "@emotion/react";
 import { GLOBAL_STYLE } from "@/styles/global-style";
-import { UserProvider } from '@auth0/nextjs-auth0/client';
-
+import { UserProvider, useUser } from "@auth0/nextjs-auth0/client";
+import { Layout } from "@/components/common/layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const client = initializeApollo();
@@ -12,10 +12,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <UserProvider user={user}>
-     <ApolloProvider client={client}>
-       <Global styles={GLOBAL_STYLE} />
-       <Component {...pageProps} />
-     </ApolloProvider>
+      <ApolloProvider client={client}>
+        <Global styles={GLOBAL_STYLE} />
+        <Layout />
+        <Component {...pageProps} />
+      </ApolloProvider>
     </UserProvider>
   );
 }
