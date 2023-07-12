@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { Tag } from "../common/tag";
 import { CurrentSituation } from "./current-situation";
 import { useBasicInfo } from "./hooks/use-basic-info";
-import SelectPrefecture from "./select-prefecture";
 import * as Styles from "./styles";
 import { Input } from "@/components/common/input";
+import { SelectPrefecture } from "@/components/user/edit/basic-info/select-prefecture";
 import { PATHS } from "@/const/paths";
 
 export const EditBasicInfo = () => {

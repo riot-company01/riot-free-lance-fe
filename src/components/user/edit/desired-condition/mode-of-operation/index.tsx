@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { PROFESSIONAL_EXPERIENCE } from "./const";
+import { MODE_OF_OPERATION } from "./const";
 
 import * as Styles from "./styles";
 
-export const ProfessionalExperience = () => {
+export const ModeOfOperation = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleButtonClick = (option: string) => {
@@ -16,11 +16,11 @@ export const ProfessionalExperience = () => {
 
   return (
     <>
-      {PROFESSIONAL_EXPERIENCE.map((item, idx) => {
+      {MODE_OF_OPERATION.map((item, idx) => {
         return (
           <Styles.ButtonWrapper
             key={idx}
-            name="selectedProfessionalExperienceButton"
+            name="selectedModeOfOperationButton"
             onClick={() => handleButtonClick(item)}
             isSelected={selectedOptions.includes(item)}
           >

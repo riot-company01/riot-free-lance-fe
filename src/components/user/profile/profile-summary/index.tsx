@@ -1,7 +1,5 @@
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import EditIcon from "@mui/icons-material/Edit";
 import * as Styles from "./styles";
-
 import { FileUpload } from "@/components/user/profile/common/file-upload";
 
 export const ProfileSummary = () => {
@@ -13,9 +11,7 @@ export const ProfileSummary = () => {
         <Styles.DivHeadFlex>
           <Styles.HeadName>名前</Styles.HeadName>
           <Styles.AnchorItem href={"/user/edit"}>
-            <Styles.SpanIcon>
-              <FontAwesomeIcon icon={faPen} size={"1x"} style={{ color: "#20b2aa" }} />
-            </Styles.SpanIcon>
+            <EditIcon style={{ fontSize: 16, color: "#20b2aa", marginBottom: "5px" }} />
             編集
           </Styles.AnchorItem>
         </Styles.DivHeadFlex>
@@ -25,9 +21,7 @@ export const ProfileSummary = () => {
         </Styles.DivItem>
         <Styles.DivAddSkill>
           <Styles.AnchorItem href="/user/edit-skill">
-            <Styles.SpanIcon>
-              <FontAwesomeIcon icon={faPen} size={"1x"} style={{ color: "#20b2aa" }} />
-            </Styles.SpanIcon>
+            <EditIcon style={{ fontSize: 16, color: "#20b2aa", marginBottom: "5px" }} />
             開発経験スキルを追加
           </Styles.AnchorItem>
         </Styles.DivAddSkill>
@@ -37,7 +31,7 @@ export const ProfileSummary = () => {
         </Styles.DivTitle>
         <Styles.DivWrpperSituation>
           <Styles.DivItem>
-            <Styles.AnchorItem href="">気になる案件</Styles.AnchorItem>
+            <Styles.AnchorItem href="/user/favorite/">気になる案件</Styles.AnchorItem>
           </Styles.DivItem>
           <Styles.DivItem>
             <Styles.AnchorItem href="">応募済み案件</Styles.AnchorItem>

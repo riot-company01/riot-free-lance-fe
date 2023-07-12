@@ -29,6 +29,7 @@ export const HeadName = styled.h3`
 export const DivAddSkill = styled.div`
   display: flex;
   justify-content: end;
+  margin: 8px 0;
 `;
 
 export const SpanIcon = styled.span`

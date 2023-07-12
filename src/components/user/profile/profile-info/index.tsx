@@ -1,5 +1,4 @@
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import EditIcon from "@mui/icons-material/Edit";
 import * as Styles from "./styles";
 
 export const ProfileInfo = () => {
@@ -9,13 +8,7 @@ export const ProfileInfo = () => {
         <Styles.DivHeadItem>
           <Styles.HeadName>基本情報</Styles.HeadName>
           <Styles.AnchorItem href={"/user/edit"}>
-            <Styles.SpanIcon>
-              <FontAwesomeIcon
-                icon={faPen}
-                size={"1x"}
-                style={{ color: "#20b2aa" }}
-              />
-            </Styles.SpanIcon>
+            <EditIcon style={{ fontSize: 16, color: "#20b2aa", margin: "0 2px 5px 0" }} />
             編集
           </Styles.AnchorItem>
         </Styles.DivHeadItem>
@@ -57,13 +50,7 @@ export const ProfileInfo = () => {
         <Styles.DivHeadItem>
           <Styles.HeadName>開発スキル・経験</Styles.HeadName>
           <Styles.AnchorItem href="/user/edit-skill">
-            <Styles.SpanIcon>
-              <FontAwesomeIcon
-                icon={faPen}
-                size={"1x"}
-                style={{ color: "#20b2aa" }}
-              />
-            </Styles.SpanIcon>
+            <EditIcon style={{ fontSize: 16, color: "#20b2aa", marginBottom: "5px" }} />
             編集
           </Styles.AnchorItem>
         </Styles.DivHeadItem>
@@ -97,23 +84,15 @@ export const ProfileInfo = () => {
         </Styles.DivItem>
         <Styles.DivItem>
           <Styles.HeadTitle>スキルシート</Styles.HeadTitle>
-          <Styles.PerItem>
-            ここにスキルシートのダウンロードボタンが必要
-          </Styles.PerItem>
+          <Styles.PerItem>ここにスキルシートのダウンロードボタンが必要</Styles.PerItem>
         </Styles.DivItem>
       </div>
       <Styles.Hr />
       <div>
         <Styles.DivHeadItem>
           <Styles.HeadName>希望条件</Styles.HeadName>
-          <Styles.AnchorItem href="">
-            <Styles.SpanIcon>
-              <FontAwesomeIcon
-                icon={faPen}
-                size={"1x"}
-                style={{ color: "#20b2aa" }}
-              />
-            </Styles.SpanIcon>
+          <Styles.AnchorItem href="/user/edit-desired-condition/">
+            <EditIcon style={{ fontSize: 16, color: "#20b2aa", marginBottom: "5px" }} />
             編集
           </Styles.AnchorItem>
         </Styles.DivHeadItem>

@@ -18,11 +18,13 @@ export const GLOBAL_STYLE = css`
   #__next {
     padding-top: 78px;
   }
-
+  :is(input, textarea, button, select, a):focus-visible {
+    outline: 2px solid #20b2aa;
+    outline-offset: -2px;
+  }
   html,
   body {
-    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo,
-      sans-serif;
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     line-height: 1.6;
     overscroll-behavior: none;
     font-weight: 300;

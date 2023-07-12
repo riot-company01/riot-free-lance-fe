@@ -19,10 +19,6 @@ export const HeadName = styled.h3`
   font-weight: bold;
 `;
 
-export const SpanIcon = styled.span`
-  margin: 8px;
-`;
-
 export const AnchorItem = styled.a`
   color: #20b2aa;
 `;

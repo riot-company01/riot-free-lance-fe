@@ -9,6 +9,7 @@ export const SelectPrefecture = () => {
   const selectPrefecture = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedPrefecture(e.target.value);
   };
+
   return (
     <Styles.SelectPrefecture value={selectedPrefecture} onChange={selectPrefecture}>
       <option value="">選択してください</option>

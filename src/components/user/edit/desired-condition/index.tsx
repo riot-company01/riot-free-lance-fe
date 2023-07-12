@@ -2,9 +2,13 @@ import { useRouter } from "next/router";
 import * as Styles from "./styles";
 import { Tag } from "@/components/user/edit/common/tag";
 import { AmountOfMoney } from "@/components/user/edit/desired-condition/amount-of-money";
+import { AvailableDays } from "@/components/user/edit/desired-condition/available-days";
 import { CommutingTime } from "@/components/user/edit/desired-condition/commuting-time";
 import { Industry } from "@/components/user/edit/desired-condition/industry";
+import { ModeOfOperation } from "@/components/user/edit/desired-condition/mode-of-operation";
+import { OperationStartDate } from "@/components/user/edit/desired-condition/operation-start-date";
 import { ProfessionalExperience } from "@/components/user/edit/desired-condition/professional-experience";
+import { SelectPrefecture } from "@/components/user/edit/desired-condition/select-prefecture";
 import { PATHS } from "@/const/paths";
 
 export const DesiredCondition = () => {
@@ -47,7 +51,7 @@ export const DesiredCondition = () => {
             <h3>勤務希望地</h3>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          {/* <SelectPrefecture value={selectedPrefecture} onChange={selectPrefecture} /> */}
+          <SelectPrefecture />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
@@ -88,7 +92,27 @@ export const DesiredCondition = () => {
             <h3>希望稼働形態</h3>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <Industry />
+          <ModeOfOperation />
+        </Styles.DivItemWrapper>
+      </Styles.DivItem>
+
+      <Styles.DivItem>
+        <Styles.DivItemWrapper>
+          <Styles.DivTitleWrapper>
+            <h3>可能稼働日数/週</h3>
+            <Tag isRequired={false} />
+          </Styles.DivTitleWrapper>
+          <AvailableDays />
+        </Styles.DivItemWrapper>
+      </Styles.DivItem>
+
+      <Styles.DivItem>
+        <Styles.DivItemWrapper>
+          <Styles.DivTitleWrapper>
+            <h3>案件開始可能時期</h3>
+            <Tag isRequired={false} />
+          </Styles.DivTitleWrapper>
+          <OperationStartDate />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 

@@ -20,7 +20,7 @@ export const Industry = () => {
         return (
           <Styles.ButtonWrapper
             key={idx}
-            name="selectedFullTimeEmployeeButton"
+            name="selectedIndustryButton"
             onClick={() => handleButtonClick(item)}
             isSelected={selectedOptions.includes(item)}
           >
