@@ -43,9 +43,7 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
   return (
     <Styles.DivWrapper>
-      <Styles.HeadProjectName>
-        {projectDetailData.projectName}
-      </Styles.HeadProjectName>
+      <Styles.HeadProjectName>{projectDetailData.projectName}</Styles.HeadProjectName>
       <Styles.DivKeywordWrapper>
         {projectDetailData.keyword.map((item, idx) => (
           <KeywordTag key={idx}>{item}</KeywordTag>
@@ -57,16 +55,11 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
           {projectDetailData.price === "応相談" ? (
             <Styles.PerBasicInfo>
-              <Styles.SpanPriceColor>
-                {projectDetailData.price}
-              </Styles.SpanPriceColor>
+              <Styles.SpanPriceColor>{projectDetailData.price}</Styles.SpanPriceColor>
             </Styles.PerBasicInfo>
           ) : (
             <Styles.PerBasicInfo>
-              〜
-              <Styles.SpanPriceColor>
-                {projectDetailData.price}
-              </Styles.SpanPriceColor>
+              〜<Styles.SpanPriceColor>{projectDetailData.price}</Styles.SpanPriceColor>
               万円/月
             </Styles.PerBasicInfo>
           )}
@@ -88,23 +81,12 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
       <Styles.DivButtonWrapper>
         <Button
-          text="この案件に応募する"
-          borderColor={"#5a85fa"}
-          backGroundCalor="#5a85fa"
-          onClick={onClickApplication}
-        />
-        <Button
           text="案件のURLをコピーする"
           borderColor={"#949793"}
           backGroundCalor="#949793"
           onClick={copyUrlHandler}
         />
-        <Button
-          text="案件一覧にもどる"
-          borderColor={"#fa5a5a"}
-          backGroundCalor="#fa5a5a"
-          onClick={onClickBackToList}
-        />
+        <Button text="案件一覧にもどる" borderColor={"#fa5a5a"} backGroundCalor="#fa5a5a" onClick={onClickBackToList} />
       </Styles.DivButtonWrapper>
     </Styles.DivWrapper>
   );
