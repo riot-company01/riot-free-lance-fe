@@ -48,7 +48,7 @@ export const OperationStartDate = () => {
   const selectMonth = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedMonth(e.target.value);
   };
-  console.log(selectedOption);
+
   return (
     <>
       {OPERATION_START_DATE.map((item, idx) => {
