@@ -30,52 +30,146 @@ export default function Works({ data }: { data: GetWorkQuery }) {
           <Filter />
         </KeyWordFixed>
         <WorksContainer>
-          <Card>
-            <Title>
-              <div>{work.title}</div>
-              <FavoriteIcon>
-                <FavoriteBorderIcon fontSize="large" />
-              </FavoriteIcon>
-            </Title>
-            <MonthlyPrice>
-              <Icon>
-                <MonetizationOnIcon fontSize="small" />
-              </Icon>
-              <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
-              <Span>万円/月額 (想定年収: 2400万円)</Span>
-            </MonthlyPrice>
-            <FlexContainer>
-              <Icon>
-                <ReportIcon />
-              </Icon>
-              <div>{work.contractType}</div>
-            </FlexContainer>
-            <FlexContainer>
-              <Icon>
-                <LocationOnIcon />
-              </Icon>
-              <div>{work.location}</div>
-            </FlexContainer>
-            <FlexContainer>
-              {work.developmentLanguages.map((value, idx) => {
-                return (
-                  <Chip
-                    key={idx}
-                    label={value.skill?.name}
-                    sx={{
-                      borderRadius: 0,
-                      marginRight: "4px",
-                    }}
-                  />
-                );
-              })}
-            </FlexContainer>
-            <FlexContainer>
-              大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
-              ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-              ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成...
-            </FlexContainer>
-          </Card>
+          <Column>
+            <Card>
+              <Title>
+                <div>{work.title}</div>
+                <FavoriteIcon>
+                  <FavoriteBorderIcon fontSize="large" />
+                </FavoriteIcon>
+              </Title>
+              <MonthlyPrice>
+                <Icon>
+                  <MonetizationOnIcon fontSize="small" />
+                </Icon>
+                <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
+                <Span>万円/月額 (想定年収: 2400万円)</Span>
+              </MonthlyPrice>
+              <FlexContainer>
+                <Icon>
+                  <ReportIcon />
+                </Icon>
+                <div>{work.contractType}</div>
+              </FlexContainer>
+              <FlexContainer>
+                <Icon>
+                  <LocationOnIcon />
+                </Icon>
+                <div>{work.location}</div>
+              </FlexContainer>
+              <FlexContainer>
+                {work.developmentLanguages.map((value, idx) => {
+                  return (
+                    <Chip
+                      key={idx}
+                      label={value.skill?.name}
+                      sx={{
+                        borderRadius: 0,
+                        marginRight: "4px",
+                      }}
+                    />
+                  );
+                })}
+              </FlexContainer>
+              <FlexContainer>
+                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
+                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
+                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成...
+              </FlexContainer>
+            </Card>
+            <Card>
+              <Title>
+                <div>{work.title}</div>
+                <FavoriteIcon>
+                  <FavoriteBorderIcon fontSize="large" />
+                </FavoriteIcon>
+              </Title>
+              <MonthlyPrice>
+                <Icon>
+                  <MonetizationOnIcon fontSize="small" />
+                </Icon>
+                <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
+                <Span>万円/月額 (想定年収: 2400万円)</Span>
+              </MonthlyPrice>
+              <FlexContainer>
+                <Icon>
+                  <ReportIcon />
+                </Icon>
+                <div>{work.contractType}</div>
+              </FlexContainer>
+              <FlexContainer>
+                <Icon>
+                  <LocationOnIcon />
+                </Icon>
+                <div>{work.location}</div>
+              </FlexContainer>
+              <FlexContainer>
+                {work.developmentLanguages.map((value, idx) => {
+                  return (
+                    <Chip
+                      key={idx}
+                      label={value.skill?.name}
+                      sx={{
+                        borderRadius: 0,
+                        marginRight: "4px",
+                      }}
+                    />
+                  );
+                })}
+              </FlexContainer>
+              <FlexContainer>
+                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
+                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
+                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成...
+              </FlexContainer>
+            </Card>
+            <Card>
+              <Title>
+                <div>{work.title}</div>
+                <FavoriteIcon>
+                  <FavoriteBorderIcon fontSize="large" />
+                </FavoriteIcon>
+              </Title>
+              <MonthlyPrice>
+                <Icon>
+                  <MonetizationOnIcon fontSize="small" />
+                </Icon>
+                <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
+                <Span>万円/月額 (想定年収: 2400万円)</Span>
+              </MonthlyPrice>
+              <FlexContainer>
+                <Icon>
+                  <ReportIcon />
+                </Icon>
+                <div>{work.contractType}</div>
+              </FlexContainer>
+              <FlexContainer>
+                <Icon>
+                  <LocationOnIcon />
+                </Icon>
+                <div>{work.location}</div>
+              </FlexContainer>
+              <FlexContainer>
+                {work.developmentLanguages.map((value, idx) => {
+                  return (
+                    <Chip
+                      key={idx}
+                      label={value.skill?.name}
+                      sx={{
+                        borderRadius: 0,
+                        marginRight: "4px",
+                      }}
+                    />
+                  );
+                })}
+              </FlexContainer>
+              <FlexContainer>
+                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
+                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
+                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成...
+              </FlexContainer>
+            </Card>
+          </Column>
           <div
             className={css`
               width: 100%;
@@ -107,6 +201,7 @@ const Wrapper = styled.div`
 const Card = styled.div`
   border: 1px solid rgb(224, 224, 224);
   padding: 16px;
+  width: 480px;
   max-width: 480px;
   background-color: white;
   height: 400px;
@@ -203,4 +298,9 @@ const FlexContainer = styled.div`
 
 const FavoriteIcon = styled.div`
   font-weight: normal;
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
