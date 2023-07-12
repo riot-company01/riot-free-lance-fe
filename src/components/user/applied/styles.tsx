@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
 
-export const DivFavoriteWrapper = styled.div`
+export const DivAppliedWrapper = styled.div`
   max-width: 980px;
   margin-right: auto;
   margin-left: auto;
 `;
 
-export const FavoriteListHeader = styled.div`
+export const AppliedListHeader = styled.div`
   display: flex;
   justify-content: center;
 `;
@@ -42,7 +42,7 @@ export const DivItems = styled.div`
   margin: 16px 0 0 16px;
 `;
 
-export const PerFavorite = styled.p`
+export const PerApplied = styled.p`
   color: #20b2aa;
 `;
 
@@ -50,7 +50,7 @@ export const DivProjectList = styled.div`
   min-width: 640px;
 `;
 
-export const DivNotFavoriteContents = styled.div`
+export const DivNotAppliedContents = styled.div`
   min-width: 640px;
   min-height: 340px;
   display: flex;
@@ -59,7 +59,7 @@ export const DivNotFavoriteContents = styled.div`
   justify-content: center;
 `;
 
-export const DivNotFavoriteItem = styled.div`
+export const DivNotAppliedItem = styled.div`
   margin: 32px;
 `;
 

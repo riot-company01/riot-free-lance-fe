@@ -3,13 +3,7 @@ import { SCREEN_SIZE } from "@/const/screen-size";
 
 export const DivListItemWrapper = styled.div`
   width: 100%;
-  @media (min-width: 865px) {
-    width: 45%;
-    min-width: 375px;
-  }
-  @media (min-width: ${SCREEN_SIZE.isPcSize}) {
-    min-width: 453px;
-  }
+  margin-bottom: 16px;
 `;
 
 export const DivContent = styled.div`

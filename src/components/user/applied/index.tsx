@@ -10,19 +10,19 @@ export const Fovarite = () => {
     push("/project/");
   };
   return (
-    <Styles.DivFavoriteWrapper>
-      <Styles.FavoriteListHeader>
-        <Styles.HeadTitle>お気に入り案件一覧</Styles.HeadTitle>
-      </Styles.FavoriteListHeader>
+    <Styles.DivAppliedWrapper>
+      <Styles.AppliedListHeader>
+        <Styles.HeadTitle>応募済み案件一覧</Styles.HeadTitle>
+      </Styles.AppliedListHeader>
       <Styles.DivWrapperContent>
         <Styles.DivWrapper>
           <Styles.DivSummary>
             <Styles.HeadSummaryTitle>案件管理</Styles.HeadSummaryTitle>
             <Styles.DivItems>
-              <Styles.PerFavorite>お気に入り</Styles.PerFavorite>
+              <Link href={"/user/favorite"}>お気に入り</Link>
             </Styles.DivItems>
             <Styles.DivItems>
-              <Link href={"/user/applied"}>応募済み案件を見る</Link>
+              <Styles.PerApplied>応募済み案件</Styles.PerApplied>
             </Styles.DivItems>
           </Styles.DivSummary>
         </Styles.DivWrapper>
@@ -30,18 +30,18 @@ export const Fovarite = () => {
           {MOCK_PROJECT_DATA ? (
             MOCK_PROJECT_DATA.map((item) => <ProjectContent key={item.id} item={item} />)
           ) : (
-            <Styles.DivNotFavoriteContents>
-              <Styles.DivNotFavoriteItem>
+            <Styles.DivNotAppliedContents>
+              <Styles.DivNotAppliedItem>
                 <Styles.PerNotFavoriteItem>まだお気に入りの案件はありません</Styles.PerNotFavoriteItem>
-              </Styles.DivNotFavoriteItem>
+              </Styles.DivNotAppliedItem>
 
               <Styles.ButtonWrapper name="searchProjectButton" onClick={() => handleSearchProjectButtonClick()}>
                 <Styles.ParText>案件を探す</Styles.ParText>
               </Styles.ButtonWrapper>
-            </Styles.DivNotFavoriteContents>
+            </Styles.DivNotAppliedContents>
           )}
         </Styles.DivProjectList>
       </Styles.DivWrapperContent>
-    </Styles.DivFavoriteWrapper>
+    </Styles.DivAppliedWrapper>
   );
 };
