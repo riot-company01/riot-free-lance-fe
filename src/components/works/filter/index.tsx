@@ -19,13 +19,7 @@ export function Filter() {
           align-items: center;
         `}
       >
-        <div
-          className={css`
-            width: 100%;
-          `}
-        >
-          案件:10,000件
-        </div>
+        <div className={css``}>案件:10,000件</div>
         <FormControl
           size="small"
           sx={{
