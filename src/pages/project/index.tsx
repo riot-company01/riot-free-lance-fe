@@ -3,7 +3,6 @@ import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { useGetUserQuery } from "@/lib/graphql/graphql";
 import { slackUrlVar } from "@/stores";
 import Loading from "react-loading";
-import { Layout } from "@/components/common/layout";
 
 function ProjectPage() {
   const { user } = useUser();
@@ -14,7 +13,6 @@ function ProjectPage() {
     <>
       {user ? (
         <>
-          <Layout name={user.name} />
           <ProjectList />
         </>
       ) : (

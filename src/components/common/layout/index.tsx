@@ -1,3 +1,4 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
@@ -5,11 +6,9 @@ import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import NextLink from "next/link";
 
-type Props = {
-  name?: string | null;
-};
+export const Layout: React.FC = () => {
+  const { user } = useUser();
 
-export const Layout: React.FC<Props> = ({ name }) => {
   return (
     <Wrapper>
       <FlexContainer>
@@ -22,7 +21,7 @@ export const Layout: React.FC<Props> = ({ name }) => {
 
       <FlexContainer>
         <NextLink href="/api/auth/logout">
-          <List>{name}</List>
+          <List>{user?.name}</List>
         </NextLink>
         <NextLink href="/api/auth/logout">
           <LastList>ログアウト</LastList>

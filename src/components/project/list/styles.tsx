@@ -53,9 +53,9 @@ export const DivWrapperList = styled.div`
   flex-wrap: wrap;
   justify-content: space-evenly;
   @media (min-width: 865px) {
-    margin: 0 40px 40px 40px;
+    margin: 12px 40px 40px 40px;
   }
   @media (min-width: ${SCREEN_SIZE.isPcSize}) {
-    margin: 0px 60px 60px 60px;
+    margin: 30px 60px 60px 60px;
   }
 `;
