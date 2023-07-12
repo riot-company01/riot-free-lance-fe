@@ -21,7 +21,6 @@ export const EditBasicInfo = () => {
     selectedDay,
     mailAddress,
     phoneNumber,
-    selectedPrefecture,
     onChangeUserFirstName,
     onChangeUserLastName,
     onChangeUserFirstNameKana,
@@ -31,7 +30,6 @@ export const EditBasicInfo = () => {
     selectDay,
     onChangeMailAddress,
     onChangePhoneNumber,
-    selectPrefecture,
   } = useBasicInfo();
 
   const generateYearOptions = () => {
@@ -203,7 +201,7 @@ export const EditBasicInfo = () => {
           <h3>お住まいの地域</h3>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
-        <SelectPrefecture value={selectedPrefecture} onChange={selectPrefecture} />
+        <SelectPrefecture />
       </Styles.DivWrpper>
       <Styles.DivWrpper>
         <Styles.DivTitleWrapper>

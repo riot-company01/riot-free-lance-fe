@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import type { ChangeEvent } from "react";
 import { PREFECTURES } from "./const";
 import * as Styles from "./styles";
 
-type Props = {
-  value: string;
-  onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
-};
+const SelectPrefecture = () => {
+  const [selectedPrefecture, setSelectedPrefecture] = useState("");
 
-const SelectPrefecture = ({ value, onChange }: Props) => {
+  const selectPrefecture = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedPrefecture(e.target.value);
+  };
   return (
-    <Styles.SelectPrefecture value={value} onChange={onChange}>
+    <Styles.SelectPrefecture value={selectedPrefecture} onChange={selectPrefecture}>
       <option value="">選択してください</option>
       {PREFECTURES.map((prefecture, index) => (
         <option key={index} value={prefecture}>

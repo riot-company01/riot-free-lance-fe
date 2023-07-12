@@ -11,7 +11,6 @@ export const useBasicInfo = () => {
   const [selectedDay, setSelectedDay] = useState("");
   const [mailAddress, setMailAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [selectedPrefecture, setSelectedPrefecture] = useState("");
 
   const onChangeUserFirstName = useCallback((e: ChangeEvent<HTMLInputElement>) => setUserFirstName(e.target.value), []);
 
@@ -41,10 +40,6 @@ export const useBasicInfo = () => {
 
   const onChangePhoneNumber = useCallback((e: ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value), []);
 
-  const selectPrefecture = (e: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedPrefecture(e.target.value);
-  };
-
   return {
     userFirstName,
     userLastName,
@@ -55,7 +50,7 @@ export const useBasicInfo = () => {
     selectedDay,
     mailAddress,
     phoneNumber,
-    selectedPrefecture,
+
     onChangeUserFirstName,
     onChangeUserLastName,
     onChangeUserFirstNameKana,
@@ -65,6 +60,5 @@ export const useBasicInfo = () => {
     selectDay,
     onChangeMailAddress,
     onChangePhoneNumber,
-    selectPrefecture,
   };
 };
