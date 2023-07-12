@@ -1,4 +1,4 @@
-import { css } from "@emotion/css";
+import styled from "@emotion/styled";
 import { FormControl, Select, MenuItem, Chip } from "@mui/material";
 
 export function Filter() {
@@ -12,14 +12,8 @@ export function Filter() {
 
   return (
     <>
-      <div
-        className={css`
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        `}
-      >
-        <div className={css``}>案件:10,000件</div>
+      <Wrapper>
+        <div>案件:10,000件</div>
         <FormControl
           size="small"
           sx={{
@@ -37,16 +31,22 @@ export function Filter() {
             <MenuItem value={30}>おすすめ順</MenuItem>
           </Select>
         </FormControl>
-      </div>
-      <div
-        className={css`
-          display: flex;
-          padding-top: 16px;
-        `}
-      >
+      </Wrapper>
+      <Container>
         <Chip label="Clickable Deletable" onClick={handleClick} onDelete={handleDelete} />
         <Chip label="Clickable Deletable" variant="outlined" onClick={handleClick} onDelete={handleDelete} />
-      </div>
+      </Container>
     </>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Container = styled.div`
+  display: flex;
+  padding-top: 16px;
+`;

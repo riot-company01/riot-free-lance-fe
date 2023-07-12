@@ -1,10 +1,19 @@
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import ReportIcon from "@mui/icons-material/Report";
+import { Chip } from "@mui/material";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
 import { initializeApollo } from "@/lib/apollo/client";
 import type { GetWorkQuery } from "@/lib/graphql/graphql";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+
+export const WORKS_Z_INDEX = {
+  FILTER: 10,
+};
 
 export default function Works({ data }: { data: GetWorkQuery }) {
   const work = data.work[0];
@@ -22,17 +31,50 @@ export default function Works({ data }: { data: GetWorkQuery }) {
         </KeyWordFixed>
         <WorksContainer>
           <Card>
-            <Title>{work.title}</Title>
+            <Title>
+              <div>{work.title}</div>
+              <FavoriteIcon>
+                <FavoriteBorderIcon fontSize="large" />
+              </FavoriteIcon>
+            </Title>
             <MonthlyPrice>
-              {work.minMonthlyPrice} ~ {work.maxMonthlyPrice}
+              <Icon>
+                <MonetizationOnIcon fontSize="small" />
+              </Icon>
+              <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
+              <Span>万円/月額 (想定年収: 2400万円)</Span>
             </MonthlyPrice>
-            <div>{work.contractType}</div>
-            <div>{work.location}</div>
-            <div>
+            <FlexContainer>
+              <Icon>
+                <ReportIcon />
+              </Icon>
+              <div>{work.contractType}</div>
+            </FlexContainer>
+            <FlexContainer>
+              <Icon>
+                <LocationOnIcon />
+              </Icon>
+              <div>{work.location}</div>
+            </FlexContainer>
+            <FlexContainer>
               {work.developmentLanguages.map((value, idx) => {
-                return <div key={idx}>{value.skill?.name}</div>;
+                return (
+                  <Chip
+                    key={idx}
+                    label={value.skill?.name}
+                    sx={{
+                      borderRadius: 0,
+                      marginRight: "4px",
+                    }}
+                  />
+                );
               })}
-            </div>
+            </FlexContainer>
+            <FlexContainer>
+              大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
+              ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
+              ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成...
+            </FlexContainer>
           </Card>
           <div
             className={css`
@@ -65,15 +107,23 @@ const Wrapper = styled.div`
 const Card = styled.div`
   border: 1px solid rgb(224, 224, 224);
   padding: 16px;
-  max-width: 400px;
+  max-width: 480px;
+  background-color: white;
   height: 400px;
+  border-radius: 8px;
 `;
 
 const Title = styled.div`
-  font-size: 20px;
+  font-weight: bold;
+  display: flex;
 `;
 
-const MonthlyPrice = styled.div``;
+const MonthlyPrice = styled.div`
+  font-size: 20px;
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+`;
 
 // const Detail = styled.div`
 //   border: 1px solid rgb(224, 224, 224);
@@ -105,7 +155,9 @@ const KeyWordFixed = styled.div`
   height: 136px;
   position: fixed;
   padding: 16px 0;
+  z-index: ${WORKS_Z_INDEX.FILTER};
   width: calc(100% - 160px);
+  background-color: #f5f5f5;
   max-width: calc(1320px - 160px);
 `;
 
@@ -121,6 +173,34 @@ const WorksContainer = styled.div`
 const DetailContainer = styled.div`
   padding: 16px;
   height: 80dvh;
-
   position: fixed;
+`;
+
+const Strong = styled.div`
+  color: #f86986;
+  font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, sans-serif;
+`;
+
+const Span = styled.div`
+  font-size: 12px;
+`;
+
+const Icon = styled.div`
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+  svg {
+    font-size: 16px;
+  }
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding-top: 8px;
+  font-size: 14px;
+`;
+
+const FavoriteIcon = styled.div`
+  font-weight: normal;
 `;
