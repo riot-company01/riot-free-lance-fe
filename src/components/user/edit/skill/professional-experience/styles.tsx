@@ -5,7 +5,7 @@ export const ButtonWrapper = styled.button<{
 }>`
   border-radius: 8px;
   height: 48px;
-  width: 144px;
+  width: 150px;
   margin: 4px;
   &:hover {
     cursor: pointer;

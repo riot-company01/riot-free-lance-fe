@@ -29,27 +29,7 @@ export const DivTitleWrapper = styled.div`
 `;
 
 export const DivWrpper = styled.div`
-  @media (min-width: ${SCREEN_SIZE.isPcSize}) {
-    margin-top: 32px;
-    padding: 0 16px 0 16px;
-  }
-`;
-
-export const SelectYear = styled.select`
-  width: 380px;
-  padding: 16px;
-  border: 1px solid #a1a1a1;
-  border-radius: 8px;
-  appearance: none;
-`;
-
-export const SelectMounthDay = styled.select`
-  width: 200px;
-  padding: 16px;
-  border: 1px solid #a1a1a1;
-  border-radius: 8px;
-  margin-left: 32px;
-  appearance: none;
+  margin: 8px 0 8px 16px;
 `;
 
 export const DivButtonWrapper = styled.div`

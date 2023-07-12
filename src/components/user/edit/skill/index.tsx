@@ -78,7 +78,8 @@ export const EditSkill = () => {
             width={"458px"}
             onChange={onChangePortfolio}
           />
-          {portfolioUrl && portfolioUrl}
+
+          {portfolioUrl && <Styles.DivWrpper>{portfolioUrl}</Styles.DivWrpper>}
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
@@ -93,7 +94,7 @@ export const EditSkill = () => {
             maxRows={6} // 最大の行数
             value={textArea}
             onChange={onChangeTextArea}
-            style={{ width: "100%" }}
+            style={{ width: "945px", height: "250px", border: "1px solid #a1a1a1", borderRadius: "8px" }}
           />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
