@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
-import { ProjectContent } from "@/components/user/common/project-content";
-import { MOCK_PROJECT_DATA } from "@/components/user/favorite/const";
 
-export const Fovarite = () => {
+export const Applied = () => {
   const { push } = useRouter();
   const handleSearchProjectButtonClick = () => {
     push("/project/");
@@ -27,19 +25,19 @@ export const Fovarite = () => {
           </Styles.DivSummary>
         </Styles.DivWrapper>
         <Styles.DivProjectList>
-          {MOCK_PROJECT_DATA ? (
+          {/* {MOCK_PROJECT_DATA ? (
             MOCK_PROJECT_DATA.map((item) => <ProjectContent key={item.id} item={item} />)
-          ) : (
-            <Styles.DivNotAppliedContents>
-              <Styles.DivNotAppliedItem>
-                <Styles.PerNotFavoriteItem>まだお気に入りの案件はありません</Styles.PerNotFavoriteItem>
-              </Styles.DivNotAppliedItem>
+          ) : ( */}
+          <Styles.DivNotAppliedContents>
+            <Styles.DivNotAppliedItem>
+              <Styles.PerNotFavoriteItem>まだ応募した案件はありません</Styles.PerNotFavoriteItem>
+            </Styles.DivNotAppliedItem>
 
-              <Styles.ButtonWrapper name="searchProjectButton" onClick={() => handleSearchProjectButtonClick()}>
-                <Styles.ParText>案件を探す</Styles.ParText>
-              </Styles.ButtonWrapper>
-            </Styles.DivNotAppliedContents>
-          )}
+            <Styles.ButtonWrapper name="searchProjectButton" onClick={() => handleSearchProjectButtonClick()}>
+              <Styles.ParText>案件を探す</Styles.ParText>
+            </Styles.ButtonWrapper>
+          </Styles.DivNotAppliedContents>
+          {/* )} */}
         </Styles.DivProjectList>
       </Styles.DivWrapperContent>
     </Styles.DivAppliedWrapper>
