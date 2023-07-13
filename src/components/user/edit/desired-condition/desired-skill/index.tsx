@@ -2,9 +2,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import * as Styles from "./styles";
-import { FRAME_WORK } from "@/components/user/edit/skill/frame-work/const";
+import { DESIRED_SKILL } from "@/components/user/edit/desired-condition/desired-skill/const";
 
-export const FrameWork = () => {
+export const DesiredSkill = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -71,13 +71,13 @@ export const FrameWork = () => {
         <Box sx={Styles.ModalStyle}>
           <Styles.HeadContentTitle>フレームワーク</Styles.HeadContentTitle>
           <Styles.DivItemsWrapper>
-            {FRAME_WORK.map((item, idx) => {
+            {DESIRED_SKILL.map((item, idx) => {
               if (selectedOptions.includes(item)) {
                 return (
                   <Button
                     variant="contained"
                     key={idx}
-                    name="selectedFrameWorkButton"
+                    name="selectedDesiredSkill"
                     onClick={() => handleButtonClick(item)}
                     style={{
                       height: "48px",
@@ -95,7 +95,7 @@ export const FrameWork = () => {
                   <Button
                     variant="outlined"
                     key={idx}
-                    name="selectFrameWorkButton"
+                    name="selectDesiredSkillButton"
                     onClick={() => handleButtonClick(item)}
                     style={{
                       height: "48px",

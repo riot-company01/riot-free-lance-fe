@@ -6,8 +6,8 @@ import { CurrentSituation } from "./current-situation";
 import { useBasicInfo } from "./hooks/use-basic-info";
 import * as Styles from "./styles";
 import { SelectPrefecture } from "@/components/user/edit/basic-info/select-prefecture";
-import { PATHS } from "@/const/paths";
 import { myStyle, selectMyStyle } from "@/components/user/edit/const";
+import { PATHS } from "@/const/paths";
 
 export const EditBasicInfo = () => {
   const { user } = useUser();

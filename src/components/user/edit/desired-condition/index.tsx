@@ -5,6 +5,7 @@ import { Tag } from "@/components/user/edit/common/tag";
 import { AmountOfMoney } from "@/components/user/edit/desired-condition/amount-of-money";
 import { AvailableDays } from "@/components/user/edit/desired-condition/available-days";
 import { CommutingTime } from "@/components/user/edit/desired-condition/commuting-time";
+import { DesiredSkill } from "@/components/user/edit/desired-condition/desired-skill";
 import { Industry } from "@/components/user/edit/desired-condition/industry";
 import { ModeOfOperation } from "@/components/user/edit/desired-condition/mode-of-operation";
 import { OperationStartDate } from "@/components/user/edit/desired-condition/operation-start-date";
@@ -82,8 +83,7 @@ export const DesiredCondition = () => {
             <Styles.HeadContentTitle>希望する開発環境・スキル</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          {/* //TODO  */}
-          {/* クリックしたら、モーダル開く、開いたモーダルでスキル系を選択、この条件で希望するボタンをクリックしたら選択していたもの全部がタブで反映するようにしたい */}
+          <DesiredSkill />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 

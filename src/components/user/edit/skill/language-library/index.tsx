@@ -1,8 +1,8 @@
+import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
-import { LANGUAGE_LIBRARY } from "@/components/user/edit/skill/language-library/const";
-import AddIcon from "@mui/icons-material/Add";
 import * as Styles from "./styles";
+import { LANGUAGE_LIBRARY } from "@/components/user/edit/skill/language-library/const";
 
 export const LanguageLibrary = () => {
   const [open, setOpen] = useState(false);
