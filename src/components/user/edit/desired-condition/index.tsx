@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
 import { Tag } from "@/components/user/edit/common/tag";
@@ -117,12 +118,23 @@ export const DesiredCondition = () => {
       </Styles.DivItem>
 
       <Styles.DivButtonWrapper>
-        <Styles.CancelButtonWrapper name="selectedFreeLanceButton" onClick={() => handleCancelButtonClick()}>
-          <Styles.ParCancelText>キャンセル</Styles.ParCancelText>
-        </Styles.CancelButtonWrapper>
-        <Styles.KeepButtonWrapper name="selectedFreeLanceButton" onClick={() => handleKeepButtonClick()}>
-          <Styles.ParKeepText>保存する</Styles.ParKeepText>
-        </Styles.KeepButtonWrapper>
+        <Button
+          variant="outlined"
+          name="cancelButton"
+          onClick={() => handleCancelButtonClick()}
+          style={{ height: "40px", width: "400px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
+        >
+          キャンセル
+        </Button>
+
+        <Button
+          variant="contained"
+          name="keepButton"
+          onClick={() => handleKeepButtonClick()}
+          style={{ height: "40px", width: "400px" }}
+        >
+          保存する
+        </Button>
       </Styles.DivButtonWrapper>
     </Styles.DivEditBasicInfoWrapper>
   );

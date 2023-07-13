@@ -1,6 +1,6 @@
+import { Button } from "@mui/material";
 import { useState } from "react";
 import { COMMUTING_TIME } from "./const";
-import * as Styles from "./styles";
 
 export const CommutingTime = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -12,16 +12,31 @@ export const CommutingTime = () => {
   return (
     <>
       {COMMUTING_TIME.map((item, idx) => {
-        return (
-          <Styles.ButtonWrapper
-            key={idx}
-            name="selectedCummitingTimeButton"
-            onClick={() => handleButtonClick(item)}
-            isSelected={selectedOption === item}
-          >
-            <Styles.ParText isSelected={selectedOption === item}>{item}</Styles.ParText>
-          </Styles.ButtonWrapper>
-        );
+        if (selectedOption === item) {
+          return (
+            <Button
+              variant="contained"
+              key={idx}
+              name="selectedCummitingTimeButton"
+              onClick={() => handleButtonClick(item)}
+              style={{ height: "48px", width: "460px", margin: "4px" }}
+            >
+              {item}
+            </Button>
+          );
+        } else {
+          return (
+            <Button
+              variant="outlined"
+              key={idx}
+              name="selectCummitingTimeButton"
+              onClick={() => handleButtonClick(item)}
+              style={{ height: "48px", width: "460px", margin: "4px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
+            >
+              {item}
+            </Button>
+          );
+        }
       })}
     </>
   );

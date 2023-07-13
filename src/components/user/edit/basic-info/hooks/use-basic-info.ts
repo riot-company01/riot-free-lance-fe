@@ -1,3 +1,4 @@
+import type { SelectChangeEvent } from "@mui/material";
 import { useCallback, useState } from "react";
 import type { ChangeEvent } from "react";
 
@@ -24,15 +25,15 @@ export const useBasicInfo = () => {
     []
   );
 
-  const selectYear = (e: ChangeEvent<HTMLSelectElement>) => {
+  const selectYear = (e: SelectChangeEvent<string>) => {
     setSelectedYear(e.target.value);
   };
 
-  const selectMonth = (e: ChangeEvent<HTMLSelectElement>) => {
+  const selectMonth = (e: SelectChangeEvent<string>) => {
     setSelectedMonth(e.target.value);
   };
 
-  const selectDay = (e: ChangeEvent<HTMLSelectElement>) => {
+  const selectDay = (e: SelectChangeEvent<string>) => {
     setSelectedDay(e.target.value);
   };
 

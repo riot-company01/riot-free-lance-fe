@@ -1,4 +1,5 @@
-import type { ChangeEvent } from "react";
+import { Button, Select } from "@mui/material";
+import type { SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
 import * as Styles from "./styles";
 import { OPERATION_START_DATE } from "@/components/user/edit/desired-condition/operation-start-date/const";
@@ -41,39 +42,54 @@ export const OperationStartDate = () => {
     return months;
   };
 
-  const selectYear = (e: ChangeEvent<HTMLSelectElement>) => {
+  const selectYear = (e: SelectChangeEvent<string>) => {
     setSelectedYear(e.target.value);
   };
 
-  const selectMonth = (e: ChangeEvent<HTMLSelectElement>) => {
+  const selectMonth = (e: SelectChangeEvent<string>) => {
     setSelectedMonth(e.target.value);
   };
 
   return (
     <>
       {OPERATION_START_DATE.map((item, idx) => {
-        return (
-          <Styles.ButtonWrapper
-            key={idx}
-            name="selectedOperationStartDateButton"
-            onClick={() => handleButtonClick(item)}
-            isSelected={selectedOption === item}
-          >
-            <Styles.ParText isSelected={selectedOption === item}>{item}</Styles.ParText>
-          </Styles.ButtonWrapper>
-        );
+        if (selectedOption === item) {
+          return (
+            <Button
+              variant="contained"
+              key={idx}
+              name="selectedOperationStartDateButton"
+              onClick={() => handleButtonClick(item)}
+              style={{ height: "48px", width: "308px", margin: "4px" }}
+            >
+              {item}
+            </Button>
+          );
+        } else {
+          return (
+            <Button
+              variant="outlined"
+              key={idx}
+              name="selectOperationStartDateButton"
+              onClick={() => handleButtonClick(item)}
+              style={{ height: "48px", width: "308px", margin: "4px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
+            >
+              {item}
+            </Button>
+          );
+        }
       })}
+
       {selectedOption === "時期選択" && (
         <Styles.DivWrapper>
-          <Styles.SelectYear value={selectedYear} onChange={selectYear}>
-            <option value="">選択してください</option>
+          <Select value={selectedYear} onChange={selectYear} style={{ width: "380px", marginRight: "32px" }}>
             {generateYearOptions()}
-          </Styles.SelectYear>
+          </Select>
 
-          <Styles.SelectMount value={selectedMonth} onChange={selectMonth}>
-            <option value="">選択してください</option>
+          <Select value={selectedMonth} onChange={selectMonth} style={{ width: "200px", marginRight: "32px" }}>
             {generateMonthOptions()}
-          </Styles.SelectMount>
+          </Select>
+
           <Styles.DivWrapper>
             <Styles.PerNote>※案件開始可能時期を選択してください</Styles.PerNote>
           </Styles.DivWrapper>

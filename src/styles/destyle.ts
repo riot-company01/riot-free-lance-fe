@@ -211,4 +211,8 @@ export const destyle = css`
     text-align: left;
     font-weight: 700;
   }
+
+  input[type="file"] {
+    display: none;
+  }
 `;

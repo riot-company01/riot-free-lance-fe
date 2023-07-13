@@ -1,23 +1,21 @@
+import { MenuItem, Select } from "@mui/material";
+import type { SelectChangeEvent } from "@mui/material";
 import React, { useState } from "react";
-import type { ChangeEvent } from "react";
 import { PREFECTURES } from "./const";
-import * as Styles from "./styles";
 
 export const SelectPrefecture = () => {
   const [selectedPrefecture, setSelectedPrefecture] = useState("");
 
-  const selectPrefecture = (e: ChangeEvent<HTMLSelectElement>) => {
+  const selectPrefecture = (e: SelectChangeEvent<string>) => {
     setSelectedPrefecture(e.target.value);
   };
-
   return (
-    <Styles.SelectPrefecture value={selectedPrefecture} onChange={selectPrefecture}>
-      <option value="">選択してください</option>
+    <Select value={selectedPrefecture} onChange={selectPrefecture} style={{ width: "380px" }}>
       {PREFECTURES.map((prefecture, index) => (
-        <option key={index} value={prefecture}>
+        <MenuItem key={index} value={prefecture}>
           {prefecture}
-        </option>
+        </MenuItem>
       ))}
-    </Styles.SelectPrefecture>
+    </Select>
   );
 };

@@ -1,17 +1,14 @@
 import EditIcon from "@mui/icons-material/Edit";
 import * as Styles from "./styles";
-import { FileUpload } from "@/components/user/profile/common/file-upload";
 
 export const ProfileSummary = () => {
   return (
     <Styles.DivProfileSummaryWrapper>
-      <FileUpload />
-
       <Styles.DivWrapper>
         <Styles.DivHeadFlex>
           <Styles.HeadName>名前</Styles.HeadName>
           <Styles.AnchorItem href={"/user/edit"}>
-            <EditIcon style={{ fontSize: 16, color: "#20b2aa", marginBottom: "5px" }} />
+            <EditIcon style={{ fontSize: 16, color: "#1976d2", marginBottom: "5px" }} />
             編集
           </Styles.AnchorItem>
         </Styles.DivHeadFlex>
@@ -21,7 +18,7 @@ export const ProfileSummary = () => {
         </Styles.DivItem>
         <Styles.DivAddSkill>
           <Styles.AnchorItem href="/user/edit-skill">
-            <EditIcon style={{ fontSize: 16, color: "#20b2aa", marginBottom: "5px" }} />
+            <EditIcon style={{ fontSize: 16, color: "#1976d2", marginBottom: "5px" }} />
             開発経験スキルを追加
           </Styles.AnchorItem>
         </Styles.DivAddSkill>

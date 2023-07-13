@@ -1,16 +1,18 @@
-import { TextareaAutosize } from "@mui/material";
+import { Button, TextareaAutosize, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
-import { Input } from "@/components/common/input";
 import { Tag } from "@/components/user/edit/common/tag";
+import { FrameWork } from "@/components/user/edit/skill/frame-work";
 import { useEditSkill } from "@/components/user/edit/skill/hooks/use-edit-skill";
 import { Industry } from "@/components/user/edit/skill/industry";
+import { LanguageLibrary } from "@/components/user/edit/skill/language-library";
 import { ProfessionalExperience } from "@/components/user/edit/skill/professional-experience";
+import { FileUpload } from "@/components/user/profile/common/file-upload";
 import { PATHS } from "@/const/paths";
 
 export const EditSkill = () => {
   const { push } = useRouter();
-  const { portfolio, textArea, onChangePortfolio, onChangeTextArea } = useEditSkill();
+  const { portfolio, textArea, uploadFile, onChangePortfolio, onChangeTextArea, onChangeUploadFile } = useEditSkill();
 
   const portfolioUrl = "http://localhost:3000/user/edit-skill";
 
@@ -51,6 +53,7 @@ export const EditSkill = () => {
             <h3>言語</h3>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
+          <LanguageLibrary />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
@@ -60,7 +63,7 @@ export const EditSkill = () => {
             <h3>フレームワーク</h3>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <Industry />
+          <FrameWork />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
@@ -70,15 +73,14 @@ export const EditSkill = () => {
             <h3>ポートフォリオ・GitHub</h3>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <Input
-            type="text"
+          <TextField
+            variant="outlined"
             name="portfolio"
             value={portfolio}
             placeholder="https://github.com/"
-            width={"458px"}
+            style={{ width: "458px" }}
             onChange={onChangePortfolio}
           />
-
           {portfolioUrl && <Styles.DivWrpper>{portfolioUrl}</Styles.DivWrpper>}
         </Styles.DivItemWrapper>
       </Styles.DivItem>
@@ -90,8 +92,8 @@ export const EditSkill = () => {
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <TextareaAutosize
-            minRows={3} // 最小の行数
-            maxRows={6} // 最大の行数
+            minRows={3}
+            maxRows={6}
             value={textArea}
             onChange={onChangeTextArea}
             style={{ width: "945px", height: "250px", border: "1px solid #a1a1a1", borderRadius: "8px" }}
@@ -105,17 +107,29 @@ export const EditSkill = () => {
             <h3>経歴書</h3>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <Industry />
+          <FileUpload onChange={onChangeUploadFile} />
+          {uploadFile && <Styles.PerUploadFile>{uploadFile.name}</Styles.PerUploadFile>}
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
       <Styles.DivButtonWrapper>
-        <Styles.CancelButtonWrapper name="selectedFreeLanceButton" onClick={() => handleCancelButtonClick()}>
-          <Styles.ParCancelText>キャンセル</Styles.ParCancelText>
-        </Styles.CancelButtonWrapper>
-        <Styles.KeepButtonWrapper name="selectedFreeLanceButton" onClick={() => handleKeepButtonClick()}>
-          <Styles.ParKeepText>保存する</Styles.ParKeepText>
-        </Styles.KeepButtonWrapper>
+        <Button
+          variant="outlined"
+          name="cancelButton"
+          onClick={() => handleCancelButtonClick()}
+          style={{ height: "40px", width: "400px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
+        >
+          キャンセル
+        </Button>
+
+        <Button
+          variant="contained"
+          name="keepButton"
+          onClick={() => handleKeepButtonClick()}
+          style={{ height: "40px", width: "400px" }}
+        >
+          保存する
+        </Button>
       </Styles.DivButtonWrapper>
     </Styles.DivEditBasicInfoWrapper>
   );

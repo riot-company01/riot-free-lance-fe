@@ -1,10 +1,10 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { Button, MenuItem, Select, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import { Tag } from "../common/tag";
 import { CurrentSituation } from "./current-situation";
 import { useBasicInfo } from "./hooks/use-basic-info";
 import * as Styles from "./styles";
-import { Input } from "@/components/common/input";
 import { SelectPrefecture } from "@/components/user/edit/basic-info/select-prefecture";
 import { PATHS } from "@/const/paths";
 
@@ -38,41 +38,27 @@ export const EditBasicInfo = () => {
 
     for (let i = currentYear; i >= currentYear - 100; i--) {
       years.push(
-        <option key={i} value={i}>
+        <MenuItem key={i} value={i}>
           {i}
-        </option>
+        </MenuItem>
       );
     }
 
     return years;
   };
 
-  const generateMonthOptions = () => {
+  const generateMonthDayOptions = (mounthDay: number) => {
     const months = [];
 
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 1; i <= mounthDay; i++) {
       months.push(
-        <option key={i} value={i}>
+        <MenuItem key={i} value={i}>
           {i}
-        </option>
+        </MenuItem>
       );
     }
 
     return months;
-  };
-
-  const generateDayOptions = () => {
-    const days = [];
-
-    for (let i = 1; i <= 31; i++) {
-      days.push(
-        <option key={i} value={i}>
-          {i}
-        </option>
-      );
-    }
-
-    return days;
   };
 
   const handleCancelButtonClick = () => {
@@ -92,12 +78,12 @@ export const EditBasicInfo = () => {
             <h3>姓</h3>
             <Tag isRequired />
           </Styles.DivTitleWrapper>
-          <Input
-            type="text"
-            name="userLastName"
+          <TextField
+            variant="outlined"
+            name="userFirstName"
             value={userLastName}
-            placeholder="例：田中"
-            width={"458px"}
+            placeholder="例:田中"
+            style={{ width: "458px" }}
             onChange={onChangeUserLastName}
           />
         </Styles.DivItemWrapper>
@@ -106,12 +92,12 @@ export const EditBasicInfo = () => {
             <h3>名</h3>
             <Tag isRequired />
           </Styles.DivTitleWrapper>
-          <Input
-            type="text"
+          <TextField
+            variant="outlined"
             name="userFirstName"
             value={userFirstName}
             placeholder="例：太郎"
-            width={"458px"}
+            style={{ width: "458px" }}
             onChange={onChangeUserFirstName}
           />
         </Styles.DivItemWrapper>
@@ -122,12 +108,13 @@ export const EditBasicInfo = () => {
             <h3>せい</h3>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <Input
+          <TextField
+            variant="outlined"
             type="text"
             name="userLastName"
             value={userLastNameKana}
             placeholder="例：たなか"
-            width={"458px"}
+            style={{ width: "458px" }}
             onChange={onChangeUserLastNameKana}
           />
         </Styles.DivItemWrapper>
@@ -136,12 +123,13 @@ export const EditBasicInfo = () => {
             <h3>めい</h3>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <Input
+          <TextField
+            variant="outlined"
             type="text"
             name="userFirstName"
             value={userFirstNameKana}
             placeholder="例：たろう"
-            width={"458px"}
+            style={{ width: "458px" }}
             onChange={onChangeUserFirstNameKana}
           />
         </Styles.DivItemWrapper>
@@ -152,20 +140,17 @@ export const EditBasicInfo = () => {
           <Tag isRequired />
         </Styles.DivTitleWrapper>
         <div>
-          <Styles.SelectYear value={selectedYear} onChange={selectYear}>
-            <option value="">選択してください</option>
+          <Select value={selectedYear} onChange={selectYear} style={{ width: "380px", marginRight: "32px" }}>
             {generateYearOptions()}
-          </Styles.SelectYear>
+          </Select>
 
-          <Styles.SelectMounthDay value={selectedMonth} onChange={selectMonth}>
-            <option value="">選択してください</option>
-            {generateMonthOptions()}
-          </Styles.SelectMounthDay>
+          <Select value={selectedMonth} onChange={selectMonth} style={{ width: "200px", marginRight: "32px" }}>
+            {generateMonthDayOptions(12)}
+          </Select>
 
-          <Styles.SelectMounthDay value={selectedDay} onChange={selectDay}>
-            <option value="">選択してください</option>
-            {generateDayOptions()}
-          </Styles.SelectMounthDay>
+          <Select value={selectedDay} onChange={selectDay} style={{ width: "200px" }}>
+            {generateMonthDayOptions(31)}
+          </Select>
         </div>
       </Styles.DivWrpper>
       <Styles.DivWrpper>
@@ -173,12 +158,14 @@ export const EditBasicInfo = () => {
           <h3>メールアドレス</h3>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
-        <Input
+
+        <TextField
+          variant="outlined"
           type="text"
           name="mailAddres"
           value={mailAddress}
           placeholder={user?.email ? user?.email : ""}
-          width={"458px"}
+          style={{ width: "458px" }}
           onChange={onChangeMailAddress}
         />
       </Styles.DivWrpper>
@@ -187,12 +174,14 @@ export const EditBasicInfo = () => {
           <h3>電話番号</h3>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
-        <Input
-          type="text"
-          name="tell"
+
+        <TextField
+          variant="outlined"
+          type="tel"
+          name="phone"
           value={phoneNumber}
           placeholder={"080xxxxxxxx"}
-          width={"458px"}
+          style={{ width: "458px" }}
           onChange={onChangePhoneNumber}
         />
       </Styles.DivWrpper>
@@ -211,12 +200,23 @@ export const EditBasicInfo = () => {
         <CurrentSituation />
       </Styles.DivWrpper>
       <Styles.DivButtonWrapper>
-        <Styles.CancelButtonWrapper name="selectedFreeLanceButton" onClick={() => handleCancelButtonClick()}>
-          <Styles.ParCancelText>キャンセル</Styles.ParCancelText>
-        </Styles.CancelButtonWrapper>
-        <Styles.KeepButtonWrapper name="selectedFreeLanceButton" onClick={() => handleKeepButtonClick()}>
-          <Styles.ParKeepText>保存する</Styles.ParKeepText>
-        </Styles.KeepButtonWrapper>
+        <Button
+          variant="outlined"
+          name="cancelButton"
+          onClick={() => handleCancelButtonClick()}
+          style={{ height: "40px", width: "400px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
+        >
+          キャンセル
+        </Button>
+
+        <Button
+          variant="contained"
+          name="keepButton"
+          onClick={() => handleKeepButtonClick()}
+          style={{ height: "40px", width: "400px" }}
+        >
+          保存する
+        </Button>
       </Styles.DivButtonWrapper>
     </Styles.DivEditBasicInfoWrapper>
   );

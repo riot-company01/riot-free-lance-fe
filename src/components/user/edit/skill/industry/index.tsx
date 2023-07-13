@@ -1,7 +1,6 @@
+import { Button } from "@mui/material";
 import { useState } from "react";
 import { INDUSTRY } from "./const";
-
-import * as Styles from "./styles";
 
 export const Industry = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
@@ -17,16 +16,31 @@ export const Industry = () => {
   return (
     <>
       {INDUSTRY.map((item, idx) => {
-        return (
-          <Styles.ButtonWrapper
-            key={idx}
-            name="selectedFullTimeEmployeeButton"
-            onClick={() => handleButtonClick(item)}
-            isSelected={selectedOptions.includes(item)}
-          >
-            <Styles.ParText isSelected={selectedOptions.includes(item)}>{item}</Styles.ParText>
-          </Styles.ButtonWrapper>
-        );
+        if (selectedOptions.includes(item)) {
+          return (
+            <Button
+              variant="contained"
+              key={idx}
+              name="selectedIndustryButton"
+              onClick={() => handleButtonClick(item)}
+              style={{ height: "48px", width: "150px", margin: "4px" }}
+            >
+              {item}
+            </Button>
+          );
+        } else {
+          return (
+            <Button
+              variant="outlined"
+              key={idx}
+              name="selectIndustryButton"
+              onClick={() => handleButtonClick(item)}
+              style={{ height: "48px", width: "150px", margin: "4px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
+            >
+              {item}
+            </Button>
+          );
+        }
       })}
     </>
   );

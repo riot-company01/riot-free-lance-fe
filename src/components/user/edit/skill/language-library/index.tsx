@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
-import { INDUSTRY } from "./const";
+import { LANGUAGE_LIBRARY } from "@/components/user/edit/skill/language-library/const";
 
-export const Industry = () => {
+export const LanguageLibrary = () => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleButtonClick = (option: string) => {
@@ -15,15 +15,15 @@ export const Industry = () => {
 
   return (
     <>
-      {INDUSTRY.map((item, idx) => {
+      {LANGUAGE_LIBRARY.map((item, idx) => {
         if (selectedOptions.includes(item)) {
           return (
             <Button
               variant="contained"
               key={idx}
-              name="selectedIndustryButton"
+              name="selectedLanguageButton"
               onClick={() => handleButtonClick(item)}
-              style={{ height: "48px", width: "150px", margin: "4px" }}
+              style={{ height: "48px", width: "150px", margin: "4px", textTransform: "none" }}
             >
               {item}
             </Button>
@@ -33,9 +33,16 @@ export const Industry = () => {
             <Button
               variant="outlined"
               key={idx}
-              name="selectIndustryButton"
+              name="selectProfessionaExperienceButton"
               onClick={() => handleButtonClick(item)}
-              style={{ height: "48px", width: "150px", margin: "4px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
+              style={{
+                height: "48px",
+                width: "150px",
+                margin: "4px",
+                border: "1px solid #a1a1a1",
+                color: "#a1a1a1",
+                textTransform: "none",
+              }}
             >
               {item}
             </Button>
