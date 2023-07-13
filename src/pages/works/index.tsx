@@ -175,9 +175,10 @@ export default function Works({ data }: { data: GetWorkQuery }) {
               width: 100%;
               max-width: calc(1320px - 160px - 400px);
               border: 1px solid rgb(224, 224, 224);
+              margin-left: 32px;
             `}
           >
-            <DetailContainer>bbb</DetailContainer>
+            <DetailContainer>村山マークダウンエリア</DetailContainer>
           </div>
         </WorksContainer>
       </KeyWordContainer>
@@ -202,6 +203,9 @@ const Card = styled.div`
   border: 1px solid rgb(224, 224, 224);
   padding: 16px;
   width: 480px;
+  :not(:first-of-type) {
+    margin-top: 16px;
+  }
   max-width: 480px;
   background-color: white;
   height: 400px;
@@ -257,7 +261,6 @@ const KeyWordFixed = styled.div`
 `;
 
 const WorksContainer = styled.div`
-  height: 2000px;
   position: absolute;
   display: flex;
   top: 214px;
@@ -267,6 +270,7 @@ const WorksContainer = styled.div`
 
 const DetailContainer = styled.div`
   padding: 16px;
+
   height: 80dvh;
   position: fixed;
 `;
