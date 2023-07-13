@@ -63,24 +63,6 @@ export const DivNotAppliedItem = styled.div`
   margin: 32px;
 `;
 
-export const PerNotFavoriteItem = styled.p`
+export const PerNotAppliedItem = styled.p`
   color: #a1a1a1;
-`;
-export const ButtonWrapper = styled.button`
-  border-radius: 8px;
-  height: 40px;
-  width: 400px;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  background-color: #20b2aa;
-  border: 2px solid #20b2aa;
-  color: white;
-`;
-
-export const ParText = styled.p`
-  color: "white";
-  text-align: center;
 `;

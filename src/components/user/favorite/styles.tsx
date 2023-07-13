@@ -21,6 +21,7 @@ export const DivWrapperContent = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
 export const HeadSummaryTitle = styled.h3`
   font-size: 20px;
   font-weight: bold;
@@ -43,7 +44,7 @@ export const DivItems = styled.div`
 `;
 
 export const PerFavorite = styled.p`
-  color: #20b2aa;
+  color: #1976d2;
 `;
 
 export const DivProjectList = styled.div`
@@ -65,22 +66,4 @@ export const DivNotFavoriteItem = styled.div`
 
 export const PerNotFavoriteItem = styled.p`
   color: #a1a1a1;
-`;
-export const ButtonWrapper = styled.button`
-  border-radius: 8px;
-  height: 40px;
-  width: 400px;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  background-color: #20b2aa;
-  border: 2px solid #20b2aa;
-  color: white;
-`;
-
-export const ParText = styled.p`
-  color: "white";
-  text-align: center;
 `;

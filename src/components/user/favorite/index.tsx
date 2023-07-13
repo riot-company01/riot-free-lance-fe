@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
@@ -35,9 +36,13 @@ export const Fovarite = () => {
                 <Styles.PerNotFavoriteItem>まだお気に入りの案件はありません</Styles.PerNotFavoriteItem>
               </Styles.DivNotFavoriteItem>
 
-              <Styles.ButtonWrapper name="searchProjectButton" onClick={() => handleSearchProjectButtonClick()}>
-                <Styles.ParText>案件を探す</Styles.ParText>
-              </Styles.ButtonWrapper>
+              <Button
+                name="searchProjectButton"
+                onClick={() => handleSearchProjectButtonClick()}
+                style={{ height: "40px", width: "400px" }}
+              >
+                案件を探す
+              </Button>
             </Styles.DivNotFavoriteContents>
           )}
         </Styles.DivProjectList>

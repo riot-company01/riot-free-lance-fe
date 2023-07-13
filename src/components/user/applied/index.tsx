@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
@@ -30,12 +31,16 @@ export const Applied = () => {
           ) : ( */}
           <Styles.DivNotAppliedContents>
             <Styles.DivNotAppliedItem>
-              <Styles.PerNotFavoriteItem>まだ応募した案件はありません</Styles.PerNotFavoriteItem>
+              <Styles.PerNotAppliedItem>まだ応募した案件はありません</Styles.PerNotAppliedItem>
             </Styles.DivNotAppliedItem>
 
-            <Styles.ButtonWrapper name="searchProjectButton" onClick={() => handleSearchProjectButtonClick()}>
-              <Styles.ParText>案件を探す</Styles.ParText>
-            </Styles.ButtonWrapper>
+            <Button
+              name="searchProjectButton"
+              onClick={() => handleSearchProjectButtonClick()}
+              style={{ height: "40px", width: "400px" }}
+            >
+              案件を探す
+            </Button>
           </Styles.DivNotAppliedContents>
           {/* )} */}
         </Styles.DivProjectList>
