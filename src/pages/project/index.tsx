@@ -1,9 +1,10 @@
-import { ProjectList } from "@/components/project/list";
-import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
-import { GetUserDocument, GetUserQuery, GetUserQueryVariables } from "@/lib/graphql/graphql";
-import { slackUrlVar } from "@/stores";
-import Loading from "react-loading";
 import { useQuery } from "@apollo/client";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
+import Loading from "react-loading";
+import { ProjectList } from "@/components/project/list";
+import type { GetUserQuery, GetUserQueryVariables } from "@/lib/graphql/graphql";
+import { GetUserDocument } from "@/lib/graphql/graphql";
+import { slackUrlVar } from "@/stores";
 
 function ProjectPage() {
   const { user } = useUser();
