@@ -40,6 +40,10 @@ export const DivPortfolioWrapper = styled.div`
 
 export const DivPortfoliLink = styled.div`
   margin: 16px;
+  > a {
+    color: black;
+    text-decoration-color: black;
+  }
 `;
 
 export const PerUploadFile = styled.p`
