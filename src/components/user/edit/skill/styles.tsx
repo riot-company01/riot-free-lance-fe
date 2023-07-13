@@ -33,8 +33,13 @@ export const HeadContentTitle = styled.h3`
   font-weight: bold;
 `;
 
-export const DivWrpper = styled.div`
-  margin: 8px 0 8px 16px;
+export const DivPortfolioWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const DivPortfoliLink = styled.div`
+  margin: 16px;
 `;
 
 export const PerUploadFile = styled.p`

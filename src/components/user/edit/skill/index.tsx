@@ -1,4 +1,4 @@
-import { Button, TextareaAutosize, TextField } from "@mui/material";
+import { Button, Link, TextareaAutosize, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
 import { Tag } from "@/components/user/edit/common/tag";
@@ -10,6 +10,7 @@ import { ProfessionalExperience } from "@/components/user/edit/skill/professiona
 import { FileUpload } from "@/components/user/profile/common/file-upload";
 import { PATHS } from "@/const/paths";
 import { myStyle } from "@/components/user/edit/const";
+import LaunchIcon from "@mui/icons-material/Launch";
 
 export const EditSkill = () => {
   const { push } = useRouter();
@@ -74,16 +75,23 @@ export const EditSkill = () => {
             <Styles.HeadContentTitle>ポートフォリオ・GitHub</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <TextField
-            variant="outlined"
-            sx={myStyle}
-            name="portfolio"
-            value={portfolio}
-            placeholder="https://github.com/"
-            style={{ width: "458px" }}
-            onChange={onChangePortfolio}
-          />
-          {portfolioUrl && <Styles.DivWrpper>{portfolioUrl}</Styles.DivWrpper>}
+          <Styles.DivPortfolioWrapper>
+            <TextField
+              variant="outlined"
+              sx={myStyle}
+              name="portfolio"
+              value={portfolio}
+              placeholder="https://github.com/"
+              style={{ width: "458px" }}
+              onChange={onChangePortfolio}
+            />
+            {portfolioUrl && (
+              <Styles.DivPortfoliLink>
+                <Link href={portfolioUrl}>{portfolioUrl}</Link>
+                <LaunchIcon style={{ fontSize: "24px" }} />
+              </Styles.DivPortfoliLink>
+            )}
+          </Styles.DivPortfolioWrapper>
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
