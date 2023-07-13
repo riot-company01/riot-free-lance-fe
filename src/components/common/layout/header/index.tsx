@@ -5,7 +5,7 @@ import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import NextLink from "next/link";
 
-export const Layout: React.FC = () => {
+export const LayoutHeader: React.FC = () => {
   return (
     <Wrapper>
       <FlexContainer>
@@ -69,7 +69,7 @@ const LastList = styled.div`
   padding-right: 20px;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.header`
   position: fixed;
   z-index: 1000;
   height: 78px;
