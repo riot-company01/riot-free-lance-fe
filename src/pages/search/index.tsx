@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { initializeApollo } from "@/lib/apollo/client";
-import type { GetSkillsQuery, GetSkillsQueryVariables } from "@/lib/graphql/graphql";
+import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 import { GetSkillsDocument } from "@/lib/graphql/graphql";
 
 const category = [
@@ -17,7 +17,9 @@ const category = [
 ];
 
 function Search({ data }: { data: GetSkillsQuery }) {
-  console.log(data);
+  const lang = data.skills.filter((value) => value.type == "LANG");
+  const library = data.skills.filter((value) => value.type == "FW/LIBRARY");
+
   return (
     <Wrapper>
       <Head1>ジャンル一覧</Head1>
@@ -26,31 +28,32 @@ function Search({ data }: { data: GetSkillsQuery }) {
           return <FlexItem key={idx}>{value}</FlexItem>;
         })}
       </FlexContainer>
-
-      {/* TODO APIのデータに差し替え */}
-      {category.map((i, idx) => {
-        return (
-          <Head2 key={idx}>
-            {/* {i}
-            <Grid>
-              {mock.map((i) => {
-                return (
-                  <>
-                    {i.words.map((v) => {
-                      return <KeywordLabel>{v}</KeywordLabel>;
-                    })}
-                  </>
-                );
-              })}
-            </Grid> */}
-          </Head2>
-        );
-      })}
+      <Head2>開発言語</Head2>
+      <Grid>
+        {lang.map((value, idx) => {
+          return <KeywordLabel key={idx}>{value.name}</KeywordLabel>;
+        })}
+      </Grid>
+      <Head2>FW/Library</Head2>
+      <Grid>
+        {library.map((value, idx) => {
+          return <KeywordLabel key={idx}>{value.name}</KeywordLabel>;
+        })}
+      </Grid>
     </Wrapper>
   );
 }
 
 export default Search;
+
+export async function getServerSideProps() {
+  const { data } = await initializeApollo().query({
+    query: GetSkillsDocument,
+  });
+  return {
+    props: { data },
+  };
+}
 
 const Wrapper = styled.div`
   padding: 0 16px;
@@ -75,28 +78,20 @@ const Head1 = styled.div`
 `;
 
 const Head2 = styled.div`
+  padding-top: 32px;
   font-size: 20px;
 `;
 
-// const KeywordLabel = styled.div`
-//   padding: 9px 16px;
-//   display: flex;
-//   border: 1px solid rgb(224, 224, 224);
-//   font-size: 14px;
-//   align-items: center;
-// `;
+const KeywordLabel = styled.div`
+  padding: 9px 16px;
+  display: flex;
+  border: 1px solid rgb(224, 224, 224);
+  font-size: 14px;
+  align-items: center;
+`;
 
-// const Grid = styled.div`
-//   display: grid;
-//   padding-top: 8px;
-//   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-// `;
-
-export async function getServerSideProps() {
-  const { data } = await initializeApollo().query<GetSkillsQuery, GetSkillsQueryVariables>({
-    query: GetSkillsDocument,
-  });
-  return {
-    props: { data },
-  };
-}
+const Grid = styled.div`
+  display: grid;
+  padding-top: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+`;

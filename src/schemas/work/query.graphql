@@ -1,0 +1,24 @@
+query GetWork @cached {
+  work_aggregate {
+    aggregate {
+      count
+    }
+  }
+  work {
+    contractType
+    id
+    location
+    maxMonthlyPrice
+    maxWorkHours
+    minMonthlyPrice
+    minWorkHours
+    title
+    developmentLanguages {
+      skill {
+        id
+        name
+        type
+      }
+    }
+  }
+}

@@ -14,5 +14,5 @@ module.exports = {
   // インデントをスペースで付与する
   useTabs: false,
   // 120 文字で改行をする
-  printWidth: 120,
+  printWidth: 150,
 };
