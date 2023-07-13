@@ -17,7 +17,7 @@ export const WORKS_Z_INDEX = {
 
 export default function Works({ data }: { data: GetWorkQuery }) {
   const work = data.work[0];
-  console.log(work);
+
   return (
     <Wrapper>
       <NavigContainer>
@@ -235,24 +235,28 @@ const MonthlyPrice = styled.div`
 
 const Navig = styled.div`
   padding: 16px;
-  height: 100dvh;
   width: 160px;
-  position: fixed;
-  overflow: auto;
 `;
 
 const NavigContainer = styled.div`
   min-width: 160px;
-  height: 80dvh;
+  position: sticky;
+  top: 78px;
+  overflow: auto;
+  height: calc(100dvh - 78px);
 `;
 
 const KeyWordContainer = styled.div`
   display: flex;
+  width: 100%;
+  flex-direction: column;
 `;
 
 const KeyWordFixed = styled.div`
   height: 136px;
-  position: fixed;
+  width: 100%;
+  position: sticky;
+  top: 78px;
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
   width: calc(100% - 160px);
@@ -261,7 +265,7 @@ const KeyWordFixed = styled.div`
 `;
 
 const WorksContainer = styled.div`
-  position: absolute;
+  position: sticky;
   display: flex;
   top: 214px;
   width: calc(100% - 160px);
@@ -270,8 +274,6 @@ const WorksContainer = styled.div`
 
 const DetailContainer = styled.div`
   padding: 16px;
-
-  height: 80dvh;
   position: fixed;
 `;
 
