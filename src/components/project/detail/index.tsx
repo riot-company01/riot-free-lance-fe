@@ -82,12 +82,6 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
       <Styles.DivButtonWrapper>
         <Button
-          text="この案件に応募する"
-          borderColor={"#5a85fa"}
-          backGroundCalor="#5a85fa"
-          onClick={onClickApplication}
-        />
-        <Button
           text="案件のURLをコピーする"
           borderColor={"#949793"}
           backGroundCalor="#949793"

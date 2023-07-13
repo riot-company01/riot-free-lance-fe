@@ -1,3 +1,4 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
@@ -6,19 +7,22 @@ import Paper from "@mui/material/Paper";
 import NextLink from "next/link";
 
 export const Layout: React.FC = () => {
+  const { user } = useUser();
+
   return (
     <Wrapper>
       <FlexContainer>
-        <NextLink href="#">
-          <List>
+        <List>
+          <NextLink href="#">
             <Logo src="images/company-logo.png" alt="ライオット" />
-          </List>
-        </NextLink>
+          </NextLink>
+        </List>
+      </FlexContainer>
 
+      <FlexContainer>
         <List>
           <CustomizedInputBase />
         </List>
-
         <NextLink href="#">
           <List>検索履歴</List>
         </NextLink>
@@ -45,6 +49,12 @@ export const Layout: React.FC = () => {
         <NextLink href="#">
           <LastList>新規登録</LastList>
         </NextLink>
+        <NextLink href="/api/auth/logout">
+          <List>{user?.name}</List>
+        </NextLink>
+        <NextLink href="/api/auth/logout">
+          <LastList>ログアウト</LastList>
+        </NextLink>
       </FlexContainer>
     </Wrapper>
   );
@@ -70,14 +80,14 @@ const LastList = styled.div`
 `;
 
 const Wrapper = styled.div`
-  position: fixed;
-  z-index: 1000;
+  position: sticky;
   height: 78px;
   display: flex;
   top: 0;
   justify-content: space-between;
   width: 100%;
   background-color: #f5f5f5;
+  border-bottom: 1px solid #dee2e6;
 `;
 
 export function CustomizedInputBase() {
