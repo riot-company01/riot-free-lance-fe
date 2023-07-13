@@ -1,4 +1,3 @@
-import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
@@ -7,22 +6,19 @@ import Paper from "@mui/material/Paper";
 import NextLink from "next/link";
 
 export const Layout: React.FC = () => {
-  const { user } = useUser();
-
   return (
     <Wrapper>
       <FlexContainer>
-        <List>
-          <NextLink href="#">
+        <NextLink href="#">
+          <List>
             <Logo src="images/company-logo.png" alt="ライオット" />
-          </NextLink>
-        </List>
-      </FlexContainer>
+          </List>
+        </NextLink>
 
-      <FlexContainer>
         <List>
           <CustomizedInputBase />
         </List>
+
         <NextLink href="#">
           <List>検索履歴</List>
         </NextLink>
@@ -43,11 +39,11 @@ export const Layout: React.FC = () => {
         <NextLink href="#">
           <List>情報</List>
         </NextLink>
-        <NextLink href="/api/auth/logout">
-          <List>{user?.name}</List>
+        <NextLink href="#">
+          <List>ログイン</List>
         </NextLink>
-        <NextLink href="/api/auth/logout">
-          <LastList>ログアウト</LastList>
+        <NextLink href="#">
+          <LastList>新規登録</LastList>
         </NextLink>
       </FlexContainer>
     </Wrapper>
