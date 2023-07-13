@@ -1,4 +1,4 @@
-import { useQuery, useReactiveVar } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { Button } from "../../common/button";
 import { KeywordTag } from "../common/keyword-tag";
@@ -7,7 +7,6 @@ import * as Styles from "./styles";
 import { PATHS } from "@/const/paths";
 import type { GetDetailProjectQuery, GetDetailProjectQueryVariables } from "@/lib/graphql/graphql";
 import { GetDetailProjectDocument } from "@/lib/graphql/graphql";
-import { slackUrlVar } from "@/stores";
 
 type ProjectDetailType = {
   projectId: string | string[] | undefined;
@@ -20,16 +19,8 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
       id: Number(projectId),
     },
   });
-  const slackUrl = useReactiveVar(slackUrlVar);
-  const projectDetailData = data?.project[0];
 
-  const onClickApplication = () => {
-    if (slackUrl) {
-      window.open(slackUrl);
-    } else {
-      alert("担当営業にURLを送ってください！");
-    }
-  };
+  const projectDetailData = data?.project[0];
 
   const copyUrlHandler = async () => {
     const currentUrl = location.href;
@@ -82,26 +73,12 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
 
       <Styles.DivButtonWrapper>
         <Button
-          text="この案件に応募する"
-          borderColor={"#5a85fa"}
-          backGroundCalor="#5a85fa"
-          onClick={onClickApplication}
-          borderRadius={28}
-        />
-        <Button
           text="案件のURLをコピーする"
           borderColor={"#949793"}
           backGroundCalor="#949793"
-          borderRadius={28}
           onClick={copyUrlHandler}
         />
-        <Button
-          text="案件一覧にもどる"
-          borderColor={"#fa5a5a"}
-          backGroundCalor="#fa5a5a"
-          borderRadius={28}
-          onClick={onClickBackToList}
-        />
+        <Button text="案件一覧にもどる" borderColor={"#fa5a5a"} backGroundCalor="#fa5a5a" onClick={onClickBackToList} />
       </Styles.DivButtonWrapper>
     </Styles.DivWrapper>
   );

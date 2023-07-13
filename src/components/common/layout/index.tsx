@@ -71,6 +71,7 @@ const LastList = styled.div`
 
 const Wrapper = styled.div`
   position: fixed;
+  z-index: 1000;
   height: 78px;
   display: flex;
   top: 0;
@@ -82,11 +83,7 @@ const Wrapper = styled.div`
 export function CustomizedInputBase() {
   return (
     <Paper component="form" sx={{ display: "flex", alignItems: "center", width: 300 }}>
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="キーワード検索 例:React"
-        inputProps={{ "aria-label": "キーワード検索 例:React" }}
-      />
+      <InputBase sx={{ ml: 1, flex: 1 }} placeholder="キーワード検索 例:React" inputProps={{ "aria-label": "キーワード検索 例:React" }} />
       <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
         <SearchIcon />
       </IconButton>

@@ -72,9 +72,157 @@ export enum Cursor_Ordering {
   Desc = 'DESC'
 }
 
+/** 開発言語 */
+export type Development_Language = {
+  __typename?: 'development_language';
+  /** An object relationship */
+  skill?: Maybe<Skills>;
+  skill_id?: Maybe<Scalars['Int']['output']>;
+  worl_id: Scalars['Int']['output'];
+};
+
+/** order by aggregate values of table "development_language" */
+export type Development_Language_Aggregate_Order_By = {
+  avg?: InputMaybe<Development_Language_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Development_Language_Max_Order_By>;
+  min?: InputMaybe<Development_Language_Min_Order_By>;
+  stddev?: InputMaybe<Development_Language_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Development_Language_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Development_Language_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Development_Language_Sum_Order_By>;
+  var_pop?: InputMaybe<Development_Language_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Development_Language_Var_Samp_Order_By>;
+  variance?: InputMaybe<Development_Language_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "development_language" */
+export type Development_Language_Arr_Rel_Insert_Input = {
+  data: Array<Development_Language_Insert_Input>;
+};
+
+/** order by avg() on columns of table "development_language" */
+export type Development_Language_Avg_Order_By = {
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "development_language". All fields are combined with a logical 'AND'. */
+export type Development_Language_Bool_Exp = {
+  _and?: InputMaybe<Array<Development_Language_Bool_Exp>>;
+  _not?: InputMaybe<Development_Language_Bool_Exp>;
+  _or?: InputMaybe<Array<Development_Language_Bool_Exp>>;
+  skill?: InputMaybe<Skills_Bool_Exp>;
+  skill_id?: InputMaybe<Int_Comparison_Exp>;
+  worl_id?: InputMaybe<Int_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "development_language" */
+export type Development_Language_Insert_Input = {
+  skill?: InputMaybe<Skills_Obj_Rel_Insert_Input>;
+  skill_id?: InputMaybe<Scalars['Int']['input']>;
+  worl_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** order by max() on columns of table "development_language" */
+export type Development_Language_Max_Order_By = {
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
+/** order by min() on columns of table "development_language" */
+export type Development_Language_Min_Order_By = {
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "development_language" */
+export type Development_Language_Mutation_Response = {
+  __typename?: 'development_language_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Development_Language>;
+};
+
+/** Ordering options when selecting data from "development_language". */
+export type Development_Language_Order_By = {
+  skill?: InputMaybe<Skills_Order_By>;
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "development_language" */
+export enum Development_Language_Select_Column {
+  /** column name */
+  SkillId = 'skill_id',
+  /** column name */
+  WorlId = 'worl_id'
+}
+
+/** order by stddev() on columns of table "development_language" */
+export type Development_Language_Stddev_Order_By = {
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "development_language" */
+export type Development_Language_Stddev_Pop_Order_By = {
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "development_language" */
+export type Development_Language_Stddev_Samp_Order_By = {
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "development_language" */
+export type Development_Language_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Development_Language_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Development_Language_Stream_Cursor_Value_Input = {
+  skill_id?: InputMaybe<Scalars['Int']['input']>;
+  worl_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** order by sum() on columns of table "development_language" */
+export type Development_Language_Sum_Order_By = {
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
+/** order by var_pop() on columns of table "development_language" */
+export type Development_Language_Var_Pop_Order_By = {
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "development_language" */
+export type Development_Language_Var_Samp_Order_By = {
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
+/** order by variance() on columns of table "development_language" */
+export type Development_Language_Variance_Order_By = {
+  skill_id?: InputMaybe<Order_By>;
+  worl_id?: InputMaybe<Order_By>;
+};
+
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** insert data into the table: "development_language" */
+  insert_development_language?: Maybe<Development_Language_Mutation_Response>;
+  /** insert a single row into the table: "development_language" */
+  insert_development_language_one?: Maybe<Development_Language>;
   /** insert data into the table: "project" */
   insert_project?: Maybe<Project_Mutation_Response>;
   /** insert a single row into the table: "project" */
@@ -83,6 +231,22 @@ export type Mutation_Root = {
   insert_skills?: Maybe<Skills_Mutation_Response>;
   /** insert a single row into the table: "skills" */
   insert_skills_one?: Maybe<Skills>;
+  /** insert data into the table: "work" */
+  insert_work?: Maybe<Work_Mutation_Response>;
+  /** insert a single row into the table: "work" */
+  insert_work_one?: Maybe<Work>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Development_LanguageArgs = {
+  objects: Array<Development_Language_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Development_Language_OneArgs = {
+  object: Development_Language_Insert_Input;
 };
 
 
@@ -111,6 +275,20 @@ export type Mutation_RootInsert_SkillsArgs = {
 export type Mutation_RootInsert_Skills_OneArgs = {
   object: Skills_Insert_Input;
   on_conflict?: InputMaybe<Skills_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_WorkArgs = {
+  objects: Array<Work_Insert_Input>;
+  on_conflict?: InputMaybe<Work_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Work_OneArgs = {
+  object: Work_Insert_Input;
+  on_conflict?: InputMaybe<Work_On_Conflict>;
 };
 
 /** Boolean expression to compare columns of type "name". All fields are combined with logical 'AND'. */
@@ -345,6 +523,8 @@ export enum Project_Update_Column {
 
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "development_language" */
+  development_language: Array<Development_Language>;
   /** fetch data from the table: "project" */
   project: Array<Project>;
   /** fetch data from the table: "project" using primary key columns */
@@ -357,6 +537,19 @@ export type Query_Root = {
   users: Array<Users>;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
+  /** fetch data from the table: "work" */
+  work: Array<Work>;
+  /** fetch data from the table: "work" using primary key columns */
+  work_by_pk?: Maybe<Work>;
+};
+
+
+export type Query_RootDevelopment_LanguageArgs = {
+  distinct_on?: InputMaybe<Array<Development_Language_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Development_Language_Order_By>>;
+  where?: InputMaybe<Development_Language_Bool_Exp>;
 };
 
 
@@ -401,6 +594,20 @@ export type Query_RootUsers_By_PkArgs = {
   id: Scalars['String']['input'];
 };
 
+
+export type Query_RootWorkArgs = {
+  distinct_on?: InputMaybe<Array<Work_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Work_Order_By>>;
+  where?: InputMaybe<Work_Bool_Exp>;
+};
+
+
+export type Query_RootWork_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
 /** スキル */
 export type Skills = {
   __typename?: 'skills';
@@ -439,6 +646,13 @@ export type Skills_Mutation_Response = {
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<Skills>;
+};
+
+/** input type for inserting object relation for remote table "skills" */
+export type Skills_Obj_Rel_Insert_Input = {
+  data: Skills_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Skills_On_Conflict>;
 };
 
 /** on_conflict condition type for table "skills" */
@@ -488,6 +702,10 @@ export enum Skills_Update_Column {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "development_language" */
+  development_language: Array<Development_Language>;
+  /** fetch data from the table in a streaming manner: "development_language" */
+  development_language_stream: Array<Development_Language>;
   /** fetch data from the table: "project" */
   project: Array<Project>;
   /** fetch data from the table: "project" using primary key columns */
@@ -506,6 +724,28 @@ export type Subscription_Root = {
   users_by_pk?: Maybe<Users>;
   /** fetch data from the table in a streaming manner: "users" */
   users_stream: Array<Users>;
+  /** fetch data from the table: "work" */
+  work: Array<Work>;
+  /** fetch data from the table: "work" using primary key columns */
+  work_by_pk?: Maybe<Work>;
+  /** fetch data from the table in a streaming manner: "work" */
+  work_stream: Array<Work>;
+};
+
+
+export type Subscription_RootDevelopment_LanguageArgs = {
+  distinct_on?: InputMaybe<Array<Development_Language_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Development_Language_Order_By>>;
+  where?: InputMaybe<Development_Language_Bool_Exp>;
+};
+
+
+export type Subscription_RootDevelopment_Language_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Development_Language_Stream_Cursor_Input>>;
+  where?: InputMaybe<Development_Language_Bool_Exp>;
 };
 
 
@@ -569,6 +809,27 @@ export type Subscription_RootUsers_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Users_Stream_Cursor_Input>>;
   where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootWorkArgs = {
+  distinct_on?: InputMaybe<Array<Work_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Work_Order_By>>;
+  where?: InputMaybe<Work_Bool_Exp>;
+};
+
+
+export type Subscription_RootWork_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootWork_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Work_Stream_Cursor_Input>>;
+  where?: InputMaybe<Work_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -640,6 +901,141 @@ export type Users_Stream_Cursor_Value_Input = {
   slackUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** 案件一覧を管理するテーブル */
+export type Work = {
+  __typename?: 'work';
+  contractType?: Maybe<Scalars['String']['output']>;
+  /** An array relationship */
+  developmentLanguages: Array<Development_Language>;
+  id: Scalars['Int']['output'];
+  location?: Maybe<Scalars['String']['output']>;
+  maxMonthlyPrice?: Maybe<Scalars['Int']['output']>;
+  maxWorkHours?: Maybe<Scalars['Int']['output']>;
+  minMonthlyPrice?: Maybe<Scalars['Int']['output']>;
+  minWorkHours?: Maybe<Scalars['Int']['output']>;
+  title: Scalars['String']['output'];
+};
+
+
+/** 案件一覧を管理するテーブル */
+export type WorkDevelopmentLanguagesArgs = {
+  distinct_on?: InputMaybe<Array<Development_Language_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Development_Language_Order_By>>;
+  where?: InputMaybe<Development_Language_Bool_Exp>;
+};
+
+/** Boolean expression to filter rows from the table "work". All fields are combined with a logical 'AND'. */
+export type Work_Bool_Exp = {
+  _and?: InputMaybe<Array<Work_Bool_Exp>>;
+  _not?: InputMaybe<Work_Bool_Exp>;
+  _or?: InputMaybe<Array<Work_Bool_Exp>>;
+  contractType?: InputMaybe<String_Comparison_Exp>;
+  developmentLanguages?: InputMaybe<Development_Language_Bool_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  location?: InputMaybe<String_Comparison_Exp>;
+  maxMonthlyPrice?: InputMaybe<Int_Comparison_Exp>;
+  maxWorkHours?: InputMaybe<Int_Comparison_Exp>;
+  minMonthlyPrice?: InputMaybe<Int_Comparison_Exp>;
+  minWorkHours?: InputMaybe<Int_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "work" */
+export enum Work_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  WorkPkey = 'work_pkey'
+}
+
+/** input type for inserting data into table "work" */
+export type Work_Insert_Input = {
+  contractType?: InputMaybe<Scalars['String']['input']>;
+  developmentLanguages?: InputMaybe<Development_Language_Arr_Rel_Insert_Input>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  minMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  minWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** response of any mutation on the table "work" */
+export type Work_Mutation_Response = {
+  __typename?: 'work_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Work>;
+};
+
+/** on_conflict condition type for table "work" */
+export type Work_On_Conflict = {
+  constraint: Work_Constraint;
+  update_columns?: Array<Work_Update_Column>;
+  where?: InputMaybe<Work_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "work". */
+export type Work_Order_By = {
+  contractType?: InputMaybe<Order_By>;
+  developmentLanguages_aggregate?: InputMaybe<Development_Language_Aggregate_Order_By>;
+  id?: InputMaybe<Order_By>;
+  location?: InputMaybe<Order_By>;
+  maxMonthlyPrice?: InputMaybe<Order_By>;
+  maxWorkHours?: InputMaybe<Order_By>;
+  minMonthlyPrice?: InputMaybe<Order_By>;
+  minWorkHours?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "work" */
+export enum Work_Select_Column {
+  /** column name */
+  ContractType = 'contractType',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Location = 'location',
+  /** column name */
+  MaxMonthlyPrice = 'maxMonthlyPrice',
+  /** column name */
+  MaxWorkHours = 'maxWorkHours',
+  /** column name */
+  MinMonthlyPrice = 'minMonthlyPrice',
+  /** column name */
+  MinWorkHours = 'minWorkHours',
+  /** column name */
+  Title = 'title'
+}
+
+/** Streaming cursor of the table "work" */
+export type Work_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Work_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Work_Stream_Cursor_Value_Input = {
+  contractType?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  minMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  minWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** placeholder for update columns of table "work" (current role has no relevant permissions) */
+export enum Work_Update_Column {
+  /** placeholder (do not use) */
+  Placeholder = '_PLACEHOLDER'
+}
+
 export type GetAllProjectQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -664,8 +1060,14 @@ export type GetUserQueryVariables = Exact<{
 
 export type GetUserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, name: string, last_seen: any, slackUrl?: string | null }> };
 
+export type GetWorkQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetWorkQuery = { __typename?: 'query_root', work: Array<{ __typename?: 'work', contractType?: string | null, id: number, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, title: string, developmentLanguages: Array<{ __typename?: 'development_language', skill?: { __typename?: 'skills', name?: string | null, type?: string | null, id: number } | null }> }> };
+
 
 export const GetAllProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllProject"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"keyword"}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllProjectQuery, GetAllProjectQueryVariables>;
 export const GetDetailProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDetailProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"businessContent"}},{"kind":"Field","name":{"kind":"Name","value":"contentBusiness"}},{"kind":"Field","name":{"kind":"Name","value":"developmentEnvironment"}},{"kind":"Field","name":{"kind":"Name","value":"keyword"}},{"kind":"Field","name":{"kind":"Name","value":"personnelSought"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentBackground"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNumber"}},{"kind":"Field","name":{"kind":"Name","value":"requiredSkills"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeSkills"}},{"kind":"Field","name":{"kind":"Name","value":"workingConditions"}}]}}]}}]} as unknown as DocumentNode<GetDetailProjectQuery, GetDetailProjectQueryVariables>;
 export const GetSkillsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSkills"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skills"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]} as unknown as DocumentNode<GetSkillsQuery, GetSkillsQueryVariables>;
 export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"last_seen"}},{"kind":"Field","name":{"kind":"Name","value":"slackUrl"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
+export const GetWorkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWork"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"developmentLanguages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkQuery, GetWorkQueryVariables>;

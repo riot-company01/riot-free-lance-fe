@@ -28,10 +28,6 @@ export const DivTitleWrapper = styled.div`
   display: flex;
 `;
 
-export const DivWrpper = styled.div`
-  margin: 8px 0 8px 16px;
-`;
-
 export const DivButtonWrapper = styled.div`
   display: flex;
   justify-content: space-around;

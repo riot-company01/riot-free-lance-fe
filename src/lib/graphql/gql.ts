@@ -16,6 +16,7 @@ const documents = {
     "query GetAllProject @cached {\n  project {\n    id\n    keyword\n    projectName\n    price\n  }\n}\n\nquery GetDetailProject($id: Int) @cached {\n  project(where: {id: {_eq: $id}}) {\n    id\n    businessContent\n    contentBusiness\n    developmentEnvironment\n    keyword\n    personnelSought\n    price\n    projectName\n    recruitmentBackground\n    recruitmentNumber\n    requiredSkills\n    welcomeSkills\n    workingConditions\n  }\n}": types.GetAllProjectDocument,
     "query GetSkills {\n  skills {\n    id\n    name\n    type\n  }\n}": types.GetSkillsDocument,
     "query GetUser($id: String) {\n  users(where: {id: {_eq: $id}}) {\n    id\n    name\n    last_seen\n    slackUrl\n  }\n}": types.GetUserDocument,
+    "query GetWork @cached {\n  work {\n    contractType\n    id\n    location\n    maxMonthlyPrice\n    maxWorkHours\n    minMonthlyPrice\n    minWorkHours\n    title\n    developmentLanguages {\n      skill {\n        name\n        type\n        id\n      }\n    }\n  }\n}": types.GetWorkDocument,
 };
 
 /**
@@ -44,6 +45,10 @@ export function graphql(source: "query GetSkills {\n  skills {\n    id\n    name
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query GetUser($id: String) {\n  users(where: {id: {_eq: $id}}) {\n    id\n    name\n    last_seen\n    slackUrl\n  }\n}"): (typeof documents)["query GetUser($id: String) {\n  users(where: {id: {_eq: $id}}) {\n    id\n    name\n    last_seen\n    slackUrl\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetWork @cached {\n  work {\n    contractType\n    id\n    location\n    maxMonthlyPrice\n    maxWorkHours\n    minMonthlyPrice\n    minWorkHours\n    title\n    developmentLanguages {\n      skill {\n        name\n        type\n        id\n      }\n    }\n  }\n}"): (typeof documents)["query GetWork @cached {\n  work {\n    contractType\n    id\n    location\n    maxMonthlyPrice\n    maxWorkHours\n    minMonthlyPrice\n    minWorkHours\n    title\n    developmentLanguages {\n      skill {\n        name\n        type\n        id\n      }\n    }\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
