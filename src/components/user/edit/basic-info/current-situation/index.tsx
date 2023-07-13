@@ -19,7 +19,7 @@ export const CurrentSituation = () => {
               key={idx}
               name="selectedFreeLanceButton"
               onClick={() => handleButtonClick(item)}
-              style={{ height: "48px", width: "460px", margin: "4px" }}
+              style={{ height: "48px", width: "460px", margin: "4px", background: "#2c345c" }}
             >
               {item}
             </Button>

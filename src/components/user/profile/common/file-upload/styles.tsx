@@ -8,7 +8,7 @@ export const LabelFileUpload = styled.label`
   width: 280px;
   border-radius: 8px;
   color: #ffffff;
-  background-color: #1976d2;
+  background-color: #2c345c;
   cursor: pointer;
   > input {
     text-align: center;

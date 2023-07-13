@@ -18,10 +18,12 @@ export const Applied = () => {
           <Styles.DivSummary>
             <Styles.HeadSummaryTitle>案件管理</Styles.HeadSummaryTitle>
             <Styles.DivItems>
-              <Link href={"/user/favorite"}>お気に入り</Link>
+              <Link href={"/user/favorite"} passHref>
+                <Styles.PerApplied>お気に入り</Styles.PerApplied>
+              </Link>
             </Styles.DivItems>
             <Styles.DivItems>
-              <Styles.PerApplied>応募済み案件</Styles.PerApplied>
+              <p>応募済み案件</p>
             </Styles.DivItems>
           </Styles.DivSummary>
         </Styles.DivWrapper>
@@ -36,8 +38,9 @@ export const Applied = () => {
 
             <Button
               name="searchProjectButton"
+              variant="contained"
               onClick={() => handleSearchProjectButtonClick()}
-              style={{ height: "40px", width: "400px" }}
+              style={{ height: "40px", width: "400px", background: "#2c345c" }}
             >
               案件を探す
             </Button>

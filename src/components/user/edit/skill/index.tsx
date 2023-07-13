@@ -9,6 +9,7 @@ import { LanguageLibrary } from "@/components/user/edit/skill/language-library";
 import { ProfessionalExperience } from "@/components/user/edit/skill/professional-experience";
 import { FileUpload } from "@/components/user/profile/common/file-upload";
 import { PATHS } from "@/const/paths";
+import { myStyle } from "@/components/user/edit/const";
 
 export const EditSkill = () => {
   const { push } = useRouter();
@@ -75,6 +76,7 @@ export const EditSkill = () => {
           </Styles.DivTitleWrapper>
           <TextField
             variant="outlined"
+            sx={myStyle}
             name="portfolio"
             value={portfolio}
             placeholder="https://github.com/"
@@ -96,7 +98,13 @@ export const EditSkill = () => {
             maxRows={6}
             value={textArea}
             onChange={onChangeTextArea}
-            style={{ width: "945px", height: "250px", border: "1px solid #a1a1a1", borderRadius: "8px" }}
+            style={{
+              width: "945px",
+              height: "250px",
+              padding: "16px",
+              border: "1px solid #a1a1a1",
+              borderRadius: "8px",
+            }}
           />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
@@ -126,7 +134,7 @@ export const EditSkill = () => {
           variant="contained"
           name="keepButton"
           onClick={() => handleKeepButtonClick()}
-          style={{ height: "40px", width: "400px" }}
+          style={{ height: "40px", width: "400px", background: "#2c345c" }}
         >
           保存する
         </Button>

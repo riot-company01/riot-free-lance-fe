@@ -131,7 +131,7 @@ export const DesiredCondition = () => {
           variant="contained"
           name="keepButton"
           onClick={() => handleKeepButtonClick()}
-          style={{ height: "40px", width: "400px" }}
+          style={{ height: "40px", width: "400px", background: "#2c345c" }}
         >
           保存する
         </Button>

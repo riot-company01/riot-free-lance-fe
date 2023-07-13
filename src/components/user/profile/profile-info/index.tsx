@@ -17,7 +17,7 @@ export const ProfileInfo = ({ skillSheet }: ProfileInfoProps) => {
         <Styles.DivHeadItem>
           <Styles.HeadName>基本情報</Styles.HeadName>
           <Styles.AnchorItem href={"/user/edit"}>
-            <EditIcon style={{ fontSize: 16, color: "#1976d2", margin: "0 2px 5px 0" }} />
+            <EditIcon style={{ fontSize: 16, color: "#2C345C", margin: "0 2px 5px 0" }} />
             編集
           </Styles.AnchorItem>
         </Styles.DivHeadItem>
@@ -59,7 +59,7 @@ export const ProfileInfo = ({ skillSheet }: ProfileInfoProps) => {
         <Styles.DivHeadItem>
           <Styles.HeadName>開発スキル・経験</Styles.HeadName>
           <Styles.AnchorItem href="/user/edit-skill">
-            <EditIcon style={{ fontSize: 16, color: "#1976d2", marginBottom: "5px" }} />
+            <EditIcon style={{ fontSize: 16, color: "#2C345C", marginBottom: "5px" }} />
             編集
           </Styles.AnchorItem>
         </Styles.DivHeadItem>
@@ -105,7 +105,7 @@ export const ProfileInfo = ({ skillSheet }: ProfileInfoProps) => {
         <Styles.DivHeadItem>
           <Styles.HeadName>希望条件</Styles.HeadName>
           <Styles.AnchorItem href="/user/edit-desired-condition/">
-            <EditIcon style={{ fontSize: 16, color: "#1976d2", marginBottom: "5px" }} />
+            <EditIcon style={{ fontSize: 16, color: "#2C345C", marginBottom: "5px" }} />
             編集
           </Styles.AnchorItem>
         </Styles.DivHeadItem>

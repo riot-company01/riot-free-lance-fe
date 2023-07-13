@@ -44,7 +44,7 @@ export const DivItems = styled.div`
 `;
 
 export const PerFavorite = styled.p`
-  color: #1976d2;
+  color: #2c345c;
 `;
 
 export const DivProjectList = styled.div`

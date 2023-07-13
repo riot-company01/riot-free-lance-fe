@@ -23,7 +23,7 @@ export const LanguageLibrary = () => {
               key={idx}
               name="selectedLanguageButton"
               onClick={() => handleButtonClick(item)}
-              style={{ height: "48px", width: "150px", margin: "4px", textTransform: "none" }}
+              style={{ height: "48px", width: "150px", margin: "4px", textTransform: "none", background: "#2c345c" }}
             >
               {item}
             </Button>

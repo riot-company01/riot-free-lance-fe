@@ -1,8 +1,9 @@
-import { Button, Select } from "@mui/material";
+import { Button, FormControl, MenuItem, Select } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
 import * as Styles from "./styles";
 import { OPERATION_START_DATE } from "@/components/user/edit/desired-condition/operation-start-date/const";
+import { selectMyStyle } from "@/components/user/edit/const";
 
 export const OperationStartDate = () => {
   const [selectedOption, setSelectedOption] = useState("時期選択");
@@ -19,9 +20,9 @@ export const OperationStartDate = () => {
 
     for (let i = currentYear; i <= currentYear + 1; i++) {
       years.push(
-        <option key={i} value={i}>
+        <MenuItem key={i} value={i}>
           {i}
-        </option>
+        </MenuItem>
       );
     }
 
@@ -33,9 +34,9 @@ export const OperationStartDate = () => {
 
     for (let i = 1; i <= 12; i++) {
       months.push(
-        <option key={i} value={i}>
+        <MenuItem key={i} value={i}>
           {i}
-        </option>
+        </MenuItem>
       );
     }
 
@@ -60,7 +61,7 @@ export const OperationStartDate = () => {
               key={idx}
               name="selectedOperationStartDateButton"
               onClick={() => handleButtonClick(item)}
-              style={{ height: "48px", width: "308px", margin: "4px" }}
+              style={{ height: "48px", width: "308px", margin: "4px", background: "#2c345c" }}
             >
               {item}
             </Button>
@@ -82,14 +83,17 @@ export const OperationStartDate = () => {
 
       {selectedOption === "時期選択" && (
         <Styles.DivWrapper>
-          <Select value={selectedYear} onChange={selectYear} style={{ width: "380px", marginRight: "32px" }}>
-            {generateYearOptions()}
-          </Select>
+          <FormControl sx={selectMyStyle} variant="outlined" style={{ width: "380px", marginRight: "16px" }}>
+            <Select value={selectedYear} onChange={selectYear}>
+              {generateYearOptions()}
+            </Select>
+          </FormControl>
 
-          <Select value={selectedMonth} onChange={selectMonth} style={{ width: "200px", marginRight: "32px" }}>
-            {generateMonthOptions()}
-          </Select>
-
+          <FormControl sx={selectMyStyle} variant="outlined" style={{ width: "200px", marginLeft: "16px" }}>
+            <Select value={selectedMonth} onChange={selectMonth}>
+              {generateMonthOptions()}
+            </Select>
+          </FormControl>
           <Styles.DivWrapper>
             <Styles.PerNote>※案件開始可能時期を選択してください</Styles.PerNote>
           </Styles.DivWrapper>

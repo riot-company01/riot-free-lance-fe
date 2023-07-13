@@ -43,7 +43,7 @@ export const DivItems = styled.div`
 `;
 
 export const PerApplied = styled.p`
-  color: #20b2aa;
+  color: #2c345c;
 `;
 
 export const DivProjectList = styled.div`

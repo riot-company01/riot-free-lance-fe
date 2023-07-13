@@ -20,10 +20,12 @@ export const Fovarite = () => {
           <Styles.DivSummary>
             <Styles.HeadSummaryTitle>案件管理</Styles.HeadSummaryTitle>
             <Styles.DivItems>
-              <Styles.PerFavorite>お気に入り</Styles.PerFavorite>
+              <p>お気に入り</p>
             </Styles.DivItems>
             <Styles.DivItems>
-              <Link href={"/user/applied"}>応募済み案件を見る</Link>
+              <Link href={"/user/applied"} passHref>
+                <Styles.PerFavorite>応募済み案件を見る</Styles.PerFavorite>
+              </Link>
             </Styles.DivItems>
           </Styles.DivSummary>
         </Styles.DivWrapper>
@@ -37,9 +39,10 @@ export const Fovarite = () => {
               </Styles.DivNotFavoriteItem>
 
               <Button
+                variant="contained"
                 name="searchProjectButton"
                 onClick={() => handleSearchProjectButtonClick()}
-                style={{ height: "40px", width: "400px" }}
+                style={{ height: "40px", width: "400px", background: "#2c345c" }}
               >
                 案件を探す
               </Button>

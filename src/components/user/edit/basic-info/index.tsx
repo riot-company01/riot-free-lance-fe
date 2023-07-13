@@ -1,5 +1,5 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import { Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import { Tag } from "../common/tag";
 import { CurrentSituation } from "./current-situation";
@@ -7,6 +7,7 @@ import { useBasicInfo } from "./hooks/use-basic-info";
 import * as Styles from "./styles";
 import { SelectPrefecture } from "@/components/user/edit/basic-info/select-prefecture";
 import { PATHS } from "@/const/paths";
+import { myStyle, selectMyStyle } from "@/components/user/edit/const";
 
 export const EditBasicInfo = () => {
   const { user } = useUser();
@@ -79,6 +80,7 @@ export const EditBasicInfo = () => {
             <Tag isRequired />
           </Styles.DivTitleWrapper>
           <TextField
+            sx={myStyle}
             variant="outlined"
             name="userFirstName"
             value={userLastName}
@@ -94,6 +96,7 @@ export const EditBasicInfo = () => {
           </Styles.DivTitleWrapper>
           <TextField
             variant="outlined"
+            sx={myStyle}
             name="userFirstName"
             value={userFirstName}
             placeholder="例：太郎"
@@ -110,6 +113,7 @@ export const EditBasicInfo = () => {
           </Styles.DivTitleWrapper>
           <TextField
             variant="outlined"
+            sx={myStyle}
             type="text"
             name="userLastName"
             value={userLastNameKana}
@@ -125,6 +129,7 @@ export const EditBasicInfo = () => {
           </Styles.DivTitleWrapper>
           <TextField
             variant="outlined"
+            sx={myStyle}
             type="text"
             name="userFirstName"
             value={userFirstNameKana}
@@ -140,17 +145,22 @@ export const EditBasicInfo = () => {
           <Tag isRequired />
         </Styles.DivTitleWrapper>
         <div>
-          <Select value={selectedYear} onChange={selectYear} style={{ width: "380px", marginRight: "32px" }}>
-            {generateYearOptions()}
-          </Select>
+          <FormControl sx={selectMyStyle} variant="outlined" style={{ width: "380px", marginRight: "32px" }}>
+            <Select value={selectedYear} onChange={selectYear}>
+              {generateYearOptions()}
+            </Select>
+          </FormControl>
+          <FormControl sx={selectMyStyle} variant="outlined" style={{ width: "200px", marginRight: "32px" }}>
+            <Select value={selectedMonth} onChange={selectMonth}>
+              {generateMonthDayOptions(12)}
+            </Select>
+          </FormControl>
 
-          <Select value={selectedMonth} onChange={selectMonth} style={{ width: "200px", marginRight: "32px" }}>
-            {generateMonthDayOptions(12)}
-          </Select>
-
-          <Select value={selectedDay} onChange={selectDay} style={{ width: "200px" }}>
-            {generateMonthDayOptions(31)}
-          </Select>
+          <FormControl sx={selectMyStyle} variant="outlined" style={{ width: "200px" }}>
+            <Select value={selectedDay} onChange={selectDay}>
+              {generateMonthDayOptions(31)}
+            </Select>
+          </FormControl>
         </div>
       </Styles.DivWrpper>
       <Styles.DivWrpper>
@@ -161,6 +171,7 @@ export const EditBasicInfo = () => {
 
         <TextField
           variant="outlined"
+          sx={myStyle}
           type="text"
           name="mailAddres"
           value={mailAddress}
@@ -177,6 +188,7 @@ export const EditBasicInfo = () => {
 
         <TextField
           variant="outlined"
+          sx={myStyle}
           type="tel"
           name="phone"
           value={phoneNumber}
@@ -213,7 +225,7 @@ export const EditBasicInfo = () => {
           variant="contained"
           name="keepButton"
           onClick={() => handleKeepButtonClick()}
-          style={{ height: "40px", width: "400px" }}
+          style={{ height: "40px", width: "400px", background: "#2c345c" }}
         >
           保存する
         </Button>

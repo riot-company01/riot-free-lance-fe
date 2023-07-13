@@ -11,7 +11,7 @@ export const DivProfileInfoWrapper = styled.div`
 export const DivHeadItem = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 16px 0;
+  margin: 32px 0;
 `;
 
 export const HeadName = styled.h3`
@@ -20,16 +20,17 @@ export const HeadName = styled.h3`
 `;
 
 export const AnchorItem = styled.a`
-  color: #1976d2;
+  color: #2c345c;
 `;
 
 export const DivItem = styled.div`
-  margin-bottom: 8px;
+  margin-bottom: 20px;
 `;
 
 export const HeadTitle = styled.h4`
   font-size: 16px;
   font-weight: bold;
+  margin-bottom: 8px;
 `;
 
 export const PerItem = styled.p`

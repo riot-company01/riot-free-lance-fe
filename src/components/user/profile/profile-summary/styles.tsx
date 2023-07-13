@@ -37,7 +37,7 @@ export const SpanIcon = styled.span`
 `;
 
 export const AnchorItem = styled.a`
-  color: #1976d2;
+  color: #2c345c;
 `;
 
 export const DivItem = styled.div`

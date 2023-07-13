@@ -19,7 +19,7 @@ export const GLOBAL_STYLE = css`
     padding-top: 78px;
   }
   :is(input, textarea, button, select, a):focus-visible {
-    outline: 2px solid #20b2aa;
+    outline: 2px solid #2c345c;
     outline-offset: -2px;
   }
   html,

@@ -8,7 +8,7 @@ export const ProfileSummary = () => {
         <Styles.DivHeadFlex>
           <Styles.HeadName>名前</Styles.HeadName>
           <Styles.AnchorItem href={"/user/edit"}>
-            <EditIcon style={{ fontSize: 16, color: "#1976d2", marginBottom: "5px" }} />
+            <EditIcon style={{ fontSize: 16, color: "#2C345C", marginBottom: "5px" }} />
             編集
           </Styles.AnchorItem>
         </Styles.DivHeadFlex>
@@ -18,7 +18,7 @@ export const ProfileSummary = () => {
         </Styles.DivItem>
         <Styles.DivAddSkill>
           <Styles.AnchorItem href="/user/edit-skill">
-            <EditIcon style={{ fontSize: 16, color: "#1976d2", marginBottom: "5px" }} />
+            <EditIcon style={{ fontSize: 16, color: "#2C345C", marginBottom: "5px" }} />
             開発経験スキルを追加
           </Styles.AnchorItem>
         </Styles.DivAddSkill>
@@ -31,7 +31,7 @@ export const ProfileSummary = () => {
             <Styles.AnchorItem href="/user/favorite/">気になる案件</Styles.AnchorItem>
           </Styles.DivItem>
           <Styles.DivItem>
-            <Styles.AnchorItem href="">応募済み案件</Styles.AnchorItem>
+            <Styles.AnchorItem href="/user/applied/">応募済み案件</Styles.AnchorItem>
           </Styles.DivItem>
         </Styles.DivWrpperSituation>
       </Styles.DivWrapper>
