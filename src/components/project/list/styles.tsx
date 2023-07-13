@@ -3,7 +3,6 @@ import { SCREEN_SIZE } from "@/const/screen-size";
 
 export const Wrap = styled.div`
   display: flex;
-  height: 100vh;
 `;
 
 export const ProjectListHeader = styled.div`
@@ -22,13 +21,11 @@ export const SideBar = styled.div`
   top: 0px;
   background-color: red;
   width: 162px;
-  height: 100vh;
 `;
 
 export const DivFilter = styled.div`
   margin: 16px 8px 16px 16px;
   background-color: blue;
-  height: 100vh;
 `;
 
 export const DivWrapper = styled.div`
