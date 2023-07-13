@@ -1,8 +1,13 @@
-import { Button } from "@mui/material";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 import { LANGUAGE_LIBRARY } from "@/components/user/edit/skill/language-library/const";
+import AddIcon from "@mui/icons-material/Add";
+import * as Styles from "./styles";
 
 export const LanguageLibrary = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleButtonClick = (option: string) => {
@@ -13,42 +18,121 @@ export const LanguageLibrary = () => {
     }
   };
 
+  const handleCancelButtonClick = () => {
+    handleClose();
+  };
+
+  const handleKeepButtonClick = () => {
+    handleClose();
+  };
+
   return (
     <>
-      {LANGUAGE_LIBRARY.map((item, idx) => {
-        if (selectedOptions.includes(item)) {
-          return (
-            <Button
-              variant="contained"
-              key={idx}
-              name="selectedLanguageButton"
-              onClick={() => handleButtonClick(item)}
-              style={{ height: "48px", width: "150px", margin: "4px", textTransform: "none", background: "#2c345c" }}
-            >
-              {item}
-            </Button>
-          );
-        } else {
-          return (
+      {selectedOptions.length !== 0 ? (
+        <Styles.DivSelectedItems>
+          {selectedOptions.map((item, idx) => {
+            return (
+              <>
+                <Typography
+                  key={idx}
+                  style={{
+                    height: "48px",
+                    width: "150px",
+                    margin: "4px",
+                    textTransform: "none",
+                    background: "#2c345c",
+                    borderRadius: "4px",
+                    color: "white",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {item}
+                </Typography>
+                {idx === selectedOptions.length - 1 && (
+                  <Button onClick={handleOpen}>
+                    <AddIcon style={{ fontSize: 40, color: "#a1a1a1" }} />
+                  </Button>
+                )}
+              </>
+            );
+          })}
+        </Styles.DivSelectedItems>
+      ) : (
+        <>
+          <Button onClick={handleOpen}>
+            <AddIcon style={{ fontSize: 40, color: "#a1a1a1" }} />
+          </Button>
+        </>
+      )}
+
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={Styles.ModalStyle}>
+          <Styles.HeadContentTitle>開発言語・ライブラリ</Styles.HeadContentTitle>
+          <Styles.DivItemsWrapper>
+            {LANGUAGE_LIBRARY.map((item, idx) => {
+              if (selectedOptions.includes(item)) {
+                return (
+                  <Button
+                    variant="contained"
+                    key={idx}
+                    name="selectedLanguageLibraryButton"
+                    onClick={() => handleButtonClick(item)}
+                    style={{
+                      height: "48px",
+                      width: "176px",
+                      margin: "4px",
+                      textTransform: "none",
+                      background: "#2c345c",
+                    }}
+                  >
+                    {item}
+                  </Button>
+                );
+              } else {
+                return (
+                  <Button
+                    variant="outlined"
+                    key={idx}
+                    name="selectLanguageLibraryButton"
+                    onClick={() => handleButtonClick(item)}
+                    style={{
+                      height: "48px",
+                      width: "176px",
+                      margin: "4px",
+                      border: "1px solid #a1a1a1",
+                      color: "#a1a1a1",
+                      textTransform: "none",
+                    }}
+                  >
+                    {item}
+                  </Button>
+                );
+              }
+            })}
+          </Styles.DivItemsWrapper>
+          <Styles.DivButtonWrapper>
             <Button
               variant="outlined"
-              key={idx}
-              name="selectProfessionaExperienceButton"
-              onClick={() => handleButtonClick(item)}
-              style={{
-                height: "48px",
-                width: "150px",
-                margin: "4px",
-                border: "1px solid #a1a1a1",
-                color: "#a1a1a1",
-                textTransform: "none",
-              }}
+              name="cancelButton"
+              onClick={() => handleCancelButtonClick()}
+              style={{ height: "40px", width: "250px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
             >
-              {item}
+              キャンセル
             </Button>
-          );
-        }
-      })}
+
+            <Button
+              variant="contained"
+              name="keepButton"
+              onClick={() => handleKeepButtonClick()}
+              style={{ height: "40px", width: "250px", background: "#2c345c" }}
+            >
+              保存する
+            </Button>
+          </Styles.DivButtonWrapper>
+        </Box>
+      </Modal>
     </>
   );
 };

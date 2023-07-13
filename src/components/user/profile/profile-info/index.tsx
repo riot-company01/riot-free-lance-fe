@@ -9,8 +9,7 @@ type ProfileInfoProps = {
 
 export const ProfileInfo = ({ skillSheet }: ProfileInfoProps) => {
   const { uploadFile, onChangeUploadFile } = useProfile();
-  console.log("skillSheet", skillSheet);
-  console.log(uploadFile);
+
   return (
     <Styles.DivProfileInfoWrapper>
       <div>

@@ -76,7 +76,7 @@ export const EditBasicInfo = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>姓</h3>
+            <Styles.HeadContentTitle>姓</Styles.HeadContentTitle>
             <Tag isRequired />
           </Styles.DivTitleWrapper>
           <TextField
@@ -91,7 +91,7 @@ export const EditBasicInfo = () => {
         </Styles.DivItemWrapper>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>名</h3>
+            <Styles.HeadContentTitle>名</Styles.HeadContentTitle>
             <Tag isRequired />
           </Styles.DivTitleWrapper>
           <TextField
@@ -108,7 +108,7 @@ export const EditBasicInfo = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>せい</h3>
+            <Styles.HeadContentTitle>せい</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <TextField
@@ -124,7 +124,7 @@ export const EditBasicInfo = () => {
         </Styles.DivItemWrapper>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>めい</h3>
+            <Styles.HeadContentTitle>めい</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <TextField
@@ -141,7 +141,7 @@ export const EditBasicInfo = () => {
       </Styles.DivItem>
       <Styles.DivWrpper>
         <Styles.DivTitleWrapper>
-          <h3>生年月日</h3>
+          <Styles.HeadContentTitle>生年月日</Styles.HeadContentTitle>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
         <div>
@@ -165,7 +165,7 @@ export const EditBasicInfo = () => {
       </Styles.DivWrpper>
       <Styles.DivWrpper>
         <Styles.DivTitleWrapper>
-          <h3>メールアドレス</h3>
+          <Styles.HeadContentTitle>メールアドレス</Styles.HeadContentTitle>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
 
@@ -182,7 +182,7 @@ export const EditBasicInfo = () => {
       </Styles.DivWrpper>
       <Styles.DivWrpper>
         <Styles.DivTitleWrapper>
-          <h3>電話番号</h3>
+          <Styles.HeadContentTitle>電話番号</Styles.HeadContentTitle>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
 
@@ -199,14 +199,14 @@ export const EditBasicInfo = () => {
       </Styles.DivWrpper>
       <Styles.DivWrpper>
         <Styles.DivTitleWrapper>
-          <h3>お住まいの地域</h3>
+          <Styles.HeadContentTitle>お住まいの地域</Styles.HeadContentTitle>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
         <SelectPrefecture />
       </Styles.DivWrpper>
       <Styles.DivWrpper>
         <Styles.DivTitleWrapper>
-          <h3>現在の状況</h3>
+          <Styles.HeadContentTitle>現在の状況</Styles.HeadContentTitle>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
         <CurrentSituation />

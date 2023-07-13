@@ -31,7 +31,7 @@ export const EditSkill = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>経験職種</h3>
+            <Styles.HeadContentTitle>経験職種</Styles.HeadContentTitle>
             <Tag isRequired />
           </Styles.DivTitleWrapper>
           <ProfessionalExperience />
@@ -41,7 +41,7 @@ export const EditSkill = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>経験業界</h3>
+            <Styles.HeadContentTitle>経験業界</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <Industry />
@@ -51,7 +51,7 @@ export const EditSkill = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>言語</h3>
+            <Styles.HeadContentTitle>開発言語・ライブラリ</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <LanguageLibrary />
@@ -61,7 +61,7 @@ export const EditSkill = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>フレームワーク</h3>
+            <Styles.HeadContentTitle>フレームワーク</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <FrameWork />
@@ -71,7 +71,7 @@ export const EditSkill = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>ポートフォリオ・GitHub</h3>
+            <Styles.HeadContentTitle>ポートフォリオ・GitHub</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <TextField
@@ -90,7 +90,7 @@ export const EditSkill = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>自己PR</h3>
+            <Styles.HeadContentTitle>自己PR</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <TextareaAutosize
@@ -112,7 +112,7 @@ export const EditSkill = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>経歴書</h3>
+            <Styles.HeadContentTitle>経歴書</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <FileUpload onChange={onChangeUploadFile} />

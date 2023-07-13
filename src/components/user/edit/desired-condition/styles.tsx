@@ -28,6 +28,11 @@ export const DivTitleWrapper = styled.div`
   display: flex;
 `;
 
+export const HeadContentTitle = styled.h3`
+  font-size: 20px;
+  font-weight: bold;
+`;
+
 export const DivButtonWrapper = styled.div`
   display: flex;
   justify-content: space-around;

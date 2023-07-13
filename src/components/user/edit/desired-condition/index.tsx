@@ -29,7 +29,7 @@ export const DesiredCondition = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>通勤時間</h3>
+            <Styles.HeadContentTitle>通勤時間</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <CommutingTime />
@@ -39,7 +39,7 @@ export const DesiredCondition = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>金額</h3>
+            <Styles.HeadContentTitle>金額</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <AmountOfMoney />
@@ -49,7 +49,7 @@ export const DesiredCondition = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>勤務希望地</h3>
+            <Styles.HeadContentTitle>勤務希望地</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <SelectPrefecture />
@@ -59,7 +59,7 @@ export const DesiredCondition = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>希望職種</h3>
+            <Styles.HeadContentTitle>希望職種</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <ProfessionalExperience />
@@ -69,7 +69,7 @@ export const DesiredCondition = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>希望業界</h3>
+            <Styles.HeadContentTitle>希望業界</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <Industry />
@@ -79,7 +79,7 @@ export const DesiredCondition = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>希望する開発環境・スキル</h3>
+            <Styles.HeadContentTitle>希望する開発環境・スキル</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           {/* //TODO  */}
@@ -90,7 +90,7 @@ export const DesiredCondition = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>希望稼働形態</h3>
+            <Styles.HeadContentTitle>希望稼働形態</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <ModeOfOperation />
@@ -100,7 +100,7 @@ export const DesiredCondition = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>可能稼働日数/週</h3>
+            <Styles.HeadContentTitle>可能稼働日数/週</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <AvailableDays />
@@ -110,7 +110,7 @@ export const DesiredCondition = () => {
       <Styles.DivItem>
         <Styles.DivItemWrapper>
           <Styles.DivTitleWrapper>
-            <h3>案件開始可能時期</h3>
+            <Styles.HeadContentTitle>案件開始可能時期</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <OperationStartDate />
