@@ -43,12 +43,6 @@ export const Layout: React.FC = () => {
         <NextLink href="#">
           <List>情報</List>
         </NextLink>
-        <NextLink href="#">
-          <List>ログイン</List>
-        </NextLink>
-        <NextLink href="#">
-          <LastList>新規登録</LastList>
-        </NextLink>
         <NextLink href="/api/auth/logout">
           <List>{user?.name}</List>
         </NextLink>
@@ -80,14 +74,14 @@ const LastList = styled.div`
 `;
 
 const Wrapper = styled.div`
-  position: sticky;
+  position: fixed;
+  z-index: 1000;
   height: 78px;
   display: flex;
   top: 0;
   justify-content: space-between;
   width: 100%;
   background-color: #f5f5f5;
-  border-bottom: 1px solid #dee2e6;
 `;
 
 export function CustomizedInputBase() {
