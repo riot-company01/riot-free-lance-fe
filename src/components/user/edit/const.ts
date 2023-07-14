@@ -1,22 +1,16 @@
 export const myStyle = {
   "& .MuiOutlinedInput-root": {
     "&:hover fieldset": {
-      borderColor: "#2C345C", // ホバー時のボーダー色(アウトライン)
+      borderColor: "#2C345C",
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#2C345C", // フォーカス時のボーダー色(アウトライン)
+      borderColor: "#2C345C",
     },
   },
 };
 
-// export const selectMyStyle = {
-//   "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-//     borderColor: "red", // フォーカスされたときのボーダーの色を指定
-//   },
-// };
 export const selectMyStyle = {
-  // 他のスタイル...
   "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#2C345C", // フォーカス時のボーダー色を指定
+    borderColor: "#2C345C",
   },
 };

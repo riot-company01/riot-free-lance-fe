@@ -31,7 +31,6 @@ export const MultiSelectItems = (props: MultiSelectItemsProps) => {
               key={idx}
               name={`selected${name}Button`}
               onClick={() => handleButtonClick(item)}
-              //style={{ height: "48px", width: "150px", margin: "4px", background: "#2c345c" }}
               style={selectedStyle}
             >
               {item}
@@ -44,7 +43,6 @@ export const MultiSelectItems = (props: MultiSelectItemsProps) => {
               key={idx}
               name={`notSelected${name}Button`}
               onClick={() => handleButtonClick(item)}
-              // style={{ height: "48px", width: "150px", margin: "4px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
               style={notSelectedStyle}
             >
               {item}
