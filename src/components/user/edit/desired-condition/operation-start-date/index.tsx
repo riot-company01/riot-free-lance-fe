@@ -1,18 +1,22 @@
-import { Button, FormControl, MenuItem, Select } from "@mui/material";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
-import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import * as Styles from "./styles";
+import { SingleSelectItem } from "@/components/user/edit/common/single-select-item";
+import { OPERATION_START_DATE } from "@/components/user/edit/common/single-select-item/mock";
 import { selectMyStyle } from "@/components/user/edit/const";
-import { OPERATION_START_DATE } from "@/components/user/edit/desired-condition/operation-start-date/const";
 
-export const OperationStartDate = () => {
-  const [selectedOption, setSelectedOption] = useState("時期選択");
-  const [selectedYear, setSelectedYear] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
+type OperationStartDateProps = {
+  selectedOption: string;
+  selectedYear: string;
+  selectedMonth: string;
+  setSelectedOption: Dispatch<SetStateAction<string>>;
+  setSelectedYear: Dispatch<SetStateAction<string>>;
+  setSelectedMonth: Dispatch<SetStateAction<string>>;
+};
 
-  const handleButtonClick = (option: string) => {
-    setSelectedOption(option);
-  };
+export const OperationStartDate = (props: OperationStartDateProps) => {
+  const { selectedOption, selectedYear, selectedMonth, setSelectedOption, setSelectedYear, setSelectedMonth } = props;
 
   const generateYearOptions = () => {
     const currentYear = new Date().getFullYear();
@@ -53,33 +57,20 @@ export const OperationStartDate = () => {
 
   return (
     <>
-      {OPERATION_START_DATE.map((item, idx) => {
-        if (selectedOption === item) {
-          return (
-            <Button
-              variant="contained"
-              key={idx}
-              name="selectedOperationStartDateButton"
-              onClick={() => handleButtonClick(item)}
-              style={{ height: "48px", width: "308px", margin: "4px", background: "#2c345c" }}
-            >
-              {item}
-            </Button>
-          );
-        } else {
-          return (
-            <Button
-              variant="outlined"
-              key={idx}
-              name="selectOperationStartDateButton"
-              onClick={() => handleButtonClick(item)}
-              style={{ height: "48px", width: "308px", margin: "4px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
-            >
-              {item}
-            </Button>
-          );
-        }
-      })}
+      <SingleSelectItem
+        data={OPERATION_START_DATE}
+        name={"OperationStartDate"}
+        selectedStyle={{ height: "48px", width: "308px", margin: "4px", background: "#2c345c" }}
+        notSelectedStyle={{
+          height: "48px",
+          width: "308px",
+          margin: "4px",
+          border: "1px solid #a1a1a1",
+          color: "#a1a1a1",
+        }}
+        selectedOption={selectedOption}
+        setSelectedOption={setSelectedOption}
+      />
 
       {selectedOption === "時期選択" && (
         <Styles.DivWrapper>

@@ -1,4 +1,34 @@
-export const LANGUAGE_LIBRARY = [
+export const PROFESSIONAL_EXPERIENCES = [
+  "フロントエンド",
+  "サーバーサイド",
+  "アプリ",
+  "インフラ",
+  "ネットワーク",
+  "データベース",
+  "コンサル",
+  "ディレクター",
+  "デザイナー",
+  "PM",
+  "PMO",
+];
+
+export const FRAME_WORKS = ["Next.js", "Laravel"];
+export const INDUSTRIES = [
+  "通信",
+  "ゲーム",
+  "EC",
+  "広告",
+  "流通・小売",
+  "公共・官公庁",
+  "医療・福祉",
+  "SI・業務系",
+  "銀行・証券・保険",
+  "WEBサービス",
+  "エンタメ",
+  "メーカー",
+  "その他",
+];
+export const LANGUAGE_LIBRARIES = [
   "Java",
   "PHP",
   "Python",
@@ -62,3 +92,4 @@ export const LANGUAGE_LIBRARY = [
   "Rust",
   "Dart",
 ];
+export const MODE_OF_OPERATION = ["リモートワーク・在宅", "常駐"];

@@ -2,10 +2,11 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import { Tag } from "../common/tag";
-import { CurrentSituation } from "./current-situation";
 import { useBasicInfo } from "./hooks/use-basic-info";
 import * as Styles from "./styles";
-import { SelectPrefecture } from "@/components/user/edit/basic-info/select-prefecture";
+import { SelectPrefecture } from "@/components/user/edit/common/select-prefecture";
+import { SingleSelectItem } from "@/components/user/edit/common/single-select-item";
+import { CURRENT_SITUATION } from "@/components/user/edit/common/single-select-item/mock";
 import { myStyle, selectMyStyle } from "@/components/user/edit/const";
 import { PATHS } from "@/const/paths";
 
@@ -22,6 +23,8 @@ export const EditBasicInfo = () => {
     selectedDay,
     mailAddress,
     phoneNumber,
+    selectedCurrentSituation,
+    selectedPrefecture,
     onChangeUserFirstName,
     onChangeUserLastName,
     onChangeUserFirstNameKana,
@@ -31,6 +34,8 @@ export const EditBasicInfo = () => {
     selectDay,
     onChangeMailAddress,
     onChangePhoneNumber,
+    setSelectedCurrentSituation,
+    setSelectedPrefecture,
   } = useBasicInfo();
 
   const generateYearOptions = () => {
@@ -202,14 +207,27 @@ export const EditBasicInfo = () => {
           <Styles.HeadContentTitle>お住まいの地域</Styles.HeadContentTitle>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
-        <SelectPrefecture />
+        <SelectPrefecture selectedPrefecture={selectedPrefecture} setSelectedPrefecture={setSelectedPrefecture} />
       </Styles.DivWrpper>
       <Styles.DivWrpper>
         <Styles.DivTitleWrapper>
           <Styles.HeadContentTitle>現在の状況</Styles.HeadContentTitle>
           <Tag isRequired />
         </Styles.DivTitleWrapper>
-        <CurrentSituation />
+        <SingleSelectItem
+          data={CURRENT_SITUATION}
+          name={"CurrentSistuation"}
+          selectedStyle={{ height: "48px", width: "460px", margin: "4px", background: "#2c345c" }}
+          notSelectedStyle={{
+            height: "48px",
+            width: "460px",
+            margin: "4px",
+            border: "1px solid #a1a1a1",
+            color: "#a1a1a1",
+          }}
+          selectedOption={selectedCurrentSituation}
+          setSelectedOption={setSelectedCurrentSituation}
+        />
       </Styles.DivWrpper>
       <Styles.DivButtonWrapper>
         <Button

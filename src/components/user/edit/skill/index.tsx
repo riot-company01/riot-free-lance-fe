@@ -2,19 +2,34 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import { Button, Link, TextareaAutosize, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
+import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
+import { PROFESSIONAL_EXPERIENCES, INDUSTRIES } from "@/components/user/edit/common/multi-select-items/mock";
 import { Tag } from "@/components/user/edit/common/tag";
 import { myStyle } from "@/components/user/edit/const";
 import { FrameWork } from "@/components/user/edit/skill/frame-work";
 import { useEditSkill } from "@/components/user/edit/skill/hooks/use-edit-skill";
-import { Industry } from "@/components/user/edit/skill/industry";
-import { LanguageLibrary } from "@/components/user/edit/skill/language-library";
-import { ProfessionalExperience } from "@/components/user/edit/skill/professional-experience";
+import { LanguageLibraries } from "@/components/user/edit/skill/language-libraries";
 import { FileUpload } from "@/components/user/profile/common/file-upload";
 import { PATHS } from "@/const/paths";
 
 export const EditSkill = () => {
   const { push } = useRouter();
-  const { portfolio, textArea, uploadFile, onChangePortfolio, onChangeTextArea, onChangeUploadFile } = useEditSkill();
+  const {
+    selectedProfessionalExperiences,
+    selectedIndustries,
+    selectedFrameWorks,
+    selectedLanguageLibralies,
+    portfolio,
+    textArea,
+    uploadFile,
+    setSelectedProfessionalExperiences,
+    setSelectedIndustries,
+    setSelectedFrameWorks,
+    setSelectedLanguageLibralies,
+    onChangePortfolio,
+    onChangeTextArea,
+    onChangeUploadFile,
+  } = useEditSkill();
 
   const portfolioUrl = "http://localhost:3000/user/edit-skill";
 
@@ -35,7 +50,20 @@ export const EditSkill = () => {
             <Styles.HeadContentTitle>経験職種</Styles.HeadContentTitle>
             <Tag isRequired />
           </Styles.DivTitleWrapper>
-          <ProfessionalExperience />
+          <MultiSelectItems
+            data={PROFESSIONAL_EXPERIENCES}
+            name={"ProfessionalExperience"}
+            selectedStyle={{ height: "48px", width: "150px", margin: "4px", background: "#2c345c" }}
+            notSelectedStyle={{
+              height: "48px",
+              width: "150px",
+              margin: "4px",
+              border: "1px solid #a1a1a1",
+              color: "#a1a1a1",
+            }}
+            selectedOptions={selectedProfessionalExperiences}
+            setSelectedOptions={setSelectedProfessionalExperiences}
+          />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
@@ -45,7 +73,20 @@ export const EditSkill = () => {
             <Styles.HeadContentTitle>経験業界</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <Industry />
+          <MultiSelectItems
+            data={INDUSTRIES}
+            name={"Industrie"}
+            selectedStyle={{ height: "48px", width: "150px", margin: "4px", background: "#2c345c" }}
+            notSelectedStyle={{
+              height: "48px",
+              width: "150px",
+              margin: "4px",
+              border: "1px solid #a1a1a1",
+              color: "#a1a1a1",
+            }}
+            selectedOptions={selectedIndustries}
+            setSelectedOptions={setSelectedIndustries}
+          />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
@@ -55,7 +96,10 @@ export const EditSkill = () => {
             <Styles.HeadContentTitle>開発言語・ライブラリ</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <LanguageLibrary />
+          <LanguageLibraries
+            selectedOptions={selectedLanguageLibralies}
+            setSelectedOptions={setSelectedLanguageLibralies}
+          />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
@@ -65,7 +109,7 @@ export const EditSkill = () => {
             <Styles.HeadContentTitle>フレームワーク</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <FrameWork />
+          <FrameWork selectedOptions={selectedFrameWorks} setSelectedOptions={setSelectedFrameWorks} />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 

@@ -1,22 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Modal, Typography } from "@mui/material";
+import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import * as Styles from "./styles";
-import { FRAME_WORK } from "@/components/user/edit/skill/frame-work/const";
+import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
+import { FRAME_WORKS } from "@/components/user/edit/common/multi-select-items/mock";
 
-export const FrameWork = () => {
+type FrameWorkProps = { selectedOptions: string[]; setSelectedOptions: Dispatch<SetStateAction<string[]>> };
+export const FrameWork = (props: FrameWorkProps) => {
+  const { selectedOptions, setSelectedOptions } = props;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  const handleButtonClick = (option: string) => {
-    if (selectedOptions.includes(option)) {
-      setSelectedOptions(selectedOptions.filter((item) => item !== option));
-    } else {
-      setSelectedOptions([...selectedOptions, option]);
-    }
-  };
 
   const handleCancelButtonClick = () => {
     handleClose();
@@ -71,46 +66,27 @@ export const FrameWork = () => {
         <Box sx={Styles.ModalStyle}>
           <Styles.HeadContentTitle>フレームワーク</Styles.HeadContentTitle>
           <Styles.DivItemsWrapper>
-            {FRAME_WORK.map((item, idx) => {
-              if (selectedOptions.includes(item)) {
-                return (
-                  <Button
-                    variant="contained"
-                    key={idx}
-                    name="selectedFrameWorkButton"
-                    onClick={() => handleButtonClick(item)}
-                    style={{
-                      height: "48px",
-                      width: "176px",
-                      margin: "4px",
-                      textTransform: "none",
-                      background: "#2c345c",
-                    }}
-                  >
-                    {item}
-                  </Button>
-                );
-              } else {
-                return (
-                  <Button
-                    variant="outlined"
-                    key={idx}
-                    name="selectFrameWorkButton"
-                    onClick={() => handleButtonClick(item)}
-                    style={{
-                      height: "48px",
-                      width: "176px",
-                      margin: "4px",
-                      border: "1px solid #a1a1a1",
-                      color: "#a1a1a1",
-                      textTransform: "none",
-                    }}
-                  >
-                    {item}
-                  </Button>
-                );
-              }
-            })}
+            <MultiSelectItems
+              data={FRAME_WORKS}
+              name={"FrameWorks"}
+              selectedStyle={{
+                height: "48px",
+                width: "176px",
+                margin: "4px",
+                textTransform: "none",
+                background: "#2c345c",
+              }}
+              notSelectedStyle={{
+                height: "48px",
+                width: "176px",
+                margin: "4px",
+                border: "1px solid #a1a1a1",
+                color: "#a1a1a1",
+                textTransform: "none",
+              }}
+              selectedOptions={selectedOptions}
+              setSelectedOptions={setSelectedOptions}
+            />
           </Styles.DivItemsWrapper>
           <Styles.DivButtonWrapper>
             <Button

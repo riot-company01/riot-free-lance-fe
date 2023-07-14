@@ -1,12 +1,16 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
-import React, { useState } from "react";
-import { PREFECTURES } from "./const";
+import React from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { PREFECTURES } from "@/components/user/edit/common/select-prefecture/mock";
 import { selectMyStyle } from "@/components/user/edit/const";
 
-export const SelectPrefecture = () => {
-  const [selectedPrefecture, setSelectedPrefecture] = useState("");
-
+type SelectPrefectureProps = {
+  selectedPrefecture: string;
+  setSelectedPrefecture: Dispatch<SetStateAction<string>>;
+};
+export const SelectPrefecture = (props: SelectPrefectureProps) => {
+  const { selectedPrefecture, setSelectedPrefecture } = props;
   const selectPrefecture = (e: SelectChangeEvent<string>) => {
     setSelectedPrefecture(e.target.value);
   };

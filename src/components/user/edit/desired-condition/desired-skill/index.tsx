@@ -1,22 +1,21 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import * as Styles from "./styles";
+import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
 import { DESIRED_SKILL } from "@/components/user/edit/desired-condition/desired-skill/const";
 
-export const DesiredSkill = () => {
+type DesiredSkillsProps = {
+  selectedDesiredSkills: string[];
+  setSelectedDesiredSkills: Dispatch<SetStateAction<string[]>>;
+};
+
+export const DesiredSkill = (props: DesiredSkillsProps) => {
+  const { selectedDesiredSkills, setSelectedDesiredSkills } = props;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  const handleButtonClick = (option: string) => {
-    if (selectedOptions.includes(option)) {
-      setSelectedOptions(selectedOptions.filter((item) => item !== option));
-    } else {
-      setSelectedOptions([...selectedOptions, option]);
-    }
-  };
 
   const handleCancelButtonClick = () => {
     handleClose();
@@ -28,9 +27,9 @@ export const DesiredSkill = () => {
 
   return (
     <>
-      {selectedOptions.length !== 0 ? (
+      {selectedDesiredSkills.length !== 0 ? (
         <Styles.DivSelectedItems>
-          {selectedOptions.map((item, idx) => {
+          {selectedDesiredSkills.map((item, idx) => {
             return (
               <>
                 <Typography
@@ -50,7 +49,7 @@ export const DesiredSkill = () => {
                 >
                   {item}
                 </Typography>
-                {idx === selectedOptions.length - 1 && (
+                {idx === selectedDesiredSkills.length - 1 && (
                   <Button onClick={handleOpen}>
                     <AddIcon style={{ fontSize: 40, color: "#a1a1a1" }} />
                   </Button>
@@ -71,46 +70,27 @@ export const DesiredSkill = () => {
         <Box sx={Styles.ModalStyle}>
           <Styles.HeadContentTitle>フレームワーク</Styles.HeadContentTitle>
           <Styles.DivItemsWrapper>
-            {DESIRED_SKILL.map((item, idx) => {
-              if (selectedOptions.includes(item)) {
-                return (
-                  <Button
-                    variant="contained"
-                    key={idx}
-                    name="selectedDesiredSkill"
-                    onClick={() => handleButtonClick(item)}
-                    style={{
-                      height: "48px",
-                      width: "176px",
-                      margin: "4px",
-                      textTransform: "none",
-                      background: "#2c345c",
-                    }}
-                  >
-                    {item}
-                  </Button>
-                );
-              } else {
-                return (
-                  <Button
-                    variant="outlined"
-                    key={idx}
-                    name="selectDesiredSkillButton"
-                    onClick={() => handleButtonClick(item)}
-                    style={{
-                      height: "48px",
-                      width: "176px",
-                      margin: "4px",
-                      border: "1px solid #a1a1a1",
-                      color: "#a1a1a1",
-                      textTransform: "none",
-                    }}
-                  >
-                    {item}
-                  </Button>
-                );
-              }
-            })}
+            <MultiSelectItems
+              data={DESIRED_SKILL}
+              name={"DesiredSkills"}
+              selectedStyle={{
+                height: "48px",
+                width: "176px",
+                margin: "4px",
+                textTransform: "none",
+                background: "#2c345c",
+              }}
+              notSelectedStyle={{
+                height: "48px",
+                width: "176px",
+                margin: "4px",
+                border: "1px solid #a1a1a1",
+                color: "#a1a1a1",
+                textTransform: "none",
+              }}
+              selectedOptions={selectedDesiredSkills}
+              setSelectedOptions={setSelectedDesiredSkills}
+            />
           </Styles.DivItemsWrapper>
           <Styles.DivButtonWrapper>
             <Button

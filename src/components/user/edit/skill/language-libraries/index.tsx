@@ -1,22 +1,22 @@
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, Modal, Typography } from "@mui/material";
+import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
-import * as Styles from "./styles";
-import { LANGUAGE_LIBRARY } from "@/components/user/edit/skill/language-library/const";
 
-export const LanguageLibrary = () => {
+import * as Styles from "./styles";
+import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
+import { LANGUAGE_LIBRARIES } from "@/components/user/edit/common/multi-select-items/mock";
+
+type LanguageLibrariesProps = {
+  selectedOptions: string[];
+  setSelectedOptions: Dispatch<SetStateAction<string[]>>;
+};
+
+export const LanguageLibraries = (props: LanguageLibrariesProps) => {
+  const { selectedOptions, setSelectedOptions } = props;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
-  const handleButtonClick = (option: string) => {
-    if (selectedOptions.includes(option)) {
-      setSelectedOptions(selectedOptions.filter((item) => item !== option));
-    } else {
-      setSelectedOptions([...selectedOptions, option]);
-    }
-  };
 
   const handleCancelButtonClick = () => {
     handleClose();
@@ -71,46 +71,27 @@ export const LanguageLibrary = () => {
         <Box sx={Styles.ModalStyle}>
           <Styles.HeadContentTitle>開発言語・ライブラリ</Styles.HeadContentTitle>
           <Styles.DivItemsWrapper>
-            {LANGUAGE_LIBRARY.map((item, idx) => {
-              if (selectedOptions.includes(item)) {
-                return (
-                  <Button
-                    variant="contained"
-                    key={idx}
-                    name="selectedLanguageLibraryButton"
-                    onClick={() => handleButtonClick(item)}
-                    style={{
-                      height: "48px",
-                      width: "176px",
-                      margin: "4px",
-                      textTransform: "none",
-                      background: "#2c345c",
-                    }}
-                  >
-                    {item}
-                  </Button>
-                );
-              } else {
-                return (
-                  <Button
-                    variant="outlined"
-                    key={idx}
-                    name="selectLanguageLibraryButton"
-                    onClick={() => handleButtonClick(item)}
-                    style={{
-                      height: "48px",
-                      width: "176px",
-                      margin: "4px",
-                      border: "1px solid #a1a1a1",
-                      color: "#a1a1a1",
-                      textTransform: "none",
-                    }}
-                  >
-                    {item}
-                  </Button>
-                );
-              }
-            })}
+            <MultiSelectItems
+              data={LANGUAGE_LIBRARIES}
+              name={"LanguageLibraries"}
+              selectedStyle={{
+                height: "48px",
+                width: "176px",
+                margin: "4px",
+                textTransform: "none",
+                background: "#2c345c",
+              }}
+              notSelectedStyle={{
+                height: "48px",
+                width: "176px",
+                margin: "4px",
+                border: "1px solid #a1a1a1",
+                color: "#a1a1a1",
+                textTransform: "none",
+              }}
+              selectedOptions={selectedOptions}
+              setSelectedOptions={setSelectedOptions}
+            />
           </Styles.DivItemsWrapper>
           <Styles.DivButtonWrapper>
             <Button

@@ -10,8 +10,10 @@ export const useBasicInfo = () => {
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedDay, setSelectedDay] = useState("");
+  const [selectedPrefecture, setSelectedPrefecture] = useState("");
   const [mailAddress, setMailAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [selectedCurrentSituation, setSelectedCurrentSituation] = useState("");
 
   const onChangeUserFirstName = useCallback((e: ChangeEvent<HTMLInputElement>) => setUserFirstName(e.target.value), []);
 
@@ -51,7 +53,8 @@ export const useBasicInfo = () => {
     selectedDay,
     mailAddress,
     phoneNumber,
-
+    selectedCurrentSituation,
+    selectedPrefecture,
     onChangeUserFirstName,
     onChangeUserLastName,
     onChangeUserFirstNameKana,
@@ -61,5 +64,7 @@ export const useBasicInfo = () => {
     selectDay,
     onChangeMailAddress,
     onChangePhoneNumber,
+    setSelectedCurrentSituation,
+    setSelectedPrefecture,
   };
 };
