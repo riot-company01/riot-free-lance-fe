@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { FormControl, Select, MenuItem, Chip } from "@mui/material";
+import { FormControl, Select, MenuItem, Chip, Stack } from "@mui/material";
 import { useRouter } from "next/router";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 
@@ -35,25 +35,27 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
       </Wrapper>
 
       <Container>
-        {selectedSkillIds.map((value) => {
-          const skillIds = selectedSkillIds.filter((i) => i !== value);
-          return (
-            <Chip
-              key={value}
-              label={defaultFilters?.find((i) => i.id === Number(value))?.name}
-              onDelete={() => {
-                push({
-                  query:
-                    skillIds.length !== 0
-                      ? {
-                          [`skill-ids`]: `${skillIds.join()}`,
-                        }
-                      : {},
-                });
-              }}
-            />
-          );
-        })}
+        <Stack direction="row" spacing={1}>
+          {selectedSkillIds.map((value) => {
+            const skillIds = selectedSkillIds.filter((i) => i !== value);
+            return (
+              <Chip
+                key={value}
+                label={defaultFilters?.find((i) => i.id === Number(value))?.name}
+                onDelete={() => {
+                  push({
+                    query:
+                      skillIds.length !== 0
+                        ? {
+                            [`skill-ids`]: `${skillIds.join()}`,
+                          }
+                        : {},
+                  });
+                }}
+              />
+            );
+          })}
+        </Stack>
       </Container>
     </>
   );
