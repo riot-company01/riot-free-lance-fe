@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { SCREEN_SIZE } from "@/const/screen-size";
+import { COLOR } from "@/styles/colors";
 
 export const DivDescriptionWrpper = styled.div`
   margin: 32px 0 32px 0;
@@ -13,7 +14,7 @@ export const SecDescription = styled.section`
     margin-top: 16px;
   }
 
-  border-bottom: dotted 3px #a1a1a1;
+  border-bottom: dotted 3px ${COLOR.LIGHT_GRAY.code};
 `;
 
 export const HeadInfoTitle = styled.h3`
