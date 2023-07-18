@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GetProjectList = gql`
   query GetAllProject @cached {
-    project {
+    project(where: { showFlag: { _eq: true } }) {
       id
       businessContent
       contentBusiness
