@@ -277,20 +277,3 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-// query GetLeftNavi @cached {
-//   skills(where: {_and: [{works_aggregate: {count: {predicate: {_gt: 0}}}}, {works: {work: {languages: {skill_id: {_eq: 1}}}}}, {works: {work: {languages: {skill_id: {_eq: 2}}}}}]}) {
-//     id
-//     name
-//     works_aggregate(where: {_and: [{work: {languages: {skill_id: {_eq: 1}}}}, {work: {languages: {skill_id: {_eq: 2}}}}]}) {
-//       nodes {
-//         work {
-//           title
-//         }
-//       }
-//       aggregate {
-//         count
-//       }
-//     }
-//   }
-// }
