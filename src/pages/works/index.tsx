@@ -6,25 +6,78 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
 import { Chip } from "@mui/material";
-import { useState } from "react";
+import type { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
-import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
 };
 
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const client = initializeApollo({});
+
+  const selectedSkillIds = (ctx.query["skill-ids"] as string | undefined)?.split(",") || [];
+
+  await client.query({
+    query: GetWorksDocument,
+    variables: {
+      where: {
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { languages: { skill_id: { _eq: Number(skillId) } } };
+          }),
+        ],
+      },
+    },
+  });
+
+  await client.query({
+    query: GetSkillsDocument,
+    variables: {
+      skillsWhere: {
+        works_aggregate: {
+          count: { predicate: { _gt: 0 } },
+        },
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { works: { work: { languages: { skill_id: { _eq: Number(skillId) } } } } };
+          }),
+        ],
+      },
+      worksWhere: {
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { work: { languages: { skill_id: { _eq: Number(skillId) } } } };
+          }),
+        ],
+      },
+    },
+  });
+
+  const documentProps = addApolloState(client, {
+    props: {},
+  });
+  return {
+    props: documentProps.props,
+  };
+};
+
 export default function Works() {
-  const [selectedValues, setSelectedValue] = useState<GetSkillsQuery["skills"]>([]);
+  const router = useRouter();
+  const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
+
   const { data: works } = useQuery(GetWorksDocument, {
     variables: {
       where: {
-        _and: selectedValues.map((value) => {
-          return { languages: { skill_id: { _eq: value.id } } };
-        }),
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { languages: { skill_id: { _eq: Number(skillId) } } };
+          }),
+        ],
       },
     },
   });
@@ -35,36 +88,32 @@ export default function Works() {
         works_aggregate: {
           count: { predicate: { _gt: 0 } },
         },
-        _and: selectedValues.map((value) => {
-          return { works: { work: { languages: { skill_id: { _eq: value.id } } } } };
-        }),
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { works: { work: { languages: { skill_id: { _eq: Number(skillId) } } } } };
+          }),
+        ],
       },
       worksWhere: {
-        _and: selectedValues.map((value) => {
-          return { work: { languages: { skill_id: { _eq: value.id } } } };
-        }),
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { work: { languages: { skill_id: { _eq: Number(skillId) } } } };
+          }),
+        ],
       },
     },
   });
-
-  const defaultFilters = skills?.skills;
-
-  function onSelectedValue(selectedValue: GetSkillsQuery["skills"][number]) {
-    setSelectedValue((prev) => {
-      return prev.some((i) => i.name === selectedValue.name) ? prev.filter((i) => i.name !== selectedValue.name) : [...prev, selectedValue];
-    });
-  }
 
   return (
     <Wrapper>
       <NavigContainer>
         <Navig>
-          <LeftNavig defaultFilters={defaultFilters} onSelectedValue={onSelectedValue} selectedValues={selectedValues} />
+          <LeftNavig defaultFilters={skills?.skills} selectedSkillIds={selectedSkillIds} />
         </Navig>
       </NavigContainer>
       <KeyWordContainer>
         <KeyWordFixed>
-          <Filter selectedValues={selectedValues} onSelectedValue={onSelectedValue} />
+          <Filter defaultFilters={skills?.skills} selectedSkillIds={selectedSkillIds} worksLength={works?.work.length} />
         </KeyWordFixed>
         <WorksContainer>
           <Column>
@@ -136,32 +185,6 @@ export default function Works() {
   );
 }
 
-export async function getServerSideProps() {
-  const client = initializeApollo({});
-  await client.query({
-    query: GetWorksDocument,
-  });
-
-  await client.query({
-    query: GetSkillsDocument,
-    variables: {
-      skillsWhere: {
-        works_aggregate: {
-          count: { predicate: { _gt: 0 } },
-        },
-        _and: [],
-      },
-    },
-  });
-
-  const documentProps = addApolloState(client, {
-    props: {},
-  });
-  return {
-    props: documentProps.props,
-  };
-}
-
 const Wrapper = styled.div`
   display: flex;
 `;
@@ -220,7 +243,6 @@ const KeyWordContainer = styled.div`
 `;
 
 const KeyWordFixed = styled.div`
-  height: 136px;
   width: 100%;
   position: sticky;
   top: 78px;
@@ -234,7 +256,6 @@ const KeyWordFixed = styled.div`
 const WorksContainer = styled.div`
   position: sticky;
   display: flex;
-  top: 214px;
   width: calc(100% - 180px);
   max-width: calc(1320px - 180px);
 `;

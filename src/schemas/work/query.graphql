@@ -17,3 +17,23 @@ query GetWork @cached {
     }
   }
 }
+
+query GetWorks($where: work_bool_exp = { _and: [] }) @cached {
+  work(where: $where) {
+    id
+    title
+    contractType
+    location
+    maxMonthlyPrice
+    maxWorkHours
+    minMonthlyPrice
+    minWorkHours
+    languages {
+      skill {
+        id
+        name
+        type
+      }
+    }
+  }
+}

@@ -3,6 +3,8 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Checkbox as _Checkbox, FormControlLabel, FormGroup } from "@mui/material";
 import { map, groupBy } from "lodash-es";
+
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 
@@ -13,40 +15,37 @@ type Filterer = {
 
 type Props = {
   defaultFilters?: GetSkillsQuery["skills"];
-  selectedValues: GetSkillsQuery["skills"];
-  onSelectedValue: (args: GetSkillsQuery["skills"][number]) => void;
+  selectedSkillIds: string[];
 };
 
-export function LeftNavig({ defaultFilters, onSelectedValue, selectedValues }: Props) {
-  const [list, setList] = useState<Filterer[]>([]);
+type PropsAccordion = {
+  nodes: Filterer;
+  selectedSkillIds: string[];
+};
+
+export function LeftNavig({ defaultFilters, selectedSkillIds }: Props) {
+  const [viewList, setViewList] = useState<Filterer[]>([]);
 
   useEffect(() => {
     if (!defaultFilters) return;
     const filterers = map(groupBy(defaultFilters, "type"), (i, key) => {
       return { type: key, word: i };
     });
-    setList(filterers);
+    setViewList(filterers);
   }, [JSON.stringify(defaultFilters)]);
 
   return (
     <div>
-      {list.map((nodes) => {
-        return <Accordion key={nodes.type} nodes={nodes} onSelectedValue={onSelectedValue} selectedValues={selectedValues} />;
+      {viewList.map((nodes) => {
+        return <Accordion key={nodes.type} nodes={nodes} selectedSkillIds={selectedSkillIds} />;
       })}
     </div>
   );
 }
 
-function Accordion({
-  nodes,
-  onSelectedValue,
-  selectedValues,
-}: {
-  nodes: Filterer;
-  onSelectedValue: Props["onSelectedValue"];
-  selectedValues: GetSkillsQuery["skills"];
-}) {
+function Accordion({ nodes, selectedSkillIds }: PropsAccordion) {
   const [isOpen, setIsOpen] = useState(true);
+
   return (
     <React.Fragment>
       <Head
@@ -61,20 +60,31 @@ function Accordion({
       {isOpen && (
         <FormGroup>
           {nodes.word.map((keyword) => {
+            const strId = keyword.id.toString();
+            const skillIds = selectedSkillIds.includes(strId) ? selectedSkillIds.filter((i) => i !== strId) : [...selectedSkillIds, strId];
             return (
-              <FormControlLabel
+              <Link
+                passHref
                 key={keyword.id}
-                control={<Checkbox size="small" />}
-                onChange={() => {
-                  onSelectedValue(keyword);
+                href={{
+                  query:
+                    skillIds.length !== 0
+                      ? {
+                          [`skill-ids`]: `${skillIds.join()}`,
+                        }
+                      : {},
                 }}
-                checked={selectedValues.some((i) => i.name === keyword.name)}
-                label={
-                  <Label>
-                    {keyword.name} ({keyword.works_aggregate.aggregate?.count})
-                  </Label>
-                }
-              />
+              >
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  checked={selectedSkillIds.some((i) => i === keyword.id.toString())}
+                  label={
+                    <Label>
+                      {keyword.name} ({keyword.works_aggregate.aggregate?.count})
+                    </Label>
+                  }
+                />
+              </Link>
             );
           })}
           <More>もっと見る</More>

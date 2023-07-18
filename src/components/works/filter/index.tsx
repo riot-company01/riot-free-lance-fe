@@ -1,21 +1,20 @@
 import styled from "@emotion/styled";
 import { FormControl, Select, MenuItem, Chip } from "@mui/material";
+import { useRouter } from "next/router";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 
 type Props = {
-  selectedValues: GetSkillsQuery["skills"];
-  onSelectedValue: (args: GetSkillsQuery["skills"][number]) => void;
+  defaultFilters?: GetSkillsQuery["skills"];
+  selectedSkillIds: string[];
+  worksLength?: number;
 };
 
-export function Filter({ selectedValues, onSelectedValue }: Props) {
-  const handleDelete = (value: GetSkillsQuery["skills"][number]) => {
-    onSelectedValue(value);
-  };
-
+export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props) {
+  const { push } = useRouter();
   return (
     <>
       <Wrapper>
-        <div>案件:10,000件</div>
+        <div>案件: {worksLength?.toLocaleString()} 件</div>
         <FormControl
           size="small"
           sx={{
@@ -36,8 +35,24 @@ export function Filter({ selectedValues, onSelectedValue }: Props) {
       </Wrapper>
 
       <Container>
-        {selectedValues.map((value, idx) => {
-          return <Chip key={idx} label={value.name} onDelete={() => handleDelete(value)} />;
+        {selectedSkillIds.map((value) => {
+          const skillIds = selectedSkillIds.filter((i) => i !== value);
+          return (
+            <Chip
+              key={value}
+              label={defaultFilters?.find((i) => i.id === Number(value))?.name}
+              onDelete={() => {
+                push({
+                  query:
+                    skillIds.length !== 0
+                      ? {
+                          [`skill-ids`]: `${skillIds.join()}`,
+                        }
+                      : {},
+                });
+              }}
+            />
+          );
         })}
       </Container>
     </>
