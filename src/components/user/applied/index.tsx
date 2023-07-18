@@ -1,7 +1,10 @@
-import { Button } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
+import { Button } from "@/components/common/button";
+import { ProjectContent } from "@/components/project/list/item";
+import { MOCK_PROJECT_DATA } from "@/components/user/favorite/const";
+import { COLOR } from "@/styles/colors";
 
 export const Applied = () => {
   const { push } = useRouter();
@@ -28,24 +31,23 @@ export const Applied = () => {
           </Styles.DivSummary>
         </Styles.DivWrapper>
         <Styles.DivProjectList>
-          {/* {MOCK_PROJECT_DATA ? (
+          {MOCK_PROJECT_DATA ? (
             MOCK_PROJECT_DATA.map((item) => <ProjectContent key={item.id} item={item} />)
-          ) : ( */}
-          <Styles.DivNotAppliedContents>
-            <Styles.DivNotAppliedItem>
-              <Styles.PerNotAppliedItem>まだ応募した案件はありません</Styles.PerNotAppliedItem>
-            </Styles.DivNotAppliedItem>
+          ) : (
+            <Styles.DivNotAppliedContents>
+              <Styles.DivNotAppliedItem>
+                <Styles.PerNotAppliedItem>まだ応募した案件はありません</Styles.PerNotAppliedItem>
+              </Styles.DivNotAppliedItem>
 
-            <Button
-              name="searchProjectButton"
-              variant="contained"
-              onClick={() => handleSearchProjectButtonClick()}
-              style={{ height: "40px", width: "400px", background: "#2c345c" }}
-            >
-              案件を探す
-            </Button>
-          </Styles.DivNotAppliedContents>
-          {/* )} */}
+              <Button
+                text="案件を探す"
+                width={400}
+                backGround={COLOR.BASE_COLOR.code}
+                fontColor={COLOR.WHITE.code}
+                onClick={handleSearchProjectButtonClick}
+              />
+            </Styles.DivNotAppliedContents>
+          )}
         </Styles.DivProjectList>
       </Styles.DivWrapperContent>
     </Styles.DivAppliedWrapper>

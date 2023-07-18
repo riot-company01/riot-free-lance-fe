@@ -4,6 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import NextLink from "next/link";
+import { COLOR } from "@/styles/colors";
 
 export const LayoutHeader: React.FC = () => {
   return (
@@ -77,13 +78,17 @@ const Wrapper = styled.header`
   top: 0;
   justify-content: space-between;
   width: 100%;
-  background-color: #f5f5f5;
+  background-color: ${COLOR.WHITE.code};
 `;
 
 export function CustomizedInputBase() {
   return (
     <Paper component="form" sx={{ display: "flex", alignItems: "center", width: 300 }}>
-      <InputBase sx={{ ml: 1, flex: 1 }} placeholder="キーワード検索 例:React" inputProps={{ "aria-label": "キーワード検索 例:React" }} />
+      <InputBase
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="キーワード検索 例:React"
+        inputProps={{ "aria-label": "キーワード検索 例:React" }}
+      />
       <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
         <SearchIcon />
       </IconButton>

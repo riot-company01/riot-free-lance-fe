@@ -1,7 +1,8 @@
 import LaunchIcon from "@mui/icons-material/Launch";
-import { Button, Link, TextareaAutosize, TextField } from "@mui/material";
+import { Link, TextareaAutosize, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
+import { Button } from "@/components/common/button";
 import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
 import { PROFESSIONAL_EXPERIENCES, INDUSTRIES } from "@/components/user/edit/common/multi-select-items/mock";
 import { Tag } from "@/components/user/edit/common/tag";
@@ -11,6 +12,7 @@ import { useEditSkill } from "@/components/user/edit/skill/hooks/use-edit-skill"
 import { LanguageLibraries } from "@/components/user/edit/skill/language-libraries";
 import { FileUpload } from "@/components/user/profile/common/file-upload";
 import { PATHS } from "@/const/paths";
+import { COLOR } from "@/styles/colors";
 
 export const EditSkill = () => {
   const { push } = useRouter();
@@ -53,14 +55,7 @@ export const EditSkill = () => {
           <MultiSelectItems
             data={PROFESSIONAL_EXPERIENCES}
             name={"ProfessionalExperience"}
-            selectedStyle={{ height: "48px", width: "150px", margin: "4px", background: "#2c345c" }}
-            notSelectedStyle={{
-              height: "48px",
-              width: "150px",
-              margin: "4px",
-              border: "1px solid #a1a1a1",
-              color: "#a1a1a1",
-            }}
+            width={150}
             selectedOptions={selectedProfessionalExperiences}
             setSelectedOptions={setSelectedProfessionalExperiences}
           />
@@ -76,14 +71,7 @@ export const EditSkill = () => {
           <MultiSelectItems
             data={INDUSTRIES}
             name={"Industrie"}
-            selectedStyle={{ height: "48px", width: "150px", margin: "4px", background: "#2c345c" }}
-            notSelectedStyle={{
-              height: "48px",
-              width: "150px",
-              margin: "4px",
-              border: "1px solid #a1a1a1",
-              color: "#a1a1a1",
-            }}
+            width={150}
             selectedOptions={selectedIndustries}
             setSelectedOptions={setSelectedIndustries}
           />
@@ -126,13 +114,12 @@ export const EditSkill = () => {
               name="portfolio"
               value={portfolio}
               placeholder="https://github.com/"
-              style={{ width: "458px" }}
               onChange={onChangePortfolio}
             />
             {portfolioUrl && (
               <Styles.DivPortfoliLink>
                 <Link href={portfolioUrl}>{portfolioUrl}</Link>
-                <LaunchIcon style={{ fontSize: "24px" }} />
+                <LaunchIcon sx={{ fontSize: "24px" }} />
               </Styles.DivPortfoliLink>
             )}
           </Styles.DivPortfolioWrapper>
@@ -154,7 +141,7 @@ export const EditSkill = () => {
               width: "945px",
               height: "250px",
               padding: "16px",
-              border: "1px solid #a1a1a1",
+              border: `1px solid ${COLOR.LIGHT_GRAY.code}`,
               borderRadius: "8px",
             }}
           />
@@ -174,22 +161,21 @@ export const EditSkill = () => {
 
       <Styles.DivButtonWrapper>
         <Button
-          variant="outlined"
-          name="cancelButton"
-          onClick={() => handleCancelButtonClick()}
-          style={{ height: "40px", width: "400px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
-        >
-          キャンセル
-        </Button>
+          text="キャンセル"
+          width={400}
+          borderColor={COLOR.LIGHT_GRAY.code}
+          backGround={COLOR.WHITE.code}
+          fontColor={COLOR.LIGHT_GRAY.code}
+          onClick={handleCancelButtonClick}
+        />
 
         <Button
-          variant="contained"
-          name="keepButton"
-          onClick={() => handleKeepButtonClick()}
-          style={{ height: "40px", width: "400px", background: "#2c345c" }}
-        >
-          保存する
-        </Button>
+          text="保存する"
+          width={400}
+          backGround={COLOR.BASE_COLOR.code}
+          fontColor={COLOR.WHITE.code}
+          onClick={handleKeepButtonClick}
+        />
       </Styles.DivButtonWrapper>
     </Styles.DivEditBasicInfoWrapper>
   );

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { COLOR } from "@/styles/colors";
 
 export const DivFavoriteWrapper = styled.div`
   max-width: 980px;
@@ -35,7 +36,7 @@ export const DivSummary = styled.div`
   width: 280px;
   height: 168px;
   padding: 20px;
-  border: 1px solid #a1a1a1;
+  border: 1px solid ${COLOR.LIGHT_GRAY.code};
   border-radius: 8px;
 `;
 
@@ -44,7 +45,7 @@ export const DivItems = styled.div`
 `;
 
 export const PerFavorite = styled.p`
-  color: #2c345c;
+  color: ${COLOR.BASE_COLOR.code};
 `;
 
 export const DivProjectList = styled.div`
@@ -65,5 +66,5 @@ export const DivNotFavoriteItem = styled.div`
 `;
 
 export const PerNotFavoriteItem = styled.p`
-  color: #a1a1a1;
+  color: ${COLOR.LIGHT_GRAY.code};
 `;

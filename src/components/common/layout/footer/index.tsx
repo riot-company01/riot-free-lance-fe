@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import OutboundIcon from "@mui/icons-material/Outbound";
+import { COLOR } from "@/styles/colors";
 
 export const LayoutFooter: React.FC = () => {
   return (
@@ -35,7 +36,7 @@ const Wrapper = styled.footer`
   justify-content: space-around;
   width: 100%;
   align-items: center;
-  background-color: #30345c;
+  background-color: ${COLOR.BASE_COLOR.code};
   color: white;
   font-size: 12px;
 `;

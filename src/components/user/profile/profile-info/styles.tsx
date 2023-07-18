@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { SCREEN_SIZE } from "@/const/screen-size";
+import { COLOR } from "@/styles/colors";
 
 export const DivProfileInfoWrapper = styled.div`
   width: 720px;
@@ -20,7 +21,7 @@ export const HeadName = styled.h3`
 `;
 
 export const AnchorItem = styled.a`
-  color: #2c345c;
+  color: ${COLOR.BASE_COLOR.code};
 `;
 
 export const DivItem = styled.div`
@@ -43,5 +44,5 @@ export const AnchorLeftMargin = styled.a`
 
 export const Hr = styled.hr`
   border: none;
-  border-top: 2px dotted #a1a1a1;
+  border-top: 2px dotted ${COLOR.LIGHT_GRAY.code};
 `;

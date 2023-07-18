@@ -1,5 +1,6 @@
 import EditIcon from "@mui/icons-material/Edit";
 import * as Styles from "./styles";
+import { COLOR } from "@/styles/colors";
 
 export const ProfileSummary = () => {
   return (
@@ -8,7 +9,7 @@ export const ProfileSummary = () => {
         <Styles.DivHeadFlex>
           <Styles.HeadName>名前</Styles.HeadName>
           <Styles.AnchorItem href={"/user/edit"}>
-            <EditIcon style={{ fontSize: 16, color: "#2C345C", marginBottom: "5px" }} />
+            <EditIcon sx={{ fontSize: 16, color: COLOR.BASE_COLOR.code, marginBottom: "5px" }} />
             編集
           </Styles.AnchorItem>
         </Styles.DivHeadFlex>
@@ -18,7 +19,7 @@ export const ProfileSummary = () => {
         </Styles.DivItem>
         <Styles.DivAddSkill>
           <Styles.AnchorItem href="/user/edit-skill">
-            <EditIcon style={{ fontSize: 16, color: "#2C345C", marginBottom: "5px" }} />
+            <EditIcon sx={{ fontSize: 16, color: COLOR.BASE_COLOR.code, marginBottom: "5px" }} />
             開発経験スキルを追加
           </Styles.AnchorItem>
         </Styles.DivAddSkill>

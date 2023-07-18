@@ -1,10 +1,13 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Modal, Button } from "@mui/material";
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import * as Styles from "./styles";
+import { Button as _Button } from "@/components/common/button";
+import { KeywordTag } from "@/components/user/edit/common/keyword-tag";
 import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
 import { DESIRED_SKILL } from "@/components/user/edit/desired-condition/desired-skill/const";
+import { COLOR } from "@/styles/colors";
 
 type DesiredSkillsProps = {
   selectedDesiredSkills: string[];
@@ -32,26 +35,11 @@ export const DesiredSkill = (props: DesiredSkillsProps) => {
           {selectedDesiredSkills.map((item, idx) => {
             return (
               <>
-                <Typography
-                  key={idx}
-                  style={{
-                    height: "48px",
-                    width: "150px",
-                    margin: "4px",
-                    textTransform: "none",
-                    background: "#2c345c",
-                    borderRadius: "4px",
-                    color: "white",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  {item}
-                </Typography>
+                <KeywordTag item={item} />
+
                 {idx === selectedDesiredSkills.length - 1 && (
                   <Button onClick={handleOpen}>
-                    <AddIcon style={{ fontSize: 40, color: "#a1a1a1" }} />
+                    <AddIcon sx={{ fontSize: 40, color: COLOR.LIGHT_GRAY.code }} />
                   </Button>
                 )}
               </>
@@ -61,7 +49,7 @@ export const DesiredSkill = (props: DesiredSkillsProps) => {
       ) : (
         <>
           <Button onClick={handleOpen}>
-            <AddIcon style={{ fontSize: 40, color: "#a1a1a1" }} />
+            <AddIcon sx={{ fontSize: 40, color: COLOR.LIGHT_GRAY.code }} />
           </Button>
         </>
       )}
@@ -73,43 +61,28 @@ export const DesiredSkill = (props: DesiredSkillsProps) => {
             <MultiSelectItems
               data={DESIRED_SKILL}
               name={"DesiredSkills"}
-              selectedStyle={{
-                height: "48px",
-                width: "176px",
-                margin: "4px",
-                textTransform: "none",
-                background: "#2c345c",
-              }}
-              notSelectedStyle={{
-                height: "48px",
-                width: "176px",
-                margin: "4px",
-                border: "1px solid #a1a1a1",
-                color: "#a1a1a1",
-                textTransform: "none",
-              }}
+              width={176}
               selectedOptions={selectedDesiredSkills}
               setSelectedOptions={setSelectedDesiredSkills}
             />
           </Styles.DivItemsWrapper>
           <Styles.DivButtonWrapper>
-            <Button
-              variant="outlined"
-              name="cancelButton"
-              onClick={() => handleCancelButtonClick()}
-              style={{ height: "40px", width: "250px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
-            >
-              キャンセル
-            </Button>
+            <_Button
+              text="キャンセル"
+              width={250}
+              borderColor={COLOR.LIGHT_GRAY.code}
+              backGround={COLOR.WHITE.code}
+              fontColor={COLOR.LIGHT_GRAY.code}
+              onClick={handleCancelButtonClick}
+            />
 
-            <Button
-              variant="contained"
-              name="keepButton"
-              onClick={() => handleKeepButtonClick()}
-              style={{ height: "40px", width: "250px", background: "#2c345c" }}
-            >
-              保存する
-            </Button>
+            <_Button
+              text="保存する"
+              width={250}
+              backGround={COLOR.BASE_COLOR.code}
+              fontColor={COLOR.WHITE.code}
+              onClick={handleKeepButtonClick}
+            />
           </Styles.DivButtonWrapper>
         </Box>
       </Modal>

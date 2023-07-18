@@ -4,7 +4,7 @@ import type { Dispatch, SetStateAction } from "react";
 import * as Styles from "./styles";
 import { SingleSelectItem } from "@/components/user/edit/common/single-select-item";
 import { OPERATION_START_DATE } from "@/components/user/edit/common/single-select-item/mock";
-import { selectMyStyle } from "@/components/user/edit/const";
+import { selectBigStyle, selectSmallStyle } from "@/components/user/edit/const";
 
 type OperationStartDateProps = {
   selectedOption: string;
@@ -60,27 +60,20 @@ export const OperationStartDate = (props: OperationStartDateProps) => {
       <SingleSelectItem
         data={OPERATION_START_DATE}
         name={"OperationStartDate"}
-        selectedStyle={{ height: "48px", width: "308px", margin: "4px", background: "#2c345c" }}
-        notSelectedStyle={{
-          height: "48px",
-          width: "308px",
-          margin: "4px",
-          border: "1px solid #a1a1a1",
-          color: "#a1a1a1",
-        }}
+        width={308}
         selectedOption={selectedOption}
         setSelectedOption={setSelectedOption}
       />
 
       {selectedOption === "時期選択" && (
         <Styles.DivWrapper>
-          <FormControl sx={selectMyStyle} variant="outlined" style={{ width: "380px", marginRight: "16px" }}>
+          <FormControl sx={selectBigStyle} variant="outlined">
             <Select value={selectedYear} onChange={selectYear}>
               {generateYearOptions()}
             </Select>
           </FormControl>
 
-          <FormControl sx={selectMyStyle} variant="outlined" style={{ width: "200px", marginLeft: "16px" }}>
+          <FormControl sx={selectSmallStyle} variant="outlined">
             <Select value={selectedMonth} onChange={selectMonth}>
               {generateMonthOptions()}
             </Select>

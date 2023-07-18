@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { SCREEN_SIZE } from "@/const/screen-size";
+import { COLOR } from "@/styles/colors";
 
 export const DivProfileSummaryWrapper = styled.div`
   width: 280px;
@@ -37,7 +38,7 @@ export const SpanIcon = styled.span`
 `;
 
 export const AnchorItem = styled.a`
-  color: #2c345c;
+  color: ${COLOR.BASE_COLOR.code};
 `;
 
 export const DivItem = styled.div`
@@ -59,5 +60,5 @@ export const DivWrpperSituation = styled.div`
 
 export const Hr = styled.hr`
   border: none;
-  border-top: 2px dotted #a1a1a1;
+  border-top: 2px dotted ${COLOR.LIGHT_GRAY.code};
 `;

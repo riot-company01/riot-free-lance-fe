@@ -1,6 +1,6 @@
-import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
+import { Button } from "@/components/common/button";
 import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
 import {
   INDUSTRIES,
@@ -15,6 +15,7 @@ import { DesiredSkill } from "@/components/user/edit/desired-condition/desired-s
 import { useDesiredCondition } from "@/components/user/edit/desired-condition/hooks/use-desired-condition";
 import { OperationStartDate } from "@/components/user/edit/desired-condition/operation-start-date";
 import { PATHS } from "@/const/paths";
+import { COLOR } from "@/styles/colors";
 
 export const DesiredCondition = () => {
   const { push } = useRouter();
@@ -63,14 +64,7 @@ export const DesiredCondition = () => {
           <SingleSelectItem
             data={COMMUTING_TIME}
             name={"CommutingTime"}
-            selectedStyle={{ height: "48px", width: "460px", margin: "4px", background: "#2c345c" }}
-            notSelectedStyle={{
-              height: "48px",
-              width: "460px",
-              margin: "4px",
-              border: "1px solid #a1a1a1",
-              color: "#a1a1a1",
-            }}
+            width={460}
             selectedOption={selectedCommutingTime}
             setSelectedOption={setSelectedCommutingTime}
           />
@@ -86,14 +80,7 @@ export const DesiredCondition = () => {
           <SingleSelectItem
             data={AMOUNT_OF_MONEY}
             name={"AmountOfMoney"}
-            selectedStyle={{ height: "48px", width: "460px", margin: "4px", background: "#2c345c" }}
-            notSelectedStyle={{
-              height: "48px",
-              width: "460px",
-              margin: "4px",
-              border: "1px solid #a1a1a1",
-              color: "#a1a1a1",
-            }}
+            width={460}
             selectedOption={selectedAmountOfMoney}
             setSelectedOption={setSelectedAmountOfMoney}
           />
@@ -119,14 +106,7 @@ export const DesiredCondition = () => {
           <MultiSelectItems
             data={PROFESSIONAL_EXPERIENCES}
             name={"ProfessionalExperience"}
-            selectedStyle={{ height: "48px", width: "150px", margin: "4px", background: "#2c345c" }}
-            notSelectedStyle={{
-              height: "48px",
-              width: "150px",
-              margin: "4px",
-              border: "1px solid #a1a1a1",
-              color: "#a1a1a1",
-            }}
+            width={150}
             selectedOptions={selectedProfessionalExperiences}
             setSelectedOptions={setSelectedProfessionalExperiences}
           />
@@ -142,14 +122,7 @@ export const DesiredCondition = () => {
           <MultiSelectItems
             data={INDUSTRIES}
             name={"Industries"}
-            selectedStyle={{ height: "48px", width: "150px", margin: "4px", background: "#2c345c" }}
-            notSelectedStyle={{
-              height: "48px",
-              width: "150px",
-              margin: "4px",
-              border: "1px solid #a1a1a1",
-              color: "#a1a1a1",
-            }}
+            width={150}
             selectedOptions={selectedIndustries}
             setSelectedOptions={setSelectedIndustries}
           />
@@ -179,14 +152,7 @@ export const DesiredCondition = () => {
           <MultiSelectItems
             data={MODE_OF_OPERATION}
             name={"ModeOfOperation"}
-            selectedStyle={{ height: "48px", width: "460px", margin: "4px", background: "#2c345c" }}
-            notSelectedStyle={{
-              height: "48px",
-              width: "460px",
-              margin: "4px",
-              border: "1px solid #a1a1a1",
-              color: "#a1a1a1",
-            }}
+            width={460}
             selectedOptions={selectedModeOfOperation}
             setSelectedOptions={setSelectedModeOfOperation}
           />
@@ -202,14 +168,7 @@ export const DesiredCondition = () => {
           <SingleSelectItem
             data={AVAILABLE_DAYS}
             name={"AvailableDays"}
-            selectedStyle={{ height: "48px", width: "460px", margin: "4px", background: "#2c345c" }}
-            notSelectedStyle={{
-              height: "48px",
-              width: "460px",
-              margin: "4px",
-              border: "1px solid #a1a1a1",
-              color: "#a1a1a1",
-            }}
+            width={460}
             selectedOption={selectedAvailableDays}
             setSelectedOption={setSelectedAvailableDays}
           />
@@ -235,22 +194,20 @@ export const DesiredCondition = () => {
 
       <Styles.DivButtonWrapper>
         <Button
-          variant="outlined"
-          name="cancelButton"
-          onClick={() => handleCancelButtonClick()}
-          style={{ height: "40px", width: "400px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
-        >
-          キャンセル
-        </Button>
-
+          text="キャンセル"
+          width={400}
+          borderColor={COLOR.LIGHT_GRAY.code}
+          backGround={COLOR.WHITE.code}
+          fontColor={COLOR.LIGHT_GRAY.code}
+          onClick={handleCancelButtonClick}
+        />
         <Button
-          variant="contained"
-          name="keepButton"
-          onClick={() => handleKeepButtonClick()}
-          style={{ height: "40px", width: "400px", background: "#2c345c" }}
-        >
-          保存する
-        </Button>
+          text="保存する"
+          width={400}
+          backGround={COLOR.BASE_COLOR.code}
+          fontColor={COLOR.WHITE.code}
+          onClick={handleKeepButtonClick}
+        />
       </Styles.DivButtonWrapper>
     </Styles.DivEditBasicInfoWrapper>
   );

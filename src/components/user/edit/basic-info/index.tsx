@@ -1,14 +1,16 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
+import { FormControl, MenuItem, Select, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import { Tag } from "../common/tag";
 import { useBasicInfo } from "./hooks/use-basic-info";
 import * as Styles from "./styles";
+import { Button } from "@/components/common/button";
 import { SelectPrefecture } from "@/components/user/edit/common/select-prefecture";
 import { SingleSelectItem } from "@/components/user/edit/common/single-select-item";
 import { CURRENT_SITUATION } from "@/components/user/edit/common/single-select-item/mock";
-import { myStyle, selectMyStyle } from "@/components/user/edit/const";
+import { myStyle, selectBigStyle, selectSmallStyle } from "@/components/user/edit/const";
 import { PATHS } from "@/const/paths";
+import { COLOR } from "@/styles/colors";
 
 export const EditBasicInfo = () => {
   const { user } = useUser();
@@ -90,7 +92,6 @@ export const EditBasicInfo = () => {
             name="userFirstName"
             value={userLastName}
             placeholder="例:田中"
-            style={{ width: "458px" }}
             onChange={onChangeUserLastName}
           />
         </Styles.DivItemWrapper>
@@ -105,7 +106,6 @@ export const EditBasicInfo = () => {
             name="userFirstName"
             value={userFirstName}
             placeholder="例：太郎"
-            style={{ width: "458px" }}
             onChange={onChangeUserFirstName}
           />
         </Styles.DivItemWrapper>
@@ -123,7 +123,6 @@ export const EditBasicInfo = () => {
             name="userLastName"
             value={userLastNameKana}
             placeholder="例：たなか"
-            style={{ width: "458px" }}
             onChange={onChangeUserLastNameKana}
           />
         </Styles.DivItemWrapper>
@@ -139,7 +138,6 @@ export const EditBasicInfo = () => {
             name="userFirstName"
             value={userFirstNameKana}
             placeholder="例：たろう"
-            style={{ width: "458px" }}
             onChange={onChangeUserFirstNameKana}
           />
         </Styles.DivItemWrapper>
@@ -150,18 +148,18 @@ export const EditBasicInfo = () => {
           <Tag isRequired />
         </Styles.DivTitleWrapper>
         <div>
-          <FormControl sx={selectMyStyle} variant="outlined" style={{ width: "380px", marginRight: "32px" }}>
+          <FormControl sx={selectBigStyle} variant="outlined">
             <Select value={selectedYear} onChange={selectYear}>
               {generateYearOptions()}
             </Select>
           </FormControl>
-          <FormControl sx={selectMyStyle} variant="outlined" style={{ width: "200px", marginRight: "32px" }}>
+          <FormControl sx={selectSmallStyle} variant="outlined">
             <Select value={selectedMonth} onChange={selectMonth}>
               {generateMonthDayOptions(12)}
             </Select>
           </FormControl>
 
-          <FormControl sx={selectMyStyle} variant="outlined" style={{ width: "200px" }}>
+          <FormControl sx={selectSmallStyle} variant="outlined">
             <Select value={selectedDay} onChange={selectDay}>
               {generateMonthDayOptions(31)}
             </Select>
@@ -181,7 +179,6 @@ export const EditBasicInfo = () => {
           name="mailAddres"
           value={mailAddress}
           placeholder={user?.email ? user?.email : ""}
-          style={{ width: "458px" }}
           onChange={onChangeMailAddress}
         />
       </Styles.DivWrpper>
@@ -198,7 +195,6 @@ export const EditBasicInfo = () => {
           name="phone"
           value={phoneNumber}
           placeholder={"080xxxxxxxx"}
-          style={{ width: "458px" }}
           onChange={onChangePhoneNumber}
         />
       </Styles.DivWrpper>
@@ -217,36 +213,28 @@ export const EditBasicInfo = () => {
         <SingleSelectItem
           data={CURRENT_SITUATION}
           name={"CurrentSistuation"}
-          selectedStyle={{ height: "48px", width: "460px", margin: "4px", background: "#2c345c" }}
-          notSelectedStyle={{
-            height: "48px",
-            width: "460px",
-            margin: "4px",
-            border: "1px solid #a1a1a1",
-            color: "#a1a1a1",
-          }}
+          width={460}
           selectedOption={selectedCurrentSituation}
           setSelectedOption={setSelectedCurrentSituation}
         />
       </Styles.DivWrpper>
       <Styles.DivButtonWrapper>
         <Button
-          variant="outlined"
-          name="cancelButton"
-          onClick={() => handleCancelButtonClick()}
-          style={{ height: "40px", width: "400px", border: "1px solid #a1a1a1", color: "#a1a1a1" }}
-        >
-          キャンセル
-        </Button>
+          text="キャンセル"
+          width={400}
+          borderColor={COLOR.LIGHT_GRAY.code}
+          backGround={COLOR.WHITE.code}
+          fontColor={COLOR.LIGHT_GRAY.code}
+          onClick={handleCancelButtonClick}
+        />
 
         <Button
-          variant="contained"
-          name="keepButton"
-          onClick={() => handleKeepButtonClick()}
-          style={{ height: "40px", width: "400px", background: "#2c345c" }}
-        >
-          保存する
-        </Button>
+          text="保存する"
+          width={400}
+          backGround={COLOR.BASE_COLOR.code}
+          fontColor={COLOR.WHITE.code}
+          onClick={handleKeepButtonClick}
+        />
       </Styles.DivButtonWrapper>
     </Styles.DivEditBasicInfoWrapper>
   );

@@ -1,16 +1,33 @@
+import { COLOR } from "@/styles/colors";
 export const myStyle = {
   "& .MuiOutlinedInput-root": {
+    width: "458px",
     "&:hover fieldset": {
-      borderColor: "#2C345C",
+      borderColor: COLOR.BASE_COLOR.code,
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#2C345C",
+      borderColor: COLOR.BASE_COLOR.code,
     },
   },
 };
 
-export const selectMyStyle = {
+export const selectBigStyle = {
+  "& .MuiInputBase-root": {
+    width: "380px",
+    marginRight: "32px",
+  },
   "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#2C345C",
+    borderColor: COLOR.BASE_COLOR.code,
+  },
+};
+
+export const selectSmallStyle = {
+  "& .MuiInputBase-root": {
+    width: "200px",
+    marginRight: "32px",
+  },
+  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    marginRight: "32px",
+    borderColor: COLOR.BASE_COLOR.code,
   },
 };

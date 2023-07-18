@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { SCREEN_SIZE } from "@/const/screen-size";
+import { COLOR } from "@/styles/colors";
 
 export const DivWrapper = styled.div`
-  border-bottom: solid 6px #edf4fc;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
   border-radius: 9px;
   background-color: white;
@@ -38,7 +38,7 @@ export const DivKeywordWrapper = styled.div`
 `;
 
 export const DivBasicInfo = styled.div`
-  border: solid 4px #edf4fc;
+  border: solid 4px ${COLOR.LIGHT_BLUE.code};
   margin-bottom: 16px;
 `;
 
@@ -55,7 +55,7 @@ export const SecBasicInfoWrapper = styled.section`
 `;
 
 export const HeadBasicInfo = styled.h3`
-  background-color: #edf4fc;
+  background-color: ${COLOR.LIGHT_BLUE.code};
   font-size: 18px;
   font-weight: bold;
   @media (max-width: ${SCREEN_SIZE.isSpSize}) {
@@ -80,7 +80,7 @@ export const PerBasicInfo = styled.p`
 
 export const SpanPriceColor = styled.span`
   font-size: 24px;
-  color: #f7979c;
+  color: ${COLOR.LIGHT_RED.code};
   font-weight: bold;
 `;
 

@@ -10,6 +10,7 @@ import { LeftNavig } from "@/components/works/left-navig";
 import { initializeApollo } from "@/lib/apollo/client";
 import type { GetWorkQuery } from "@/lib/graphql/graphql";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
@@ -72,9 +73,12 @@ export default function Works({ data }: { data: GetWorkQuery }) {
                 })}
               </FlexContainer>
               <FlexContainer>
-                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
-                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成...
+                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                ・社内外との折衝 ・計画書作成
+                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                ・社内外との折衝
+                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                ・社内外との折衝 ・計画書作成...
               </FlexContainer>
             </Card>
             <Card>
@@ -118,9 +122,12 @@ export default function Works({ data }: { data: GetWorkQuery }) {
                 })}
               </FlexContainer>
               <FlexContainer>
-                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
-                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成...
+                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                ・社内外との折衝 ・計画書作成
+                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                ・社内外との折衝
+                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                ・社内外との折衝 ・計画書作成...
               </FlexContainer>
             </Card>
             <Card>
@@ -164,9 +171,12 @@ export default function Works({ data }: { data: GetWorkQuery }) {
                 })}
               </FlexContainer>
               <FlexContainer>
-                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
-                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成...
+                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                ・社内外との折衝 ・計画書作成
+                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                ・社内外との折衝
+                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                ・社内外との折衝 ・計画書作成...
               </FlexContainer>
             </Card>
           </Column>
@@ -260,7 +270,7 @@ const KeyWordFixed = styled.div`
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
   width: calc(100% - 160px);
-  background-color: #f5f5f5;
+  background-color: ${COLOR.WHITE.code};
   max-width: calc(1320px - 160px);
 `;
 
@@ -278,7 +288,7 @@ const DetailContainer = styled.div`
 `;
 
 const Strong = styled.div`
-  color: #f86986;
+  color: ${COLOR.RED.code};
   font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, sans-serif;
 `;
 

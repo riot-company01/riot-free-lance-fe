@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { COLOR } from "@/styles/colors";
 
 export const AnyKeyword = styled.p<{ isRequired: boolean }>`
   text-align: center;
@@ -6,8 +7,8 @@ export const AnyKeyword = styled.p<{ isRequired: boolean }>`
   padding: 2px 4px;
   border-radius: 4px;
   font-size: 8px;
-  color: #a1a1a1;
-  border: 1px solid #a1a1a1;
+  color: ${COLOR.LIGHT_GRAY.code}s;
+  border: 1px solid ${COLOR.LIGHT_GRAY.code};
 `;
 
 export const RequiredKeyword = styled.p<{ isRequired: boolean }>`
@@ -16,6 +17,6 @@ export const RequiredKeyword = styled.p<{ isRequired: boolean }>`
   padding: 2px 4px;
   border-radius: 4px;
   font-size: 8px;
-  border: 1px solid #fa5a5a;
-  color: #fa5a5a;
+  border: 1px solid ${COLOR.RED.code};
+  color: ${COLOR.RED.code};
 `;
