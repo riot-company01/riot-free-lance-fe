@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { SCREEN_SIZE } from "@/const/screen-size";
+import { COLOR } from "@/styles/colors";
 
 export const DivListItemWrapper = styled.div`
   width: 100%;
@@ -60,7 +61,7 @@ export const SecContentWrap = styled.section`
 export const SecContent = styled.section`
   display: flex;
   justify-content: space-around;
-  aline-items: center;
+  align-items: center;
   margin: 0 16px;
   height: 40px;
 `;
@@ -83,7 +84,7 @@ export const PerPrice = styled.p`
 
 export const SpanPriceColor = styled.span`
   font-size: 24px;
-  color: #f7979c;
+  color: ${COLOR.LIGHT_RED.code};
   font-weight: bold;
 `;
 

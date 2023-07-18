@@ -12,7 +12,7 @@ export const ProjectContent = ({ item }: Props) => {
   const { id, price, projectName } = item;
   return (
     <Styles.DivListItemWrapper>
-      <Link href={`/project/detail/${id}`}>
+      <Link href={`/project/detail/${id}`} passHref>
         <Styles.DivContent>
           <Styles.HederContent>{projectName}</Styles.HederContent>
           <Styles.SecContent>

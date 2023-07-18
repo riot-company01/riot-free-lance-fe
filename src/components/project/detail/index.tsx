@@ -7,6 +7,7 @@ import * as Styles from "./styles";
 import { PATHS } from "@/const/paths";
 import type { GetDetailProjectQuery, GetDetailProjectQueryVariables } from "@/lib/graphql/graphql";
 import { GetDetailProjectDocument } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
 type ProjectDetailType = {
   projectId: string | string[] | undefined;
@@ -72,8 +73,21 @@ export const ProjectDetail = ({ projectId }: ProjectDetailType) => {
       <Description projectDetailData={projectDetailData} />
 
       <Styles.DivButtonWrapper>
-        <Button text="案件のURLをコピーする" borderColor={"#949793"} backGroundCalor="#949793" onClick={copyUrlHandler} />
-        <Button text="案件一覧にもどる" borderColor={"#fa5a5a"} backGroundCalor="#fa5a5a" onClick={onClickBackToList} />
+        <Button
+          text="案件のURLをコピーする"
+          width={200}
+          backGround={COLOR.WHITE.code}
+          borderColor={COLOR.GRAY.code}
+          fontColor={COLOR.GRAY.code}
+          onClick={copyUrlHandler}
+        />
+        <Button
+          text="案件一覧にもどる"
+          width={200}
+          backGround={COLOR.RED.code}
+          fontColor={COLOR.WHITE.code}
+          onClick={onClickBackToList}
+        />
       </Styles.DivButtonWrapper>
     </Styles.DivWrapper>
   );

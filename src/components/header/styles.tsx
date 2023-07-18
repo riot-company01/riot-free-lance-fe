@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
+import { COLOR } from "@/styles/colors";
 
 export const HeaderContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: #f5f5f5;
+  background-color: ${COLOR.WHITE.code};
   padding: 20px;
 `;
 

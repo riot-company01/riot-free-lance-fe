@@ -2,22 +2,25 @@ import * as Styles from "./styles";
 
 type Props = {
   text: string;
-  borderColor: string;
-  backGroundCalor: string;
+  width: number;
+  backGround: string;
+  borderColor?: string;
+  fontColor: string;
   onClick: () => void;
 };
 
 export const Button = (props: Props) => {
-  const { text, borderColor, backGroundCalor, onClick } = props;
+  const { text, width, borderColor, backGround, fontColor, onClick } = props;
 
   return (
-    <Styles.ButtonWrapper
-      name={"button"}
+    <Styles.Button
+      width={width}
       borderColor={borderColor}
-      backGroundColor={backGroundCalor}
+      backGround={backGround}
+      fontColor={fontColor}
       onClick={onClick}
     >
-      <Styles.ParText>{text}</Styles.ParText>
-    </Styles.ButtonWrapper>
+      {text}
+    </Styles.Button>
   );
 };
