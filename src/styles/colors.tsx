@@ -9,7 +9,7 @@ export const COLOR = {
     code: "#a1a1a1",
   },
   WHITE: {
-    code: "#ffffff",
+    code: "#f5f5f5",
   },
   BLACK: {
     code: "#000000",
