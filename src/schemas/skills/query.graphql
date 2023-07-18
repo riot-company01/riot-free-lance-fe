@@ -1,7 +1,17 @@
-query GetSkills {
-  skills {
+query GetSkills($skillsWhere: skills_bool_exp = { _and: [] }, $worksWhere: work_to_detail_bool_exp = { _and: [] }) @cached {
+  skills(where: $skillsWhere) {
     id
-    name
     type
+    name
+    works_aggregate(where: $worksWhere) {
+      nodes {
+        work {
+          title
+        }
+      }
+      aggregate {
+        count
+      }
+    }
   }
 }

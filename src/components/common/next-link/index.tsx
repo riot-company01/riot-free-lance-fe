@@ -14,7 +14,7 @@ type NextLinkProps = {
  * @param props {@link NextLinkProps}
  */
 export const NextLink = (props: NextLinkProps) => {
-  const { children, href, scroll = false, ...rest } = props;
+  const { children, href, scroll = true, ...rest } = props;
 
   return (
     <_NextLink href={href} scroll={scroll} {...rest}>

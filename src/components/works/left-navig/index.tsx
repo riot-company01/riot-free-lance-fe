@@ -1,134 +1,96 @@
 import styled from "@emotion/styled";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { FormGroup, FormControlLabel, Checkbox as _Checkbox } from "@mui/material";
-import { useState } from "react";
+import { Checkbox as _Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import { map, groupBy } from "lodash-es";
 
-export function LeftNavig() {
-  const [isOpen, setIsOpen] = useState(true);
-  ExpandMoreIcon;
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import type { GetSkillsQuery } from "@/lib/graphql/graphql";
+
+type Filterer = {
+  type: string;
+  word: GetSkillsQuery["skills"];
+};
+
+type Props = {
+  defaultFilters?: GetSkillsQuery["skills"];
+  selectedSkillIds: string[];
+};
+
+type PropsAccordion = {
+  nodes: Filterer;
+  selectedSkillIds: string[];
+};
+
+export function LeftNavig({ defaultFilters, selectedSkillIds }: Props) {
+  const [viewList, setViewList] = useState<Filterer[]>([]);
+
+  useEffect(() => {
+    if (!defaultFilters) return;
+    const filterers = map(groupBy(defaultFilters, "type"), (i, key) => {
+      return { type: key, word: i };
+    });
+    setViewList(filterers);
+  }, [JSON.stringify(defaultFilters)]);
+
   return (
     <div>
-      <Head>
-        <div>FW/LIB</div>
-        <div
-          onClick={() => {
-            setIsOpen((prev) => !prev);
-          }}
-        >
-          {isOpen ? <ExpandLessIcon fontSize="large" /> : <ExpandMoreIcon fontSize="large" />}
-        </div>
-      </Head>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>React.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Next.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Vue.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Nuxt.js</Label>} />
-        <More>もっと見る</More>
-      </FormGroup>
-      <Head>
-        <div>FW/LIB</div>
-        <div
-          onClick={() => {
-            setIsOpen((prev) => !prev);
-          }}
-        >
-          {isOpen ? <ExpandLessIcon fontSize="large" /> : <ExpandMoreIcon fontSize="large" />}
-        </div>
-      </Head>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>React.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Next.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Vue.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Nuxt.js</Label>} />
-        <More>もっと見る</More>
-      </FormGroup>
-      <Head>
-        <div>FW/LIB</div>
-        <div
-          onClick={() => {
-            setIsOpen((prev) => !prev);
-          }}
-        >
-          {isOpen ? <ExpandLessIcon fontSize="large" /> : <ExpandMoreIcon fontSize="large" />}
-        </div>
-      </Head>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>React.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Next.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Vue.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Nuxt.js</Label>} />
-        <More>もっと見る</More>
-      </FormGroup>
-      <Head>
-        <div>FW/LIB</div>
-        <div
-          onClick={() => {
-            setIsOpen((prev) => !prev);
-          }}
-        >
-          {isOpen ? <ExpandLessIcon fontSize="large" /> : <ExpandMoreIcon fontSize="large" />}
-        </div>
-      </Head>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>React.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Next.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Vue.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Nuxt.js</Label>} />
-        <More>もっと見る</More>
-      </FormGroup>
-      <Head>
-        <div>FW/LIB</div>
-        <div
-          onClick={() => {
-            setIsOpen((prev) => !prev);
-          }}
-        >
-          {isOpen ? <ExpandLessIcon fontSize="large" /> : <ExpandMoreIcon fontSize="large" />}
-        </div>
-      </Head>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>React.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Next.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Vue.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Nuxt.js</Label>} />
-        <More>もっと見る</More>
-      </FormGroup>
-      <Head>
-        <div>FW/LIB</div>
-        <div
-          onClick={() => {
-            setIsOpen((prev) => !prev);
-          }}
-        >
-          {isOpen ? <ExpandLessIcon fontSize="large" /> : <ExpandMoreIcon fontSize="large" />}
-        </div>
-      </Head>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>React.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Next.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Vue.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Nuxt.js</Label>} />
-        <More>もっと見る</More>
-      </FormGroup>
-      <Head>
-        <div>FW/LIB</div>
-        <div
-          onClick={() => {
-            setIsOpen((prev) => !prev);
-          }}
-        >
-          {isOpen ? <ExpandLessIcon fontSize="large" /> : <ExpandMoreIcon fontSize="large" />}
-        </div>
-      </Head>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>React.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Next.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Vue.js</Label>} />
-        <FormControlLabel control={<Checkbox size="small" />} label={<Label>Nuxt.js</Label>} />
-        <More>もっと見る</More>
-      </FormGroup>
+      {viewList.map((nodes) => {
+        return <Accordion key={nodes.type} nodes={nodes} selectedSkillIds={selectedSkillIds} />;
+      })}
     </div>
+  );
+}
+
+function Accordion({ nodes, selectedSkillIds }: PropsAccordion) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  return (
+    <React.Fragment>
+      <Head
+        role="button"
+        onClick={() => {
+          setIsOpen((prev) => !prev);
+        }}
+      >
+        <button>{nodes.type}</button>
+        <div>{isOpen ? <ExpandLessIcon fontSize="large" /> : <ExpandMoreIcon fontSize="large" />}</div>
+      </Head>
+      {isOpen && (
+        <FormGroup>
+          {nodes.word.map((keyword) => {
+            const strId = keyword.id.toString();
+            const skillIds = selectedSkillIds.includes(strId) ? selectedSkillIds.filter((i) => i !== strId) : [...selectedSkillIds, strId];
+            return (
+              <Link
+                passHref
+                key={keyword.id}
+                href={{
+                  query:
+                    skillIds.length !== 0
+                      ? {
+                          [`skill-ids`]: `${skillIds.join()}`,
+                        }
+                      : {},
+                }}
+              >
+                <FormControlLabel
+                  control={<Checkbox size="small" />}
+                  checked={selectedSkillIds.some((i) => i === keyword.id.toString())}
+                  label={
+                    <Label>
+                      {keyword.name} ({keyword.works_aggregate.aggregate?.count})
+                    </Label>
+                  }
+                />
+              </Link>
+            );
+          })}
+          <More>もっと見る</More>
+        </FormGroup>
+      )}
+    </React.Fragment>
   );
 }
 

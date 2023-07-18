@@ -1,15 +1,16 @@
 import { ApolloProvider } from "@apollo/client";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+
 import { Global } from "@emotion/react";
 import styled from "@emotion/styled";
 import type { AppProps } from "next/app";
 import { LayoutFooter } from "@/components/common/layout/footer";
 import { LayoutHeader } from "@/components/common/layout/header";
-import { initializeApollo } from "@/lib/apollo/client";
+import { useCustomApollo } from "@/lib/apollo/client";
 import { GLOBAL_STYLE } from "@/styles/global-style";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const client = initializeApollo();
+  const client = useCustomApollo(pageProps);
   const { user } = pageProps;
 
   return (

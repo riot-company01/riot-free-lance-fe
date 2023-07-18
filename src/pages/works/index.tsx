@@ -1,3 +1,4 @@
+import { useQuery } from "@apollo/client";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -5,185 +6,173 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
 import { Chip } from "@mui/material";
+import type { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
-import { initializeApollo } from "@/lib/apollo/client";
-import type { GetWorkQuery } from "@/lib/graphql/graphql";
-import { GetWorkDocument } from "@/lib/graphql/graphql";
-import { COLOR } from "@/styles/colors";
+import { addApolloState, initializeApollo } from "@/lib/apollo/client";
+import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
 };
 
-export default function Works({ data }: { data: GetWorkQuery }) {
-  const work = data.work[0];
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const client = initializeApollo({});
+
+  const selectedSkillIds = (ctx.query["skill-ids"] as string | undefined)?.split(",") || [];
+
+  await client.query({
+    query: GetWorksDocument,
+    variables: {
+      where: {
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { languages: { skill_id: { _eq: Number(skillId) } } };
+          }),
+        ],
+      },
+    },
+  });
+
+  await client.query({
+    query: GetSkillsDocument,
+    variables: {
+      skillsWhere: {
+        works_aggregate: {
+          count: { predicate: { _gt: 0 } },
+        },
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { works: { work: { languages: { skill_id: { _eq: Number(skillId) } } } } };
+          }),
+        ],
+      },
+      worksWhere: {
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { work: { languages: { skill_id: { _eq: Number(skillId) } } } };
+          }),
+        ],
+      },
+    },
+  });
+
+  const documentProps = addApolloState(client, {
+    props: {},
+  });
+  return {
+    props: documentProps.props,
+  };
+};
+
+export default function Works() {
+  const router = useRouter();
+  const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
+
+  const { data: works } = useQuery(GetWorksDocument, {
+    variables: {
+      where: {
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { languages: { skill_id: { _eq: Number(skillId) } } };
+          }),
+        ],
+      },
+    },
+  });
+
+  const { data: skills } = useQuery(GetSkillsDocument, {
+    variables: {
+      skillsWhere: {
+        works_aggregate: {
+          count: { predicate: { _gt: 0 } },
+        },
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { works: { work: { languages: { skill_id: { _eq: Number(skillId) } } } } };
+          }),
+        ],
+      },
+      worksWhere: {
+        _and: [
+          ...selectedSkillIds.map((skillId) => {
+            return { work: { languages: { skill_id: { _eq: Number(skillId) } } } };
+          }),
+        ],
+      },
+    },
+  });
 
   return (
     <Wrapper>
       <NavigContainer>
         <Navig>
-          <LeftNavig />
+          <LeftNavig defaultFilters={skills?.skills} selectedSkillIds={selectedSkillIds} />
         </Navig>
       </NavigContainer>
       <KeyWordContainer>
         <KeyWordFixed>
-          <Filter />
+          <Filter defaultFilters={skills?.skills} selectedSkillIds={selectedSkillIds} worksLength={works?.work.length} />
         </KeyWordFixed>
         <WorksContainer>
           <Column>
-            <Card>
-              <Title>
-                <div>{work.title}</div>
-                <FavoriteIcon>
-                  <FavoriteBorderIcon fontSize="large" />
-                </FavoriteIcon>
-              </Title>
-              <MonthlyPrice>
-                <Icon>
-                  <MonetizationOnIcon fontSize="small" />
-                </Icon>
-                <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
-                <Span>万円/月額 (想定年収: 2400万円)</Span>
-              </MonthlyPrice>
-              <FlexContainer>
-                <Icon>
-                  <ReportIcon />
-                </Icon>
-                <div>{work.contractType}</div>
-              </FlexContainer>
-              <FlexContainer>
-                <Icon>
-                  <LocationOnIcon />
-                </Icon>
-                <div>{work.location}</div>
-              </FlexContainer>
-              <FlexContainer>
-                {work.developmentLanguages.map((value, idx) => {
-                  return (
-                    <Chip
-                      key={idx}
-                      label={value.skill?.name}
-                      sx={{
-                        borderRadius: 0,
-                        marginRight: "4px",
-                      }}
-                    />
-                  );
-                })}
-              </FlexContainer>
-              <FlexContainer>
-                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
-                ・社内外との折衝 ・計画書作成
-                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
-                ・社内外との折衝
-                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
-                ・社内外との折衝 ・計画書作成...
-              </FlexContainer>
-            </Card>
-            <Card>
-              <Title>
-                <div>{work.title}</div>
-                <FavoriteIcon>
-                  <FavoriteBorderIcon fontSize="large" />
-                </FavoriteIcon>
-              </Title>
-              <MonthlyPrice>
-                <Icon>
-                  <MonetizationOnIcon fontSize="small" />
-                </Icon>
-                <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
-                <Span>万円/月額 (想定年収: 2400万円)</Span>
-              </MonthlyPrice>
-              <FlexContainer>
-                <Icon>
-                  <ReportIcon />
-                </Icon>
-                <div>{work.contractType}</div>
-              </FlexContainer>
-              <FlexContainer>
-                <Icon>
-                  <LocationOnIcon />
-                </Icon>
-                <div>{work.location}</div>
-              </FlexContainer>
-              <FlexContainer>
-                {work.developmentLanguages.map((value, idx) => {
-                  return (
-                    <Chip
-                      key={idx}
-                      label={value.skill?.name}
-                      sx={{
-                        borderRadius: 0,
-                        marginRight: "4px",
-                      }}
-                    />
-                  );
-                })}
-              </FlexContainer>
-              <FlexContainer>
-                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
-                ・社内外との折衝 ・計画書作成
-                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
-                ・社内外との折衝
-                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
-                ・社内外との折衝 ・計画書作成...
-              </FlexContainer>
-            </Card>
-            <Card>
-              <Title>
-                <div>{work.title}</div>
-                <FavoriteIcon>
-                  <FavoriteBorderIcon fontSize="large" />
-                </FavoriteIcon>
-              </Title>
-              <MonthlyPrice>
-                <Icon>
-                  <MonetizationOnIcon fontSize="small" />
-                </Icon>
-                <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
-                <Span>万円/月額 (想定年収: 2400万円)</Span>
-              </MonthlyPrice>
-              <FlexContainer>
-                <Icon>
-                  <ReportIcon />
-                </Icon>
-                <div>{work.contractType}</div>
-              </FlexContainer>
-              <FlexContainer>
-                <Icon>
-                  <LocationOnIcon />
-                </Icon>
-                <div>{work.location}</div>
-              </FlexContainer>
-              <FlexContainer>
-                {work.developmentLanguages.map((value, idx) => {
-                  return (
-                    <Chip
-                      key={idx}
-                      label={value.skill?.name}
-                      sx={{
-                        borderRadius: 0,
-                        marginRight: "4px",
-                      }}
-                    />
-                  );
-                })}
-              </FlexContainer>
-              <FlexContainer>
-                大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
-                ・社内外との折衝 ・計画書作成
-                ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
-                ・社内外との折衝
-                ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
-                ・社内外との折衝 ・計画書作成...
-              </FlexContainer>
-            </Card>
+            {works?.work.map((item, idx) => {
+              return (
+                <Card key={idx}>
+                  <Title>
+                    <div>{item.title}</div>
+                    <FavoriteIcon>
+                      <FavoriteBorderIcon fontSize="large" />
+                    </FavoriteIcon>
+                  </Title>
+                  <MonthlyPrice>
+                    <Icon>
+                      <MonetizationOnIcon fontSize="small" />
+                    </Icon>
+                    <Strong>{item.minMonthlyPrice}</Strong>~<Strong>{item.maxMonthlyPrice}</Strong>
+                    <Span>万円/月額 (想定年収: 2400万円)</Span>
+                  </MonthlyPrice>
+                  <FlexContainer>
+                    <Icon>
+                      <ReportIcon />
+                    </Icon>
+                    <div>{item.contractType}</div>
+                  </FlexContainer>
+                  <FlexContainer>
+                    <Icon>
+                      <LocationOnIcon />
+                    </Icon>
+                    <div>{item.location}</div>
+                  </FlexContainer>
+                  <FlexContainer>
+                    {item.languages.map((value, idx) => {
+                      return (
+                        <Chip
+                          key={idx}
+                          label={value.skill?.name}
+                          sx={{
+                            borderRadius: 0,
+                            marginRight: "4px",
+                          }}
+                        />
+                      );
+                    })}
+                  </FlexContainer>
+                  <FlexContainer>
+                    大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
+                    ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
+                    ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
+                    ・計画書作成...
+                  </FlexContainer>
+                </Card>
+              );
+            })}
           </Column>
           <div
             className={css`
               width: 100%;
-              max-width: calc(1320px - 160px - 400px);
+              max-width: calc(1320px - 180px - 400px);
               border: 1px solid rgb(224, 224, 224);
               margin-left: 32px;
             `}
@@ -194,15 +183,6 @@ export default function Works({ data }: { data: GetWorkQuery }) {
       </KeyWordContainer>
     </Wrapper>
   );
-}
-
-export async function getServerSideProps() {
-  const { data } = await initializeApollo().query({
-    query: GetWorkDocument,
-  });
-  return {
-    props: { data },
-  };
 }
 
 const Wrapper = styled.div`
@@ -245,11 +225,11 @@ const MonthlyPrice = styled.div`
 
 const Navig = styled.div`
   padding: 16px;
-  width: 160px;
+  width: 180px;
 `;
 
 const NavigContainer = styled.div`
-  min-width: 160px;
+  min-width: 180px;
   position: sticky;
   top: 78px;
   overflow: auto;
@@ -263,23 +243,21 @@ const KeyWordContainer = styled.div`
 `;
 
 const KeyWordFixed = styled.div`
-  height: 136px;
   width: 100%;
   position: sticky;
   top: 78px;
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
-  width: calc(100% - 160px);
-  background-color: ${COLOR.WHITE.code};
-  max-width: calc(1320px - 160px);
+  width: calc(100% - 180px);
+  background-color: #f5f5f5;
+  max-width: calc(1320px - 180px);
 `;
 
 const WorksContainer = styled.div`
   position: sticky;
   display: flex;
-  top: 214px;
-  width: calc(100% - 160px);
-  max-width: calc(1320px - 160px);
+  width: calc(100% - 180px);
+  max-width: calc(1320px - 180px);
 `;
 
 const DetailContainer = styled.div`
@@ -288,7 +266,7 @@ const DetailContainer = styled.div`
 `;
 
 const Strong = styled.div`
-  color: ${COLOR.RED.code};
+  color: #f86986;
   font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, sans-serif;
 `;
 

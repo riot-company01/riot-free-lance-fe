@@ -1,19 +1,20 @@
 import styled from "@emotion/styled";
-import { FormControl, Select, MenuItem, Chip } from "@mui/material";
+import { FormControl, Select, MenuItem, Chip, Stack } from "@mui/material";
+import { useRouter } from "next/router";
+import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 
-export function Filter() {
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
-  };
+type Props = {
+  defaultFilters?: GetSkillsQuery["skills"];
+  selectedSkillIds: string[];
+  worksLength?: number;
+};
 
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
-  };
-
+export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props) {
+  const { push } = useRouter();
   return (
     <>
       <Wrapper>
-        <div>案件:10,000件</div>
+        <div>案件: {worksLength?.toLocaleString()} 件</div>
         <FormControl
           size="small"
           sx={{
@@ -32,9 +33,29 @@ export function Filter() {
           </Select>
         </FormControl>
       </Wrapper>
+
       <Container>
-        <Chip label="Clickable Deletable" onClick={handleClick} onDelete={handleDelete} />
-        <Chip label="Clickable Deletable" variant="outlined" onClick={handleClick} onDelete={handleDelete} />
+        <Stack direction="row" spacing={1}>
+          {selectedSkillIds.map((value) => {
+            const skillIds = selectedSkillIds.filter((i) => i !== value);
+            return (
+              <Chip
+                key={value}
+                label={defaultFilters?.find((i) => i.id === Number(value))?.name}
+                onDelete={() => {
+                  push({
+                    query:
+                      skillIds.length !== 0
+                        ? {
+                            [`skill-ids`]: `${skillIds.join()}`,
+                          }
+                        : {},
+                  });
+                }}
+              />
+            );
+          })}
+        </Stack>
       </Container>
     </>
   );

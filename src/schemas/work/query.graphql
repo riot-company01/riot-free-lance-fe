@@ -1,9 +1,4 @@
 query GetWork @cached {
-  work_aggregate {
-    aggregate {
-      count
-    }
-  }
   work {
     contractType
     id
@@ -13,7 +8,27 @@ query GetWork @cached {
     minMonthlyPrice
     minWorkHours
     title
-    developmentLanguages {
+    languages {
+      skill {
+        id
+        name
+        type
+      }
+    }
+  }
+}
+
+query GetWorks($where: work_bool_exp = { _and: [] }) @cached {
+  work(where: $where) {
+    id
+    title
+    contractType
+    location
+    maxMonthlyPrice
+    maxWorkHours
+    minMonthlyPrice
+    minWorkHours
+    languages {
       skill {
         id
         name

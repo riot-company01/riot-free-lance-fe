@@ -39,6 +39,14 @@ const Wrapper = styled.footer`
   background-color: ${COLOR.BASE_COLOR.code};
   color: white;
   font-size: 12px;
+
+  div {
+    align-items: center;
+    display: flex;
+    svg {
+      font-size: 12px;
+    }
+  }
 `;
 
 // 運営会社

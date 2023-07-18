@@ -3,14 +3,21 @@ import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import deepMerge from "deepmerge";
 import isEqual from "lodash-es/isEqual";
 import "cross-fetch/polyfill";
+import type { AppProps } from "next/app";
 import { useMemo } from "react";
+
+export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 const createApolloClient = () => {
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
+    connectToDevTools: true,
     link: new HttpLink({
       uri: "https://famous-walrus-45.hasura.app/v1/graphql",
+      headers: {
+        "x-hasura-admin-secret": "tKvU0cHFeIRFtuXaqCD4bW6U7y3ocW16e6l8KphpYFZE8xVBotoglTsC7QKYDnBt",
+      },
     }),
     cache: new InMemoryCache(),
   });
@@ -21,10 +28,7 @@ export const initializeApollo = (initialState?: unknown) => {
   if (initialState) {
     const existingCache = _apolloClient.cache.extract();
     const data = deepMerge(initialState, existingCache, {
-      arrayMerge: (destinationArray, sourceArray) => [
-        ...sourceArray,
-        ...destinationArray.filter((d) => sourceArray.every((s) => !isEqual(d, s))),
-      ],
+      arrayMerge: (destinationArray, sourceArray) => [...sourceArray, ...destinationArray.filter((d) => sourceArray.every((s) => !isEqual(d, s)))],
     });
 
     _apolloClient.cache.restore(data);
@@ -39,15 +43,16 @@ export const initializeApollo = (initialState?: unknown) => {
   return _apolloClient;
 };
 
-export const useCustomApollo = () => {
-  const state =
-    typeof window !== "undefined"
-      ? // @ts-ignore
-        window.__NEXT_DATA__.apolloState
-      : undefined;
-  const client = useMemo(() => {
-    return initializeApollo(state);
-  }, [state]);
+export const useCustomApollo = (pageProps: AppProps["pageProps"]) => {
+  const state = pageProps[APOLLO_STATE_PROP_NAME];
+  const store = useMemo(() => initializeApollo(state), [state]);
 
-  return client;
+  return store;
 };
+
+export function addApolloState(client: ApolloClient<NormalizedCacheObject>, pageProps: AppProps["pageProps"]) {
+  if (pageProps?.props) {
+    pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
+  }
+  return pageProps;
+}
