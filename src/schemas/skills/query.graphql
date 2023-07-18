@@ -1,7 +1,69 @@
-query GetSkills {
-  skills {
+query GetWorks($where: work_bool_exp = { _and: [] }) @cached {
+  work(where: $where) {
     id
-    name
-    type
+    title
+    contractType
+    location
+    maxMonthlyPrice
+    maxWorkHours
+    minMonthlyPrice
+    minWorkHours
+    languages {
+      skill {
+        id
+        name
+        type
+      }
+    }
   }
 }
+
+query GetSkills($skillsWhere: skills_bool_exp = { _and: [] }, $worksWhere: work_to_detail_bool_exp = { _and: [] }) @cached {
+  skills(where: $skillsWhere) {
+    id
+    type
+    name
+    works_aggregate(where: $worksWhere) {
+      nodes {
+        work {
+          title
+        }
+      }
+      aggregate {
+        count
+      }
+    }
+  }
+}
+
+# query GetLeftNavi @cached {
+#   skills(
+#     where: {
+#       _and: [
+#         { works_aggregate: { count: { predicate: { _gt: 0 } } } }
+#         { works: { work: { languages: { skill_id: { _eq: 1 } } } } }
+#         { works: { work: { languages: { skill_id: { _eq: 2 } } } } }
+#       ]
+#     }
+#   ) {
+#     id
+#     name
+#     works_aggregate(
+#       where: {
+#         _and: [
+#           { work: { languages: { skill_id: { _eq: 1 } } } }
+#           { work: { languages: { skill_id: { _eq: 2 } } } }
+#         ]
+#       }
+#     ) {
+#       nodes {
+#         work {
+#           title
+#         }
+#       }
+#       aggregate {
+#         count
+#       }
+#     }
+#   }
+# }

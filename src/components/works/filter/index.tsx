@@ -1,13 +1,15 @@
 import styled from "@emotion/styled";
 import { FormControl, Select, MenuItem, Chip } from "@mui/material";
+import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 
-export function Filter() {
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
-  };
+type Props = {
+  selectedValues: GetSkillsQuery["skills"];
+  onSelectedValue: (args: GetSkillsQuery["skills"][number]) => void;
+};
 
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
+export function Filter({ selectedValues, onSelectedValue }: Props) {
+  const handleDelete = (value: GetSkillsQuery["skills"][number]) => {
+    onSelectedValue(value);
   };
 
   return (
@@ -32,9 +34,11 @@ export function Filter() {
           </Select>
         </FormControl>
       </Wrapper>
+
       <Container>
-        <Chip label="Clickable Deletable" onClick={handleClick} onDelete={handleDelete} />
-        <Chip label="Clickable Deletable" variant="outlined" onClick={handleClick} onDelete={handleDelete} />
+        {selectedValues.map((value, idx) => {
+          return <Chip key={idx} label={value.name} onDelete={() => handleDelete(value)} />;
+        })}
       </Container>
     </>
   );
