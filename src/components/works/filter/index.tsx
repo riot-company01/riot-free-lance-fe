@@ -14,7 +14,7 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
   return (
     <>
       <Wrapper>
-        <div>案件: {worksLength?.toLocaleString()} 件</div>
+        <div>合計: {worksLength?.toLocaleString()} 件</div>
         <FormControl
           size="small"
           sx={{
