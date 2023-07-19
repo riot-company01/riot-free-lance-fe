@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export const useProfile = () => {
-  const [uploadFile, setUploadFile] = useState<File | undefined>(undefined);
+export const useProfile = (skillSheet: string | null | undefined) => {
+  const [uploadFile, setUploadFile] = useState<string | null | undefined>(skillSheet);
 
   const onChangeUploadFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUploadFile(event.target.files?.[0]);
+    setUploadFile(event.target.files?.[0].name);
   };
 
   return {

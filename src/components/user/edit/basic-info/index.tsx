@@ -11,10 +11,21 @@ import { CURRENT_SITUATION } from "@/components/user/edit/common/single-select-i
 import { myStyle, selectBigStyle, selectSmallStyle } from "@/components/user/edit/const";
 import { PATHS } from "@/const/paths";
 import { COLOR } from "@/styles/colors";
+import {
+  GetUserBasicInfoQuery,
+  GetUserBasicInfoQueryVariables,
+  GetUserBasicInfoDocument,
+  UseEditBasicInfoDocument,
+} from "@/lib/graphql/graphql";
+import { useMutation, useQuery } from "@apollo/client";
 
 export const EditBasicInfo = () => {
   const { user } = useUser();
+  const { data } = useQuery<GetUserBasicInfoQuery, GetUserBasicInfoQueryVariables>(GetUserBasicInfoDocument, {
+    variables: { id: user?.sub },
+  });
   const { push } = useRouter();
+
   const {
     userFirstName,
     userLastName,
@@ -38,7 +49,9 @@ export const EditBasicInfo = () => {
     onChangePhoneNumber,
     setSelectedCurrentSituation,
     setSelectedPrefecture,
-  } = useBasicInfo();
+  } = useBasicInfo(data);
+
+  const [editProfileMutation] = useMutation(UseEditBasicInfoDocument);
 
   const generateYearOptions = () => {
     const currentYear = new Date().getFullYear();
@@ -73,7 +86,23 @@ export const EditBasicInfo = () => {
     push(PATHS.PROFILE);
   };
 
-  const handleKeepButtonClick = () => {
+  const handleKeepButtonClick = async () => {
+    await editProfileMutation({
+      variables: {
+        id: user?.sub || "",
+        lastName: userLastName || "",
+        firstName: userFirstName || "",
+        lastNameKana: userLastNameKana || "",
+        firstNameKana: userFirstNameKana || "",
+        birthdayYear: String(selectedYear) || "",
+        birthdayMounth: String(selectedMonth) || "",
+        birthdayDay: String(selectedDay) || "",
+        mail: mailAddress || "",
+        tel: phoneNumber || "",
+        prefectures: selectedPrefecture || "",
+        currentSituation: selectedCurrentSituation || "",
+      },
+    });
     push(PATHS.PROFILE);
   };
 

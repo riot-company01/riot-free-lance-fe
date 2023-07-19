@@ -1,19 +1,22 @@
 import type { SelectChangeEvent } from "@mui/material";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
+import { GetUserBasicInfoQuery } from "@/lib/graphql/graphql";
 
-export const useBasicInfo = () => {
-  const [userFirstName, setUserFirstName] = useState("");
-  const [userLastName, setUserLastName] = useState("");
-  const [userFirstNameKana, setUserFirstNameKana] = useState("");
-  const [userLastNameKana, setUserLastNameKana] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const [selectedDay, setSelectedDay] = useState("");
-  const [selectedPrefecture, setSelectedPrefecture] = useState("");
-  const [mailAddress, setMailAddress] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [selectedCurrentSituation, setSelectedCurrentSituation] = useState("");
+export const useBasicInfo = (data: GetUserBasicInfoQuery | undefined) => {
+  const userBasicInfo = data?.users[0];
+
+  const [userFirstName, setUserFirstName] = useState(userBasicInfo?.first_name);
+  const [userLastName, setUserLastName] = useState(userBasicInfo?.last_name);
+  const [userFirstNameKana, setUserFirstNameKana] = useState(userBasicInfo?.first_name_kana);
+  const [userLastNameKana, setUserLastNameKana] = useState(userBasicInfo?.last_name_kana);
+  const [selectedYear, setSelectedYear] = useState(userBasicInfo?.birthday_year);
+  const [selectedMonth, setSelectedMonth] = useState(userBasicInfo?.birthday_mounth);
+  const [selectedDay, setSelectedDay] = useState(userBasicInfo?.birthday_day);
+  const [selectedPrefecture, setSelectedPrefecture] = useState(userBasicInfo?.prefectures);
+  const [mailAddress, setMailAddress] = useState(userBasicInfo?.mail);
+  const [phoneNumber, setPhoneNumber] = useState(userBasicInfo?.tel);
+  const [selectedCurrentSituation, setSelectedCurrentSituation] = useState(userBasicInfo?.current_situation);
 
   const onChangeUserFirstName = useCallback((e: ChangeEvent<HTMLInputElement>) => setUserFirstName(e.target.value), []);
 
@@ -42,6 +45,20 @@ export const useBasicInfo = () => {
   const onChangeMailAddress = useCallback((e: ChangeEvent<HTMLInputElement>) => setMailAddress(e.target.value), []);
 
   const onChangePhoneNumber = useCallback((e: ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value), []);
+
+  useEffect(() => {
+    setUserLastName(userBasicInfo?.last_name);
+    setUserFirstName(userBasicInfo?.first_name);
+    setUserFirstNameKana(userBasicInfo?.first_name_kana);
+    setUserLastNameKana(userBasicInfo?.last_name_kana);
+    setSelectedYear(userBasicInfo?.birthday_year);
+    setSelectedMonth(userBasicInfo?.birthday_mounth);
+    setSelectedDay(userBasicInfo?.birthday_day);
+    setSelectedPrefecture(userBasicInfo?.prefectures);
+    setMailAddress(userBasicInfo?.mail);
+    setPhoneNumber(userBasicInfo?.tel);
+    setSelectedCurrentSituation(userBasicInfo?.current_situation);
+  }, [userBasicInfo]);
 
   return {
     userFirstName,

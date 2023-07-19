@@ -1,0 +1,15 @@
+query GetUserDesiredCondition($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    commuting_time
+    amount_of_money
+    preferred_place_of_work
+    desired_occupation
+    desired_industries
+    desired_skills
+    mode_of_operation
+    available_day
+    project_start_time
+    project_start_year
+    project_start_mounth
+  }
+}

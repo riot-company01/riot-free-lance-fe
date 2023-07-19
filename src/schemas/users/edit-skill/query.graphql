@@ -1,0 +1,12 @@
+query GetUserSkill($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    professional_experience
+    industries
+    language_libraries
+    frame_work
+    portfolio
+    self_pr
+    file_title
+    file_path
+  }
+}

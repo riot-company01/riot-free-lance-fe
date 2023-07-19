@@ -1,0 +1,15 @@
+query GetUserBasicInfo($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    last_name
+    first_name
+    last_name_kana
+    first_name_kana
+    birthday_year
+    birthday_mounth
+    birthday_day
+    mail
+    tel
+    prefectures
+    current_situation
+  }
+}

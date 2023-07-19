@@ -1,8 +1,34 @@
-query GetUser($id: String) {
+query GetUserInfo($id: String) {
   users(where: { id: { _eq: $id } }) {
-    id
-    name
-    last_seen
-    slackUrl
+    last_name
+    first_name
+    last_name_kana
+    first_name_kana
+    birthday_year
+    birthday_mounth
+    birthday_day
+    mail
+    tel
+    prefectures
+    current_situation
+    professional_experience
+    industries
+    language_libraries
+    frame_work
+    portfolio
+    self_pr
+    file_title
+    file_path
+    commuting_time
+    amount_of_money
+    preferred_place_of_work
+    desired_occupation
+    desired_industries
+    desired_skills
+    mode_of_operation
+    available_day
+    project_start_time
+    project_start_year
+    project_start_mounth
   }
 }

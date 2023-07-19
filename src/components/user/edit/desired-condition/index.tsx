@@ -121,7 +121,7 @@ export const DesiredCondition = () => {
           </Styles.DivTitleWrapper>
           <MultiSelectItems
             data={INDUSTRIES}
-            name={"Industries"}
+            name={"desiredIndustries"}
             width={150}
             selectedOptions={selectedIndustries}
             setSelectedOptions={setSelectedIndustries}
