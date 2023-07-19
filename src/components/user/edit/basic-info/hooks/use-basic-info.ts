@@ -1,7 +1,7 @@
 import type { SelectChangeEvent } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
-import { GetUserBasicInfoQuery } from "@/lib/graphql/graphql";
+import type { GetUserBasicInfoQuery } from "@/lib/graphql/graphql";
 
 export const useBasicInfo = (data: GetUserBasicInfoQuery | undefined) => {
   const userBasicInfo = data?.users[0];

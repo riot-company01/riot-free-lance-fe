@@ -1,17 +1,23 @@
 import { useState } from "react";
+import type { GetUserDesiredConditionQuery } from "@/lib/graphql/graphql";
 
-export const useDesiredCondition = () => {
-  const [selectedPrefecture, setSelectedPrefecture] = useState("");
-  const [selectedCommutingTime, setSelectedCommutingTime] = useState("");
-  const [selectedAmountOfMoney, setSelectedAmountOfMoney] = useState("");
-  const [selectedAvailableDays, setSelectedAvailableDays] = useState("");
-  const [selectedProfessionalExperiences, setSelectedProfessionalExperiences] = useState<string[]>([]);
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
-  const [selectedOperationStartDate, setSelectedOperationStartDate] = useState("時期選択");
-  const [selectedYear, setSelectedYear] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const [selectedModeOfOperation, setSelectedModeOfOperation] = useState<string[]>([]);
-  const [selectedDesiredSkills, setSelectedDesiredSkills] = useState<string[]>([]);
+export const useDesiredCondition = (data: GetUserDesiredConditionQuery | undefined) => {
+  const desiredConditionInfo = data?.users[0];
+  const [selectedPrefecture, setSelectedPrefecture] = useState(desiredConditionInfo?.preferred_place_of_work);
+  const [selectedCommutingTime, setSelectedCommutingTime] = useState(desiredConditionInfo?.commuting_time);
+  const [selectedAmountOfMoney, setSelectedAmountOfMoney] = useState(desiredConditionInfo?.amount_of_money);
+  const [selectedAvailableDays, setSelectedAvailableDays] = useState(desiredConditionInfo?.available_day);
+  const [selectedProfessionalExperiences, setSelectedProfessionalExperiences] = useState(
+    desiredConditionInfo?.desired_occupation
+  );
+  const [selectedIndustries, setSelectedIndustries] = useState(desiredConditionInfo?.desired_industries);
+  const [selectedOperationStartDate, setSelectedOperationStartDate] = useState(
+    desiredConditionInfo?.project_start_time
+  );
+  const [selectedYear, setSelectedYear] = useState(desiredConditionInfo?.project_start_year);
+  const [selectedMonth, setSelectedMonth] = useState(desiredConditionInfo?.project_start_mounth);
+  const [selectedModeOfOperation, setSelectedModeOfOperation] = useState(desiredConditionInfo?.mode_of_operation);
+  const [selectedDesiredSkills, setSelectedDesiredSkills] = useState(desiredConditionInfo?.desired_skills);
 
   return {
     selectedPrefecture,

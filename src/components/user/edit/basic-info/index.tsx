@@ -1,3 +1,4 @@
+import { useMutation, useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { FormControl, MenuItem, Select, TextField } from "@mui/material";
 import { useRouter } from "next/router";
@@ -10,14 +11,9 @@ import { SingleSelectItem } from "@/components/user/edit/common/single-select-it
 import { CURRENT_SITUATION } from "@/components/user/edit/common/single-select-item/mock";
 import { myStyle, selectBigStyle, selectSmallStyle } from "@/components/user/edit/const";
 import { PATHS } from "@/const/paths";
+import { GetUserBasicInfoDocument, UseEditBasicInfoDocument } from "@/lib/graphql/graphql";
+import type { GetUserBasicInfoQuery, GetUserBasicInfoQueryVariables } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
-import {
-  GetUserBasicInfoQuery,
-  GetUserBasicInfoQueryVariables,
-  GetUserBasicInfoDocument,
-  UseEditBasicInfoDocument,
-} from "@/lib/graphql/graphql";
-import { useMutation, useQuery } from "@apollo/client";
 
 export const EditBasicInfo = () => {
   const { user } = useUser();

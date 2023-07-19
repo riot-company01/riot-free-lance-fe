@@ -10,9 +10,9 @@ type OperationStartDateProps = {
   selectedOption: string;
   selectedYear: string;
   selectedMonth: string;
-  setSelectedOption: Dispatch<SetStateAction<string>>;
-  setSelectedYear: Dispatch<SetStateAction<string>>;
-  setSelectedMonth: Dispatch<SetStateAction<string>>;
+  setSelectedOption: Dispatch<SetStateAction<string | null | undefined>>;
+  setSelectedYear: Dispatch<SetStateAction<string | undefined>>;
+  setSelectedMonth: Dispatch<SetStateAction<string | undefined>>;
 };
 
 export const OperationStartDate = (props: OperationStartDateProps) => {

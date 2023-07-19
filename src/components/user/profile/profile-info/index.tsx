@@ -1,11 +1,12 @@
+import { useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import EditIcon from "@mui/icons-material/Edit";
 import * as Styles from "./styles";
 import { FileUpload } from "@/components/user/profile/common/file-upload";
 import { useProfile } from "@/components/user/profile/hooks/use-profile";
+import { GetUserInfoDocument } from "@/lib/graphql/graphql";
+import type { GetUserInfoQuery, GetUserInfoQueryVariables } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { GetUserInfoDocument, GetUserInfoQuery, GetUserInfoQueryVariables } from "@/lib/graphql/graphql";
-import { useQuery } from "@apollo/client";
 
 export const ProfileInfo = () => {
   const { user } = useUser();

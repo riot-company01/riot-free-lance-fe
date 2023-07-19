@@ -6,7 +6,7 @@ type MultiSelectItemsProps = {
   name: string;
   width: number;
   selectedOptions: string[];
-  setSelectedOptions: Dispatch<SetStateAction<string[]>>;
+  setSelectedOptions: Dispatch<SetStateAction<string[]>> | Dispatch<SetStateAction<string[] | null | undefined>>;
 };
 
 export const MultiSelectItems = (props: MultiSelectItemsProps) => {

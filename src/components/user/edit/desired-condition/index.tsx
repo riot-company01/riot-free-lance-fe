@@ -1,3 +1,5 @@
+import { useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
 import { Button } from "@/components/common/button";
@@ -15,10 +17,19 @@ import { DesiredSkill } from "@/components/user/edit/desired-condition/desired-s
 import { useDesiredCondition } from "@/components/user/edit/desired-condition/hooks/use-desired-condition";
 import { OperationStartDate } from "@/components/user/edit/desired-condition/operation-start-date";
 import { PATHS } from "@/const/paths";
+import { GetUserDesiredConditionDocument } from "@/lib/graphql/graphql";
+import type { GetUserDesiredConditionQuery, GetUserDesiredConditionQueryVariables } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 export const DesiredCondition = () => {
   const { push } = useRouter();
+  const { user } = useUser();
+  const { data } = useQuery<GetUserDesiredConditionQuery, GetUserDesiredConditionQueryVariables>(
+    GetUserDesiredConditionDocument,
+    {
+      variables: { id: user?.sub },
+    }
+  );
   const {
     selectedPrefecture,
     selectedCommutingTime,
@@ -42,7 +53,7 @@ export const DesiredCondition = () => {
     setSelectedIndustries,
     setSelectedModeOfOperation,
     setSelectedDesiredSkills,
-  } = useDesiredCondition();
+  } = useDesiredCondition(data);
 
   const handleCancelButtonClick = () => {
     push(PATHS.PROFILE);
@@ -65,7 +76,7 @@ export const DesiredCondition = () => {
             data={COMMUTING_TIME}
             name={"CommutingTime"}
             width={460}
-            selectedOption={selectedCommutingTime}
+            selectedOption={selectedCommutingTime || ""}
             setSelectedOption={setSelectedCommutingTime}
           />
         </Styles.DivItemWrapper>
@@ -81,7 +92,7 @@ export const DesiredCondition = () => {
             data={AMOUNT_OF_MONEY}
             name={"AmountOfMoney"}
             width={460}
-            selectedOption={selectedAmountOfMoney}
+            selectedOption={selectedAmountOfMoney || ""}
             setSelectedOption={setSelectedAmountOfMoney}
           />
         </Styles.DivItemWrapper>
@@ -93,7 +104,10 @@ export const DesiredCondition = () => {
             <Styles.HeadContentTitle>勤務希望地</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <SelectPrefecture selectedPrefecture={selectedPrefecture} setSelectedPrefecture={setSelectedPrefecture} />
+          <SelectPrefecture
+            selectedPrefecture={selectedPrefecture || ""}
+            setSelectedPrefecture={setSelectedPrefecture}
+          />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 
@@ -107,7 +121,7 @@ export const DesiredCondition = () => {
             data={PROFESSIONAL_EXPERIENCES}
             name={"ProfessionalExperience"}
             width={150}
-            selectedOptions={selectedProfessionalExperiences}
+            selectedOptions={selectedProfessionalExperiences || []}
             setSelectedOptions={setSelectedProfessionalExperiences}
           />
         </Styles.DivItemWrapper>
@@ -123,7 +137,7 @@ export const DesiredCondition = () => {
             data={INDUSTRIES}
             name={"desiredIndustries"}
             width={150}
-            selectedOptions={selectedIndustries}
+            selectedOptions={selectedIndustries || []}
             setSelectedOptions={setSelectedIndustries}
           />
         </Styles.DivItemWrapper>
@@ -153,7 +167,7 @@ export const DesiredCondition = () => {
             data={MODE_OF_OPERATION}
             name={"ModeOfOperation"}
             width={460}
-            selectedOptions={selectedModeOfOperation}
+            selectedOptions={selectedModeOfOperation || []}
             setSelectedOptions={setSelectedModeOfOperation}
           />
         </Styles.DivItemWrapper>
@@ -169,7 +183,7 @@ export const DesiredCondition = () => {
             data={AVAILABLE_DAYS}
             name={"AvailableDays"}
             width={460}
-            selectedOption={selectedAvailableDays}
+            selectedOption={selectedAvailableDays || ""}
             setSelectedOption={setSelectedAvailableDays}
           />
         </Styles.DivItemWrapper>
@@ -182,9 +196,9 @@ export const DesiredCondition = () => {
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <OperationStartDate
-            selectedOption={selectedOperationStartDate}
-            selectedYear={selectedYear}
-            selectedMonth={selectedMonth}
+            selectedOption={selectedOperationStartDate || ""}
+            selectedYear={selectedYear || ""}
+            selectedMonth={selectedMonth || ""}
             setSelectedOption={setSelectedOperationStartDate}
             setSelectedYear={setSelectedYear}
             setSelectedMonth={setSelectedMonth}

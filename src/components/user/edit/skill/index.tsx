@@ -1,3 +1,5 @@
+import { useMutation, useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { Link, TextareaAutosize, TextField } from "@mui/material";
 import { useRouter } from "next/router";
@@ -12,10 +14,16 @@ import { useEditSkill } from "@/components/user/edit/skill/hooks/use-edit-skill"
 import { LanguageLibraries } from "@/components/user/edit/skill/language-libraries";
 import { FileUpload } from "@/components/user/profile/common/file-upload";
 import { PATHS } from "@/const/paths";
+import { EditSkillInfoDocument, GetUserSkillDocument } from "@/lib/graphql/graphql";
+import type { GetUserSkillQuery, GetUserSkillQueryVariables } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 export const EditSkill = () => {
   const { push } = useRouter();
+  const { user } = useUser();
+  const { data } = useQuery<GetUserSkillQuery, GetUserSkillQueryVariables>(GetUserSkillDocument, {
+    variables: { id: user?.sub },
+  });
   const {
     selectedProfessionalExperiences,
     selectedIndustries,
@@ -23,24 +31,38 @@ export const EditSkill = () => {
     selectedLanguageLibralies,
     portfolio,
     textArea,
-    uploadFile,
+    uploadFileName,
+    uploadFilePath,
     setSelectedProfessionalExperiences,
     setSelectedIndustries,
     setSelectedFrameWorks,
     setSelectedLanguageLibralies,
     onChangePortfolio,
     onChangeTextArea,
-    onChangeUploadFile,
-  } = useEditSkill();
+    onChangeUploadFileName,
+  } = useEditSkill(data);
 
-  const portfolioUrl = "http://localhost:3000/user/edit-skill";
+  const [editSkillInfoMutation] = useMutation(EditSkillInfoDocument);
 
   const handleCancelButtonClick = () => {
     push(PATHS.PROFILE);
   };
 
-  const handleKeepButtonClick = () => {
-    push(PATHS.PROFILE);
+  const handleKeepButtonClick = async () => {
+    await editSkillInfoMutation({
+      variables: {
+        id: user?.sub || "",
+        professionalExperience: selectedProfessionalExperiences,
+        industries: selectedIndustries,
+        languageLibraries: selectedLanguageLibralies,
+        frameWork: selectedFrameWorks,
+        portfolio,
+        selfPr: textArea,
+        fileTitle: uploadFileName,
+        filePath: uploadFilePath,
+      },
+    }),
+      push(PATHS.PROFILE);
   };
 
   return (
@@ -116,9 +138,9 @@ export const EditSkill = () => {
               placeholder="https://github.com/"
               onChange={onChangePortfolio}
             />
-            {portfolioUrl && (
+            {portfolio && (
               <Styles.DivPortfoliLink>
-                <Link href={portfolioUrl}>{portfolioUrl}</Link>
+                <Link href={portfolio}>{portfolio}</Link>
                 <LaunchIcon sx={{ fontSize: "24px" }} />
               </Styles.DivPortfoliLink>
             )}
@@ -154,8 +176,8 @@ export const EditSkill = () => {
             <Styles.HeadContentTitle>経歴書</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <FileUpload onChange={onChangeUploadFile} />
-          {uploadFile && <Styles.PerUploadFile>{uploadFile.name}</Styles.PerUploadFile>}
+          <FileUpload onChange={onChangeUploadFileName} />
+          {uploadFileName && <Styles.PerUploadFile>{uploadFileName}</Styles.PerUploadFile>}
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 

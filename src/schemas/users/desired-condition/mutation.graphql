@@ -1,0 +1,43 @@
+mutation editDesiredCondition(
+  $id: String!
+  $commutingTime: String
+  $amountOfMoney: String
+  $preferredPlaceOfWork: String
+  $desiredOccupation: [String!]
+  $desiredIndustries: [String!]
+  $desiredSkills: [String!]
+  $modeOfOperation: [String!]
+  $availableDay: String
+  $projectStartTime: String
+  $projectStartYear: String
+  $projectStartMounth: String
+) {
+  update_users_by_pk(
+    pk_columns: { id: $id }
+    _set: {
+      commuting_time: $commutingTime
+      amount_of_money: $amountOfMoney
+      preferred_place_of_work: $preferredPlaceOfWork
+      desired_occupation: $desiredOccupation
+      desired_industries: $desiredIndustries
+      desired_skills: $desiredSkills
+      mode_of_operation: $modeOfOperation
+      available_day: $availableDay
+      project_start_time: $projectStartTime
+      project_start_year: $projectStartYear
+      project_start_mounth: $projectStartMounth
+    }
+  ) {
+    commuting_time
+    amount_of_money
+    preferred_place_of_work
+    desired_occupation
+    desired_industries
+    desired_skills
+    mode_of_operation
+    available_day
+    project_start_time
+    project_start_year
+    project_start_mounth
+  }
+}

@@ -10,8 +10,8 @@ import { DESIRED_SKILL } from "@/components/user/edit/desired-condition/desired-
 import { COLOR } from "@/styles/colors";
 
 type DesiredSkillsProps = {
-  selectedDesiredSkills: string[];
-  setSelectedDesiredSkills: Dispatch<SetStateAction<string[]>>;
+  selectedDesiredSkills: string[] | null | undefined;
+  setSelectedDesiredSkills: Dispatch<SetStateAction<string[] | null | undefined>>;
 };
 
 export const DesiredSkill = (props: DesiredSkillsProps) => {
@@ -30,9 +30,9 @@ export const DesiredSkill = (props: DesiredSkillsProps) => {
 
   return (
     <>
-      {selectedDesiredSkills.length !== 0 ? (
+      {selectedDesiredSkills?.length !== 0 ? (
         <Styles.DivSelectedItems>
-          {selectedDesiredSkills.map((item, idx) => {
+          {selectedDesiredSkills?.map((item, idx) => {
             return (
               <>
                 <KeywordTag item={item} />
@@ -62,7 +62,7 @@ export const DesiredSkill = (props: DesiredSkillsProps) => {
               data={DESIRED_SKILL}
               name={"DesiredSkills"}
               width={176}
-              selectedOptions={selectedDesiredSkills}
+              selectedOptions={selectedDesiredSkills || []}
               setSelectedOptions={setSelectedDesiredSkills}
             />
           </Styles.DivItemsWrapper>

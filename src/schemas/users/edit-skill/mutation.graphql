@@ -1,0 +1,34 @@
+mutation editSkillInfo(
+  $id: String!
+  $professionalExperience: [String!]
+  $industries: [String!]
+  $languageLibraries: [String!]
+  $frameWork: [String!]
+  $portfolio: String
+  $selfPr: String
+  $fileTitle: String
+  $filePath: String
+) {
+  update_users_by_pk(
+    pk_columns: { id: $id }
+    _set: {
+      professional_experience: $professionalExperience
+      industries: $industries
+      language_libraries: $languageLibraries
+      frame_work: $frameWork
+      portfolio: $portfolio
+      self_pr: $selfPr
+      file_title: $fileTitle
+      file_path: $filePath
+    }
+  ) {
+    professional_experience
+    industries
+    language_libraries
+    frame_work
+    portfolio
+    self_pr
+    file_title
+    file_path
+  }
+}

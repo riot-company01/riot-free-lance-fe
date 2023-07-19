@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import * as Styles from "./styles";
 
 type SingleSelectItemProps = {
@@ -6,7 +6,7 @@ type SingleSelectItemProps = {
   name: string;
   width: number;
   selectedOption?: string;
-  setSelectedOption: Dispatch<SetStateAction<string | undefined>>;
+  setSelectedOption: Dispatch<SetStateAction<string | undefined>> | Dispatch<SetStateAction<string | null | undefined>>;
 };
 
 export const SingleSelectItem = (props: SingleSelectItemProps) => {

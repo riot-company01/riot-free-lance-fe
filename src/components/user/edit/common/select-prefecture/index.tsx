@@ -7,7 +7,9 @@ import { selectBigStyle } from "@/components/user/edit/const";
 
 type SelectPrefectureProps = {
   selectedPrefecture?: string;
-  setSelectedPrefecture: Dispatch<SetStateAction<string | undefined>>;
+  setSelectedPrefecture:
+    | Dispatch<SetStateAction<string | null | undefined>>
+    | Dispatch<SetStateAction<string | undefined>>;
 };
 export const SelectPrefecture = (props: SelectPrefectureProps) => {
   const { selectedPrefecture, setSelectedPrefecture } = props;

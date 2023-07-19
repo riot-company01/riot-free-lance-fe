@@ -1,23 +1,46 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
+import type { GetUserSkillQuery } from "@/lib/graphql/graphql";
 
-export const useEditSkill = () => {
-  const [selectedProfessionalExperiences, setSelectedProfessionalExperiences] = useState<string[]>([]);
-  const [selectedIndustries, setSelectedIndustries] = useState<string[]>([]);
-  const [selectedFrameWorks, setSelectedFrameWorks] = useState<string[]>([]);
-  const [selectedLanguageLibralies, setSelectedLanguageLibralies] = useState<string[]>([]);
-  const [portfolio, setPortfolio] = useState("");
-  const [textArea, setTextArea] = useState("");
-  const [uploadFile, setUploadFile] = useState<File | undefined>(undefined);
+export const useEditSkill = (data: GetUserSkillQuery | undefined) => {
+  const ussrSkillInfo = data?.users[0];
+  const [selectedProfessionalExperiences, setSelectedProfessionalExperiences] = useState(
+    ussrSkillInfo?.professional_experience || []
+  );
+  const [selectedIndustries, setSelectedIndustries] = useState<string[]>(ussrSkillInfo?.industries || []);
+  const [selectedFrameWorks, setSelectedFrameWorks] = useState<string[]>(ussrSkillInfo?.frame_work || []);
+  const [selectedLanguageLibralies, setSelectedLanguageLibralies] = useState<string[]>(
+    ussrSkillInfo?.language_libraries || []
+  );
+  const [portfolio, setPortfolio] = useState(ussrSkillInfo?.portfolio);
+  const [textArea, setTextArea] = useState(ussrSkillInfo?.self_pr || "");
+  const [uploadFileName, setUploadFileName] = useState<string>(ussrSkillInfo?.file_title || "");
+  const [uploadFilePath, setUploadFilePath] = useState<string>(ussrSkillInfo?.file_path || "");
 
   const onChangePortfolio = useCallback((e: ChangeEvent<HTMLInputElement>) => setPortfolio(e.target.value), []);
 
   const onChangeTextArea = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextArea(event.target.value);
   };
-  const onChangeUploadFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUploadFile(event.target.files?.[0]);
+  const onChangeUploadFileName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUploadFileName(event.target.value);
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      const filePath = URL.createObjectURL(selectedFile);
+      setUploadFilePath(filePath);
+    }
   };
+
+  useEffect(() => {
+    setSelectedProfessionalExperiences(ussrSkillInfo?.professional_experience || []);
+    setSelectedIndustries(ussrSkillInfo?.industries || []);
+    setSelectedFrameWorks(ussrSkillInfo?.frame_work || []);
+    setSelectedLanguageLibralies(ussrSkillInfo?.language_libraries || []);
+    setPortfolio(ussrSkillInfo?.portfolio);
+    setTextArea(ussrSkillInfo?.self_pr || "");
+    setUploadFileName(ussrSkillInfo?.file_title || "");
+    setUploadFilePath(ussrSkillInfo?.file_path || "");
+  }, [ussrSkillInfo]);
 
   return {
     selectedProfessionalExperiences,
@@ -26,13 +49,14 @@ export const useEditSkill = () => {
     selectedLanguageLibralies,
     portfolio,
     textArea,
-    uploadFile,
+    uploadFileName,
+    uploadFilePath,
     setSelectedProfessionalExperiences,
     setSelectedIndustries,
     setSelectedFrameWorks,
     setSelectedLanguageLibralies,
     onChangePortfolio,
     onChangeTextArea,
-    onChangeUploadFile,
+    onChangeUploadFileName,
   };
 };
