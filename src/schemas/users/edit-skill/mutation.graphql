@@ -6,8 +6,8 @@ mutation editSkillInfo(
   $frameWork: [String!]
   $portfolio: String
   $selfPr: String
-  $fileTitle: String
-  $filePath: String
+  $fileName: String
+  $fileData: String
 ) {
   update_users_by_pk(
     pk_columns: { id: $id }
@@ -18,8 +18,8 @@ mutation editSkillInfo(
       frame_work: $frameWork
       portfolio: $portfolio
       self_pr: $selfPr
-      file_title: $fileTitle
-      file_path: $filePath
+      file_name: $fileName
+      file_data: $fileData
     }
   ) {
     professional_experience
@@ -28,7 +28,14 @@ mutation editSkillInfo(
     frame_work
     portfolio
     self_pr
-    file_title
-    file_path
+    file_name
+    file_data
+  }
+}
+
+mutation UploadSkillSheet($id: String, $filename: String!, $filedata: String!) {
+  update_users_by_pk(pk_columns: { id: $id }, _set: { file_name: $filename, file_data: $filedata }) {
+    file_name
+    file_data
   }
 }

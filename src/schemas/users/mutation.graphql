@@ -17,8 +17,8 @@ mutation editProfile(
   $frameWork: [String!]
   $portfolio: String
   $selfPr: String
-  $fileTitle: String
-  $filePath: String
+  $fileName: String
+  $fileData: String
   $commutingTime: String
   $amountOfMoney: String
   $preferredPlaceOfWork: String
@@ -51,8 +51,8 @@ mutation editProfile(
       frame_work: $frameWork
       portfolio: $portfolio
       self_pr: $selfPr
-      file_title: $fileTitle
-      file_path: $filePath
+      file_name: $fileName
+      file_data: $fileData
       commuting_time: $commutingTime
       amount_of_money: $amountOfMoney
       preferred_place_of_work: $preferredPlaceOfWork
@@ -83,8 +83,8 @@ mutation editProfile(
     frame_work
     portfolio
     self_pr
-    file_title
-    file_path
+    file_name
+    file_data
     commuting_time
     amount_of_money
     preferred_place_of_work

@@ -6,7 +6,14 @@ query GetUserSkill($id: String) {
     frame_work
     portfolio
     self_pr
-    file_title
-    file_path
+    file_name
+    file_data
+  }
+}
+
+query GetSkillSheet($id: String!) {
+  users(where: { id: { _eq: $id } }) {
+    file_data
+    file_name
   }
 }

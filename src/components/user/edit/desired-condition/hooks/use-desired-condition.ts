@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { GetUserDesiredConditionQuery } from "@/lib/graphql/graphql";
 
 export const useDesiredCondition = (data: GetUserDesiredConditionQuery | undefined) => {
@@ -18,6 +18,20 @@ export const useDesiredCondition = (data: GetUserDesiredConditionQuery | undefin
   const [selectedMonth, setSelectedMonth] = useState(desiredConditionInfo?.project_start_mounth);
   const [selectedModeOfOperation, setSelectedModeOfOperation] = useState(desiredConditionInfo?.mode_of_operation);
   const [selectedDesiredSkills, setSelectedDesiredSkills] = useState(desiredConditionInfo?.desired_skills);
+
+  useEffect(() => {
+    setSelectedPrefecture(desiredConditionInfo?.preferred_place_of_work);
+    setSelectedCommutingTime(desiredConditionInfo?.commuting_time);
+    setSelectedAmountOfMoney(desiredConditionInfo?.amount_of_money);
+    setSelectedAvailableDays(desiredConditionInfo?.available_day);
+    setSelectedProfessionalExperiences(desiredConditionInfo?.desired_occupation);
+    setSelectedIndustries(desiredConditionInfo?.desired_industries);
+    setSelectedOperationStartDate(desiredConditionInfo?.project_start_time);
+    setSelectedYear(desiredConditionInfo?.project_start_year);
+    setSelectedMonth(desiredConditionInfo?.project_start_mounth);
+    setSelectedModeOfOperation(desiredConditionInfo?.mode_of_operation);
+    setSelectedDesiredSkills(desiredConditionInfo?.desired_skills);
+  }, [desiredConditionInfo]);
 
   return {
     selectedPrefecture,

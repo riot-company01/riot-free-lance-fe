@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import LaunchIcon from "@mui/icons-material/Launch";
-import { Link, TextareaAutosize, TextField } from "@mui/material";
+import { TextareaAutosize, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
 import { Button } from "@/components/common/button";
@@ -12,11 +11,12 @@ import { myStyle } from "@/components/user/edit/const";
 import { FrameWork } from "@/components/user/edit/skill/frame-work";
 import { useEditSkill } from "@/components/user/edit/skill/hooks/use-edit-skill";
 import { LanguageLibraries } from "@/components/user/edit/skill/language-libraries";
-import { FileUpload } from "@/components/user/profile/common/file-upload";
+import FileUploader from "@/components/user/profile/common/file-upload-download";
 import { PATHS } from "@/const/paths";
 import { EditSkillInfoDocument, GetUserSkillDocument } from "@/lib/graphql/graphql";
 import type { GetUserSkillQuery, GetUserSkillQueryVariables } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
+import FileUploadDownloadComponent from "@/components/user/profile/common/file-upload-download";
 
 export const EditSkill = () => {
   const { push } = useRouter();
@@ -138,12 +138,6 @@ export const EditSkill = () => {
               placeholder="https://github.com/"
               onChange={onChangePortfolio}
             />
-            {portfolio && (
-              <Styles.DivPortfoliLink>
-                <Link href={portfolio}>{portfolio}</Link>
-                <LaunchIcon sx={{ fontSize: "24px" }} />
-              </Styles.DivPortfoliLink>
-            )}
           </Styles.DivPortfolioWrapper>
         </Styles.DivItemWrapper>
       </Styles.DivItem>
@@ -176,8 +170,8 @@ export const EditSkill = () => {
             <Styles.HeadContentTitle>経歴書</Styles.HeadContentTitle>
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
-          <FileUpload onChange={onChangeUploadFileName} />
-          {uploadFileName && <Styles.PerUploadFile>{uploadFileName}</Styles.PerUploadFile>}
+
+          <FileUploadDownloadComponent />
         </Styles.DivItemWrapper>
       </Styles.DivItem>
 

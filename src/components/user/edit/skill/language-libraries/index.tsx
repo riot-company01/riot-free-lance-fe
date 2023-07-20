@@ -35,7 +35,7 @@ export const LanguageLibraries = (props: LanguageLibrariesProps) => {
           {selectedOptions.map((item, idx) => {
             return (
               <>
-                <KeywordTag item={item} />
+                <KeywordTag item={item} width={150} />
                 {idx === selectedOptions.length - 1 && (
                   <Button onClick={handleOpen}>
                     <AddIcon sx={{ fontSize: 40, color: COLOR.LIGHT_GRAY.code }} />

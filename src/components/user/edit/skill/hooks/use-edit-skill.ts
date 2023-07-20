@@ -14,8 +14,8 @@ export const useEditSkill = (data: GetUserSkillQuery | undefined) => {
   );
   const [portfolio, setPortfolio] = useState(ussrSkillInfo?.portfolio);
   const [textArea, setTextArea] = useState(ussrSkillInfo?.self_pr || "");
-  const [uploadFileName, setUploadFileName] = useState<string>(ussrSkillInfo?.file_title || "");
-  const [uploadFilePath, setUploadFilePath] = useState<string>(ussrSkillInfo?.file_path || "");
+  const [uploadFileName, setUploadFileName] = useState<string>(ussrSkillInfo?.file_name || "");
+  const [uploadFilePath, setUploadFilePath] = useState<string>(ussrSkillInfo?.file_data || "");
 
   const onChangePortfolio = useCallback((e: ChangeEvent<HTMLInputElement>) => setPortfolio(e.target.value), []);
 
@@ -27,6 +27,7 @@ export const useEditSkill = (data: GetUserSkillQuery | undefined) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
       const filePath = URL.createObjectURL(selectedFile);
+      console.log(filePath);
       setUploadFilePath(filePath);
     }
   };
@@ -38,8 +39,8 @@ export const useEditSkill = (data: GetUserSkillQuery | undefined) => {
     setSelectedLanguageLibralies(ussrSkillInfo?.language_libraries || []);
     setPortfolio(ussrSkillInfo?.portfolio);
     setTextArea(ussrSkillInfo?.self_pr || "");
-    setUploadFileName(ussrSkillInfo?.file_title || "");
-    setUploadFilePath(ussrSkillInfo?.file_path || "");
+    setUploadFileName(ussrSkillInfo?.file_name || "");
+    setUploadFilePath(ussrSkillInfo?.file_data || "");
   }, [ussrSkillInfo]);
 
   return {

@@ -2,11 +2,15 @@ import { useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import EditIcon from "@mui/icons-material/Edit";
 import * as Styles from "./styles";
-import { FileUpload } from "@/components/user/profile/common/file-upload";
+import FileUploader from "@/components/user/profile/common/file-upload-download";
 import { useProfile } from "@/components/user/profile/hooks/use-profile";
 import { GetUserInfoDocument } from "@/lib/graphql/graphql";
 import type { GetUserInfoQuery, GetUserInfoQueryVariables } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
+import { KeywordTag } from "@/components/user/edit/common/keyword-tag";
+import Link from "next/link";
+import LaunchIcon from "@mui/icons-material/Launch";
+import FileUploadDownloadComponent from "@/components/user/profile/common/file-upload-download";
 
 export const ProfileInfo = () => {
   const { user } = useUser();
@@ -14,7 +18,7 @@ export const ProfileInfo = () => {
     variables: { id: user?.sub },
   });
   const userInfo = data?.users[0];
-  const { uploadFile, onChangeUploadFile } = useProfile(userInfo?.file_title);
+  const { uploadFile, onChangeUploadFile } = useProfile(userInfo?.file_name);
 
   return (
     <>
@@ -73,19 +77,37 @@ export const ProfileInfo = () => {
             </Styles.DivHeadItem>
             <Styles.DivItem>
               <Styles.HeadTitle>経験職種</Styles.HeadTitle>
-              <Styles.PerItem>{userInfo?.professional_experience}</Styles.PerItem>
+              <Styles.DivKeywordWrapper>
+                {userInfo?.professional_experience?.map((item, idx) => {
+                  return <KeywordTag key={idx} item={item} width={172} />;
+                })}
+              </Styles.DivKeywordWrapper>
             </Styles.DivItem>
             <Styles.DivItem>
               <Styles.HeadTitle>経験業界</Styles.HeadTitle>
-              <Styles.PerItem>{userInfo?.industries}</Styles.PerItem>
+              <Styles.DivKeywordWrapper>
+                {userInfo?.industries?.map((item, idx) => {
+                  return <KeywordTag key={idx} item={item} width={172} />;
+                })}
+              </Styles.DivKeywordWrapper>
             </Styles.DivItem>
             <Styles.DivItem>
               <Styles.HeadTitle>経験言語・スキル</Styles.HeadTitle>
-              <Styles.PerItem>{userInfo?.language_libraries}</Styles.PerItem>
+              <Styles.DivKeywordWrapper>
+                {userInfo?.language_libraries?.map((item, idx) => {
+                  return <KeywordTag key={idx} item={item} width={172} />;
+                })}
+              </Styles.DivKeywordWrapper>
             </Styles.DivItem>
             <Styles.DivItem>
               <Styles.HeadTitle>ポートフォリオ・Githubアカウント</Styles.HeadTitle>
-              <Styles.AnchorLeftMargin ref={userInfo?.portfolio}>{userInfo?.portfolio}</Styles.AnchorLeftMargin>
+
+              {userInfo?.portfolio && (
+                <Styles.DivPortfoliLink>
+                  <Link href={userInfo?.portfolio}>{userInfo?.portfolio}</Link>
+                  <LaunchIcon sx={{ fontSize: "24px" }} />
+                </Styles.DivPortfoliLink>
+              )}
             </Styles.DivItem>
             <Styles.DivItem>
               <Styles.HeadTitle>自己PR</Styles.HeadTitle>
@@ -93,11 +115,7 @@ export const ProfileInfo = () => {
             </Styles.DivItem>
             <Styles.DivItem>
               <Styles.HeadTitle>スキルシート</Styles.HeadTitle>
-              {userInfo?.file_title || uploadFile ? (
-                <>{userInfo?.file_title || uploadFile}</>
-              ) : (
-                <FileUpload onChange={onChangeUploadFile} />
-              )}
+              <FileUploadDownloadComponent />
             </Styles.DivItem>
           </div>
           <Styles.Hr />

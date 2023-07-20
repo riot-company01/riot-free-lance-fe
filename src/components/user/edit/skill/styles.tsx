@@ -38,14 +38,6 @@ export const DivPortfolioWrapper = styled.div`
   flex-direction: column;
 `;
 
-export const DivPortfoliLink = styled.div`
-  margin: 16px;
-  > a {
-    color: black;
-    text-decoration-color: black;
-  }
-`;
-
 export const PerUploadFile = styled.p`
   margin-left: 16px;
 `;

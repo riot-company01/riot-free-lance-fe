@@ -10,7 +10,7 @@ import { DESIRED_SKILL } from "@/components/user/edit/desired-condition/desired-
 import { COLOR } from "@/styles/colors";
 
 type DesiredSkillsProps = {
-  selectedDesiredSkills: string[] | null | undefined;
+  selectedDesiredSkills: string[];
   setSelectedDesiredSkills: Dispatch<SetStateAction<string[] | null | undefined>>;
 };
 
@@ -35,8 +35,7 @@ export const DesiredSkill = (props: DesiredSkillsProps) => {
           {selectedDesiredSkills?.map((item, idx) => {
             return (
               <>
-                <KeywordTag item={item} />
-
+                <KeywordTag item={item} width={150} />
                 {idx === selectedDesiredSkills.length - 1 && (
                   <Button onClick={handleOpen}>
                     <AddIcon sx={{ fontSize: 40, color: COLOR.LIGHT_GRAY.code }} />

@@ -18,8 +18,8 @@ query GetUserInfo($id: String) {
     frame_work
     portfolio
     self_pr
-    file_title
-    file_path
+    file_name
+    file_data
     commuting_time
     amount_of_money
     preferred_place_of_work

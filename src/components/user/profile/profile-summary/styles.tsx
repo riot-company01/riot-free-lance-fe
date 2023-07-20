@@ -16,25 +16,9 @@ export const DivWrapper = styled.div`
   margin-top: 16px;
 `;
 
-export const DivHeadFlex = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
-`;
-
 export const HeadName = styled.h3`
   font-size: 20px;
   font-weight: bold;
-`;
-
-export const DivAddSkill = styled.div`
-  display: flex;
-  justify-content: end;
-  margin: 8px 0;
-`;
-
-export const SpanIcon = styled.span`
-  margin: 8px;
 `;
 
 export const AnchorItem = styled.a`
@@ -45,10 +29,6 @@ export const DivItem = styled.div`
   margin: 8px 0 8px 16px;
 `;
 
-export const PerMargin = styled.p`
-  margin: 8px 0;
-`;
-
 export const DivTitle = styled.div`
   margin: 16px 0;
 `;
@@ -56,9 +36,4 @@ export const DivTitle = styled.div`
 export const DivWrpperSituation = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-export const Hr = styled.hr`
-  border: none;
-  border-top: 2px dotted ${COLOR.LIGHT_GRAY.code};
 `;

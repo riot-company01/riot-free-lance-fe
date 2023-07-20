@@ -34,6 +34,18 @@ export const HeadTitle = styled.h4`
   margin-bottom: 8px;
 `;
 
+export const DivKeywordWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const DivPortfoliLink = styled.div`
+  margin: 16px;
+  > a {
+    color: black;
+    text-decoration-color: black;
+  }
+`;
 export const PerItem = styled.p`
   margin-left: 8px;
 `;

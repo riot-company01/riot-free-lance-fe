@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
@@ -17,7 +17,11 @@ import { DesiredSkill } from "@/components/user/edit/desired-condition/desired-s
 import { useDesiredCondition } from "@/components/user/edit/desired-condition/hooks/use-desired-condition";
 import { OperationStartDate } from "@/components/user/edit/desired-condition/operation-start-date";
 import { PATHS } from "@/const/paths";
-import { GetUserDesiredConditionDocument } from "@/lib/graphql/graphql";
+import {
+  EditDesiredConditionDocument,
+  GetUserDesiredConditionDocument,
+  UseEditBasicInfoDocument,
+} from "@/lib/graphql/graphql";
 import type { GetUserDesiredConditionQuery, GetUserDesiredConditionQueryVariables } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
@@ -55,11 +59,29 @@ export const DesiredCondition = () => {
     setSelectedDesiredSkills,
   } = useDesiredCondition(data);
 
+  const [editDesiredConditionMutation] = useMutation(EditDesiredConditionDocument);
+
   const handleCancelButtonClick = () => {
     push(PATHS.PROFILE);
   };
 
-  const handleKeepButtonClick = () => {
+  const handleKeepButtonClick = async () => {
+    await editDesiredConditionMutation({
+      variables: {
+        id: user?.sub || "",
+        commutingTime: selectedCommutingTime,
+        amountOfMoney: selectedAmountOfMoney,
+        preferredPlaceOfWork: selectedPrefecture,
+        desiredOccupation: selectedProfessionalExperiences,
+        desiredIndustries: selectedIndustries,
+        desiredSkills: selectedDesiredSkills,
+        modeOfOperation: selectedModeOfOperation,
+        availableDay: selectedAvailableDays,
+        projectStartTime: selectedOperationStartDate,
+        projectStartYear: String(selectedYear),
+        projectStartMounth: String(selectedMonth),
+      },
+    });
     push(PATHS.PROFILE);
   };
 
@@ -150,7 +172,7 @@ export const DesiredCondition = () => {
             <Tag isRequired={false} />
           </Styles.DivTitleWrapper>
           <DesiredSkill
-            selectedDesiredSkills={selectedDesiredSkills}
+            selectedDesiredSkills={selectedDesiredSkills || []}
             setSelectedDesiredSkills={setSelectedDesiredSkills}
           />
         </Styles.DivItemWrapper>
