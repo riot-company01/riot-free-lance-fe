@@ -45,6 +45,23 @@ export type Int_Comparison_Exp = {
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
+export type String_Array_Comparison_Exp = {
+  /** is the array contained in the given array value */
+  _contained_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** does the array contain the given value */
+  _contains?: InputMaybe<Array<Scalars['String']['input']>>;
+  _eq?: InputMaybe<Array<Scalars['String']['input']>>;
+  _gt?: InputMaybe<Array<Scalars['String']['input']>>;
+  _gte?: InputMaybe<Array<Scalars['String']['input']>>;
+  _in?: InputMaybe<Array<Array<Scalars['String']['input']>>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Array<Scalars['String']['input']>>;
+  _lte?: InputMaybe<Array<Scalars['String']['input']>>;
+  _neq?: InputMaybe<Array<Scalars['String']['input']>>;
+  _nin?: InputMaybe<Array<Array<Scalars['String']['input']>>>;
+};
+
+/** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['String']['input']>;
   _gt?: InputMaybe<Scalars['String']['input']>;
@@ -2047,10 +2064,40 @@ export type Timestamptz_Comparison_Exp = {
 /** columns and relationships of "users" */
 export type Users = {
   __typename?: 'users';
+  amount_of_money?: Maybe<Scalars['String']['output']>;
+  available_day?: Maybe<Scalars['String']['output']>;
+  birthday_day: Scalars['String']['output'];
+  birthday_mounth: Scalars['String']['output'];
+  birthday_year: Scalars['String']['output'];
+  commuting_time?: Maybe<Scalars['String']['output']>;
+  current_situation: Scalars['String']['output'];
+  desired_industries?: Maybe<Array<Scalars['String']['output']>>;
+  desired_occupation?: Maybe<Array<Scalars['String']['output']>>;
+  desired_skills?: Maybe<Array<Scalars['String']['output']>>;
+  file_data?: Maybe<Scalars['String']['output']>;
+  file_name?: Maybe<Scalars['String']['output']>;
+  first_name?: Maybe<Scalars['String']['output']>;
+  first_name_kana?: Maybe<Scalars['String']['output']>;
+  frame_work?: Maybe<Array<Scalars['String']['output']>>;
   id: Scalars['String']['output'];
+  industries?: Maybe<Array<Scalars['String']['output']>>;
+  language_libraries?: Maybe<Array<Scalars['String']['output']>>;
+  last_name?: Maybe<Scalars['String']['output']>;
+  last_name_kana?: Maybe<Scalars['String']['output']>;
   last_seen: Scalars['timestamptz']['output'];
+  mail?: Maybe<Scalars['String']['output']>;
+  mode_of_operation?: Maybe<Array<Scalars['String']['output']>>;
   name: Scalars['String']['output'];
+  portfolio?: Maybe<Scalars['String']['output']>;
+  prefectures: Scalars['String']['output'];
+  preferred_place_of_work?: Maybe<Scalars['String']['output']>;
+  professional_experience?: Maybe<Array<Scalars['String']['output']>>;
+  project_start_mounth: Scalars['String']['output'];
+  project_start_time?: Maybe<Scalars['String']['output']>;
+  project_start_year: Scalars['String']['output'];
+  self_pr?: Maybe<Scalars['String']['output']>;
   slackUrl?: Maybe<Scalars['String']['output']>;
+  tel?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregated selection of "users" */
@@ -2080,10 +2127,40 @@ export type Users_Bool_Exp = {
   _and?: InputMaybe<Array<Users_Bool_Exp>>;
   _not?: InputMaybe<Users_Bool_Exp>;
   _or?: InputMaybe<Array<Users_Bool_Exp>>;
+  amount_of_money?: InputMaybe<String_Comparison_Exp>;
+  available_day?: InputMaybe<String_Comparison_Exp>;
+  birthday_day?: InputMaybe<String_Comparison_Exp>;
+  birthday_mounth?: InputMaybe<String_Comparison_Exp>;
+  birthday_year?: InputMaybe<String_Comparison_Exp>;
+  commuting_time?: InputMaybe<String_Comparison_Exp>;
+  current_situation?: InputMaybe<String_Comparison_Exp>;
+  desired_industries?: InputMaybe<String_Array_Comparison_Exp>;
+  desired_occupation?: InputMaybe<String_Array_Comparison_Exp>;
+  desired_skills?: InputMaybe<String_Array_Comparison_Exp>;
+  file_data?: InputMaybe<String_Comparison_Exp>;
+  file_name?: InputMaybe<String_Comparison_Exp>;
+  first_name?: InputMaybe<String_Comparison_Exp>;
+  first_name_kana?: InputMaybe<String_Comparison_Exp>;
+  frame_work?: InputMaybe<String_Array_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
+  industries?: InputMaybe<String_Array_Comparison_Exp>;
+  language_libraries?: InputMaybe<String_Array_Comparison_Exp>;
+  last_name?: InputMaybe<String_Comparison_Exp>;
+  last_name_kana?: InputMaybe<String_Comparison_Exp>;
   last_seen?: InputMaybe<Timestamptz_Comparison_Exp>;
+  mail?: InputMaybe<String_Comparison_Exp>;
+  mode_of_operation?: InputMaybe<String_Array_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  portfolio?: InputMaybe<String_Comparison_Exp>;
+  prefectures?: InputMaybe<String_Comparison_Exp>;
+  preferred_place_of_work?: InputMaybe<String_Comparison_Exp>;
+  professional_experience?: InputMaybe<String_Array_Comparison_Exp>;
+  project_start_mounth?: InputMaybe<String_Comparison_Exp>;
+  project_start_time?: InputMaybe<String_Comparison_Exp>;
+  project_start_year?: InputMaybe<String_Comparison_Exp>;
+  self_pr?: InputMaybe<String_Comparison_Exp>;
   slackUrl?: InputMaybe<String_Comparison_Exp>;
+  tel?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "users" */
@@ -2094,28 +2171,118 @@ export enum Users_Constraint {
 
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
+  amount_of_money?: InputMaybe<Scalars['String']['input']>;
+  available_day?: InputMaybe<Scalars['String']['input']>;
+  birthday_day?: InputMaybe<Scalars['String']['input']>;
+  birthday_mounth?: InputMaybe<Scalars['String']['input']>;
+  birthday_year?: InputMaybe<Scalars['String']['input']>;
+  commuting_time?: InputMaybe<Scalars['String']['input']>;
+  current_situation?: InputMaybe<Scalars['String']['input']>;
+  desired_industries?: InputMaybe<Array<Scalars['String']['input']>>;
+  desired_occupation?: InputMaybe<Array<Scalars['String']['input']>>;
+  desired_skills?: InputMaybe<Array<Scalars['String']['input']>>;
+  file_data?: InputMaybe<Scalars['String']['input']>;
+  file_name?: InputMaybe<Scalars['String']['input']>;
+  first_name?: InputMaybe<Scalars['String']['input']>;
+  first_name_kana?: InputMaybe<Scalars['String']['input']>;
+  frame_work?: InputMaybe<Array<Scalars['String']['input']>>;
   id?: InputMaybe<Scalars['String']['input']>;
+  industries?: InputMaybe<Array<Scalars['String']['input']>>;
+  language_libraries?: InputMaybe<Array<Scalars['String']['input']>>;
+  last_name?: InputMaybe<Scalars['String']['input']>;
+  last_name_kana?: InputMaybe<Scalars['String']['input']>;
   last_seen?: InputMaybe<Scalars['timestamptz']['input']>;
+  mail?: InputMaybe<Scalars['String']['input']>;
+  mode_of_operation?: InputMaybe<Array<Scalars['String']['input']>>;
   name?: InputMaybe<Scalars['String']['input']>;
+  portfolio?: InputMaybe<Scalars['String']['input']>;
+  prefectures?: InputMaybe<Scalars['String']['input']>;
+  preferred_place_of_work?: InputMaybe<Scalars['String']['input']>;
+  professional_experience?: InputMaybe<Array<Scalars['String']['input']>>;
+  project_start_mounth?: InputMaybe<Scalars['String']['input']>;
+  project_start_time?: InputMaybe<Scalars['String']['input']>;
+  project_start_year?: InputMaybe<Scalars['String']['input']>;
+  self_pr?: InputMaybe<Scalars['String']['input']>;
   slackUrl?: InputMaybe<Scalars['String']['input']>;
+  tel?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** aggregate max on columns */
 export type Users_Max_Fields = {
   __typename?: 'users_max_fields';
+  amount_of_money?: Maybe<Scalars['String']['output']>;
+  available_day?: Maybe<Scalars['String']['output']>;
+  birthday_day?: Maybe<Scalars['String']['output']>;
+  birthday_mounth?: Maybe<Scalars['String']['output']>;
+  birthday_year?: Maybe<Scalars['String']['output']>;
+  commuting_time?: Maybe<Scalars['String']['output']>;
+  current_situation?: Maybe<Scalars['String']['output']>;
+  desired_industries?: Maybe<Array<Scalars['String']['output']>>;
+  desired_occupation?: Maybe<Array<Scalars['String']['output']>>;
+  desired_skills?: Maybe<Array<Scalars['String']['output']>>;
+  file_data?: Maybe<Scalars['String']['output']>;
+  file_name?: Maybe<Scalars['String']['output']>;
+  first_name?: Maybe<Scalars['String']['output']>;
+  first_name_kana?: Maybe<Scalars['String']['output']>;
+  frame_work?: Maybe<Array<Scalars['String']['output']>>;
   id?: Maybe<Scalars['String']['output']>;
+  industries?: Maybe<Array<Scalars['String']['output']>>;
+  language_libraries?: Maybe<Array<Scalars['String']['output']>>;
+  last_name?: Maybe<Scalars['String']['output']>;
+  last_name_kana?: Maybe<Scalars['String']['output']>;
   last_seen?: Maybe<Scalars['timestamptz']['output']>;
+  mail?: Maybe<Scalars['String']['output']>;
+  mode_of_operation?: Maybe<Array<Scalars['String']['output']>>;
   name?: Maybe<Scalars['String']['output']>;
+  portfolio?: Maybe<Scalars['String']['output']>;
+  prefectures?: Maybe<Scalars['String']['output']>;
+  preferred_place_of_work?: Maybe<Scalars['String']['output']>;
+  professional_experience?: Maybe<Array<Scalars['String']['output']>>;
+  project_start_mounth?: Maybe<Scalars['String']['output']>;
+  project_start_time?: Maybe<Scalars['String']['output']>;
+  project_start_year?: Maybe<Scalars['String']['output']>;
+  self_pr?: Maybe<Scalars['String']['output']>;
   slackUrl?: Maybe<Scalars['String']['output']>;
+  tel?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregate min on columns */
 export type Users_Min_Fields = {
   __typename?: 'users_min_fields';
+  amount_of_money?: Maybe<Scalars['String']['output']>;
+  available_day?: Maybe<Scalars['String']['output']>;
+  birthday_day?: Maybe<Scalars['String']['output']>;
+  birthday_mounth?: Maybe<Scalars['String']['output']>;
+  birthday_year?: Maybe<Scalars['String']['output']>;
+  commuting_time?: Maybe<Scalars['String']['output']>;
+  current_situation?: Maybe<Scalars['String']['output']>;
+  desired_industries?: Maybe<Array<Scalars['String']['output']>>;
+  desired_occupation?: Maybe<Array<Scalars['String']['output']>>;
+  desired_skills?: Maybe<Array<Scalars['String']['output']>>;
+  file_data?: Maybe<Scalars['String']['output']>;
+  file_name?: Maybe<Scalars['String']['output']>;
+  first_name?: Maybe<Scalars['String']['output']>;
+  first_name_kana?: Maybe<Scalars['String']['output']>;
+  frame_work?: Maybe<Array<Scalars['String']['output']>>;
   id?: Maybe<Scalars['String']['output']>;
+  industries?: Maybe<Array<Scalars['String']['output']>>;
+  language_libraries?: Maybe<Array<Scalars['String']['output']>>;
+  last_name?: Maybe<Scalars['String']['output']>;
+  last_name_kana?: Maybe<Scalars['String']['output']>;
   last_seen?: Maybe<Scalars['timestamptz']['output']>;
+  mail?: Maybe<Scalars['String']['output']>;
+  mode_of_operation?: Maybe<Array<Scalars['String']['output']>>;
   name?: Maybe<Scalars['String']['output']>;
+  portfolio?: Maybe<Scalars['String']['output']>;
+  prefectures?: Maybe<Scalars['String']['output']>;
+  preferred_place_of_work?: Maybe<Scalars['String']['output']>;
+  professional_experience?: Maybe<Array<Scalars['String']['output']>>;
+  project_start_mounth?: Maybe<Scalars['String']['output']>;
+  project_start_time?: Maybe<Scalars['String']['output']>;
+  project_start_year?: Maybe<Scalars['String']['output']>;
+  self_pr?: Maybe<Scalars['String']['output']>;
   slackUrl?: Maybe<Scalars['String']['output']>;
+  tel?: Maybe<Scalars['String']['output']>;
 };
 
 /** response of any mutation on the table "users" */
@@ -2136,10 +2303,40 @@ export type Users_On_Conflict = {
 
 /** Ordering options when selecting data from "users". */
 export type Users_Order_By = {
+  amount_of_money?: InputMaybe<Order_By>;
+  available_day?: InputMaybe<Order_By>;
+  birthday_day?: InputMaybe<Order_By>;
+  birthday_mounth?: InputMaybe<Order_By>;
+  birthday_year?: InputMaybe<Order_By>;
+  commuting_time?: InputMaybe<Order_By>;
+  current_situation?: InputMaybe<Order_By>;
+  desired_industries?: InputMaybe<Order_By>;
+  desired_occupation?: InputMaybe<Order_By>;
+  desired_skills?: InputMaybe<Order_By>;
+  file_data?: InputMaybe<Order_By>;
+  file_name?: InputMaybe<Order_By>;
+  first_name?: InputMaybe<Order_By>;
+  first_name_kana?: InputMaybe<Order_By>;
+  frame_work?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  industries?: InputMaybe<Order_By>;
+  language_libraries?: InputMaybe<Order_By>;
+  last_name?: InputMaybe<Order_By>;
+  last_name_kana?: InputMaybe<Order_By>;
   last_seen?: InputMaybe<Order_By>;
+  mail?: InputMaybe<Order_By>;
+  mode_of_operation?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  portfolio?: InputMaybe<Order_By>;
+  prefectures?: InputMaybe<Order_By>;
+  preferred_place_of_work?: InputMaybe<Order_By>;
+  professional_experience?: InputMaybe<Order_By>;
+  project_start_mounth?: InputMaybe<Order_By>;
+  project_start_time?: InputMaybe<Order_By>;
+  project_start_year?: InputMaybe<Order_By>;
+  self_pr?: InputMaybe<Order_By>;
   slackUrl?: InputMaybe<Order_By>;
+  tel?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: users */
@@ -2150,21 +2347,111 @@ export type Users_Pk_Columns_Input = {
 /** select columns of table "users" */
 export enum Users_Select_Column {
   /** column name */
+  AmountOfMoney = 'amount_of_money',
+  /** column name */
+  AvailableDay = 'available_day',
+  /** column name */
+  BirthdayDay = 'birthday_day',
+  /** column name */
+  BirthdayMounth = 'birthday_mounth',
+  /** column name */
+  BirthdayYear = 'birthday_year',
+  /** column name */
+  CommutingTime = 'commuting_time',
+  /** column name */
+  CurrentSituation = 'current_situation',
+  /** column name */
+  DesiredIndustries = 'desired_industries',
+  /** column name */
+  DesiredOccupation = 'desired_occupation',
+  /** column name */
+  DesiredSkills = 'desired_skills',
+  /** column name */
+  FileData = 'file_data',
+  /** column name */
+  FileName = 'file_name',
+  /** column name */
+  FirstName = 'first_name',
+  /** column name */
+  FirstNameKana = 'first_name_kana',
+  /** column name */
+  FrameWork = 'frame_work',
+  /** column name */
   Id = 'id',
+  /** column name */
+  Industries = 'industries',
+  /** column name */
+  LanguageLibraries = 'language_libraries',
+  /** column name */
+  LastName = 'last_name',
+  /** column name */
+  LastNameKana = 'last_name_kana',
   /** column name */
   LastSeen = 'last_seen',
   /** column name */
+  Mail = 'mail',
+  /** column name */
+  ModeOfOperation = 'mode_of_operation',
+  /** column name */
   Name = 'name',
   /** column name */
-  SlackUrl = 'slackUrl'
+  Portfolio = 'portfolio',
+  /** column name */
+  Prefectures = 'prefectures',
+  /** column name */
+  PreferredPlaceOfWork = 'preferred_place_of_work',
+  /** column name */
+  ProfessionalExperience = 'professional_experience',
+  /** column name */
+  ProjectStartMounth = 'project_start_mounth',
+  /** column name */
+  ProjectStartTime = 'project_start_time',
+  /** column name */
+  ProjectStartYear = 'project_start_year',
+  /** column name */
+  SelfPr = 'self_pr',
+  /** column name */
+  SlackUrl = 'slackUrl',
+  /** column name */
+  Tel = 'tel'
 }
 
 /** input type for updating data in table "users" */
 export type Users_Set_Input = {
+  amount_of_money?: InputMaybe<Scalars['String']['input']>;
+  available_day?: InputMaybe<Scalars['String']['input']>;
+  birthday_day?: InputMaybe<Scalars['String']['input']>;
+  birthday_mounth?: InputMaybe<Scalars['String']['input']>;
+  birthday_year?: InputMaybe<Scalars['String']['input']>;
+  commuting_time?: InputMaybe<Scalars['String']['input']>;
+  current_situation?: InputMaybe<Scalars['String']['input']>;
+  desired_industries?: InputMaybe<Array<Scalars['String']['input']>>;
+  desired_occupation?: InputMaybe<Array<Scalars['String']['input']>>;
+  desired_skills?: InputMaybe<Array<Scalars['String']['input']>>;
+  file_data?: InputMaybe<Scalars['String']['input']>;
+  file_name?: InputMaybe<Scalars['String']['input']>;
+  first_name?: InputMaybe<Scalars['String']['input']>;
+  first_name_kana?: InputMaybe<Scalars['String']['input']>;
+  frame_work?: InputMaybe<Array<Scalars['String']['input']>>;
   id?: InputMaybe<Scalars['String']['input']>;
+  industries?: InputMaybe<Array<Scalars['String']['input']>>;
+  language_libraries?: InputMaybe<Array<Scalars['String']['input']>>;
+  last_name?: InputMaybe<Scalars['String']['input']>;
+  last_name_kana?: InputMaybe<Scalars['String']['input']>;
   last_seen?: InputMaybe<Scalars['timestamptz']['input']>;
+  mail?: InputMaybe<Scalars['String']['input']>;
+  mode_of_operation?: InputMaybe<Array<Scalars['String']['input']>>;
   name?: InputMaybe<Scalars['String']['input']>;
+  portfolio?: InputMaybe<Scalars['String']['input']>;
+  prefectures?: InputMaybe<Scalars['String']['input']>;
+  preferred_place_of_work?: InputMaybe<Scalars['String']['input']>;
+  professional_experience?: InputMaybe<Array<Scalars['String']['input']>>;
+  project_start_mounth?: InputMaybe<Scalars['String']['input']>;
+  project_start_time?: InputMaybe<Scalars['String']['input']>;
+  project_start_year?: InputMaybe<Scalars['String']['input']>;
+  self_pr?: InputMaybe<Scalars['String']['input']>;
   slackUrl?: InputMaybe<Scalars['String']['input']>;
+  tel?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Streaming cursor of the table "users" */
@@ -2177,22 +2464,112 @@ export type Users_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Users_Stream_Cursor_Value_Input = {
+  amount_of_money?: InputMaybe<Scalars['String']['input']>;
+  available_day?: InputMaybe<Scalars['String']['input']>;
+  birthday_day?: InputMaybe<Scalars['String']['input']>;
+  birthday_mounth?: InputMaybe<Scalars['String']['input']>;
+  birthday_year?: InputMaybe<Scalars['String']['input']>;
+  commuting_time?: InputMaybe<Scalars['String']['input']>;
+  current_situation?: InputMaybe<Scalars['String']['input']>;
+  desired_industries?: InputMaybe<Array<Scalars['String']['input']>>;
+  desired_occupation?: InputMaybe<Array<Scalars['String']['input']>>;
+  desired_skills?: InputMaybe<Array<Scalars['String']['input']>>;
+  file_data?: InputMaybe<Scalars['String']['input']>;
+  file_name?: InputMaybe<Scalars['String']['input']>;
+  first_name?: InputMaybe<Scalars['String']['input']>;
+  first_name_kana?: InputMaybe<Scalars['String']['input']>;
+  frame_work?: InputMaybe<Array<Scalars['String']['input']>>;
   id?: InputMaybe<Scalars['String']['input']>;
+  industries?: InputMaybe<Array<Scalars['String']['input']>>;
+  language_libraries?: InputMaybe<Array<Scalars['String']['input']>>;
+  last_name?: InputMaybe<Scalars['String']['input']>;
+  last_name_kana?: InputMaybe<Scalars['String']['input']>;
   last_seen?: InputMaybe<Scalars['timestamptz']['input']>;
+  mail?: InputMaybe<Scalars['String']['input']>;
+  mode_of_operation?: InputMaybe<Array<Scalars['String']['input']>>;
   name?: InputMaybe<Scalars['String']['input']>;
+  portfolio?: InputMaybe<Scalars['String']['input']>;
+  prefectures?: InputMaybe<Scalars['String']['input']>;
+  preferred_place_of_work?: InputMaybe<Scalars['String']['input']>;
+  professional_experience?: InputMaybe<Array<Scalars['String']['input']>>;
+  project_start_mounth?: InputMaybe<Scalars['String']['input']>;
+  project_start_time?: InputMaybe<Scalars['String']['input']>;
+  project_start_year?: InputMaybe<Scalars['String']['input']>;
+  self_pr?: InputMaybe<Scalars['String']['input']>;
   slackUrl?: InputMaybe<Scalars['String']['input']>;
+  tel?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** update columns of table "users" */
 export enum Users_Update_Column {
   /** column name */
+  AmountOfMoney = 'amount_of_money',
+  /** column name */
+  AvailableDay = 'available_day',
+  /** column name */
+  BirthdayDay = 'birthday_day',
+  /** column name */
+  BirthdayMounth = 'birthday_mounth',
+  /** column name */
+  BirthdayYear = 'birthday_year',
+  /** column name */
+  CommutingTime = 'commuting_time',
+  /** column name */
+  CurrentSituation = 'current_situation',
+  /** column name */
+  DesiredIndustries = 'desired_industries',
+  /** column name */
+  DesiredOccupation = 'desired_occupation',
+  /** column name */
+  DesiredSkills = 'desired_skills',
+  /** column name */
+  FileData = 'file_data',
+  /** column name */
+  FileName = 'file_name',
+  /** column name */
+  FirstName = 'first_name',
+  /** column name */
+  FirstNameKana = 'first_name_kana',
+  /** column name */
+  FrameWork = 'frame_work',
+  /** column name */
   Id = 'id',
+  /** column name */
+  Industries = 'industries',
+  /** column name */
+  LanguageLibraries = 'language_libraries',
+  /** column name */
+  LastName = 'last_name',
+  /** column name */
+  LastNameKana = 'last_name_kana',
   /** column name */
   LastSeen = 'last_seen',
   /** column name */
+  Mail = 'mail',
+  /** column name */
+  ModeOfOperation = 'mode_of_operation',
+  /** column name */
   Name = 'name',
   /** column name */
-  SlackUrl = 'slackUrl'
+  Portfolio = 'portfolio',
+  /** column name */
+  Prefectures = 'prefectures',
+  /** column name */
+  PreferredPlaceOfWork = 'preferred_place_of_work',
+  /** column name */
+  ProfessionalExperience = 'professional_experience',
+  /** column name */
+  ProjectStartMounth = 'project_start_mounth',
+  /** column name */
+  ProjectStartTime = 'project_start_time',
+  /** column name */
+  ProjectStartYear = 'project_start_year',
+  /** column name */
+  SelfPr = 'self_pr',
+  /** column name */
+  SlackUrl = 'slackUrl',
+  /** column name */
+  Tel = 'tel'
 }
 
 export type Users_Updates = {
@@ -2207,6 +2584,7 @@ export type Work = {
   __typename?: 'work';
   contractType?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
+  is_show: Scalars['Boolean']['output'];
   /** An array relationship */
   languages: Array<Work_To_Detail>;
   /** An aggregate relationship */
@@ -2286,6 +2664,7 @@ export type Work_Bool_Exp = {
   _or?: InputMaybe<Array<Work_Bool_Exp>>;
   contractType?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
+  is_show?: InputMaybe<Boolean_Comparison_Exp>;
   languages?: InputMaybe<Work_To_Detail_Bool_Exp>;
   languages_aggregate?: InputMaybe<Work_To_Detail_Aggregate_Bool_Exp>;
   location?: InputMaybe<String_Comparison_Exp>;
@@ -2317,6 +2696,7 @@ export type Work_Inc_Input = {
 export type Work_Insert_Input = {
   contractType?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  is_show?: InputMaybe<Scalars['Boolean']['input']>;
   languages?: InputMaybe<Work_To_Detail_Arr_Rel_Insert_Input>;
   location?: InputMaybe<Scalars['String']['input']>;
   maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
@@ -2379,6 +2759,7 @@ export type Work_On_Conflict = {
 export type Work_Order_By = {
   contractType?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  is_show?: InputMaybe<Order_By>;
   languages_aggregate?: InputMaybe<Work_To_Detail_Aggregate_Order_By>;
   location?: InputMaybe<Order_By>;
   maxMonthlyPrice?: InputMaybe<Order_By>;
@@ -2400,6 +2781,8 @@ export enum Work_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  IsShow = 'is_show',
+  /** column name */
   Location = 'location',
   /** column name */
   MaxMonthlyPrice = 'maxMonthlyPrice',
@@ -2417,6 +2800,7 @@ export enum Work_Select_Column {
 export type Work_Set_Input = {
   contractType?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  is_show?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
   maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
@@ -2467,6 +2851,7 @@ export type Work_Stream_Cursor_Input = {
 export type Work_Stream_Cursor_Value_Input = {
   contractType?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  is_show?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
   maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
@@ -2802,6 +3187,8 @@ export enum Work_Update_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  IsShow = 'is_show',
+  /** column name */
   Location = 'location',
   /** column name */
   MaxMonthlyPrice = 'maxMonthlyPrice',
@@ -2881,10 +3268,12 @@ export type GetUserQueryVariables = Exact<{
 
 export type GetUserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, name: string, last_seen: any, slackUrl?: string | null }> };
 
-export type GetWorkQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetWorkQueryVariables = Exact<{
+  id?: InputMaybe<Int_Comparison_Exp>;
+}>;
 
 
-export type GetWorkQuery = { __typename?: 'query_root', work: Array<{ __typename?: 'work', contractType?: string | null, id: number, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, title: string, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> }> };
+export type GetWorkQuery = { __typename?: 'query_root', work: Array<{ __typename?: 'work', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> }> };
 
 export type GetWorksQueryVariables = Exact<{
   where?: InputMaybe<Work_Bool_Exp>;
@@ -2898,5 +3287,5 @@ export const GetAllProjectDocument = {"kind":"Document","definitions":[{"kind":"
 export const GetDetailProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDetailProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"businessContent"}},{"kind":"Field","name":{"kind":"Name","value":"contentBusiness"}},{"kind":"Field","name":{"kind":"Name","value":"developmentEnvironment"}},{"kind":"Field","name":{"kind":"Name","value":"keyword"}},{"kind":"Field","name":{"kind":"Name","value":"personnelSought"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentBackground"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNumber"}},{"kind":"Field","name":{"kind":"Name","value":"requiredSkills"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeSkills"}},{"kind":"Field","name":{"kind":"Name","value":"workingConditions"}}]}}]}}]} as unknown as DocumentNode<GetDetailProjectQuery, GetDetailProjectQueryVariables>;
 export const GetSkillsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSkills"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skillsWhere"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"skills_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"worksWhere"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"work_to_detail_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skills"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skillsWhere"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"works_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"worksWhere"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetSkillsQuery, GetSkillsQueryVariables>;
 export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"last_seen"}},{"kind":"Field","name":{"kind":"Name","value":"slackUrl"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
-export const GetWorkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWork"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkQuery, GetWorkQueryVariables>;
+export const GetWorkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWork"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int_comparison_exp"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkQuery, GetWorkQueryVariables>;
 export const GetWorksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWorks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"work_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorksQuery, GetWorksQueryVariables>;

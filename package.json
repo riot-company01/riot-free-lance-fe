@@ -33,16 +33,18 @@
     "next": "13.4.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-loading": "^2.0.3"
+    "react-loading": "^2.0.3",
+    "react-markdown": "^8.0.7"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "4.0.1",
-    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@graphql-codegen/client-preset": "4.0.1",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
+    "@next/eslint-plugin-next": "12.0.7",
     "@types/lodash-es": "^4.17.7",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
     "deepmerge": "^4.3.1",
-    "lodash-es": "^4.17.21",
-    "typescript": "^5.1.6",
     "eslint": "^8.34.0",
     "eslint-config-next": "13.4.6",
     "eslint-config-prettier": "^8.6.0",
@@ -54,9 +56,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-sort-exports": "^0.8.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.53.0",
-    "@typescript-eslint/parser": "^5.53.0",
-    "@next/eslint-plugin-next": "12.0.7",
-    "prettier": "^2.8.4"
+    "lodash-es": "^4.17.21",
+    "prettier": "^2.8.4",
+    "typescript": "^5.1.6"
   }
 }

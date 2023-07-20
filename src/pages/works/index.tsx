@@ -1,5 +1,4 @@
 import { useQuery } from "@apollo/client";
-import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -8,6 +7,7 @@ import ReportIcon from "@mui/icons-material/Report";
 import { Chip } from "@mui/material";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import { Detail } from "@/components/works/detail";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
@@ -15,6 +15,10 @@ import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
+};
+
+const languages = (skillId: string) => {
+  return { languages: { skill_id: { _eq: Number(skillId) } } };
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -28,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       where: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { languages: { skill_id: { _eq: Number(skillId) } } };
+            return languages(skillId);
           }),
         ],
       },
@@ -44,14 +48,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { works: { work: { languages: { skill_id: { _eq: Number(skillId) } } } } };
+            return { works: { work: languages(skillId) } };
           }),
         ],
       },
       worksWhere: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { work: { languages: { skill_id: { _eq: Number(skillId) } } } };
+            return { work: languages(skillId) };
           }),
         ],
       },
@@ -68,6 +72,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 export default function Works() {
   const router = useRouter();
+
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
 
   const { data: works } = useQuery(GetWorksDocument, {
@@ -75,7 +80,7 @@ export default function Works() {
       where: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { languages: { skill_id: { _eq: Number(skillId) } } };
+            return languages(skillId);
           }),
         ],
       },
@@ -90,14 +95,14 @@ export default function Works() {
         },
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { works: { work: { languages: { skill_id: { _eq: Number(skillId) } } } } };
+            return { works: { work: languages(skillId) } };
           }),
         ],
       },
       worksWhere: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { work: { languages: { skill_id: { _eq: Number(skillId) } } } };
+            return { work: languages(skillId) };
           }),
         ],
       },
@@ -119,7 +124,21 @@ export default function Works() {
           <Column>
             {works?.work.map((item, idx) => {
               return (
-                <Card key={idx}>
+                <Card
+                  key={idx}
+                  onClick={() => {
+                    router.push(
+                      {
+                        query: {
+                          ...router.query,
+                          "work-id": item.id,
+                        },
+                      },
+                      undefined,
+                      { scroll: false }
+                    );
+                  }}
+                >
                   <Title>
                     <div>{item.title}</div>
                     <FavoriteIcon>
@@ -130,8 +149,27 @@ export default function Works() {
                     <Icon>
                       <MonetizationOnIcon fontSize="small" />
                     </Icon>
-                    <Strong>{item.minMonthlyPrice}</Strong>~<Strong>{item.maxMonthlyPrice}</Strong>
-                    <Span>万円/月額 (想定年収: 2400万円)</Span>
+                    {(() => {
+                      if (item.minMonthlyPrice && item.maxMonthlyPrice) {
+                        return (
+                          <>
+                            <Strong>{item.minMonthlyPrice}</Strong>~<Strong>{item.maxMonthlyPrice}</Strong>
+                            <Span>
+                              万円/月額 (想定年収: {item.minMonthlyPrice * 12}~{item.maxMonthlyPrice * 12}万円)
+                            </Span>
+                          </>
+                        );
+                      } else if (item.minMonthlyPrice || item.maxMonthlyPrice) {
+                        return (
+                          <>
+                            <Strong>{item.minMonthlyPrice || item.maxMonthlyPrice}</Strong>
+                            <Span>万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)</Span>
+                          </>
+                        );
+                      } else {
+                        return <Span>要相談</Span>;
+                      }
+                    })()}
                   </MonthlyPrice>
                   <FlexContainer>
                     <Icon>
@@ -145,7 +183,7 @@ export default function Works() {
                     </Icon>
                     <div>{item.location}</div>
                   </FlexContainer>
-                  <FlexContainer>
+                  <FlexContainerLabel>
                     {item.languages.map((value, idx) => {
                       return (
                         <Chip
@@ -158,7 +196,7 @@ export default function Works() {
                         />
                       );
                     })}
-                  </FlexContainer>
+                  </FlexContainerLabel>
                   <FlexContainer>
                     大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
                     ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
@@ -169,16 +207,9 @@ export default function Works() {
               );
             })}
           </Column>
-          <div
-            className={css`
-              width: 100%;
-              max-width: calc(1320px - 180px - 400px);
-              border: 1px solid rgb(224, 224, 224);
-              margin-left: 32px;
-            `}
-          >
-            <DetailContainer>村山マークダウンエリア</DetailContainer>
-          </div>
+          <DetailWrapper>
+            <Detail defaultWorkId={works?.work[0].id} />
+          </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
     </Wrapper>
@@ -214,14 +245,11 @@ const MonthlyPrice = styled.div`
   align-items: center;
 `;
 
-// const Detail = styled.div`
-//   border: 1px solid rgb(224, 224, 224);
-//   padding: 16px;
-//   height: 80dvh;
-//   right: 0px;
-//   width: 720px;
-//   position: fixed;
-// `;
+const DetailWrapper = styled.div`
+  width: 100%;
+  max-width: calc(1320px - 180px - 400px);
+  margin-left: 32px;
+`;
 
 const Navig = styled.div`
   padding: 16px;
@@ -260,11 +288,6 @@ const WorksContainer = styled.div`
   max-width: calc(1320px - 180px);
 `;
 
-const DetailContainer = styled.div`
-  padding: 16px;
-  position: fixed;
-`;
-
 const Strong = styled.div`
   color: #f86986;
   font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, sans-serif;
@@ -288,6 +311,10 @@ const FlexContainer = styled.div`
   align-items: center;
   padding-top: 8px;
   font-size: 14px;
+`;
+
+const FlexContainerLabel = styled(FlexContainer)`
+  overflow: auto;
 `;
 
 const FavoriteIcon = styled.div`
