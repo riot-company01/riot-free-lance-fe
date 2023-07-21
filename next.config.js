@@ -4,7 +4,7 @@ module.exports = {
     return [
       {
         source: "/",
-        destination: "/project",
+        destination: "/works/",
         permanent: true,
       },
     ];

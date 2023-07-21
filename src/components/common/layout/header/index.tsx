@@ -20,18 +20,18 @@ export const LayoutHeader: React.FC = () => {
           <CustomizedInputBase />
         </List>
 
-        <NextLink href="#">
+        {/* <NextLink href="#">
           <List>検索履歴</List>
         </NextLink>
         <NextLink href="#">
           <List>条件</List>
-        </NextLink>
+        </NextLink> */}
       </FlexContainer>
       <FlexContainer>
-        <NextLink href="#">
+        {/* <NextLink href="#">
           <List>案件を探す</List>
-        </NextLink>
-        <NextLink href="#">
+        </NextLink> */}
+        {/* <NextLink href="#">
           <List>エージェントを探す</List>
         </NextLink>
         <NextLink href="#">
@@ -39,13 +39,16 @@ export const LayoutHeader: React.FC = () => {
         </NextLink>
         <NextLink href="#">
           <List>情報</List>
-        </NextLink>
+        </NextLink> */}
         <NextLink href="#">
+          <LastList>ログアウト</LastList>
+        </NextLink>
+        {/* <NextLink href="#">
           <List>ログイン</List>
         </NextLink>
         <NextLink href="#">
           <LastList>新規登録</LastList>
-        </NextLink>
+        </NextLink> */}
       </FlexContainer>
     </Wrapper>
   );

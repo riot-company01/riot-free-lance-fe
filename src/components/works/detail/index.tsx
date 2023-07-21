@@ -46,6 +46,12 @@ export function Detail({ defaultWorkId, workListWrapperHeight }: Props) {
     setScrollOffset(window.scrollY);
   };
 
+  const copyUrlHandler = async () => {
+    const currentUrl = location.href;
+    await navigator.clipboard.writeText(currentUrl);
+    alert("urlがコピーされました");
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setScrollOffset(window.scrollY);
@@ -124,10 +130,11 @@ export function Detail({ defaultWorkId, workListWrapperHeight }: Props) {
         <ReactMarkdown>{work.description}</ReactMarkdown>
       </Description>
 
-      <FlexContainer>
-        <Button variant="contained">応募する</Button>
-        <Button variant="outlined">お気に入り登録</Button>
-      </FlexContainer>
+      <FlexButtonContainer>
+        <Button variant="contained" onClick={copyUrlHandler}>
+          案件のURLをコピーする
+        </Button>
+      </FlexButtonContainer>
     </DetailContainer>
   );
 }
@@ -145,14 +152,17 @@ const DetailContainer = styled.div<{ scroll: boolean; scrollOffset: number; work
   position: fixed;
 
   ${({ scroll, scrollOffset, workListWrapperHeight }) =>
-    scroll && workListWrapperHeight === 400 && `bottom: ${scrollOffset}px;height: calc(100vh - 200px);`}
+    scroll &&
+    workListWrapperHeight === 400 &&
+    `bottom: ${scrollOffset}px;height: calc(100vh - 200px); 
+    margin-bottom: 16px;`}
 
   ${({ scroll, scrollOffset, workListWrapperHeight }) =>
     scroll &&
     workListWrapperHeight !== 400 &&
     `
       top: calc(${workListWrapperHeight}px - ${scrollOffset}px - 650px);
-      height: calc(100vh - 164px);
+      height: calc(100vh - 152px);
     `}
 
   overflow: auto;
@@ -191,7 +201,7 @@ const Info = styled.div`
 
 const FlexContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
 `;
 
 const Text = styled.div`
@@ -204,4 +214,9 @@ const Description = styled.div`
   h3 {
     margin: 16px 0 8px 0;
   }
+`;
+
+const FlexButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
 `;
