@@ -40,7 +40,7 @@ export const LayoutHeader: React.FC = () => {
         <NextLink href="#">
           <List>情報</List>
         </NextLink> */}
-        <NextLink href="#">
+        <NextLink href="/api/auth/logout">
           <LastList>ログアウト</LastList>
         </NextLink>
         {/* <NextLink href="#">
@@ -71,6 +71,7 @@ const LastList = styled.div`
   font-size: 14px;
   padding-left: 20px;
   padding-right: 20px;
+  color: ${COLOR.BLACK.code};
 `;
 
 const Wrapper = styled.header`
