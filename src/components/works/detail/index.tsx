@@ -7,9 +7,9 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
-import { GetWorkDocument } from "@/lib/graphql/graphql";
-import ReactMarkdown from "react-markdown";
 import { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import { GetWorkDocument } from "@/lib/graphql/graphql";
 
 type Props = {
   defaultWorkId?: number;

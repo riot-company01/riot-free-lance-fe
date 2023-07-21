@@ -7,12 +7,12 @@ import ReportIcon from "@mui/icons-material/Report";
 import { Chip } from "@mui/material";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import { useState, useRef, useEffect } from "react";
 import { Detail } from "@/components/works/detail";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
 import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
-import { useState, useRef, useEffect } from "react";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
