@@ -162,7 +162,7 @@ const DetailContainer = styled.div<{ scroll: boolean; scrollOffset: number; work
     workListWrapperHeight !== 400 &&
     `
       top: calc(${workListWrapperHeight}px - ${scrollOffset}px - 650px);
-      height: calc(100vh - 152px);
+      height: calc(100vh - 8px);
     `}
 
   overflow: auto;
