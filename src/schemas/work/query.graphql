@@ -8,6 +8,7 @@ query GetWork($id: Int_comparison_exp) @cached {
     maxWorkHours
     minMonthlyPrice
     minWorkHours
+    description
     languages {
       skill {
         id

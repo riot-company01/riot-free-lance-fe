@@ -8,13 +8,20 @@ import PaymentIcon from "@mui/icons-material/Payment";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import ReactMarkdown from "react-markdown";
+import { useState, useEffect } from "react";
 
 type Props = {
   defaultWorkId?: number;
+  workListWrapperHeight?: number;
 };
 
-export function Detail({ defaultWorkId }: Props) {
+export function Detail({ defaultWorkId, workListWrapperHeight }: Props) {
   const router = useRouter();
+  const [scrolled, setScrolled] = useState(false);
+  const [scrollOffset, setScrollOffset] = useState(0);
+  const isClientSide = typeof window !== "undefined";
+
   const { data } = useQuery(GetWorkDocument, {
     variables: {
       id: {
@@ -23,9 +30,40 @@ export function Detail({ defaultWorkId }: Props) {
     },
   });
   const work = data?.work[0];
+
+  const handleScroll = () => {
+    const targetPosition = workListWrapperHeight;
+    const scrollPosition = window.scrollY;
+
+    if (targetPosition) {
+      if (targetPosition !== 400) {
+        setScrolled(scrollPosition >= targetPosition - 800);
+      } else {
+        setScrolled(scrollPosition >= workListWrapperHeight - 800);
+      }
+    }
+
+    setScrollOffset(window.scrollY);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScrollOffset(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    handleResize(); // 初回レンダリング時に1度実行しておく
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [workListWrapperHeight, isClientSide, scrollOffset]);
+
   if (!work) return null;
+
   return (
-    <DetailContainer>
+    <DetailContainer scroll={scrolled} scrollOffset={scrollOffset} workListWrapperHeight={workListWrapperHeight}>
       <Title>{work.title}</Title>
       <MonthlyPrice>
         <Icon>
@@ -82,6 +120,10 @@ export function Detail({ defaultWorkId }: Props) {
         <Text>{work.location}</Text>
       </Icon>
 
+      <Description>
+        <ReactMarkdown>{work.description}</ReactMarkdown>
+      </Description>
+
       <FlexContainer>
         <Button variant="contained">応募する</Button>
         <Button variant="outlined">お気に入り登録</Button>
@@ -95,12 +137,27 @@ const Title = styled.div`
   font-weight: bold;
 `;
 
-const DetailContainer = styled.div`
+const DetailContainer = styled.div<{ scroll: boolean; scrollOffset: number; workListWrapperHeight?: number }>`
   padding: 16px;
   width: 448px;
   border: 1px solid rgb(224, 224, 224);
   background-color: white;
   position: fixed;
+
+  ${({ scroll, scrollOffset, workListWrapperHeight }) =>
+    scroll && workListWrapperHeight === 400 && `bottom: ${scrollOffset}px;height: calc(100vh - 200px);`}
+
+  ${({ scroll, scrollOffset, workListWrapperHeight }) =>
+    scroll &&
+    workListWrapperHeight !== 400 &&
+    `
+      top: calc(${workListWrapperHeight}px - ${scrollOffset}px - 650px);
+      height: calc(100vh - 164px);
+    `}
+
+  overflow: auto;
+  overscroll-behavior: contain;
+  border-radius: 8px;
 `;
 
 const MonthlyPrice = styled.div`
@@ -134,9 +191,17 @@ const Info = styled.div`
 
 const FlexContainer = styled.div`
   display: flex;
+  justify-content: space-around;
 `;
 
 const Text = styled.div`
   padding-left: 8px;
   font-size: 12px;
+`;
+
+const Description = styled.div`
+  padding: 8px 0;
+  h3 {
+    margin: 16px 0 8px 0;
+  }
 `;

@@ -12,6 +12,7 @@ import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
 import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
+import { useState, useRef, useEffect } from "react";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
@@ -72,6 +73,28 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 export default function Works() {
   const router = useRouter();
+  const [workListWrapperHeight, setworkListWrapperHeight] = useState<number | undefined>(0);
+  const workListWrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === workListWrapperRef.current) {
+          setworkListWrapperHeight(entry.target.clientHeight);
+        }
+      }
+    });
+
+    if (workListWrapperRef.current) {
+      observer.observe(workListWrapperRef.current);
+    }
+
+    return () => {
+      if (workListWrapperRef.current) {
+        observer.unobserve(workListWrapperRef.current);
+      }
+    };
+  }, [workListWrapperRef]);
 
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
 
@@ -118,10 +141,14 @@ export default function Works() {
       </NavigContainer>
       <KeyWordContainer>
         <KeyWordFixed>
-          <Filter defaultFilters={skills?.skills} selectedSkillIds={selectedSkillIds} worksLength={works?.work.length} />
+          <Filter
+            defaultFilters={skills?.skills}
+            selectedSkillIds={selectedSkillIds}
+            worksLength={works?.work.length}
+          />
         </KeyWordFixed>
         <WorksContainer>
-          <Column>
+          <Column ref={workListWrapperRef}>
             {works?.work.map((item, idx) => {
               return (
                 <Card
@@ -163,7 +190,10 @@ export default function Works() {
                         return (
                           <>
                             <Strong>{item.minMonthlyPrice || item.maxMonthlyPrice}</Strong>
-                            <Span>万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)</Span>
+                            <Span>
+                              万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}
+                              万円)
+                            </Span>
                           </>
                         );
                       } else {
@@ -198,17 +228,19 @@ export default function Works() {
                     })}
                   </FlexContainerLabel>
                   <FlexContainer>
-                    大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
-                    ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                    ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                    ・計画書作成...
+                    大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                    ・社内外との折衝 ・計画書作成
+                    ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                    ・社内外との折衝
+                    ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。
+                    ・社内外との折衝 ・計画書作成...
                   </FlexContainer>
                 </Card>
               );
             })}
           </Column>
           <DetailWrapper>
-            <Detail defaultWorkId={works?.work[0].id} />
+            <Detail defaultWorkId={works?.work[0].id} workListWrapperHeight={workListWrapperHeight} />
           </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
@@ -246,7 +278,7 @@ const MonthlyPrice = styled.div`
 `;
 
 const DetailWrapper = styled.div`
-  width: 100%;
+  width: 47%;
   max-width: calc(1320px - 180px - 400px);
   margin-left: 32px;
 `;
