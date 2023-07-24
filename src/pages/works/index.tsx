@@ -1,6 +1,5 @@
 import { useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
@@ -141,9 +140,9 @@ export default function Works() {
                 >
                   <Title>
                     <div>{item.title}</div>
-                    <FavoriteIcon>
+                    {/* <FavoriteIcon>
                       <FavoriteBorderIcon fontSize="large" />
-                    </FavoriteIcon>
+                    </FavoriteIcon> */}
                   </Title>
                   <MonthlyPrice>
                     <Icon>
@@ -207,7 +206,7 @@ export default function Works() {
               );
             })}
             <PaginationWrapper>
-              <Pagination count={30} variant="outlined" shape="rounded" size="large" />
+              <Pagination count={1} variant="outlined" shape="rounded" size="large" />
             </PaginationWrapper>
           </Column>
           <DetailWrapper>
