@@ -20,26 +20,26 @@ export const LayoutHeader: React.FC = () => {
           <CustomizedInputBase />
         </List>
 
-        <NextLink href="#">
+        {/* <NextLink href="#">
           <List>検索履歴</List>
         </NextLink>
         <NextLink href="#">
           <List>条件</List>
-        </NextLink>
+        </NextLink> */}
       </FlexContainer>
       <FlexContainer>
-        <NextLink href="#">
+        {/* <NextLink href="#">
           <List>案件を探す</List>
-        </NextLink>
-        <NextLink href="#">
+        </NextLink> */}
+        {/* <NextLink href="#">
           <List>エージェントを探す</List>
-        </NextLink>
-        <NextLink href="#">
+        </NextLink> */}
+        {/* <NextLink href="#">
           <List>スカウト</List>
-        </NextLink>
-        <NextLink href="#">
+        </NextLink> */}
+        {/* <NextLink href="#">
           <List>情報</List>
-        </NextLink>
+        </NextLink> */}
         <NextLink href="#">
           <List>ログイン</List>
         </NextLink>
@@ -84,11 +84,7 @@ const Wrapper = styled.header`
 export function CustomizedInputBase() {
   return (
     <Paper component="form" sx={{ display: "flex", alignItems: "center", width: 300 }}>
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="キーワード検索 例:React"
-        inputProps={{ "aria-label": "キーワード検索 例:React" }}
-      />
+      <InputBase sx={{ ml: 1, flex: 1 }} placeholder="キーワード検索 例:React" inputProps={{ "aria-label": "キーワード検索 例:React" }} />
       <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
         <SearchIcon />
       </IconButton>

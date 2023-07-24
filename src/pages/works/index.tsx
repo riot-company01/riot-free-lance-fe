@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -16,7 +17,6 @@ import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 export const WORKS_Z_INDEX = {
   FILTER: 10,
 };
-removeMd;
 
 const languages = (skillId: string) => {
   return { languages: { skill_id: { _eq: Number(skillId) } } };
@@ -71,7 +71,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
-export default function Works() {
+function Works() {
   const router = useRouter();
 
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
@@ -338,3 +338,5 @@ const MdWrapper = styled.div`
   overflow: hidden;
   font-size: 14px;
 `;
+
+export default withPageAuthRequired(Works);
