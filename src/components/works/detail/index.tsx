@@ -30,7 +30,7 @@ export function Detail({ defaultWorkId }: Props) {
     alert("urlがコピーされました");
   };
   const work = data?.work[0];
-  console.log(router.query["skill-ids"]);
+
   if (!work) return null;
   return (
     <DetailContainer isSelected={!!router.query["skill-ids"]}>
