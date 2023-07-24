@@ -112,6 +112,7 @@ const Title = styled.div`
 
 const DetailContainer = styled.div<{ isSelected: boolean }>`
   padding: 16px;
+  border-radius: 8px;
   width: 448px;
   max-height: ${({ isSelected }) => (isSelected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
   overflow: scroll;
