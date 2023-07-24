@@ -4,7 +4,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Chip } from "@mui/material";
+import { Chip, Pagination } from "@mui/material";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { Detail } from "@/components/works/detail";
@@ -206,6 +206,9 @@ export default function Works() {
                 </Card>
               );
             })}
+            <PaginationWrapper>
+              <Pagination count={30} variant="outlined" shape="rounded" size="large" />
+            </PaginationWrapper>
           </Column>
           <DetailWrapper>
             <Detail defaultWorkId={works?.work[0].id} />
@@ -218,6 +221,7 @@ export default function Works() {
 
 const Wrapper = styled.div`
   display: flex;
+  margin-bottom: 320px;
 `;
 
 const Card = styled.div`
@@ -324,4 +328,8 @@ const FavoriteIcon = styled.div`
 const Column = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const PaginationWrapper = styled.div`
+  padding: 40px 0;
 `;

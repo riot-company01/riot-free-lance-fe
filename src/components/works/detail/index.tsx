@@ -7,6 +7,7 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
+import ReactMarkdown from "react-markdown";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 
 type Props = {
@@ -22,10 +23,17 @@ export function Detail({ defaultWorkId }: Props) {
       },
     },
   });
+  const copyUrlHandler = async () => {
+    const currentUrl = location.href;
+    await navigator.clipboard.writeText(currentUrl);
+
+    alert("urlがコピーされました");
+  };
   const work = data?.work[0];
+  console.log(router.query["skill-ids"]);
   if (!work) return null;
   return (
-    <DetailContainer>
+    <DetailContainer isSelected={!!router.query["skill-ids"]}>
       <Title>{work.title}</Title>
       <MonthlyPrice>
         <Icon>
@@ -77,14 +85,21 @@ export function Detail({ defaultWorkId }: Props) {
         </Info>
       </FlexContainer>
 
-      <Icon>
-        <LocationOnIcon fontSize="small" />
-        <Text>{work.location}</Text>
-      </Icon>
+      <FlexContainer>
+        <Icon>
+          <LocationOnIcon fontSize="small" />
+          <Text>{work.location}</Text>
+        </Icon>
+      </FlexContainer>
+
+      <Description>
+        <ReactMarkdown>{work.description}</ReactMarkdown>
+      </Description>
 
       <FlexContainer>
-        <Button variant="contained">応募する</Button>
-        <Button variant="outlined">お気に入り登録</Button>
+        <Button variant="contained" onClick={copyUrlHandler}>
+          案件のURLをコピーする
+        </Button>
       </FlexContainer>
     </DetailContainer>
   );
@@ -95,12 +110,15 @@ const Title = styled.div`
   font-weight: bold;
 `;
 
-const DetailContainer = styled.div`
+const DetailContainer = styled.div<{ isSelected: boolean }>`
   padding: 16px;
   width: 448px;
+  max-height: ${({ isSelected }) => (isSelected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  overflow: scroll;
   border: 1px solid rgb(224, 224, 224);
   background-color: white;
-  position: fixed;
+  position: sticky;
+  top: ${({ isSelected }) => (isSelected ? "198px" : "166px")};
 `;
 
 const MonthlyPrice = styled.div`
@@ -134,9 +152,16 @@ const Info = styled.div`
 
 const FlexContainer = styled.div`
   display: flex;
+  padding-top: 8px;
 `;
 
 const Text = styled.div`
   padding-left: 8px;
   font-size: 12px;
+`;
+
+const Description = styled.div`
+  * {
+    all: revert;
+  }
 `;
