@@ -1,13 +1,14 @@
 import { useQuery } from "@apollo/client";
-import { css } from "@emotion/css";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Chip } from "@mui/material";
+import { Chip, Pagination } from "@mui/material";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import removeMd from "remove-markdown";
+import { Detail } from "@/components/works/detail";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
@@ -15,6 +16,10 @@ import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
+};
+
+const languages = (skillId: string) => {
+  return { languages: { skill_id: { _eq: Number(skillId) } } };
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -28,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       where: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { languages: { skill_id: { _eq: Number(skillId) } } };
+            return languages(skillId);
           }),
         ],
       },
@@ -44,14 +49,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { works: { work: { languages: { skill_id: { _eq: Number(skillId) } } } } };
+            return { works: { work: languages(skillId) } };
           }),
         ],
       },
       worksWhere: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { work: { languages: { skill_id: { _eq: Number(skillId) } } } };
+            return { work: languages(skillId) };
           }),
         ],
       },
@@ -66,8 +71,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 };
 
-export default function Works() {
+function Works() {
   const router = useRouter();
+
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
 
   const { data: works } = useQuery(GetWorksDocument, {
@@ -75,7 +81,7 @@ export default function Works() {
       where: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { languages: { skill_id: { _eq: Number(skillId) } } };
+            return languages(skillId);
           }),
         ],
       },
@@ -90,14 +96,14 @@ export default function Works() {
         },
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { works: { work: { languages: { skill_id: { _eq: Number(skillId) } } } } };
+            return { works: { work: languages(skillId) } };
           }),
         ],
       },
       worksWhere: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { work: { languages: { skill_id: { _eq: Number(skillId) } } } };
+            return { work: languages(skillId) };
           }),
         ],
       },
@@ -119,19 +125,52 @@ export default function Works() {
           <Column>
             {works?.work.map((item, idx) => {
               return (
-                <Card key={idx}>
+                <Card
+                  key={idx}
+                  onClick={() => {
+                    router.push(
+                      {
+                        query: {
+                          ...router.query,
+                          "work-id": item.id,
+                        },
+                      },
+                      undefined,
+                      { scroll: false }
+                    );
+                  }}
+                >
                   <Title>
                     <div>{item.title}</div>
-                    <FavoriteIcon>
+                    {/* <FavoriteIcon>
                       <FavoriteBorderIcon fontSize="large" />
-                    </FavoriteIcon>
+                    </FavoriteIcon> */}
                   </Title>
                   <MonthlyPrice>
                     <Icon>
                       <MonetizationOnIcon fontSize="small" />
                     </Icon>
-                    <Strong>{item.minMonthlyPrice}</Strong>~<Strong>{item.maxMonthlyPrice}</Strong>
-                    <Span>万円/月額 (想定年収: 2400万円)</Span>
+                    {(() => {
+                      if (item.minMonthlyPrice && item.maxMonthlyPrice) {
+                        return (
+                          <>
+                            <Strong>{item.minMonthlyPrice}</Strong>~<Strong>{item.maxMonthlyPrice}</Strong>
+                            <Span>
+                              万円/月額 (想定年収: {item.minMonthlyPrice * 12}~{item.maxMonthlyPrice * 12}万円)
+                            </Span>
+                          </>
+                        );
+                      } else if (item.minMonthlyPrice || item.maxMonthlyPrice) {
+                        return (
+                          <>
+                            <Strong>{item.minMonthlyPrice || item.maxMonthlyPrice}</Strong>
+                            <Span>万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)</Span>
+                          </>
+                        );
+                      } else {
+                        return <Span>要相談</Span>;
+                      }
+                    })()}
                   </MonthlyPrice>
                   <FlexContainer>
                     <Icon>
@@ -145,7 +184,7 @@ export default function Works() {
                     </Icon>
                     <div>{item.location}</div>
                   </FlexContainer>
-                  <FlexContainer>
+                  <FlexContainerLabel>
                     {item.languages.map((value, idx) => {
                       return (
                         <Chip
@@ -158,27 +197,18 @@ export default function Works() {
                         />
                       );
                     })}
-                  </FlexContainer>
-                  <FlexContainer>
-                    大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
-                    ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                    ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                    ・計画書作成...
-                  </FlexContainer>
+                  </FlexContainerLabel>
+                  <MdWrapper>{removeMd(item.description)}</MdWrapper>
                 </Card>
               );
             })}
+            <PaginationWrapper>
+              <Pagination count={1} variant="outlined" shape="rounded" size="large" />
+            </PaginationWrapper>
           </Column>
-          <div
-            className={css`
-              width: 100%;
-              max-width: calc(1320px - 180px - 400px);
-              border: 1px solid rgb(224, 224, 224);
-              margin-left: 32px;
-            `}
-          >
-            <DetailContainer>村山マークダウンエリア</DetailContainer>
-          </div>
+          <DetailWrapper>
+            <Detail defaultWorkId={works?.work[0].id} />
+          </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
     </Wrapper>
@@ -187,6 +217,7 @@ export default function Works() {
 
 const Wrapper = styled.div`
   display: flex;
+  margin-bottom: 320px;
 `;
 
 const Card = styled.div`
@@ -214,14 +245,11 @@ const MonthlyPrice = styled.div`
   align-items: center;
 `;
 
-// const Detail = styled.div`
-//   border: 1px solid rgb(224, 224, 224);
-//   padding: 16px;
-//   height: 80dvh;
-//   right: 0px;
-//   width: 720px;
-//   position: fixed;
-// `;
+const DetailWrapper = styled.div`
+  width: 100%;
+  max-width: calc(1320px - 180px - 400px);
+  margin-left: 32px;
+`;
 
 const Navig = styled.div`
   padding: 16px;
@@ -260,11 +288,6 @@ const WorksContainer = styled.div`
   max-width: calc(1320px - 180px);
 `;
 
-const DetailContainer = styled.div`
-  padding: 16px;
-  position: fixed;
-`;
-
 const Strong = styled.div`
   color: #f86986;
   font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, sans-serif;
@@ -290,11 +313,30 @@ const FlexContainer = styled.div`
   font-size: 14px;
 `;
 
-const FavoriteIcon = styled.div`
-  font-weight: normal;
+const FlexContainerLabel = styled(FlexContainer)`
+  overflow: auto;
 `;
+
+// const FavoriteIcon = styled.div`
+//   font-weight: normal;
+// `;
 
 const Column = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+const PaginationWrapper = styled.div`
+  padding: 40px 0;
+`;
+
+const MdWrapper = styled.div`
+  padding-top: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 14px;
+`;
+
+export default withPageAuthRequired(Works);

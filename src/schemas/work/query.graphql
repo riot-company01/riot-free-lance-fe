@@ -1,13 +1,14 @@
-query GetWork @cached {
-  work {
-    contractType
+query GetWork($id: Int_comparison_exp) @cached {
+  work(where: { id: $id }) {
     id
+    title
+    contractType
     location
     maxMonthlyPrice
     maxWorkHours
     minMonthlyPrice
     minWorkHours
-    title
+    description
     languages {
       skill {
         id
@@ -28,6 +29,7 @@ query GetWorks($where: work_bool_exp = { _and: [] }) @cached {
     maxWorkHours
     minMonthlyPrice
     minWorkHours
+    description
     languages {
       skill {
         id

@@ -4,11 +4,6 @@ query GetSkills($skillsWhere: skills_bool_exp = { _and: [] }, $worksWhere: work_
     type
     name
     works_aggregate(where: $worksWhere) {
-      nodes {
-        work {
-          title
-        }
-      }
       aggregate {
         count
       }
