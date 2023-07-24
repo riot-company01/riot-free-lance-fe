@@ -29,6 +29,7 @@ query GetWorks($where: work_bool_exp = { _and: [] }) @cached {
     maxWorkHours
     minMonthlyPrice
     minWorkHours
+    description
     languages {
       skill {
         id

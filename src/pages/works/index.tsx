@@ -6,6 +6,7 @@ import ReportIcon from "@mui/icons-material/Report";
 import { Chip, Pagination } from "@mui/material";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import removeMd from "remove-markdown";
 import { Detail } from "@/components/works/detail";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
@@ -15,6 +16,7 @@ import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 export const WORKS_Z_INDEX = {
   FILTER: 10,
 };
+removeMd;
 
 const languages = (skillId: string) => {
   return { languages: { skill_id: { _eq: Number(skillId) } } };
@@ -196,12 +198,7 @@ export default function Works() {
                       );
                     })}
                   </FlexContainerLabel>
-                  <FlexContainer>
-                    大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
-                    ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                    ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                    ・計画書作成...
-                  </FlexContainer>
+                  <MdWrapper>{removeMd(item.description)}</MdWrapper>
                 </Card>
               );
             })}
@@ -320,9 +317,9 @@ const FlexContainerLabel = styled(FlexContainer)`
   overflow: auto;
 `;
 
-const FavoriteIcon = styled.div`
-  font-weight: normal;
-`;
+// const FavoriteIcon = styled.div`
+//   font-weight: normal;
+// `;
 
 const Column = styled.div`
   display: flex;
@@ -331,4 +328,13 @@ const Column = styled.div`
 
 const PaginationWrapper = styled.div`
   padding: 40px 0;
+`;
+
+const MdWrapper = styled.div`
+  padding-top: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 14px;
 `;
