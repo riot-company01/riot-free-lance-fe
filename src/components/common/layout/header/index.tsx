@@ -1,3 +1,4 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
@@ -7,6 +8,7 @@ import NextLink from "next/link";
 import { COLOR } from "@/styles/colors";
 
 export const LayoutHeader: React.FC = () => {
+  const { user } = useUser();
   return (
     <Wrapper>
       <FlexContainer>
@@ -40,11 +42,9 @@ export const LayoutHeader: React.FC = () => {
         {/* <NextLink href="#">
           <List>情報</List>
         </NextLink> */}
-        <NextLink href="#">
-          <List>ログイン</List>
-        </NextLink>
-        <NextLink href="#">
-          <LastList>新規登録</LastList>
+        <List>{user?.name}</List>
+        <NextLink href="/api/auth/logout">
+          <LastList>ログアウト</LastList>
         </NextLink>
       </FlexContainer>
     </Wrapper>
