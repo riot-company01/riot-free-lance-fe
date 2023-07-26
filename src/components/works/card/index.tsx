@@ -72,7 +72,7 @@ export function Card({ item }: { item: GetWorksQuery["work"][number] }) {
               label={value.skill?.name}
               sx={{
                 borderRadius: 0,
-                marginRight: "4px",
+                fontWeight: "bold",
               }}
             />
           );
@@ -135,6 +135,8 @@ const FlexContainer = styled.div`
 
 const FlexContainerLabel = styled(FlexContainer)`
   overflow: auto;
+  flex-wrap: wrap;
+  gap: 4px;
 `;
 
 const MdWrapper = styled.div`
