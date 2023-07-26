@@ -1,14 +1,17 @@
 import { useQuery } from "@apollo/client";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
-import { Button, Pagination } from "@mui/material";
+import { Pagination } from "@mui/material";
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Card } from "@/components/works/card";
 import { Detail } from "@/components/works/detail";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
+import { NotResult } from "@/components/works/not-result";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
+import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 
 export const WORKS_Z_INDEX = {
@@ -112,7 +115,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 function Works() {
   const router = useRouter();
-
+  const [keepSkills, setKeepSkills] = useState<GetSkillsQuery["skills"]>([]);
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
   const inputKeyword = (router.query["keyword"] as string) || "";
 
@@ -175,23 +178,13 @@ function Works() {
     },
   });
 
+  useEffect(() => {
+    if (skills?.skills.length === 0) return;
+    setKeepSkills(skills?.skills || []);
+  }, [skills]);
+
   if (works?.work.length === 0) {
-    return (
-      <NotResultWrapper>
-        <div>該当する案件がありません。</div>
-        <div>絞り込み条件を見直してください。</div>
-        <Button
-          variant="contained"
-          onClick={() => {
-            router.push({
-              pathname: "works/",
-            });
-          }}
-        >
-          絞りみ条件をリセットする
-        </Button>
-      </NotResultWrapper>
-    );
+    return <NotResult keepSkills={keepSkills} selectedSkillIds={selectedSkillIds} inputKeyword={inputKeyword} />;
   }
 
   return (
@@ -277,7 +270,5 @@ const Column = styled.div`
 const PaginationWrapper = styled.div`
   padding: 40px 0;
 `;
-
-const NotResultWrapper = styled.div``;
 
 export default withPageAuthRequired(Works);
