@@ -5,7 +5,9 @@ import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import { COLOR } from "@/styles/colors";
+import { removeObjectKey } from "@/util/remove-object-key";
 
 export const LayoutHeader: React.FC = () => {
   const { user } = useUser();
@@ -82,9 +84,35 @@ const Wrapper = styled.header`
 `;
 
 export function CustomizedInputBase() {
+  const router = useRouter();
+  const inputKeyword = (router.query["keyword"] as string) || "";
   return (
     <Paper component="form" sx={{ display: "flex", alignItems: "center", width: 300 }}>
-      <InputBase sx={{ ml: 1, flex: 1 }} placeholder="キーワード検索 例:React" inputProps={{ "aria-label": "キーワード検索 例:React" }} />
+      <InputBase
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="言語・キーワードで検索"
+        inputProps={{ "aria-label": "言語・キーワードで検索" }}
+        // onKeyDown={(e) => {
+        //   // e.preventDefault();
+        // }}
+        defaultValue={inputKeyword}
+        onChange={(e) => {
+          console.log(e.target.value);
+          const filteredQuery =
+            e.target.value !== ""
+              ? {
+                  ...router.query,
+                  keyword: e.target.value,
+                }
+              : { ...removeObjectKey(router.query, "keyword") };
+          router.push({
+            pathname: "works/",
+            query: {
+              ...filteredQuery,
+            },
+          });
+        }}
+      />
       <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
         <SearchIcon />
       </IconButton>

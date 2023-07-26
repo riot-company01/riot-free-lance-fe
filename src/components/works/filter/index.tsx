@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
+import SearchIcon from "@mui/icons-material/Search";
 import { FormControl, Select, MenuItem, Chip, Stack } from "@mui/material";
 import { useRouter } from "next/router";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
+import { removeObjectKey } from "@/util/remove-object-key";
 
 type Props = {
   defaultFilters?: GetSkillsQuery["skills"];
@@ -10,7 +12,9 @@ type Props = {
 };
 
 export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props) {
-  const { push } = useRouter();
+  const router = useRouter();
+  const inputKeyword = (router.query["keyword"] as string) || "";
+
   return (
     <>
       <Wrapper>
@@ -43,18 +47,35 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
                 key={value}
                 label={defaultFilters?.find((i) => i.id === Number(value))?.name}
                 onDelete={() => {
-                  push({
+                  router.push({
                     query:
                       skillIds.length !== 0
                         ? {
+                            ...router.query,
                             [`skill-ids`]: `${skillIds.join()}`,
                           }
-                        : {},
+                        : {
+                            ...removeObjectKey(router.query, "skill-ids"),
+                          },
                   });
                 }}
               />
             );
           })}
+          {inputKeyword && (
+            <Chip
+              icon={<SearchIcon fontSize="small" />}
+              key={inputKeyword}
+              label={inputKeyword}
+              onDelete={() => {
+                router.push({
+                  query: {
+                    ...removeObjectKey(router.query, "keyword"),
+                  },
+                });
+              }}
+            />
+          )}
         </Stack>
       </Container>
     </>
