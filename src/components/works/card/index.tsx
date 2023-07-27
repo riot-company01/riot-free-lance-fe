@@ -79,6 +79,7 @@ export function Card({ item }: { item: GetWorksQuery["work"][number] }) {
         })}
       </FlexContainerLabel>
       <MdWrapper>{removeMd(item.description)}</MdWrapper>
+      <PublicationDate>掲載日:{item.createAt}</PublicationDate>
     </Wrapper>
   );
 }
@@ -146,4 +147,9 @@ const MdWrapper = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 14px;
+`;
+
+const PublicationDate = styled.div`
+  padding-top: 8px;
+  font-size: 12px;
 `;

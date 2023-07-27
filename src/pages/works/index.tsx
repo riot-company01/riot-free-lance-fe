@@ -12,7 +12,7 @@ import { LeftNavig } from "@/components/works/left-navig";
 import { NotResult } from "@/components/works/not-result";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
-import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
+import { Order_By, GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
@@ -47,6 +47,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await client.query({
     query: GetWorksDocument,
     variables: {
+      order_by: {
+        createAt: Order_By.Desc,
+      },
       where: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
@@ -118,9 +121,15 @@ function Works() {
   const [keepSkills, setKeepSkills] = useState<GetSkillsQuery["skills"]>([]);
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
   const inputKeyword = (router.query["keyword"] as string) || "";
+  const sort = (router.query["sort"] as string) || "";
+
+  const order = sort === "new" ? { createAt: Order_By.Desc } : { maxMonthlyPrice: Order_By.Desc };
 
   const { data: works } = useQuery(GetWorksDocument, {
     variables: {
+      order_by: {
+        ...order,
+      },
       where: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
@@ -250,7 +259,7 @@ const KeyWordFixed = styled.div`
   top: 78px;
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
-  width: calc(100% - 200px);
+
   background-color: #f5f5f5;
   max-width: calc(1320px - 200px);
 `;
@@ -258,7 +267,7 @@ const KeyWordFixed = styled.div`
 const WorksContainer = styled.div`
   position: sticky;
   display: flex;
-  width: calc(100% - 200px);
+
   max-width: calc(1320px - 200px);
 `;
 

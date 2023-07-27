@@ -88,15 +88,20 @@ export function CustomizedInputBase() {
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
 
+  const filteredQuery =
+    inputValue !== ""
+      ? {
+          ...router.query,
+          keyword: inputValue,
+        }
+      : { ...removeObjectKey(router.query, "keyword") };
+
   return (
     <Paper component="form" sx={{ display: "flex", alignItems: "center", width: 300 }}>
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         placeholder="言語・キーワードで検索"
         inputProps={{ "aria-label": "言語・キーワードで検索" }}
-        // onKeyDown={(e) => {
-        //   // e.preventDefault();
-        // }}
         type="input"
         value={inputValue}
         onChange={(e) => {
@@ -105,13 +110,6 @@ export function CustomizedInputBase() {
         onKeyDown={(e) => {
           if (e.code === "Enter") {
             e.preventDefault();
-            const filteredQuery =
-              inputValue !== ""
-                ? {
-                    ...router.query,
-                    keyword: inputValue,
-                  }
-                : { ...removeObjectKey(router.query, "keyword") };
             router.push({
               pathname: "works/",
               query: {
@@ -126,13 +124,6 @@ export function CustomizedInputBase() {
         sx={{ p: "10px" }}
         aria-label="search"
         onClick={() => {
-          const filteredQuery =
-            inputValue !== ""
-              ? {
-                  ...router.query,
-                  keyword: inputValue,
-                }
-              : { ...removeObjectKey(router.query, "keyword") };
           router.push({
             pathname: "works/",
             query: {

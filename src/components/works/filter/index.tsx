@@ -11,9 +11,21 @@ type Props = {
   worksLength?: number;
 };
 
+const list = [
+  {
+    value: "price",
+    displayName: "高単価順",
+  },
+  {
+    value: "new",
+    displayName: "新着順",
+  },
+];
+
 export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props) {
   const router = useRouter();
   const inputKeyword = (router.query["keyword"] as string) || "";
+  const sort = (router.query["sort"] as string) || "new";
 
   return (
     <>
@@ -25,15 +37,25 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
             width: 220,
           }}
         >
-          <Select
-            value={10}
-            onChange={() => {
-              //
-            }}
-          >
-            <MenuItem value={10}>高単価順</MenuItem>
-            <MenuItem value={20}>新着順</MenuItem>
-            <MenuItem value={30}>おすすめ順</MenuItem>
+          <Select value={sort}>
+            {list.map((i) => {
+              return (
+                <MenuItem
+                  key={i.value}
+                  value={i.value}
+                  onClick={() => {
+                    router.push({
+                      query: {
+                        ...router.query,
+                        sort: i.value,
+                      },
+                    });
+                  }}
+                >
+                  {i.displayName}
+                </MenuItem>
+              );
+            })}
           </Select>
         </FormControl>
       </Wrapper>

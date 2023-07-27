@@ -9,6 +9,7 @@ query GetWork($id: Int_comparison_exp) @cached {
     minMonthlyPrice
     minWorkHours
     description
+    createAt
     languages {
       skill {
         id
@@ -19,8 +20,8 @@ query GetWork($id: Int_comparison_exp) @cached {
   }
 }
 
-query GetWorks($where: work_bool_exp = { _and: [] }) @cached {
-  work(where: $where) {
+query GetWorks($where: work_bool_exp = { _and: [] }, $order_by: [work_order_by!] = {}) @cached {
+  work(where: $where, order_by: $order_by) {
     id
     title
     contractType
@@ -30,6 +31,7 @@ query GetWorks($where: work_bool_exp = { _and: [] }) @cached {
     minMonthlyPrice
     minWorkHours
     description
+    createAt
     languages {
       skill {
         id
