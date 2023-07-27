@@ -5,8 +5,10 @@ import { Checkbox as _Checkbox, FormControlLabel, FormGroup } from "@mui/materia
 import { map, groupBy } from "lodash-es";
 
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
+import { removeObjectKey } from "@/util/remove-object-key";
 
 type Filterer = {
   type: string;
@@ -45,6 +47,7 @@ export function LeftNavig({ defaultFilters, selectedSkillIds }: Props) {
 
 function Accordion({ nodes, selectedSkillIds }: PropsAccordion) {
   const [isOpen, setIsOpen] = useState(true);
+  const router = useRouter();
 
   return (
     <React.Fragment>
@@ -58,7 +61,11 @@ function Accordion({ nodes, selectedSkillIds }: PropsAccordion) {
         <div>{isOpen ? <ExpandLessIcon fontSize="large" /> : <ExpandMoreIcon fontSize="large" />}</div>
       </Head>
       {isOpen && (
-        <FormGroup>
+        <FormGroup
+          sx={{
+            paddingBottom: 2,
+          }}
+        >
           {nodes.word.map((keyword) => {
             const strId = keyword.id.toString();
             const skillIds = selectedSkillIds.includes(strId) ? selectedSkillIds.filter((i) => i !== strId) : [...selectedSkillIds, strId];
@@ -70,9 +77,12 @@ function Accordion({ nodes, selectedSkillIds }: PropsAccordion) {
                   query:
                     skillIds.length !== 0
                       ? {
+                          ...router.query,
                           [`skill-ids`]: `${skillIds.join()}`,
                         }
-                      : {},
+                      : {
+                          ...removeObjectKey(router.query, "skill-ids"),
+                        },
                 }}
               >
                 <FormControlLabel
@@ -87,7 +97,7 @@ function Accordion({ nodes, selectedSkillIds }: PropsAccordion) {
               </Link>
             );
           })}
-          <More>もっと見る</More>
+          {/* <More>もっと見る</More> */}
         </FormGroup>
       )}
     </React.Fragment>
@@ -108,9 +118,10 @@ const Head = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: bold;
 `;
 
-const More = styled.div`
-  font-size: 14px;
-  text-align: right;
-`;
+// const More = styled.div`
+//   font-size: 14px;
+//   text-align: right;
+// `;

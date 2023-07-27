@@ -31,7 +31,7 @@ export const DivFilter = styled.div`
 export const DivWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100% - 180px);
+  width: calc(100% - 200px);
   overflow: scroll;
   @media (max-width: ${SCREEN_SIZE.isSpSize}) {
     margin: 8px;

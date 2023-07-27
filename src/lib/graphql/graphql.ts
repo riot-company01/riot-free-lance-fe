@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  date: { input: any; output: any; }
   name: { input: any; output: any; }
   timestamptz: { input: any; output: any; }
 };
@@ -101,6 +102,19 @@ export enum Cursor_Ordering {
   /** descending ordering of the cursor */
   Desc = 'DESC'
 }
+
+/** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
+export type Date_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['date']['input']>;
+  _gt?: InputMaybe<Scalars['date']['input']>;
+  _gte?: InputMaybe<Scalars['date']['input']>;
+  _in?: InputMaybe<Array<Scalars['date']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['date']['input']>;
+  _lte?: InputMaybe<Scalars['date']['input']>;
+  _neq?: InputMaybe<Scalars['date']['input']>;
+  _nin?: InputMaybe<Array<Scalars['date']['input']>>;
+};
 
 /** 都道府県 */
 export type Location = {
@@ -2583,9 +2597,10 @@ export type Users_Updates = {
 export type Work = {
   __typename?: 'work';
   contractType?: Maybe<Scalars['String']['output']>;
+  createAt: Scalars['date']['output'];
   description: Scalars['String']['output'];
   id: Scalars['Int']['output'];
-  is_show: Scalars['Boolean']['output'];
+  is_closed: Scalars['Boolean']['output'];
   /** An array relationship */
   languages: Array<Work_To_Detail>;
   /** An aggregate relationship */
@@ -2665,9 +2680,10 @@ export type Work_Bool_Exp = {
   _not?: InputMaybe<Work_Bool_Exp>;
   _or?: InputMaybe<Array<Work_Bool_Exp>>;
   contractType?: InputMaybe<String_Comparison_Exp>;
+  createAt?: InputMaybe<Date_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
-  is_show?: InputMaybe<Boolean_Comparison_Exp>;
+  is_closed?: InputMaybe<Boolean_Comparison_Exp>;
   languages?: InputMaybe<Work_To_Detail_Bool_Exp>;
   languages_aggregate?: InputMaybe<Work_To_Detail_Aggregate_Bool_Exp>;
   location?: InputMaybe<String_Comparison_Exp>;
@@ -2699,9 +2715,10 @@ export type Work_Inc_Input = {
 /** input type for inserting data into table "work" */
 export type Work_Insert_Input = {
   contractType?: InputMaybe<Scalars['String']['input']>;
+  createAt?: InputMaybe<Scalars['date']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
-  is_show?: InputMaybe<Scalars['Boolean']['input']>;
+  is_closed?: InputMaybe<Scalars['Boolean']['input']>;
   languages?: InputMaybe<Work_To_Detail_Arr_Rel_Insert_Input>;
   location?: InputMaybe<Scalars['String']['input']>;
   maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
@@ -2716,6 +2733,7 @@ export type Work_Insert_Input = {
 export type Work_Max_Fields = {
   __typename?: 'work_max_fields';
   contractType?: Maybe<Scalars['String']['output']>;
+  createAt?: Maybe<Scalars['date']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   location?: Maybe<Scalars['String']['output']>;
@@ -2731,6 +2749,7 @@ export type Work_Max_Fields = {
 export type Work_Min_Fields = {
   __typename?: 'work_min_fields';
   contractType?: Maybe<Scalars['String']['output']>;
+  createAt?: Maybe<Scalars['date']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
   location?: Maybe<Scalars['String']['output']>;
@@ -2768,9 +2787,10 @@ export type Work_On_Conflict = {
 /** Ordering options when selecting data from "work". */
 export type Work_Order_By = {
   contractType?: InputMaybe<Order_By>;
+  createAt?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
-  is_show?: InputMaybe<Order_By>;
+  is_closed?: InputMaybe<Order_By>;
   languages_aggregate?: InputMaybe<Work_To_Detail_Aggregate_Order_By>;
   location?: InputMaybe<Order_By>;
   maxMonthlyPrice?: InputMaybe<Order_By>;
@@ -2791,11 +2811,13 @@ export enum Work_Select_Column {
   /** column name */
   ContractType = 'contractType',
   /** column name */
+  CreateAt = 'createAt',
+  /** column name */
   Description = 'description',
   /** column name */
   Id = 'id',
   /** column name */
-  IsShow = 'is_show',
+  IsClosed = 'is_closed',
   /** column name */
   Location = 'location',
   /** column name */
@@ -2815,9 +2837,10 @@ export enum Work_Select_Column {
 /** input type for updating data in table "work" */
 export type Work_Set_Input = {
   contractType?: InputMaybe<Scalars['String']['input']>;
+  createAt?: InputMaybe<Scalars['date']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
-  is_show?: InputMaybe<Scalars['Boolean']['input']>;
+  is_closed?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
   maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
@@ -2868,9 +2891,10 @@ export type Work_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Work_Stream_Cursor_Value_Input = {
   contractType?: InputMaybe<Scalars['String']['input']>;
+  createAt?: InputMaybe<Scalars['date']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['Int']['input']>;
-  is_show?: InputMaybe<Scalars['Boolean']['input']>;
+  is_closed?: InputMaybe<Scalars['Boolean']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
   maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
@@ -3205,11 +3229,13 @@ export enum Work_Update_Column {
   /** column name */
   ContractType = 'contractType',
   /** column name */
+  CreateAt = 'createAt',
+  /** column name */
   Description = 'description',
   /** column name */
   Id = 'id',
   /** column name */
-  IsShow = 'is_show',
+  IsClosed = 'is_closed',
   /** column name */
   Location = 'location',
   /** column name */
@@ -3297,19 +3323,20 @@ export type GetWorkQueryVariables = Exact<{
 }>;
 
 
-export type GetWorkQuery = { __typename?: 'query_root', work: Array<{ __typename?: 'work', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> }> };
+export type GetWorkQuery = { __typename?: 'query_root', work: Array<{ __typename?: 'work', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, createAt: any, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> }> };
 
 export type GetWorksQueryVariables = Exact<{
   where?: InputMaybe<Work_Bool_Exp>;
+  order_by?: InputMaybe<Array<Work_Order_By> | Work_Order_By>;
 }>;
 
 
-export type GetWorksQuery = { __typename?: 'query_root', work: Array<{ __typename?: 'work', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> }> };
+export type GetWorksQuery = { __typename?: 'query_root', work: Array<{ __typename?: 'work', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, createAt: any, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> }> };
 
 
 export const GetAllProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllProject"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"keyword"}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllProjectQuery, GetAllProjectQueryVariables>;
 export const GetDetailProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDetailProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"businessContent"}},{"kind":"Field","name":{"kind":"Name","value":"contentBusiness"}},{"kind":"Field","name":{"kind":"Name","value":"developmentEnvironment"}},{"kind":"Field","name":{"kind":"Name","value":"keyword"}},{"kind":"Field","name":{"kind":"Name","value":"personnelSought"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentBackground"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNumber"}},{"kind":"Field","name":{"kind":"Name","value":"requiredSkills"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeSkills"}},{"kind":"Field","name":{"kind":"Name","value":"workingConditions"}}]}}]}}]} as unknown as DocumentNode<GetDetailProjectQuery, GetDetailProjectQueryVariables>;
 export const GetSkillsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSkills"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skillsWhere"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"skills_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"worksWhere"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"work_to_detail_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skills"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skillsWhere"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"works_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"worksWhere"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetSkillsQuery, GetSkillsQueryVariables>;
 export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"last_seen"}},{"kind":"Field","name":{"kind":"Name","value":"slackUrl"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
-export const GetWorkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWork"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int_comparison_exp"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkQuery, GetWorkQueryVariables>;
-export const GetWorksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWorks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"work_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorksQuery, GetWorksQueryVariables>;
+export const GetWorkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWork"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int_comparison_exp"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkQuery, GetWorkQueryVariables>;
+export const GetWorksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWorks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"work_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"order_by"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"work_order_by"}}}},"defaultValue":{"kind":"ObjectValue","fields":[]}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"order_by"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorksQuery, GetWorksQueryVariables>;

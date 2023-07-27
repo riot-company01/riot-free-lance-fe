@@ -5,7 +5,10 @@ import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { COLOR } from "@/styles/colors";
+import { removeObjectKey } from "@/util/remove-object-key";
 
 export const LayoutHeader: React.FC = () => {
   const { user } = useUser();
@@ -82,10 +85,53 @@ const Wrapper = styled.header`
 `;
 
 export function CustomizedInputBase() {
+  const router = useRouter();
+  const [inputValue, setInputValue] = useState("");
+
+  const filteredQuery =
+    inputValue !== ""
+      ? {
+          ...router.query,
+          keyword: inputValue,
+        }
+      : { ...removeObjectKey(router.query, "keyword") };
+
   return (
     <Paper component="form" sx={{ display: "flex", alignItems: "center", width: 300 }}>
-      <InputBase sx={{ ml: 1, flex: 1 }} placeholder="キーワード検索 例:React" inputProps={{ "aria-label": "キーワード検索 例:React" }} />
-      <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+      <InputBase
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="言語・キーワードで検索"
+        inputProps={{ "aria-label": "言語・キーワードで検索" }}
+        type="input"
+        value={inputValue}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.code === "Enter") {
+            e.preventDefault();
+            router.push({
+              pathname: "works/",
+              query: {
+                ...filteredQuery,
+              },
+            });
+          }
+        }}
+      />
+      <IconButton
+        type="button"
+        sx={{ p: "10px" }}
+        aria-label="search"
+        onClick={() => {
+          router.push({
+            pathname: "works/",
+            query: {
+              ...filteredQuery,
+            },
+          });
+        }}
+      >
         <SearchIcon />
       </IconButton>
     </Paper>
