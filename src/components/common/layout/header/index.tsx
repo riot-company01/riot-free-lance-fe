@@ -6,6 +6,7 @@ import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { COLOR } from "@/styles/colors";
 import { removeObjectKey } from "@/util/remove-object-key";
 
@@ -85,7 +86,8 @@ const Wrapper = styled.header`
 
 export function CustomizedInputBase() {
   const router = useRouter();
-  const inputKeyword = (router.query["keyword"] as string) || "";
+  const [inputValue, setInputValue] = useState("");
+
   return (
     <Paper component="form" sx={{ display: "flex", alignItems: "center", width: 300 }}>
       <InputBase
@@ -95,14 +97,40 @@ export function CustomizedInputBase() {
         // onKeyDown={(e) => {
         //   // e.preventDefault();
         // }}
-        defaultValue={inputKeyword}
+        type="input"
+        value={inputValue}
         onChange={(e) => {
-          console.log(e.target.value);
+          setInputValue(e.target.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.code === "Enter") {
+            e.preventDefault();
+            const filteredQuery =
+              inputValue !== ""
+                ? {
+                    ...router.query,
+                    keyword: inputValue,
+                  }
+                : { ...removeObjectKey(router.query, "keyword") };
+            router.push({
+              pathname: "works/",
+              query: {
+                ...filteredQuery,
+              },
+            });
+          }
+        }}
+      />
+      <IconButton
+        type="button"
+        sx={{ p: "10px" }}
+        aria-label="search"
+        onClick={() => {
           const filteredQuery =
-            e.target.value !== ""
+            inputValue !== ""
               ? {
                   ...router.query,
-                  keyword: e.target.value,
+                  keyword: inputValue,
                 }
               : { ...removeObjectKey(router.query, "keyword") };
           router.push({
@@ -112,8 +140,7 @@ export function CustomizedInputBase() {
             },
           });
         }}
-      />
-      <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+      >
         <SearchIcon />
       </IconButton>
     </Paper>

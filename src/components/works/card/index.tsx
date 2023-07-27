@@ -142,7 +142,7 @@ const FlexContainerLabel = styled(FlexContainer)`
 const MdWrapper = styled.div`
   padding-top: 8px;
   display: -webkit-box;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 14px;
