@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { Card } from "@/components/works/card";
+import { CustomCard } from "@/components/works/card";
 import { Detail } from "@/components/works/detail";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
@@ -127,7 +127,7 @@ function Works() {
 
   const order = sort === "new" ? { createAt: Order_By.Desc } : { maxMonthlyPrice: Order_By.Desc };
 
-  const { data: worksData } = useQuery(GetWorksDocument, {
+  const { data: worksData, loading } = useQuery(GetWorksDocument, {
     variables: {
       order_by: {
         ...order,
@@ -194,7 +194,7 @@ function Works() {
     setKeepSkills(skillsData?.skills || []);
   }, [skillsData]);
 
-  if (worksData?.works.length === 0) {
+  if (!worksData && !loading) {
     return <NotResult keepSkills={keepSkills} selectedSkillIds={selectedSkillIds} inputKeyword={inputKeyword} />;
   }
 
@@ -217,7 +217,7 @@ function Works() {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  return <Card key={idx} item={item} />;
+                  return <CustomCard key={idx} item={item} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (
@@ -231,7 +231,7 @@ function Works() {
             </PaginationWrapper>
           </Column>
           {/* // TODO 変える */}
-          <DetailWrapper>{<Detail defaultWorkId={worksData?.works[0]?.id} />}</DetailWrapper>
+          <DetailWrapper>{<Detail defaultWorkId={worksData?.works[0].id} />}</DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
     </Wrapper>
