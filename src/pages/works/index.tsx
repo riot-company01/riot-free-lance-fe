@@ -62,52 +62,52 @@ export const getServerSideProps = withPageAuthRequired({
       },
     });
 
-    // await client.query({
-    //   query: GetSkillsDocument,
-    //   variables: {
-    //     skillsWhere: {
-    //       works_aggregate: {
-    //         count: { predicate: { _gt: 0 } },
-    //       },
-    //       _and: [
-    //         ...selectedSkillIds.map((skillId) => {
-    //           return { works: { work: languages(skillId) } };
-    //         }),
-    //         {
-    //           _or: [
-    //             {
-    //               works: {
-    //                 work: direction(inputKeyword),
-    //               },
-    //             },
-    //             {
-    //               works: {
-    //                 work: title(inputKeyword),
-    //               },
-    //             },
-    //           ],
-    //         },
-    //       ],
-    //     },
-    //     worksWhere: {
-    //       _and: [
-    //         ...selectedSkillIds.map((skillId) => {
-    //           return { work: languages(skillId) };
-    //         }),
-    //         {
-    //           _or: [
-    //             {
-    //               work: direction(inputKeyword),
-    //             },
-    //             {
-    //               work: title(inputKeyword),
-    //             },
-    //           ],
-    //         },
-    //       ],
-    //     },
-    //   },
-    // });
+    await client.query({
+      query: GetSkillsDocument,
+      variables: {
+        skillsWhere: {
+          works_aggregate: {
+            count: { predicate: { _gt: 0 } },
+          },
+          _and: [
+            ...selectedSkillIds.map((skillId) => {
+              return { works: { work: languages(skillId) } };
+            }),
+            {
+              // _or: [
+              //   {
+              //     works: {
+              //       work: direction(inputKeyword),
+              //     },
+              //   },
+              //   {
+              //     works: {
+              //       work: title(inputKeyword),
+              //     },
+              //   },
+              // ],
+            },
+          ],
+        },
+        worksWhere: {
+          _and: [
+            ...selectedSkillIds.map((skillId) => {
+              return { work: languages(skillId) };
+            }),
+            {
+              // _or: [
+              //   {
+              //     work: direction(inputKeyword),
+              //   },
+              //   {
+              //     work: title(inputKeyword),
+              //   },
+              // ],
+            },
+          ],
+        },
+      },
+    });
 
     const documentProps = addApolloState(client, {
       props: {},
@@ -187,9 +187,6 @@ function Works() {
         ],
       },
     },
-    onCompleted: (data) => {
-      console.log({ data });
-    },
   });
 
   useEffect(() => {
@@ -208,7 +205,7 @@ function Works() {
           {skillsData ? (
             <LeftNavig defaultFilters={skillsData.skills} selectedSkillIds={selectedSkillIds} />
           ) : (
-            <Skeleton variant="rectangular" height={"100vh"} />
+            <CustomSkeleton variant="rectangular" height={"100vh"} />
           )}
         </Navig>
       </NavigContainer>
