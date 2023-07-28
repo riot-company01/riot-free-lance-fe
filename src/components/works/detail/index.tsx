@@ -1,12 +1,14 @@
 import { useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
+
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
-import { Button } from "@mui/material";
+import { Button, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
+import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 
@@ -16,24 +18,36 @@ type Props = {
 
 export function Detail({ defaultWorkId }: Props) {
   const router = useRouter();
+  const ref = useRef<HTMLDivElement>(null);
+  // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const { data } = useQuery(GetWorkDocument, {
     variables: {
-      id: {
-        _eq: Number(router.query["work-id"]) || defaultWorkId,
-      },
+      id: (Number(router.query["work-id"]) || defaultWorkId) as number,
     },
   });
+  const work = data?.works_by_pk;
+
   const copyUrlHandler = async () => {
     const currentUrl = location.href;
     await navigator.clipboard.writeText(currentUrl);
-
     alert("urlがコピーされました");
   };
-  const work = data?.work[0];
 
-  if (!work) return null;
+  useEffect(() => {
+    ref.current?.scrollTo({
+      top: 0,
+    });
+  }, [work]);
+
+  if (!work)
+    return (
+      <DetailContainer isSelected={!!router.query["skill-ids"]} ref={ref}>
+        <Skeleton variant="rectangular" height={"100vh"} />
+      </DetailContainer>
+    );
+
   return (
-    <DetailContainer isSelected={!!router.query["skill-ids"]}>
+    <DetailContainer isSelected={!!router.query["skill-ids"]} ref={ref}>
       <Title>{work.title}</Title>
       <MonthlyPrice>
         <Icon>

@@ -285,14 +285,14 @@ export type Mutation_Root = {
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
   delete_users_by_pk?: Maybe<Users>;
-  /** delete data from the table: "work" */
-  delete_work?: Maybe<Work_Mutation_Response>;
-  /** delete single row from the table: "work" */
-  delete_work_by_pk?: Maybe<Work>;
   /** delete data from the table: "work_to_detail" */
   delete_work_to_detail?: Maybe<Work_To_Detail_Mutation_Response>;
   /** delete single row from the table: "work_to_detail" */
   delete_work_to_detail_by_pk?: Maybe<Work_To_Detail>;
+  /** delete data from the table: "works" */
+  delete_works?: Maybe<Works_Mutation_Response>;
+  /** delete single row from the table: "works" */
+  delete_works_by_pk?: Maybe<Works>;
   /** insert data into the table: "location" */
   insert_location?: Maybe<Location_Mutation_Response>;
   /** insert a single row into the table: "location" */
@@ -313,14 +313,14 @@ export type Mutation_Root = {
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
-  /** insert data into the table: "work" */
-  insert_work?: Maybe<Work_Mutation_Response>;
-  /** insert a single row into the table: "work" */
-  insert_work_one?: Maybe<Work>;
   /** insert data into the table: "work_to_detail" */
   insert_work_to_detail?: Maybe<Work_To_Detail_Mutation_Response>;
   /** insert a single row into the table: "work_to_detail" */
   insert_work_to_detail_one?: Maybe<Work_To_Detail>;
+  /** insert data into the table: "works" */
+  insert_works?: Maybe<Works_Mutation_Response>;
+  /** insert a single row into the table: "works" */
+  insert_works_one?: Maybe<Works>;
   /** update data of the table: "location" */
   update_location?: Maybe<Location_Mutation_Response>;
   /** update single row of the table: "location" */
@@ -351,18 +351,18 @@ export type Mutation_Root = {
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
-  /** update data of the table: "work" */
-  update_work?: Maybe<Work_Mutation_Response>;
-  /** update single row of the table: "work" */
-  update_work_by_pk?: Maybe<Work>;
-  /** update multiples rows of table: "work" */
-  update_work_many?: Maybe<Array<Maybe<Work_Mutation_Response>>>;
   /** update data of the table: "work_to_detail" */
   update_work_to_detail?: Maybe<Work_To_Detail_Mutation_Response>;
   /** update single row of the table: "work_to_detail" */
   update_work_to_detail_by_pk?: Maybe<Work_To_Detail>;
   /** update multiples rows of table: "work_to_detail" */
   update_work_to_detail_many?: Maybe<Array<Maybe<Work_To_Detail_Mutation_Response>>>;
+  /** update data of the table: "works" */
+  update_works?: Maybe<Works_Mutation_Response>;
+  /** update single row of the table: "works" */
+  update_works_by_pk?: Maybe<Works>;
+  /** update multiples rows of table: "works" */
+  update_works_many?: Maybe<Array<Maybe<Works_Mutation_Response>>>;
 };
 
 
@@ -427,18 +427,6 @@ export type Mutation_RootDelete_Users_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_WorkArgs = {
-  where: Work_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Work_By_PkArgs = {
-  id: Scalars['Int']['input'];
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_Work_To_DetailArgs = {
   where: Work_To_Detail_Bool_Exp;
 };
@@ -448,6 +436,18 @@ export type Mutation_RootDelete_Work_To_DetailArgs = {
 export type Mutation_RootDelete_Work_To_Detail_By_PkArgs = {
   skill_id: Scalars['Int']['input'];
   work_id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_WorksArgs = {
+  where: Works_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Works_By_PkArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -522,20 +522,6 @@ export type Mutation_RootInsert_Users_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_WorkArgs = {
-  objects: Array<Work_Insert_Input>;
-  on_conflict?: InputMaybe<Work_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Work_OneArgs = {
-  object: Work_Insert_Input;
-  on_conflict?: InputMaybe<Work_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_Work_To_DetailArgs = {
   objects: Array<Work_To_Detail_Insert_Input>;
   on_conflict?: InputMaybe<Work_To_Detail_On_Conflict>;
@@ -546,6 +532,20 @@ export type Mutation_RootInsert_Work_To_DetailArgs = {
 export type Mutation_RootInsert_Work_To_Detail_OneArgs = {
   object: Work_To_Detail_Insert_Input;
   on_conflict?: InputMaybe<Work_To_Detail_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_WorksArgs = {
+  objects: Array<Works_Insert_Input>;
+  on_conflict?: InputMaybe<Works_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Works_OneArgs = {
+  object: Works_Insert_Input;
+  on_conflict?: InputMaybe<Works_On_Conflict>;
 };
 
 
@@ -656,28 +656,6 @@ export type Mutation_RootUpdate_Users_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_WorkArgs = {
-  _inc?: InputMaybe<Work_Inc_Input>;
-  _set?: InputMaybe<Work_Set_Input>;
-  where: Work_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Work_By_PkArgs = {
-  _inc?: InputMaybe<Work_Inc_Input>;
-  _set?: InputMaybe<Work_Set_Input>;
-  pk_columns: Work_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Work_ManyArgs = {
-  updates: Array<Work_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_Work_To_DetailArgs = {
   _inc?: InputMaybe<Work_To_Detail_Inc_Input>;
   _set?: InputMaybe<Work_To_Detail_Set_Input>;
@@ -696,6 +674,28 @@ export type Mutation_RootUpdate_Work_To_Detail_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Work_To_Detail_ManyArgs = {
   updates: Array<Work_To_Detail_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_WorksArgs = {
+  _inc?: InputMaybe<Works_Inc_Input>;
+  _set?: InputMaybe<Works_Set_Input>;
+  where: Works_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Works_By_PkArgs = {
+  _inc?: InputMaybe<Works_Inc_Input>;
+  _set?: InputMaybe<Works_Set_Input>;
+  pk_columns: Works_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Works_ManyArgs = {
+  updates: Array<Works_Updates>;
 };
 
 /** Boolean expression to compare columns of type "name". All fields are combined with logical 'AND'. */
@@ -1186,18 +1186,18 @@ export type Query_Root = {
   users_aggregate: Users_Aggregate;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
-  /** fetch data from the table: "work" */
-  work: Array<Work>;
-  /** fetch aggregated fields from the table: "work" */
-  work_aggregate: Work_Aggregate;
-  /** fetch data from the table: "work" using primary key columns */
-  work_by_pk?: Maybe<Work>;
   /** fetch data from the table: "work_to_detail" */
   work_to_detail: Array<Work_To_Detail>;
   /** fetch aggregated fields from the table: "work_to_detail" */
   work_to_detail_aggregate: Work_To_Detail_Aggregate;
   /** fetch data from the table: "work_to_detail" using primary key columns */
   work_to_detail_by_pk?: Maybe<Work_To_Detail>;
+  /** fetch data from the table: "works" */
+  works: Array<Works>;
+  /** fetch aggregated fields from the table: "works" */
+  works_aggregate: Works_Aggregate;
+  /** fetch data from the table: "works" using primary key columns */
+  works_by_pk?: Maybe<Works>;
 };
 
 
@@ -1316,29 +1316,6 @@ export type Query_RootUsers_By_PkArgs = {
 };
 
 
-export type Query_RootWorkArgs = {
-  distinct_on?: InputMaybe<Array<Work_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Work_Order_By>>;
-  where?: InputMaybe<Work_Bool_Exp>;
-};
-
-
-export type Query_RootWork_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Work_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Work_Order_By>>;
-  where?: InputMaybe<Work_Bool_Exp>;
-};
-
-
-export type Query_RootWork_By_PkArgs = {
-  id: Scalars['Int']['input'];
-};
-
-
 export type Query_RootWork_To_DetailArgs = {
   distinct_on?: InputMaybe<Array<Work_To_Detail_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1360,6 +1337,29 @@ export type Query_RootWork_To_Detail_AggregateArgs = {
 export type Query_RootWork_To_Detail_By_PkArgs = {
   skill_id: Scalars['Int']['input'];
   work_id: Scalars['Int']['input'];
+};
+
+
+export type Query_RootWorksArgs = {
+  distinct_on?: InputMaybe<Array<Works_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Works_Order_By>>;
+  where?: InputMaybe<Works_Bool_Exp>;
+};
+
+
+export type Query_RootWorks_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Works_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Works_Order_By>>;
+  where?: InputMaybe<Works_Bool_Exp>;
+};
+
+
+export type Query_RootWorks_By_PkArgs = {
+  id: Scalars['Int']['input'];
 };
 
 /** 検索するテーブル */
@@ -1833,14 +1833,6 @@ export type Subscription_Root = {
   users_by_pk?: Maybe<Users>;
   /** fetch data from the table in a streaming manner: "users" */
   users_stream: Array<Users>;
-  /** fetch data from the table: "work" */
-  work: Array<Work>;
-  /** fetch aggregated fields from the table: "work" */
-  work_aggregate: Work_Aggregate;
-  /** fetch data from the table: "work" using primary key columns */
-  work_by_pk?: Maybe<Work>;
-  /** fetch data from the table in a streaming manner: "work" */
-  work_stream: Array<Work>;
   /** fetch data from the table: "work_to_detail" */
   work_to_detail: Array<Work_To_Detail>;
   /** fetch aggregated fields from the table: "work_to_detail" */
@@ -1849,6 +1841,14 @@ export type Subscription_Root = {
   work_to_detail_by_pk?: Maybe<Work_To_Detail>;
   /** fetch data from the table in a streaming manner: "work_to_detail" */
   work_to_detail_stream: Array<Work_To_Detail>;
+  /** fetch data from the table: "works" */
+  works: Array<Works>;
+  /** fetch aggregated fields from the table: "works" */
+  works_aggregate: Works_Aggregate;
+  /** fetch data from the table: "works" using primary key columns */
+  works_by_pk?: Maybe<Works>;
+  /** fetch data from the table in a streaming manner: "works" */
+  works_stream: Array<Works>;
 };
 
 
@@ -2002,36 +2002,6 @@ export type Subscription_RootUsers_StreamArgs = {
 };
 
 
-export type Subscription_RootWorkArgs = {
-  distinct_on?: InputMaybe<Array<Work_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Work_Order_By>>;
-  where?: InputMaybe<Work_Bool_Exp>;
-};
-
-
-export type Subscription_RootWork_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Work_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Work_Order_By>>;
-  where?: InputMaybe<Work_Bool_Exp>;
-};
-
-
-export type Subscription_RootWork_By_PkArgs = {
-  id: Scalars['Int']['input'];
-};
-
-
-export type Subscription_RootWork_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Work_Stream_Cursor_Input>>;
-  where?: InputMaybe<Work_Bool_Exp>;
-};
-
-
 export type Subscription_RootWork_To_DetailArgs = {
   distinct_on?: InputMaybe<Array<Work_To_Detail_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -2060,6 +2030,36 @@ export type Subscription_RootWork_To_Detail_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Work_To_Detail_Stream_Cursor_Input>>;
   where?: InputMaybe<Work_To_Detail_Bool_Exp>;
+};
+
+
+export type Subscription_RootWorksArgs = {
+  distinct_on?: InputMaybe<Array<Works_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Works_Order_By>>;
+  where?: InputMaybe<Works_Bool_Exp>;
+};
+
+
+export type Subscription_RootWorks_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Works_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Works_Order_By>>;
+  where?: InputMaybe<Works_Bool_Exp>;
+};
+
+
+export type Subscription_RootWorks_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootWorks_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Works_Stream_Cursor_Input>>;
+  where?: InputMaybe<Works_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -2593,327 +2593,6 @@ export type Users_Updates = {
   where: Users_Bool_Exp;
 };
 
-/** 案件一覧を管理するテーブル */
-export type Work = {
-  __typename?: 'work';
-  contractType?: Maybe<Scalars['String']['output']>;
-  createAt: Scalars['date']['output'];
-  description: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
-  is_closed: Scalars['Boolean']['output'];
-  /** An array relationship */
-  languages: Array<Work_To_Detail>;
-  /** An aggregate relationship */
-  languages_aggregate: Work_To_Detail_Aggregate;
-  location?: Maybe<Scalars['String']['output']>;
-  maxMonthlyPrice?: Maybe<Scalars['Int']['output']>;
-  maxWorkHours?: Maybe<Scalars['Int']['output']>;
-  minMonthlyPrice?: Maybe<Scalars['Int']['output']>;
-  minWorkHours?: Maybe<Scalars['Int']['output']>;
-  title: Scalars['String']['output'];
-  work_style: Scalars['String']['output'];
-};
-
-
-/** 案件一覧を管理するテーブル */
-export type WorkLanguagesArgs = {
-  distinct_on?: InputMaybe<Array<Work_To_Detail_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Work_To_Detail_Order_By>>;
-  where?: InputMaybe<Work_To_Detail_Bool_Exp>;
-};
-
-
-/** 案件一覧を管理するテーブル */
-export type WorkLanguages_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Work_To_Detail_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Work_To_Detail_Order_By>>;
-  where?: InputMaybe<Work_To_Detail_Bool_Exp>;
-};
-
-/** aggregated selection of "work" */
-export type Work_Aggregate = {
-  __typename?: 'work_aggregate';
-  aggregate?: Maybe<Work_Aggregate_Fields>;
-  nodes: Array<Work>;
-};
-
-/** aggregate fields of "work" */
-export type Work_Aggregate_Fields = {
-  __typename?: 'work_aggregate_fields';
-  avg?: Maybe<Work_Avg_Fields>;
-  count: Scalars['Int']['output'];
-  max?: Maybe<Work_Max_Fields>;
-  min?: Maybe<Work_Min_Fields>;
-  stddev?: Maybe<Work_Stddev_Fields>;
-  stddev_pop?: Maybe<Work_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Work_Stddev_Samp_Fields>;
-  sum?: Maybe<Work_Sum_Fields>;
-  var_pop?: Maybe<Work_Var_Pop_Fields>;
-  var_samp?: Maybe<Work_Var_Samp_Fields>;
-  variance?: Maybe<Work_Variance_Fields>;
-};
-
-
-/** aggregate fields of "work" */
-export type Work_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Work_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** aggregate avg on columns */
-export type Work_Avg_Fields = {
-  __typename?: 'work_avg_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
-  maxWorkHours?: Maybe<Scalars['Float']['output']>;
-  minMonthlyPrice?: Maybe<Scalars['Float']['output']>;
-  minWorkHours?: Maybe<Scalars['Float']['output']>;
-};
-
-/** Boolean expression to filter rows from the table "work". All fields are combined with a logical 'AND'. */
-export type Work_Bool_Exp = {
-  _and?: InputMaybe<Array<Work_Bool_Exp>>;
-  _not?: InputMaybe<Work_Bool_Exp>;
-  _or?: InputMaybe<Array<Work_Bool_Exp>>;
-  contractType?: InputMaybe<String_Comparison_Exp>;
-  createAt?: InputMaybe<Date_Comparison_Exp>;
-  description?: InputMaybe<String_Comparison_Exp>;
-  id?: InputMaybe<Int_Comparison_Exp>;
-  is_closed?: InputMaybe<Boolean_Comparison_Exp>;
-  languages?: InputMaybe<Work_To_Detail_Bool_Exp>;
-  languages_aggregate?: InputMaybe<Work_To_Detail_Aggregate_Bool_Exp>;
-  location?: InputMaybe<String_Comparison_Exp>;
-  maxMonthlyPrice?: InputMaybe<Int_Comparison_Exp>;
-  maxWorkHours?: InputMaybe<Int_Comparison_Exp>;
-  minMonthlyPrice?: InputMaybe<Int_Comparison_Exp>;
-  minWorkHours?: InputMaybe<Int_Comparison_Exp>;
-  title?: InputMaybe<String_Comparison_Exp>;
-  work_style?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "work" */
-export enum Work_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  WorkPkey = 'work_pkey',
-  /** unique or primary key constraint on columns "title" */
-  WorkTitleKey = 'work_title_key'
-}
-
-/** input type for incrementing numeric columns in table "work" */
-export type Work_Inc_Input = {
-  id?: InputMaybe<Scalars['Int']['input']>;
-  maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
-  maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
-  minMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
-  minWorkHours?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** input type for inserting data into table "work" */
-export type Work_Insert_Input = {
-  contractType?: InputMaybe<Scalars['String']['input']>;
-  createAt?: InputMaybe<Scalars['date']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
-  is_closed?: InputMaybe<Scalars['Boolean']['input']>;
-  languages?: InputMaybe<Work_To_Detail_Arr_Rel_Insert_Input>;
-  location?: InputMaybe<Scalars['String']['input']>;
-  maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
-  maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
-  minMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
-  minWorkHours?: InputMaybe<Scalars['Int']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  work_style?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate max on columns */
-export type Work_Max_Fields = {
-  __typename?: 'work_max_fields';
-  contractType?: Maybe<Scalars['String']['output']>;
-  createAt?: Maybe<Scalars['date']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
-  location?: Maybe<Scalars['String']['output']>;
-  maxMonthlyPrice?: Maybe<Scalars['Int']['output']>;
-  maxWorkHours?: Maybe<Scalars['Int']['output']>;
-  minMonthlyPrice?: Maybe<Scalars['Int']['output']>;
-  minWorkHours?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  work_style?: Maybe<Scalars['String']['output']>;
-};
-
-/** aggregate min on columns */
-export type Work_Min_Fields = {
-  __typename?: 'work_min_fields';
-  contractType?: Maybe<Scalars['String']['output']>;
-  createAt?: Maybe<Scalars['date']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
-  location?: Maybe<Scalars['String']['output']>;
-  maxMonthlyPrice?: Maybe<Scalars['Int']['output']>;
-  maxWorkHours?: Maybe<Scalars['Int']['output']>;
-  minMonthlyPrice?: Maybe<Scalars['Int']['output']>;
-  minWorkHours?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  work_style?: Maybe<Scalars['String']['output']>;
-};
-
-/** response of any mutation on the table "work" */
-export type Work_Mutation_Response = {
-  __typename?: 'work_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Work>;
-};
-
-/** input type for inserting object relation for remote table "work" */
-export type Work_Obj_Rel_Insert_Input = {
-  data: Work_Insert_Input;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Work_On_Conflict>;
-};
-
-/** on_conflict condition type for table "work" */
-export type Work_On_Conflict = {
-  constraint: Work_Constraint;
-  update_columns?: Array<Work_Update_Column>;
-  where?: InputMaybe<Work_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "work". */
-export type Work_Order_By = {
-  contractType?: InputMaybe<Order_By>;
-  createAt?: InputMaybe<Order_By>;
-  description?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  is_closed?: InputMaybe<Order_By>;
-  languages_aggregate?: InputMaybe<Work_To_Detail_Aggregate_Order_By>;
-  location?: InputMaybe<Order_By>;
-  maxMonthlyPrice?: InputMaybe<Order_By>;
-  maxWorkHours?: InputMaybe<Order_By>;
-  minMonthlyPrice?: InputMaybe<Order_By>;
-  minWorkHours?: InputMaybe<Order_By>;
-  title?: InputMaybe<Order_By>;
-  work_style?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: work */
-export type Work_Pk_Columns_Input = {
-  id: Scalars['Int']['input'];
-};
-
-/** select columns of table "work" */
-export enum Work_Select_Column {
-  /** column name */
-  ContractType = 'contractType',
-  /** column name */
-  CreateAt = 'createAt',
-  /** column name */
-  Description = 'description',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  IsClosed = 'is_closed',
-  /** column name */
-  Location = 'location',
-  /** column name */
-  MaxMonthlyPrice = 'maxMonthlyPrice',
-  /** column name */
-  MaxWorkHours = 'maxWorkHours',
-  /** column name */
-  MinMonthlyPrice = 'minMonthlyPrice',
-  /** column name */
-  MinWorkHours = 'minWorkHours',
-  /** column name */
-  Title = 'title',
-  /** column name */
-  WorkStyle = 'work_style'
-}
-
-/** input type for updating data in table "work" */
-export type Work_Set_Input = {
-  contractType?: InputMaybe<Scalars['String']['input']>;
-  createAt?: InputMaybe<Scalars['date']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
-  is_closed?: InputMaybe<Scalars['Boolean']['input']>;
-  location?: InputMaybe<Scalars['String']['input']>;
-  maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
-  maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
-  minMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
-  minWorkHours?: InputMaybe<Scalars['Int']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  work_style?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate stddev on columns */
-export type Work_Stddev_Fields = {
-  __typename?: 'work_stddev_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
-  maxWorkHours?: Maybe<Scalars['Float']['output']>;
-  minMonthlyPrice?: Maybe<Scalars['Float']['output']>;
-  minWorkHours?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Work_Stddev_Pop_Fields = {
-  __typename?: 'work_stddev_pop_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
-  maxWorkHours?: Maybe<Scalars['Float']['output']>;
-  minMonthlyPrice?: Maybe<Scalars['Float']['output']>;
-  minWorkHours?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Work_Stddev_Samp_Fields = {
-  __typename?: 'work_stddev_samp_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
-  maxWorkHours?: Maybe<Scalars['Float']['output']>;
-  minMonthlyPrice?: Maybe<Scalars['Float']['output']>;
-  minWorkHours?: Maybe<Scalars['Float']['output']>;
-};
-
-/** Streaming cursor of the table "work" */
-export type Work_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Work_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Work_Stream_Cursor_Value_Input = {
-  contractType?: InputMaybe<Scalars['String']['input']>;
-  createAt?: InputMaybe<Scalars['date']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
-  is_closed?: InputMaybe<Scalars['Boolean']['input']>;
-  location?: InputMaybe<Scalars['String']['input']>;
-  maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
-  maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
-  minMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
-  minWorkHours?: InputMaybe<Scalars['Int']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  work_style?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate sum on columns */
-export type Work_Sum_Fields = {
-  __typename?: 'work_sum_fields';
-  id?: Maybe<Scalars['Int']['output']>;
-  maxMonthlyPrice?: Maybe<Scalars['Int']['output']>;
-  maxWorkHours?: Maybe<Scalars['Int']['output']>;
-  minMonthlyPrice?: Maybe<Scalars['Int']['output']>;
-  minWorkHours?: Maybe<Scalars['Int']['output']>;
-};
-
 /** 案件⇄詳細を繋ぐテーブル */
 export type Work_To_Detail = {
   __typename?: 'work_to_detail';
@@ -2921,7 +2600,7 @@ export type Work_To_Detail = {
   skill?: Maybe<Skills>;
   skill_id: Scalars['Int']['output'];
   /** An object relationship */
-  work?: Maybe<Work>;
+  work?: Maybe<Works>;
   work_id: Scalars['Int']['output'];
 };
 
@@ -3008,7 +2687,7 @@ export type Work_To_Detail_Bool_Exp = {
   _or?: InputMaybe<Array<Work_To_Detail_Bool_Exp>>;
   skill?: InputMaybe<Skills_Bool_Exp>;
   skill_id?: InputMaybe<Int_Comparison_Exp>;
-  work?: InputMaybe<Work_Bool_Exp>;
+  work?: InputMaybe<Works_Bool_Exp>;
   work_id?: InputMaybe<Int_Comparison_Exp>;
 };
 
@@ -3028,7 +2707,7 @@ export type Work_To_Detail_Inc_Input = {
 export type Work_To_Detail_Insert_Input = {
   skill?: InputMaybe<Skills_Obj_Rel_Insert_Input>;
   skill_id?: InputMaybe<Scalars['Int']['input']>;
-  work?: InputMaybe<Work_Obj_Rel_Insert_Input>;
+  work?: InputMaybe<Works_Obj_Rel_Insert_Input>;
   work_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -3078,7 +2757,7 @@ export type Work_To_Detail_On_Conflict = {
 export type Work_To_Detail_Order_By = {
   skill?: InputMaybe<Skills_Order_By>;
   skill_id?: InputMaybe<Order_By>;
-  work?: InputMaybe<Work_Order_By>;
+  work?: InputMaybe<Works_Order_By>;
   work_id?: InputMaybe<Order_By>;
 };
 
@@ -3224,8 +2903,221 @@ export type Work_To_Detail_Variance_Order_By = {
   work_id?: InputMaybe<Order_By>;
 };
 
-/** update columns of table "work" */
-export enum Work_Update_Column {
+/** 案件一覧を管理するテーブル */
+export type Works = {
+  __typename?: 'works';
+  contractType?: Maybe<Scalars['String']['output']>;
+  createAt: Scalars['date']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  is_closed: Scalars['Boolean']['output'];
+  /** An array relationship */
+  languages: Array<Work_To_Detail>;
+  /** An aggregate relationship */
+  languages_aggregate: Work_To_Detail_Aggregate;
+  location?: Maybe<Scalars['String']['output']>;
+  maxMonthlyPrice?: Maybe<Scalars['Int']['output']>;
+  maxWorkHours?: Maybe<Scalars['Int']['output']>;
+  minMonthlyPrice?: Maybe<Scalars['Int']['output']>;
+  minWorkHours?: Maybe<Scalars['Int']['output']>;
+  title: Scalars['String']['output'];
+  work_style: Scalars['String']['output'];
+};
+
+
+/** 案件一覧を管理するテーブル */
+export type WorksLanguagesArgs = {
+  distinct_on?: InputMaybe<Array<Work_To_Detail_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Work_To_Detail_Order_By>>;
+  where?: InputMaybe<Work_To_Detail_Bool_Exp>;
+};
+
+
+/** 案件一覧を管理するテーブル */
+export type WorksLanguages_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Work_To_Detail_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Work_To_Detail_Order_By>>;
+  where?: InputMaybe<Work_To_Detail_Bool_Exp>;
+};
+
+/** aggregated selection of "works" */
+export type Works_Aggregate = {
+  __typename?: 'works_aggregate';
+  aggregate?: Maybe<Works_Aggregate_Fields>;
+  nodes: Array<Works>;
+};
+
+/** aggregate fields of "works" */
+export type Works_Aggregate_Fields = {
+  __typename?: 'works_aggregate_fields';
+  avg?: Maybe<Works_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Works_Max_Fields>;
+  min?: Maybe<Works_Min_Fields>;
+  stddev?: Maybe<Works_Stddev_Fields>;
+  stddev_pop?: Maybe<Works_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Works_Stddev_Samp_Fields>;
+  sum?: Maybe<Works_Sum_Fields>;
+  var_pop?: Maybe<Works_Var_Pop_Fields>;
+  var_samp?: Maybe<Works_Var_Samp_Fields>;
+  variance?: Maybe<Works_Variance_Fields>;
+};
+
+
+/** aggregate fields of "works" */
+export type Works_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Works_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** aggregate avg on columns */
+export type Works_Avg_Fields = {
+  __typename?: 'works_avg_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
+  maxWorkHours?: Maybe<Scalars['Float']['output']>;
+  minMonthlyPrice?: Maybe<Scalars['Float']['output']>;
+  minWorkHours?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Boolean expression to filter rows from the table "works". All fields are combined with a logical 'AND'. */
+export type Works_Bool_Exp = {
+  _and?: InputMaybe<Array<Works_Bool_Exp>>;
+  _not?: InputMaybe<Works_Bool_Exp>;
+  _or?: InputMaybe<Array<Works_Bool_Exp>>;
+  contractType?: InputMaybe<String_Comparison_Exp>;
+  createAt?: InputMaybe<Date_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  is_closed?: InputMaybe<Boolean_Comparison_Exp>;
+  languages?: InputMaybe<Work_To_Detail_Bool_Exp>;
+  languages_aggregate?: InputMaybe<Work_To_Detail_Aggregate_Bool_Exp>;
+  location?: InputMaybe<String_Comparison_Exp>;
+  maxMonthlyPrice?: InputMaybe<Int_Comparison_Exp>;
+  maxWorkHours?: InputMaybe<Int_Comparison_Exp>;
+  minMonthlyPrice?: InputMaybe<Int_Comparison_Exp>;
+  minWorkHours?: InputMaybe<Int_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+  work_style?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "works" */
+export enum Works_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  WorkPkey = 'work_pkey',
+  /** unique or primary key constraint on columns "title" */
+  WorkTitleKey = 'work_title_key'
+}
+
+/** input type for incrementing numeric columns in table "works" */
+export type Works_Inc_Input = {
+  id?: InputMaybe<Scalars['Int']['input']>;
+  maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  minMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  minWorkHours?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "works" */
+export type Works_Insert_Input = {
+  contractType?: InputMaybe<Scalars['String']['input']>;
+  createAt?: InputMaybe<Scalars['date']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  is_closed?: InputMaybe<Scalars['Boolean']['input']>;
+  languages?: InputMaybe<Work_To_Detail_Arr_Rel_Insert_Input>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  minMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  minWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  work_style?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Works_Max_Fields = {
+  __typename?: 'works_max_fields';
+  contractType?: Maybe<Scalars['String']['output']>;
+  createAt?: Maybe<Scalars['date']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  location?: Maybe<Scalars['String']['output']>;
+  maxMonthlyPrice?: Maybe<Scalars['Int']['output']>;
+  maxWorkHours?: Maybe<Scalars['Int']['output']>;
+  minMonthlyPrice?: Maybe<Scalars['Int']['output']>;
+  minWorkHours?: Maybe<Scalars['Int']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  work_style?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Works_Min_Fields = {
+  __typename?: 'works_min_fields';
+  contractType?: Maybe<Scalars['String']['output']>;
+  createAt?: Maybe<Scalars['date']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  location?: Maybe<Scalars['String']['output']>;
+  maxMonthlyPrice?: Maybe<Scalars['Int']['output']>;
+  maxWorkHours?: Maybe<Scalars['Int']['output']>;
+  minMonthlyPrice?: Maybe<Scalars['Int']['output']>;
+  minWorkHours?: Maybe<Scalars['Int']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  work_style?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "works" */
+export type Works_Mutation_Response = {
+  __typename?: 'works_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Works>;
+};
+
+/** input type for inserting object relation for remote table "works" */
+export type Works_Obj_Rel_Insert_Input = {
+  data: Works_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Works_On_Conflict>;
+};
+
+/** on_conflict condition type for table "works" */
+export type Works_On_Conflict = {
+  constraint: Works_Constraint;
+  update_columns?: Array<Works_Update_Column>;
+  where?: InputMaybe<Works_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "works". */
+export type Works_Order_By = {
+  contractType?: InputMaybe<Order_By>;
+  createAt?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  is_closed?: InputMaybe<Order_By>;
+  languages_aggregate?: InputMaybe<Work_To_Detail_Aggregate_Order_By>;
+  location?: InputMaybe<Order_By>;
+  maxMonthlyPrice?: InputMaybe<Order_By>;
+  maxWorkHours?: InputMaybe<Order_By>;
+  minMonthlyPrice?: InputMaybe<Order_By>;
+  minWorkHours?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  work_style?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: works */
+export type Works_Pk_Columns_Input = {
+  id: Scalars['Int']['input'];
+};
+
+/** select columns of table "works" */
+export enum Works_Select_Column {
   /** column name */
   ContractType = 'contractType',
   /** column name */
@@ -3252,18 +3144,126 @@ export enum Work_Update_Column {
   WorkStyle = 'work_style'
 }
 
-export type Work_Updates = {
+/** input type for updating data in table "works" */
+export type Works_Set_Input = {
+  contractType?: InputMaybe<Scalars['String']['input']>;
+  createAt?: InputMaybe<Scalars['date']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  is_closed?: InputMaybe<Scalars['Boolean']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  minMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  minWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  work_style?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Works_Stddev_Fields = {
+  __typename?: 'works_stddev_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
+  maxWorkHours?: Maybe<Scalars['Float']['output']>;
+  minMonthlyPrice?: Maybe<Scalars['Float']['output']>;
+  minWorkHours?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Works_Stddev_Pop_Fields = {
+  __typename?: 'works_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
+  maxWorkHours?: Maybe<Scalars['Float']['output']>;
+  minMonthlyPrice?: Maybe<Scalars['Float']['output']>;
+  minWorkHours?: Maybe<Scalars['Float']['output']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Works_Stddev_Samp_Fields = {
+  __typename?: 'works_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']['output']>;
+  maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
+  maxWorkHours?: Maybe<Scalars['Float']['output']>;
+  minMonthlyPrice?: Maybe<Scalars['Float']['output']>;
+  minWorkHours?: Maybe<Scalars['Float']['output']>;
+};
+
+/** Streaming cursor of the table "works" */
+export type Works_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Works_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Works_Stream_Cursor_Value_Input = {
+  contractType?: InputMaybe<Scalars['String']['input']>;
+  createAt?: InputMaybe<Scalars['date']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  is_closed?: InputMaybe<Scalars['Boolean']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  maxMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  maxWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  minMonthlyPrice?: InputMaybe<Scalars['Int']['input']>;
+  minWorkHours?: InputMaybe<Scalars['Int']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  work_style?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Works_Sum_Fields = {
+  __typename?: 'works_sum_fields';
+  id?: Maybe<Scalars['Int']['output']>;
+  maxMonthlyPrice?: Maybe<Scalars['Int']['output']>;
+  maxWorkHours?: Maybe<Scalars['Int']['output']>;
+  minMonthlyPrice?: Maybe<Scalars['Int']['output']>;
+  minWorkHours?: Maybe<Scalars['Int']['output']>;
+};
+
+/** update columns of table "works" */
+export enum Works_Update_Column {
+  /** column name */
+  ContractType = 'contractType',
+  /** column name */
+  CreateAt = 'createAt',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IsClosed = 'is_closed',
+  /** column name */
+  Location = 'location',
+  /** column name */
+  MaxMonthlyPrice = 'maxMonthlyPrice',
+  /** column name */
+  MaxWorkHours = 'maxWorkHours',
+  /** column name */
+  MinMonthlyPrice = 'minMonthlyPrice',
+  /** column name */
+  MinWorkHours = 'minWorkHours',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  WorkStyle = 'work_style'
+}
+
+export type Works_Updates = {
   /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Work_Inc_Input>;
+  _inc?: InputMaybe<Works_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Work_Set_Input>;
+  _set?: InputMaybe<Works_Set_Input>;
   /** filter the rows which have to be updated */
-  where: Work_Bool_Exp;
+  where: Works_Bool_Exp;
 };
 
 /** aggregate var_pop on columns */
-export type Work_Var_Pop_Fields = {
-  __typename?: 'work_var_pop_fields';
+export type Works_Var_Pop_Fields = {
+  __typename?: 'works_var_pop_fields';
   id?: Maybe<Scalars['Float']['output']>;
   maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
   maxWorkHours?: Maybe<Scalars['Float']['output']>;
@@ -3272,8 +3272,8 @@ export type Work_Var_Pop_Fields = {
 };
 
 /** aggregate var_samp on columns */
-export type Work_Var_Samp_Fields = {
-  __typename?: 'work_var_samp_fields';
+export type Works_Var_Samp_Fields = {
+  __typename?: 'works_var_samp_fields';
   id?: Maybe<Scalars['Float']['output']>;
   maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
   maxWorkHours?: Maybe<Scalars['Float']['output']>;
@@ -3282,8 +3282,8 @@ export type Work_Var_Samp_Fields = {
 };
 
 /** aggregate variance on columns */
-export type Work_Variance_Fields = {
-  __typename?: 'work_variance_fields';
+export type Works_Variance_Fields = {
+  __typename?: 'works_variance_fields';
   id?: Maybe<Scalars['Float']['output']>;
   maxMonthlyPrice?: Maybe<Scalars['Float']['output']>;
   maxWorkHours?: Maybe<Scalars['Float']['output']>;
@@ -3319,24 +3319,24 @@ export type GetUserQueryVariables = Exact<{
 export type GetUserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, name: string, last_seen: any, slackUrl?: string | null }> };
 
 export type GetWorkQueryVariables = Exact<{
-  id?: InputMaybe<Int_Comparison_Exp>;
+  id: Scalars['Int']['input'];
 }>;
 
 
-export type GetWorkQuery = { __typename?: 'query_root', work: Array<{ __typename?: 'work', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, createAt: any, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> }> };
+export type GetWorkQuery = { __typename?: 'query_root', works_by_pk?: { __typename?: 'works', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, createAt: any, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> } | null };
 
 export type GetWorksQueryVariables = Exact<{
-  where?: InputMaybe<Work_Bool_Exp>;
-  order_by?: InputMaybe<Array<Work_Order_By> | Work_Order_By>;
+  where?: InputMaybe<Works_Bool_Exp>;
+  order_by?: InputMaybe<Array<Works_Order_By> | Works_Order_By>;
 }>;
 
 
-export type GetWorksQuery = { __typename?: 'query_root', work: Array<{ __typename?: 'work', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, createAt: any, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> }> };
+export type GetWorksQuery = { __typename?: 'query_root', works: Array<{ __typename?: 'works', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, createAt: any, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> }> };
 
 
 export const GetAllProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllProject"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"keyword"}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllProjectQuery, GetAllProjectQueryVariables>;
 export const GetDetailProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDetailProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"businessContent"}},{"kind":"Field","name":{"kind":"Name","value":"contentBusiness"}},{"kind":"Field","name":{"kind":"Name","value":"developmentEnvironment"}},{"kind":"Field","name":{"kind":"Name","value":"keyword"}},{"kind":"Field","name":{"kind":"Name","value":"personnelSought"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentBackground"}},{"kind":"Field","name":{"kind":"Name","value":"recruitmentNumber"}},{"kind":"Field","name":{"kind":"Name","value":"requiredSkills"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeSkills"}},{"kind":"Field","name":{"kind":"Name","value":"workingConditions"}}]}}]}}]} as unknown as DocumentNode<GetDetailProjectQuery, GetDetailProjectQueryVariables>;
 export const GetSkillsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSkills"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"skillsWhere"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"skills_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"worksWhere"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"work_to_detail_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skills"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"skillsWhere"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"works_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"worksWhere"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetSkillsQuery, GetSkillsQueryVariables>;
-export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"last_seen"}},{"kind":"Field","name":{"kind":"Name","value":"slackUrl"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
-export const GetWorkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWork"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int_comparison_exp"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkQuery, GetWorkQueryVariables>;
-export const GetWorksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWorks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"work_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"order_by"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"work_order_by"}}}},"defaultValue":{"kind":"ObjectValue","fields":[]}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"work"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"order_by"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorksQuery, GetWorksQueryVariables>;
+export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"last_seen"}},{"kind":"Field","name":{"kind":"Name","value":"slackUrl"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
+export const GetWorkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWork"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"works_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorkQuery, GetWorkQueryVariables>;
+export const GetWorksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWorks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"works_bool_exp"}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_and"},"value":{"kind":"ListValue","values":[]}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"order_by"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"works_order_by"}}}},"defaultValue":{"kind":"ObjectValue","fields":[]}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"works"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"order_by"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"maxMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"maxWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"minMonthlyPrice"}},{"kind":"Field","name":{"kind":"Name","value":"minWorkHours"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"createAt"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"skill"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetWorksQuery, GetWorksQueryVariables>;

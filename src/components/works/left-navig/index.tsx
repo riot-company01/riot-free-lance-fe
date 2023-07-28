@@ -37,11 +37,11 @@ export function LeftNavig({ defaultFilters, selectedSkillIds }: Props) {
   }, [JSON.stringify(defaultFilters)]);
 
   return (
-    <div>
+    <>
       {viewList.map((nodes) => {
         return <Accordion key={nodes.type} nodes={nodes} selectedSkillIds={selectedSkillIds} />;
       })}
-    </div>
+    </>
   );
 }
 
@@ -50,7 +50,7 @@ function Accordion({ nodes, selectedSkillIds }: PropsAccordion) {
   const router = useRouter();
 
   return (
-    <React.Fragment>
+    <div>
       <Head
         role="button"
         onClick={() => {
@@ -100,7 +100,7 @@ function Accordion({ nodes, selectedSkillIds }: PropsAccordion) {
           {/* <More>もっと見る</More> */}
         </FormGroup>
       )}
-    </React.Fragment>
+    </div>
   );
 }
 

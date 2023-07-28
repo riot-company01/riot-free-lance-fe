@@ -1,10 +1,9 @@
 import { useQuery } from "@apollo/client";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import styled from "@emotion/styled";
-import { Pagination } from "@mui/material";
-import type { GetServerSideProps } from "next";
+import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/works/card";
 import { Detail } from "@/components/works/detail";
 import { Filter } from "@/components/works/filter";
@@ -38,83 +37,86 @@ const title = (keyword: string) => {
   };
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const client = initializeApollo({});
+export const getServerSideProps = withPageAuthRequired({
+  // @ts-ignore
+  async getServerSideProps(ctx) {
+    const client = initializeApollo({});
 
-  const selectedSkillIds = (ctx.query["skill-ids"] as string | undefined)?.split(",") || [];
-  const inputKeyword = (ctx.query["keyword"] as string) || "";
+    const selectedSkillIds = (ctx.query["skill-ids"] as string | undefined)?.split(",") || [];
+    const inputKeyword = (ctx.query["keyword"] as string) || "";
 
-  await client.query({
-    query: GetWorksDocument,
-    variables: {
-      order_by: {
-        createAt: Order_By.Desc,
-      },
-      where: {
-        _and: [
-          ...selectedSkillIds.map((skillId) => {
-            return languages(skillId);
-          }),
-          { _or: [direction(inputKeyword), title(inputKeyword)] },
-        ],
-      },
-    },
-  });
-
-  await client.query({
-    query: GetSkillsDocument,
-    variables: {
-      skillsWhere: {
-        works_aggregate: {
-          count: { predicate: { _gt: 0 } },
+    await client.query({
+      query: GetWorksDocument,
+      variables: {
+        order_by: {
+          createAt: Order_By.Desc,
         },
-        _and: [
-          ...selectedSkillIds.map((skillId) => {
-            return { works: { work: languages(skillId) } };
-          }),
-          {
-            _or: [
-              {
-                works: {
-                  work: direction(inputKeyword),
-                },
-              },
-              {
-                works: {
-                  work: title(inputKeyword),
-                },
-              },
-            ],
-          },
-        ],
+        where: {
+          _and: [
+            ...selectedSkillIds.map((skillId) => {
+              return languages(skillId);
+            }),
+            { _or: [direction(inputKeyword), title(inputKeyword)] },
+          ],
+        },
       },
-      worksWhere: {
-        _and: [
-          ...selectedSkillIds.map((skillId) => {
-            return { work: languages(skillId) };
-          }),
-          {
-            _or: [
-              {
-                work: direction(inputKeyword),
-              },
-              {
-                work: title(inputKeyword),
-              },
-            ],
-          },
-        ],
-      },
-    },
-  });
+    });
 
-  const documentProps = addApolloState(client, {
-    props: {},
-  });
-  return {
-    props: documentProps.props,
-  };
-};
+    // await client.query({
+    //   query: GetSkillsDocument,
+    //   variables: {
+    //     skillsWhere: {
+    //       works_aggregate: {
+    //         count: { predicate: { _gt: 0 } },
+    //       },
+    //       _and: [
+    //         ...selectedSkillIds.map((skillId) => {
+    //           return { works: { work: languages(skillId) } };
+    //         }),
+    //         {
+    //           _or: [
+    //             {
+    //               works: {
+    //                 work: direction(inputKeyword),
+    //               },
+    //             },
+    //             {
+    //               works: {
+    //                 work: title(inputKeyword),
+    //               },
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //     },
+    //     worksWhere: {
+    //       _and: [
+    //         ...selectedSkillIds.map((skillId) => {
+    //           return { work: languages(skillId) };
+    //         }),
+    //         {
+    //           _or: [
+    //             {
+    //               work: direction(inputKeyword),
+    //             },
+    //             {
+    //               work: title(inputKeyword),
+    //             },
+    //           ],
+    //         },
+    //       ],
+    //     },
+    //   },
+    // });
+
+    const documentProps = addApolloState(client, {
+      props: {},
+    });
+    return {
+      props: documentProps.props,
+    };
+  },
+});
 
 function Works() {
   const router = useRouter();
@@ -125,7 +127,7 @@ function Works() {
 
   const order = sort === "new" ? { createAt: Order_By.Desc } : { maxMonthlyPrice: Order_By.Desc };
 
-  const { data: works } = useQuery(GetWorksDocument, {
+  const { data: worksData } = useQuery(GetWorksDocument, {
     variables: {
       order_by: {
         ...order,
@@ -141,7 +143,7 @@ function Works() {
     },
   });
 
-  const { data: skills } = useQuery(GetSkillsDocument, {
+  const { data: skillsData } = useQuery(GetSkillsDocument, {
     variables: {
       skillsWhere: {
         works_aggregate: {
@@ -185,14 +187,17 @@ function Works() {
         ],
       },
     },
+    onCompleted: (data) => {
+      console.log({ data });
+    },
   });
 
   useEffect(() => {
-    if (skills?.skills.length === 0) return;
-    setKeepSkills(skills?.skills || []);
-  }, [skills]);
+    if (skillsData?.skills.length === 0) return;
+    setKeepSkills(skillsData?.skills || []);
+  }, [skillsData]);
 
-  if (works?.work.length === 0) {
+  if (worksData?.works.length === 0) {
     return <NotResult keepSkills={keepSkills} selectedSkillIds={selectedSkillIds} inputKeyword={inputKeyword} />;
   }
 
@@ -200,23 +205,36 @@ function Works() {
     <Wrapper>
       <NavigContainer>
         <Navig>
-          <LeftNavig defaultFilters={skills?.skills} selectedSkillIds={selectedSkillIds} />
+          {skillsData ? (
+            <LeftNavig defaultFilters={skillsData.skills} selectedSkillIds={selectedSkillIds} />
+          ) : (
+            <Skeleton variant="rectangular" height={"100vh"} />
+          )}
         </Navig>
       </NavigContainer>
       <KeyWordContainer>
         <KeyWordFixed>
-          <Filter defaultFilters={skills?.skills} selectedSkillIds={selectedSkillIds} worksLength={works?.work.length} />
+          <Filter defaultFilters={skillsData?.skills} selectedSkillIds={selectedSkillIds} worksLength={worksData?.works.length} />
         </KeyWordFixed>
         <WorksContainer>
           <Column>
-            {works?.work.map((item, idx) => {
-              return <Card key={idx} item={item} />;
-            })}
+            {worksData
+              ? worksData?.works.map((item, idx) => {
+                  return <Card key={idx} item={item} />;
+                })
+              : [...Array(5)].map((_, idx) => {
+                  return (
+                    <WrapperSkeleton key={idx}>
+                      <CustomSkeleton key={idx} variant="rectangular" height={"100%"} />
+                    </WrapperSkeleton>
+                  );
+                })}
             <PaginationWrapper>
               <Pagination count={1} variant="outlined" shape="rounded" size="large" />
             </PaginationWrapper>
           </Column>
-          <DetailWrapper>{works?.work[0]?.id && <Detail defaultWorkId={works?.work[0]?.id} />}</DetailWrapper>
+          {/* // TODO 変える */}
+          <DetailWrapper>{<Detail defaultWorkId={worksData?.works[0]?.id} />}</DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
     </Wrapper>
@@ -226,6 +244,23 @@ function Works() {
 const Wrapper = styled.div`
   display: flex;
   margin-bottom: 160px;
+`;
+
+const WrapperSkeleton = styled.div`
+  border: 1px solid rgb(224, 224, 224);
+  padding: 16px;
+  width: 480px;
+  :not(:first-of-type) {
+    margin-top: 16px;
+  }
+  max-width: 480px;
+  background-color: white;
+  height: 400px;
+  border-radius: 8px;
+`;
+
+const CustomSkeleton = styled(Skeleton)`
+  border-radius: 8px;
 `;
 
 const DetailWrapper = styled.div`
@@ -280,4 +315,4 @@ const PaginationWrapper = styled.div`
   padding: 40px 0;
 `;
 
-export default withPageAuthRequired(Works);
+export default Works;
