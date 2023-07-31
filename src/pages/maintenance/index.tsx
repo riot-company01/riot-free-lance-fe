@@ -16,7 +16,7 @@ export default function Maintenance() {
   return (
     <CenteredContainer>
       <Container>
-        <Message>ただいまこちらのページはメンテナンス中です</Message>
+        <Message>ただいまこちらのページは準備中です</Message>
         <div>画面サイズは1024px以上で閲覧ください</div>
       </Container>
     </CenteredContainer>

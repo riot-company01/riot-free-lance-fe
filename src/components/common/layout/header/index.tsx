@@ -15,7 +15,7 @@ export const LayoutHeader: React.FC = () => {
   return (
     <Wrapper>
       <FlexContainer>
-        <NextLink href="#">
+        <NextLink href="/works">
           <List>
             <Logo src="images/company-logo.png" alt="ライオット" />
           </List>
