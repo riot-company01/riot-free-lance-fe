@@ -1,29 +1,30 @@
 import styled from "@emotion/styled";
 import OutboundIcon from "@mui/icons-material/Outbound";
 import { COLOR } from "@/styles/colors";
+import { NextLink } from "@/components/common/next-link";
 
 export const LayoutFooter: React.FC = () => {
   return (
     <Wrapper>
       <div>
         <OutboundIcon fontSize="small" />
-        運営会社
+        <NextLink href="https://riot-company.com/top/">運営会社</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        利用規約
+        <NextLink href="/maintenance">利用規約</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        プライバシーポリシー
+        <NextLink href="/maintenance">プライバシーポリシー</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        お問い合わせ
+        <NextLink href="https://riot-company.com/contact/">お問い合わせ</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        ご利用ガイド
+        <NextLink href="/maintenance">ご利用ガイド</NextLink>
       </div>
     </Wrapper>
   );
