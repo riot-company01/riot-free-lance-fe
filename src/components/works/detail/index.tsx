@@ -128,7 +128,7 @@ export function Detail({ defaultWorkId }: Props) {
 }
 
 const Title = styled.div`
-  font-size: 18px;
+  font-size: 30px;
   font-weight: bold;
 `;
 
