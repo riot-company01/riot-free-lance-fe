@@ -25,7 +25,7 @@ const list = [
 export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props) {
   const router = useRouter();
   const inputKeyword = (router.query["keyword"] as string) || "";
-  const sort = (router.query["sort"] as string) || "new";
+  const sort = (router.query["sort"] as string) || "price";
 
   return (
     <>

@@ -124,7 +124,7 @@ function Works() {
 
   const order = sort === "new" ? { createAt: Order_By.Desc } : { maxMonthlyPrice: Order_By.Desc };
 
-  const { data: worksData, loading } = useQuery(GetWorksDocument, {
+  const { data: worksData } = useQuery(GetWorksDocument, {
     variables: {
       order_by: {
         ...order,
