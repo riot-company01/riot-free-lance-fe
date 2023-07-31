@@ -3,12 +3,14 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { CustomCard } from "@/components/works/card";
 import { Detail } from "@/components/works/detail";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
 import { NotResult } from "@/components/works/not-result";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
+import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 import { Order_By, GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 
 export const WORKS_Z_INDEX = {
@@ -53,7 +55,7 @@ function Works() {
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
   const inputKeyword = (router.query["keyword"] as string) || "";
   const sort = (router.query["sort"] as string) || "";
-
+  const [skills, setSkills] = useState<GetSkillsQuery["skills"] | undefined>([]);
   const order = sort === "new" ? { createAt: Order_By.Desc } : { maxMonthlyPrice: Order_By.Desc };
 
   const { data: worksData } = useQuery(GetWorksDocument, {
@@ -120,6 +122,12 @@ function Works() {
     },
   });
 
+  useEffect(() => {
+    if (skillsData) {
+      setSkills(skillsData?.skills);
+    }
+  }, [skillsData?.skills]);
+
   if (worksData?.works.length === 0) {
     return <NotResult />;
   }
@@ -128,8 +136,8 @@ function Works() {
     <Wrapper>
       <NavigContainer>
         <Navig>
-          {skillsData ? (
-            <LeftNavig defaultFilters={skillsData.skills} selectedSkillIds={selectedSkillIds} />
+          {skills?.length !== 0 ? (
+            <LeftNavig defaultFilters={skills} selectedSkillIds={selectedSkillIds} />
           ) : (
             <CustomSkeleton variant="rectangular" height={"100vh"} />
           )}
@@ -137,7 +145,7 @@ function Works() {
       </NavigContainer>
       <KeyWordContainer>
         <KeyWordFixed>
-          <Filter defaultFilters={skillsData?.skills} selectedSkillIds={selectedSkillIds} worksLength={worksData?.works.length} />
+          <Filter defaultFilters={skills} selectedSkillIds={selectedSkillIds} worksLength={worksData?.works.length} />
         </KeyWordFixed>
         <WorksContainer>
           <Column>
