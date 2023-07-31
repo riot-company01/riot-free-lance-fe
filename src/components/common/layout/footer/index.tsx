@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import OutboundIcon from "@mui/icons-material/Outbound";
-import { COLOR } from "@/styles/colors";
 import { NextLink } from "@/components/common/next-link";
+import { COLOR } from "@/styles/colors";
 
 export const LayoutFooter: React.FC = () => {
   return (
