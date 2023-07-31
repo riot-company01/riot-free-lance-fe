@@ -146,25 +146,27 @@ function Works() {
         works_aggregate: {
           count: { predicate: { _gt: 0 } },
         },
-        _and: [
-          ...selectedSkillIds.map((skillId) => {
-            return { works: { work: languages(skillId) } };
-          }),
+        _or: [
           {
-            _or: [
-              {
-                works: {
-                  work: direction(inputKeyword),
-                },
-              },
-              {
-                works: {
-                  work: title(inputKeyword),
-                },
-              },
-            ],
+            works: {
+              work: direction(inputKeyword),
+            },
+          },
+          {
+            works: {
+              work: title(inputKeyword),
+            },
           },
         ],
+        works: {
+          work: {
+            _and: [
+              ...selectedSkillIds.map((skillId) => {
+                return languages(skillId);
+              }),
+            ],
+          },
+        },
       },
       worksWhere: {
         _and: [

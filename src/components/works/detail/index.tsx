@@ -17,7 +17,6 @@ type Props = {
 };
 
 export function Detail({ defaultWorkId }: Props) {
-  console.log(defaultWorkId);
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const id = Number(router.query["work-id"]) || defaultWorkId;
@@ -76,7 +75,7 @@ export function Detail({ defaultWorkId }: Props) {
               return (
                 <>
                   <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
-                  <Span>万円/月額 (想定年収: {((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
+                  <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
                 </>
               );
             } else {
