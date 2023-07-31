@@ -35,7 +35,7 @@ export function LeftNavig({ defaultFilters, selectedSkillIds }: Props) {
     });
     setViewList(filterers);
   }, [JSON.stringify(defaultFilters)]);
-
+  console.log(viewList);
   return (
     <>
       {viewList.map((nodes) => {
@@ -67,6 +67,7 @@ function Accordion({ nodes, selectedSkillIds }: PropsAccordion) {
           }}
         >
           {nodes.word.map((keyword) => {
+            if (keyword.works_aggregate.aggregate?.count === 0) return null;
             const strId = keyword.id.toString();
             const skillIds = selectedSkillIds.includes(strId) ? selectedSkillIds.filter((i) => i !== strId) : [...selectedSkillIds, strId];
             return (

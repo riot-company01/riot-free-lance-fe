@@ -74,18 +74,18 @@ export const getServerSideProps = withPageAuthRequired({
               return { works: { work: languages(skillId) } };
             }),
             {
-              // _or: [
-              //   {
-              //     works: {
-              //       work: direction(inputKeyword),
-              //     },
-              //   },
-              //   {
-              //     works: {
-              //       work: title(inputKeyword),
-              //     },
-              //   },
-              // ],
+              _or: [
+                {
+                  works: {
+                    work: direction(inputKeyword),
+                  },
+                },
+                {
+                  works: {
+                    work: title(inputKeyword),
+                  },
+                },
+              ],
             },
           ],
         },
@@ -95,14 +95,14 @@ export const getServerSideProps = withPageAuthRequired({
               return { work: languages(skillId) };
             }),
             {
-              // _or: [
-              //   {
-              //     work: direction(inputKeyword),
-              //   },
-              //   {
-              //     work: title(inputKeyword),
-              //   },
-              // ],
+              _or: [
+                {
+                  work: direction(inputKeyword),
+                },
+                {
+                  work: title(inputKeyword),
+                },
+              ],
             },
           ],
         },
