@@ -14,7 +14,7 @@ export default function Preparation() {
   return (
     <CenteredContainer>
       <Container>
-        <Message>ただいまこちらのページはです</Message>
+        <Message>ただいまこちらのページは準備中です</Message>
         <Button variant="contained" onClick={transitWorksPage}>
           案件ページに戻る
         </Button>
