@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { destyle } from "./destyle";
+import { COLOR } from "@/styles/colors";
 
 export const GLOBAL_STYLE = css`
   ${destyle};
@@ -15,13 +16,19 @@ export const GLOBAL_STYLE = css`
     padding: var(--sat) var(--sar) var(--sab) var(--sal);
   }
 
+  #__next {
+    padding-top: 78px;
+  }
+  :is(input, textarea, button, select, a):focus-visible {
+    outline: 2px solid ${COLOR.BASE_COLOR.code};
+    outline-offset: -2px;
+  }
   html,
   body {
-    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo,
-      sans-serif;
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     line-height: 1.6;
     overscroll-behavior: none;
     font-weight: 300;
-    background-color: #f5f5f5;
+    background-color: ${COLOR.WHITE.code};
   }
 `;

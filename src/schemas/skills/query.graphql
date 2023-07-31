@@ -1,0 +1,13 @@
+query GetSkills($skillsWhere: skills_bool_exp = { _and: [] }, $worksWhere: work_to_detail_bool_exp = { _and: [] })
+@cached(ttl: 0) {
+  skills(where: $skillsWhere) {
+    id
+    type
+    name
+    works_aggregate(where: $worksWhere) {
+      aggregate {
+        count
+      }
+    }
+  }
+}

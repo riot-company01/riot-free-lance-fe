@@ -1,0 +1,7 @@
+.next
+
+.eslintrc.js
+eslint-configs/*.js
+src/lib/graphql/*.ts
+src/lib/graphql.ts
+next.config.js

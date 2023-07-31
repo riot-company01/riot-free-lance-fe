@@ -1,0 +1,43 @@
+query GetWork($id: Int!) @cached(ttl: 0) {
+  works_by_pk(id: $id) {
+    id
+    title
+    contractType
+    location
+    maxMonthlyPrice
+    maxWorkHours
+    minMonthlyPrice
+    minWorkHours
+    description
+    createAt
+    languages {
+      skill {
+        id
+        name
+        type
+      }
+    }
+  }
+}
+
+query GetWorks($where: works_bool_exp = { _and: [] }, $order_by: [works_order_by!] = {}) @cached(ttl: 0) {
+  works(where: $where, order_by: $order_by) {
+    id
+    title
+    contractType
+    location
+    maxMonthlyPrice
+    maxWorkHours
+    minMonthlyPrice
+    minWorkHours
+    description
+    createAt
+    languages {
+      skill {
+        id
+        name
+        type
+      }
+    }
+  }
+}
