@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
-import { COLOR } from "@/styles/colors";
 import { Button } from "@mui/material";
-import { PATHS } from "@/const/paths";
 import { useRouter } from "next/router";
+import { PATHS } from "@/const/paths";
+import { COLOR } from "@/styles/colors";
 
 export default function Preparation() {
   const { push } = useRouter();
