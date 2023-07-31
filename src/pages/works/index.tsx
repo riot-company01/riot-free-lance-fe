@@ -37,76 +37,8 @@ const title = (keyword: string) => {
 
 export const getServerSideProps = withPageAuthRequired({
   // @ts-ignore
-  async getServerSideProps(ctx) {
+  async getServerSideProps() {
     const client = initializeApollo({});
-
-    const selectedSkillIds = (ctx.query["skill-ids"] as string | undefined)?.split(",") || [];
-    const inputKeyword = (ctx.query["keyword"] as string) || "";
-
-    await client.query({
-      query: GetWorksDocument,
-      variables: {
-        order_by: {
-          createAt: Order_By.Desc,
-        },
-        where: {
-          _and: [
-            ...selectedSkillIds.map((skillId) => {
-              return languages(skillId);
-            }),
-            { _or: [direction(inputKeyword), title(inputKeyword)] },
-          ],
-        },
-      },
-    });
-
-    await client.query({
-      query: GetSkillsDocument,
-      variables: {
-        skillsWhere: {
-          works_aggregate: {
-            count: { predicate: { _gt: 0 } },
-          },
-          _and: [
-            ...selectedSkillIds.map((skillId) => {
-              return { works: { work: languages(skillId) } };
-            }),
-            {
-              _or: [
-                {
-                  works: {
-                    work: direction(inputKeyword),
-                  },
-                },
-                {
-                  works: {
-                    work: title(inputKeyword),
-                  },
-                },
-              ],
-            },
-          ],
-        },
-        worksWhere: {
-          _and: [
-            ...selectedSkillIds.map((skillId) => {
-              return { work: languages(skillId) };
-            }),
-            {
-              _or: [
-                {
-                  work: direction(inputKeyword),
-                },
-                {
-                  work: title(inputKeyword),
-                },
-              ],
-            },
-          ],
-        },
-      },
-    });
-
     const documentProps = addApolloState(client, {
       props: {},
     });
@@ -146,25 +78,27 @@ function Works() {
         works_aggregate: {
           count: { predicate: { _gt: 0 } },
         },
-        _and: [
-          ...selectedSkillIds.map((skillId) => {
-            return { works: { work: languages(skillId) } };
-          }),
+        _or: [
           {
-            _or: [
-              {
-                works: {
-                  work: direction(inputKeyword),
-                },
-              },
-              {
-                works: {
-                  work: title(inputKeyword),
-                },
-              },
-            ],
+            works: {
+              work: direction(inputKeyword),
+            },
+          },
+          {
+            works: {
+              work: title(inputKeyword),
+            },
           },
         ],
+        works: {
+          work: {
+            _and: [
+              ...selectedSkillIds.map((skillId) => {
+                return languages(skillId);
+              }),
+            ],
+          },
+        },
       },
       worksWhere: {
         _and: [
