@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Checkbox as _Checkbox, FormControlLabel, FormGroup } from "@mui/material";
-import { map, groupBy } from "lodash-es";
+import { map, groupBy, sortBy } from "lodash-es";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -30,9 +30,16 @@ export function LeftNavig({ defaultFilters, selectedSkillIds }: Props) {
 
   useEffect(() => {
     if (!defaultFilters) return;
-    const filterers = map(groupBy(defaultFilters, "type"), (i, key) => {
-      return { type: key, word: i };
-    });
+    const filterers = sortBy(
+      map(groupBy(defaultFilters, "type"), (i, key) => {
+        return { type: key, word: i };
+      }),
+      [
+        function (o) {
+          return o.type;
+        },
+      ]
+    ).reverse();
     setViewList(filterers);
   }, [JSON.stringify(defaultFilters)]);
 
