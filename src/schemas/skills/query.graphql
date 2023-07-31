@@ -1,4 +1,4 @@
-query GetSkills($skillsWhere: skills_bool_exp = { _and: [] }, $worksWhere: work_to_detail_bool_exp = { _and: [] }) @cached {
+query GetSkills($skillsWhere: skills_bool_exp = { _and: [] }, $worksWhere: work_to_detail_bool_exp = { _and: [] }) @cached(ttl: 600) {
   skills(where: $skillsWhere) {
     id
     type

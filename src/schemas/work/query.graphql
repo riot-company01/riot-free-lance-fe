@@ -1,5 +1,5 @@
-query GetWork($id: Int_comparison_exp) @cached {
-  work(where: { id: $id }) {
+query GetWork($id: Int!) @cached(ttl: 600) {
+  works_by_pk(id: $id) {
     id
     title
     contractType
@@ -20,8 +20,8 @@ query GetWork($id: Int_comparison_exp) @cached {
   }
 }
 
-query GetWorks($where: work_bool_exp = { _and: [] }, $order_by: [work_order_by!] = {}) @cached {
-  work(where: $where, order_by: $order_by) {
+query GetWorks($where: works_bool_exp = { _and: [] }, $order_by: [works_order_by!] = {}) @cached(ttl: 600) {
+  works(where: $where, order_by: $order_by) {
     id
     title
     contractType

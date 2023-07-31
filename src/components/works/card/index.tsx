@@ -2,14 +2,15 @@ import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Chip } from "@mui/material";
+import { Card, CardActionArea, Chip } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 
-export function Card({ item }: { item: GetWorksQuery["work"][number] }) {
+export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
   return (
-    <Wrapper
+    <CustomCardActionArea
+      sx={{ width: 480, cursor: "pointer", borderRadius: 2 }}
       onClick={() => {
         router.push(
           {
@@ -23,78 +24,78 @@ export function Card({ item }: { item: GetWorksQuery["work"][number] }) {
         );
       }}
     >
-      <Title>
-        <div>{item.title}</div>
-      </Title>
-      <MonthlyPrice>
-        <Icon>
-          <MonetizationOnIcon fontSize="small" />
-        </Icon>
-        {(() => {
-          if (item.minMonthlyPrice && item.maxMonthlyPrice) {
+      <CardActionArea
+        sx={{
+          padding: 2,
+          minHeight: 400,
+        }}
+      >
+        <Title>
+          <div>{item.title}</div>
+        </Title>
+        <MonthlyPrice>
+          <Icon>
+            <MonetizationOnIcon fontSize="small" />
+          </Icon>
+          {(() => {
+            if (item.minMonthlyPrice && item.maxMonthlyPrice) {
+              return (
+                <>
+                  <Strong>{item.minMonthlyPrice}</Strong>~<Strong>{item.maxMonthlyPrice}</Strong>
+                  <Span>
+                    万円/月額 (想定年収: {item.minMonthlyPrice * 12}~{item.maxMonthlyPrice * 12}万円)
+                  </Span>
+                </>
+              );
+            } else if (item.minMonthlyPrice || item.maxMonthlyPrice) {
+              return (
+                <>
+                  <Strong>{item.minMonthlyPrice || item.maxMonthlyPrice}</Strong>
+                  <Span>万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)</Span>
+                </>
+              );
+            } else {
+              return <Span>要相談</Span>;
+            }
+          })()}
+        </MonthlyPrice>
+        <FlexContainer>
+          <Icon>
+            <ReportIcon />
+          </Icon>
+          <div>{item.contractType}</div>
+        </FlexContainer>
+        <FlexContainer>
+          <Icon>
+            <LocationOnIcon />
+          </Icon>
+          <div>{item.location}</div>
+        </FlexContainer>
+        <FlexContainerLabel>
+          {item.languages.map((value, idx) => {
             return (
-              <>
-                <Strong>{item.minMonthlyPrice}</Strong>~<Strong>{item.maxMonthlyPrice}</Strong>
-                <Span>
-                  万円/月額 (想定年収: {item.minMonthlyPrice * 12}~{item.maxMonthlyPrice * 12}万円)
-                </Span>
-              </>
+              <Chip
+                key={idx}
+                label={value.skill?.name}
+                sx={{
+                  borderRadius: 0,
+                  fontWeight: "bold",
+                }}
+              />
             );
-          } else if (item.minMonthlyPrice || item.maxMonthlyPrice) {
-            return (
-              <>
-                <Strong>{item.minMonthlyPrice || item.maxMonthlyPrice}</Strong>
-                <Span>万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)</Span>
-              </>
-            );
-          } else {
-            return <Span>要相談</Span>;
-          }
-        })()}
-      </MonthlyPrice>
-      <FlexContainer>
-        <Icon>
-          <ReportIcon />
-        </Icon>
-        <div>{item.contractType}</div>
-      </FlexContainer>
-      <FlexContainer>
-        <Icon>
-          <LocationOnIcon />
-        </Icon>
-        <div>{item.location}</div>
-      </FlexContainer>
-      <FlexContainerLabel>
-        {item.languages.map((value, idx) => {
-          return (
-            <Chip
-              key={idx}
-              label={value.skill?.name}
-              sx={{
-                borderRadius: 0,
-                fontWeight: "bold",
-              }}
-            />
-          );
-        })}
-      </FlexContainerLabel>
-      <MdWrapper>{removeMd(item.description)}</MdWrapper>
-      <PublicationDate>掲載日:{item.createAt}</PublicationDate>
-    </Wrapper>
+          })}
+        </FlexContainerLabel>
+        <MdWrapper>{removeMd(item.description)}</MdWrapper>
+        <PublicationDate>掲載日:{item.createAt}</PublicationDate>
+      </CardActionArea>
+    </CustomCardActionArea>
   );
 }
 
-const Wrapper = styled.div`
-  border: 1px solid rgb(224, 224, 224);
-  padding: 16px;
-  width: 480px;
+const CustomCardActionArea = styled(Card)`
   :not(:first-of-type) {
     margin-top: 16px;
   }
-  max-width: 480px;
-  background-color: white;
-  height: 400px;
-  border-radius: 8px;
 `;
 
 const Title = styled.div`
@@ -153,3 +154,34 @@ const PublicationDate = styled.div`
   padding-top: 8px;
   font-size: 12px;
 `;
+
+// import * as React from 'react';
+// import Card from '@mui/material/Card';
+// import CardContent from '@mui/material/CardContent';
+// import CardMedia from '@mui/material/CardMedia';
+// import Typography from '@mui/material/Typography';
+// import { CardActionArea } from '@mui/material';
+
+// export default function ActionAreaCard() {
+//   return (
+//     <Card sx={{ maxWidth: 345 }}>
+//       <CardActionArea>
+//         <CardMedia
+//           component="img"
+//           height="140"
+//           image="/static/images/cards/contemplative-reptile.jpg"
+//           alt="green iguana"
+//         />
+//         <CardContent>
+//           <Typography gutterBottom variant="h5" component="div">
+//             Lizard
+//           </Typography>
+//           <Typography variant="body2" color="text.secondary">
+//             Lizards are a widespread group of squamate reptiles, with over 6,000
+//             species, ranging across all continents except Antarctica
+//           </Typography>
+//         </CardContent>
+//       </CardActionArea>
+//     </Card>
+//   );
+// }
