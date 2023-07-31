@@ -1,69 +1,13 @@
 import styled from "@emotion/styled";
-import SearchIcon from "@mui/icons-material/Search";
-import { Stack, Chip, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import router from "next/router";
-import type { GetSkillsQuery } from "@/lib/graphql/graphql";
-import { removeObjectKey } from "@/util/remove-object-key";
 
-export function NotResult({
-  keepSkills,
-  selectedSkillIds,
-  inputKeyword,
-}: {
-  keepSkills: GetSkillsQuery["skills"];
-  selectedSkillIds: string[];
-  inputKeyword: string;
-}) {
+export function NotResult() {
   return (
     <NotResultWrapper>
       <As>該当する案件がありません。</As>
       <div>絞り込み条件を見直してください。</div>
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{
-          margin: "0 auto",
-        }}
-      >
-        {selectedSkillIds.map((value) => {
-          const skillIds = selectedSkillIds.filter((i) => i !== value);
-          return (
-            keepSkills?.find((i) => i.id === Number(value))?.name && (
-              <Chip
-                key={value}
-                label={keepSkills?.find((i) => i.id === Number(value))?.name}
-                onDelete={() => {
-                  router.push({
-                    query:
-                      skillIds.length !== 0
-                        ? {
-                            ...router.query,
-                            [`skill-ids`]: `${skillIds.join()}`,
-                          }
-                        : {
-                            ...removeObjectKey(router.query, "skill-ids"),
-                          },
-                  });
-                }}
-              />
-            )
-          );
-        })}
-        {inputKeyword && (
-          <Chip
-            icon={<SearchIcon fontSize="small" />}
-            key={inputKeyword}
-            label={inputKeyword}
-            onDelete={() => {
-              router.push({
-                query: {
-                  ...removeObjectKey(router.query, "keyword"),
-                },
-              });
-            }}
-          />
-        )}
-      </Stack>
+
       <Button
         variant="contained"
         sx={{

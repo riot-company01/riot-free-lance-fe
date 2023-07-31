@@ -3,14 +3,12 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
 import { CustomCard } from "@/components/works/card";
 import { Detail } from "@/components/works/detail";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
 import { NotResult } from "@/components/works/not-result";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
-import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 import { Order_By, GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 
 export const WORKS_Z_INDEX = {
@@ -120,7 +118,6 @@ export const getServerSideProps = withPageAuthRequired({
 
 function Works() {
   const router = useRouter();
-  const [keepSkills, setKeepSkills] = useState<GetSkillsQuery["skills"]>([]);
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
   const inputKeyword = (router.query["keyword"] as string) || "";
   const sort = (router.query["sort"] as string) || "";
@@ -189,13 +186,8 @@ function Works() {
     },
   });
 
-  useEffect(() => {
-    if (skillsData?.skills.length === 0) return;
-    setKeepSkills(skillsData?.skills || []);
-  }, [skillsData]);
-
-  if (!worksData && !loading) {
-    return <NotResult keepSkills={keepSkills} selectedSkillIds={selectedSkillIds} inputKeyword={inputKeyword} />;
+  if (worksData?.works.length === 0) {
+    return <NotResult />;
   }
 
   return (

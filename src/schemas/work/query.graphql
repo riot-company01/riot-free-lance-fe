@@ -1,4 +1,4 @@
-query GetWork($id: Int!) @cached {
+query GetWork($id: Int!) @cached(ttl: 600) {
   works_by_pk(id: $id) {
     id
     title
@@ -20,7 +20,7 @@ query GetWork($id: Int!) @cached {
   }
 }
 
-query GetWorks($where: works_bool_exp = { _and: [] }, $order_by: [works_order_by!] = {}) @cached {
+query GetWorks($where: works_bool_exp = { _and: [] }, $order_by: [works_order_by!] = {}) @cached(ttl: 600) {
   works(where: $where, order_by: $order_by) {
     id
     title
