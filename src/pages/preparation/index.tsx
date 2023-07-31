@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
-import { PATHS } from "@/const/paths";
 import { COLOR } from "@/styles/colors";
 
 export default function Preparation() {
   const { push } = useRouter();
 
   const transitWorksPage = () => {
-    push(PATHS.PROJECT);
+    push({
+      pathname: "/works",
+    });
   };
 
   return (

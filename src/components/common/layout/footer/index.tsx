@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import OutboundIcon from "@mui/icons-material/Outbound";
-import { NextLink } from "@/components/common/next-link";
+import NextLink from "next/link";
 import { COLOR } from "@/styles/colors";
 
 export const LayoutFooter: React.FC = () => {
@@ -49,10 +49,3 @@ const Wrapper = styled.footer`
     }
   }
 `;
-
-// 運営会社
-// 利用規約
-// プライバシーポリシー
-// 提携パートナー
-// お問い合わせ
-// ご利用ガイド
