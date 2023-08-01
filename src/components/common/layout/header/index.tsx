@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import { alpha, InputBase, Menu, MenuItem, styled as muiStyled } from "@mui/material";
+import { alpha, Avatar, InputBase, Menu, MenuItem, styled as muiStyled } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -10,12 +9,12 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { useState } from "react";
 
-const pcPages = ["株式会社Riot", "LOGOUT"];
-const spPages = ["LOGOUT"];
+const pages = ["株式会社ライオット", "LOGOUT"];
 
 export function LayoutHeader() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -56,7 +55,7 @@ export function LayoutHeader() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -76,7 +75,7 @@ export function LayoutHeader() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {spPages.map((page) => (
+              {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
@@ -85,7 +84,7 @@ export function LayoutHeader() {
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pcPages.map((page) => (
+            {pages.map((page) => (
               <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
                 {page}
               </Button>
