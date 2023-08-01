@@ -107,7 +107,7 @@ const Layout = styled.div<{
   left: 50%;
   max-width: 768px;
   width: 100%;
-  height: 90%;
+  max-height: 90%;
   background-color: white;
   transform: translate(-50%, -50%);
   z-index: 10002;
