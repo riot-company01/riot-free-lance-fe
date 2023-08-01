@@ -1,3 +1,4 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import { alpha, Avatar, InputBase, Menu, MenuItem, styled as muiStyled } from "@mui/material";
@@ -8,20 +9,36 @@ import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { useState } from "react";
-
-const pages = ["株式会社ライオット", "LOGOUT"];
+import { removeObjectKey } from "@/util/remove-object-key";
 
 export function LayoutHeader() {
   const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
+  const { user } = useUser();
+  const router = useRouter();
+  const [inputValue, setInputValue] = useState("");
 
+  const pages = [user?.email, "LOGOUT"];
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+  const filteredQuery =
+    inputValue !== ""
+      ? {
+          ...router.query,
+          keyword: inputValue,
+        }
+      : { ...removeObjectKey(router.query, "keyword") };
+
+  const handleCloseNavMenu = (target?: string) => {
+    if (target === "LOGOUT") {
+      router.push("/api/auth/logout");
+    } else {
+      setAnchorElNav(null);
+    }
   };
 
   return (
@@ -55,7 +72,7 @@ export function LayoutHeader() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+              <Avatar alt={user?.email || ""} src="/static/images/avatar/2.jpg" />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -70,13 +87,20 @@ export function LayoutHeader() {
                 horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={() => handleCloseNavMenu()}
               sx={{
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+              {pages.map((page, idx) => (
+                <MenuItem
+                  key={idx}
+                  onClick={() => {
+                    if (page) {
+                      handleCloseNavMenu(page);
+                    }
+                  }}
+                >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -84,8 +108,16 @@ export function LayoutHeader() {
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
+            {pages.map((page, idx) => (
+              <Button
+                key={idx}
+                onClick={() => {
+                  if (page) {
+                    handleCloseNavMenu(page);
+                  }
+                }}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
                 {page}
               </Button>
             ))}
@@ -94,9 +126,35 @@ export function LayoutHeader() {
           <Box sx={{ flexGrow: 0 }}>
             <Search>
               <SearchIconWrapper>
-                <SearchIcon />
+                <SearchIcon
+                  onClick={() => {
+                    router.push({
+                      pathname: "works/",
+                      query: {
+                        ...filteredQuery,
+                      },
+                    });
+                  }}
+                />
               </SearchIconWrapper>
-              <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
+              <StyledInputBase
+                placeholder="キーワード検索..."
+                inputProps={{ "aria-label": "search" }}
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                }}
+                onKeyDown={(e) => {
+                  if (e.code === "Enter") {
+                    e.preventDefault();
+                    router.push({
+                      pathname: "works/",
+                      query: {
+                        ...filteredQuery,
+                      },
+                    });
+                  }
+                }}
+              />
             </Search>
           </Box>
         </Toolbar>
@@ -142,7 +200,7 @@ const StyledInputBase = muiStyled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "12ch",
+      width: "20ch",
       "&:focus": {
         width: "20ch",
       },
