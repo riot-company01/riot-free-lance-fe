@@ -33,6 +33,7 @@ export function useApiRequest() {
     variables: {
       order_by: {
         ...order,
+        isClosed: Order_By.Asc,
       },
       where: {
         _and: [

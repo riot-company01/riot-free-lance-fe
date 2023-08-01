@@ -8,6 +8,7 @@ import removeMd from "remove-markdown";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 
 export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
+  console.log(item.isClosed);
   return (
     <CustomCardActionArea
       sx={{ cursor: "pointer", borderRadius: 2 }}
@@ -24,6 +25,11 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
         );
       }}
     >
+      {item.isClosed && (
+        <Closed>
+          <Msg>この案件の募集は終了しました。</Msg>
+        </Closed>
+      )}
       <CardActionArea
         sx={{
           padding: 2,
@@ -93,10 +99,32 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
 }
 
 const CustomCardActionArea = styled(Card)`
+  position: relative;
   :not(:first-of-type) {
     margin-top: 16px;
   }
   width: 480px;
+`;
+
+const Closed = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+`;
+
+const Msg = styled.div`
+  color: white;
+  font-weight: bold;
+  justify-content: center;
+  display: flex;
+  font-size: 20px;
+  height: 100%;
+  width: 100%;
+  align-items: center;
 `;
 
 const Title = styled.div`
