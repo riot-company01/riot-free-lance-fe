@@ -1,139 +1,152 @@
-import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
+import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import { alpha, InputBase, Menu, MenuItem, styled as muiStyled } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
-import Paper from "@mui/material/Paper";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { COLOR } from "@/styles/colors";
-import { removeObjectKey } from "@/util/remove-object-key";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 
-export const LayoutHeader: React.FC = () => {
-  const { user } = useUser();
-  return (
-    <Wrapper>
-      <FlexContainer>
-        <NextLink href="/works">
-          <List>
-            <Logo src="images/company-logo.png" alt="ライオット" />
-          </List>
-        </NextLink>
+const pcPages = ["株式会社Riot", "LOGOUT"];
+const spPages = ["LOGOUT"];
 
-        <List>
-          <CustomizedInputBase />
-        </List>
+export function LayoutHeader() {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
-        {/* <NextLink href="#">
-          <List>検索履歴</List>
-        </NextLink>
-        <NextLink href="#">
-          <List>条件</List>
-        </NextLink> */}
-      </FlexContainer>
-      <FlexContainer>
-        {/* <NextLink href="#">
-          <List>案件を探す</List>
-        </NextLink> */}
-        {/* <NextLink href="#">
-          <List>エージェントを探す</List>
-        </NextLink> */}
-        {/* <NextLink href="#">
-          <List>スカウト</List>
-        </NextLink> */}
-        {/* <NextLink href="#">
-          <List>情報</List>
-        </NextLink> */}
-        <List>{user?.name}</List>
-        <NextLink href="/api/auth/logout">
-          <LastList>ログアウト</LastList>
-        </NextLink>
-      </FlexContainer>
-    </Wrapper>
-  );
-};
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
 
-const FlexContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Logo = styled.img`
-  width: 40px;
-`;
-
-const List = styled.div`
-  font-size: 14px;
-  padding-left: 20px;
-`;
-const LastList = styled.div`
-  font-size: 14px;
-  padding-left: 20px;
-  padding-right: 20px;
-`;
-
-const Wrapper = styled.header`
-  position: fixed;
-  z-index: 1000;
-  height: 78px;
-  display: flex;
-  top: 0;
-  justify-content: space-between;
-  width: 100%;
-  background-color: ${COLOR.WHITE.code};
-`;
-
-export function CustomizedInputBase() {
-  const router = useRouter();
-  const [inputValue, setInputValue] = useState("");
-
-  const filteredQuery =
-    inputValue !== ""
-      ? {
-          ...router.query,
-          keyword: inputValue,
-        }
-      : { ...removeObjectKey(router.query, "keyword") };
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
   return (
-    <Paper component="form" sx={{ display: "flex", alignItems: "center", width: 300 }}>
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="言語・キーワードで検索"
-        inputProps={{ "aria-label": "言語・キーワードで検索" }}
-        type="input"
-        value={inputValue}
-        onChange={(e) => {
-          setInputValue(e.target.value);
-        }}
-        onKeyDown={(e) => {
-          if (e.code === "Enter") {
-            e.preventDefault();
-            router.push({
-              pathname: "works/",
-              query: {
-                ...filteredQuery,
-              },
-            });
-          }
-        }}
-      />
-      <IconButton
-        type="button"
-        sx={{ p: "10px" }}
-        aria-label="search"
-        onClick={() => {
-          router.push({
-            pathname: "works/",
-            query: {
-              ...filteredQuery,
-            },
-          });
-        }}
-      >
-        <SearchIcon />
-      </IconButton>
-    </Paper>
+    <AppBar position="sticky">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/works"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            <Logo src="images/Group-35.png" alt="ライオット" />
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              {spPages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {pcPages.map((page) => (
+              <Button key={page} onClick={handleCloseNavMenu} sx={{ my: 2, color: "white", display: "block" }}>
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
+            </Search>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }
+
+const Logo = styled.img`
+  width: 68px;
+`;
+
+const Search = muiStyled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = muiStyled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = muiStyled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
