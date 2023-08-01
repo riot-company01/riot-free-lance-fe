@@ -10,7 +10,7 @@ import type { GetWorksQuery } from "@/lib/graphql/graphql";
 export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
   return (
     <CustomCardActionArea
-      sx={{ width: 480, cursor: "pointer", borderRadius: 2 }}
+      sx={{ cursor: "pointer", borderRadius: 2 }}
       onClick={() => {
         router.push(
           {
@@ -96,6 +96,7 @@ const CustomCardActionArea = styled(Card)`
   :not(:first-of-type) {
     margin-top: 16px;
   }
+  width: 480px;
 `;
 
 const Title = styled.div`
@@ -154,34 +155,3 @@ const PublicationDate = styled.div`
   padding-top: 8px;
   font-size: 12px;
 `;
-
-// import * as React from 'react';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import Typography from '@mui/material/Typography';
-// import { CardActionArea } from '@mui/material';
-
-// export default function ActionAreaCard() {
-//   return (
-//     <Card sx={{ maxWidth: 345 }}>
-//       <CardActionArea>
-//         <CardMedia
-//           component="img"
-//           height="140"
-//           image="/static/images/cards/contemplative-reptile.jpg"
-//           alt="green iguana"
-//         />
-//         <CardContent>
-//           <Typography gutterBottom variant="h5" component="div">
-//             Lizard
-//           </Typography>
-//           <Typography variant="body2" color="text.secondary">
-//             Lizards are a widespread group of squamate reptiles, with over 6,000
-//             species, ranging across all continents except Antarctica
-//           </Typography>
-//         </CardContent>
-//       </CardActionArea>
-//     </Card>
-//   );
-// }
