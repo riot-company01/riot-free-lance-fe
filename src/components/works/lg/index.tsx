@@ -38,7 +38,14 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
               : [...Array(5)].map((_, idx) => {
                   return (
                     <WrapperSkeleton key={idx}>
-                      <CustomSkeleton key={idx} variant="rectangular" height={"100%"} />
+                      <CustomSkeleton
+                        key={idx}
+                        variant="rectangular"
+                        height={400}
+                        sx={{
+                          borderRadius: 2,
+                        }}
+                      />
                     </WrapperSkeleton>
                   );
                 })}
@@ -61,7 +68,6 @@ const Wrapper = styled.div`
 
 const WrapperSkeleton = styled.div`
   border: 1px solid rgb(224, 224, 224);
-  padding: 16px;
   width: 480px;
   :not(:first-of-type) {
     margin-top: 16px;

@@ -2,15 +2,15 @@ import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Card, CardActionArea, Chip } from "@mui/material";
+import { CardActionArea, Chip, Card as MuiCard } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 
-export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
+export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
   return (
     <CustomCardActionArea
-      sx={{ cursor: "pointer", borderRadius: 2 }}
+      sx={{ cursor: "pointer", borderRadius: 2, overflow: "scroll" }}
       onClick={() => {
         router.push(
           {
@@ -32,7 +32,6 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
       <CardActionArea
         sx={{
           padding: 2,
-          minHeight: 400,
         }}
       >
         <Title>
@@ -97,12 +96,8 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
   );
 }
 
-const CustomCardActionArea = styled(Card)`
+const CustomCardActionArea = styled(MuiCard)`
   position: relative;
-  :not(:first-of-type) {
-    margin-top: 16px;
-  }
-  width: 480px;
 `;
 
 const Closed = styled.div`
@@ -122,6 +117,7 @@ const Msg = styled.div`
   display: flex;
   font-size: 20px;
   height: 100%;
+  text-align: center;
   width: 100%;
   align-items: center;
 `;
@@ -144,7 +140,7 @@ const Strong = styled.div`
 `;
 
 const Span = styled.div`
-  font-size: 12px;
+  font-size: 10px;
 `;
 
 const Icon = styled.div`
@@ -165,14 +161,13 @@ const FlexContainer = styled.div`
 
 const FlexContainerLabel = styled(FlexContainer)`
   overflow: auto;
-  flex-wrap: wrap;
   gap: 4px;
 `;
 
 const MdWrapper = styled.div`
-  padding-top: 8px;
+  padding-top: 4px;
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 14px;

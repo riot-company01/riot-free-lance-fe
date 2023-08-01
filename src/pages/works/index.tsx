@@ -55,7 +55,7 @@ function Works() {
           display: { ...MD_BREAK_POINT },
         }}
       >
-        <WorksMd />
+        <WorksMd skills={skills} selectedSkillIds={selectedSkillIds} worksData={worksData} />
       </Box>
     </>
   );
