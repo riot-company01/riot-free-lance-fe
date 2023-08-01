@@ -129,15 +129,3 @@ const Wrapper = styled.div`
   word-wrap: break-word;
   overflow-wrap: break-word;
 `;
-
-const DivWrapper = styled.div`
-  position: sticky;
-  top: 0px;
-  z-index: 10004;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  height: 60px;
-  color: white;
-  background-color: #1976d2;
-`;
