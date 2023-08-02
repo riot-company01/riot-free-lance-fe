@@ -3,7 +3,6 @@ import { Box, Button, Modal } from "@mui/material";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import * as Styles from "./styles";
-import { Button as _Button } from "@/components/common/button";
 import { KeywordTag } from "@/components/user/edit/common/keyword-tag";
 import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
 import { FRAME_WORKS } from "@/components/user/edit/common/multi-select-items/mock";
@@ -62,22 +61,13 @@ export const FrameWork = (props: FrameWorkProps) => {
             />
           </Styles.DivItemsWrapper>
           <Styles.DivButtonWrapper>
-            <_Button
-              text="キャンセル"
-              width={250}
-              borderColor={COLOR.LIGHT_GRAY.code}
-              backGround={COLOR.WHITE.code}
-              fontColor={COLOR.LIGHT_GRAY.code}
-              onClick={handleCancelButtonClick}
-            />
+            <Button variant="outlined" onClick={handleCancelButtonClick}>
+              キャンセル
+            </Button>
 
-            <_Button
-              text="保存する"
-              width={250}
-              backGround={COLOR.BASE_COLOR.code}
-              fontColor={COLOR.WHITE.code}
-              onClick={handleKeepButtonClick}
-            />
+            <Button variant="contained" onClick={handleKeepButtonClick}>
+              保存する
+            </Button>
           </Styles.DivButtonWrapper>
         </Box>
       </Modal>

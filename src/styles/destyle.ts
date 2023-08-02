@@ -10,7 +10,6 @@ export const destyle = css`
     border-width: 0;
   }
   html {
-    line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
   }
@@ -37,8 +36,6 @@ export const destyle = css`
   h4,
   h5,
   h6 {
-    font-size: inherit;
-    font-weight: inherit;
     margin: 0;
   }
   ul,

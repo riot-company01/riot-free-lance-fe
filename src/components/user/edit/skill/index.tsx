@@ -1,9 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { TextareaAutosize, TextField } from "@mui/material";
+import { Button, TextareaAutosize, TextField } from "@mui/material";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
-import { Button } from "@/components/common/button";
 import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
 import { PROFESSIONAL_EXPERIENCES, INDUSTRIES } from "@/components/user/edit/common/multi-select-items/mock";
 import { Tag } from "@/components/user/edit/common/tag";
@@ -11,12 +10,10 @@ import { myStyle } from "@/components/user/edit/const";
 import { FrameWork } from "@/components/user/edit/skill/frame-work";
 import { useEditSkill } from "@/components/user/edit/skill/hooks/use-edit-skill";
 import { LanguageLibraries } from "@/components/user/edit/skill/language-libraries";
-import FileUploader from "@/components/user/profile/common/file-upload-download";
-import { PATHS } from "@/const/paths";
+import FileUploadDownloadComponent from "@/components/user/profile/common/file-upload-download";
 import { EditSkillInfoDocument, GetUserSkillDocument } from "@/lib/graphql/graphql";
 import type { GetUserSkillQuery, GetUserSkillQueryVariables } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
-import FileUploadDownloadComponent from "@/components/user/profile/common/file-upload-download";
 
 export const EditSkill = () => {
   const { push } = useRouter();
@@ -31,21 +28,18 @@ export const EditSkill = () => {
     selectedLanguageLibralies,
     portfolio,
     textArea,
-    uploadFileName,
-    uploadFilePath,
     setSelectedProfessionalExperiences,
     setSelectedIndustries,
     setSelectedFrameWorks,
     setSelectedLanguageLibralies,
     onChangePortfolio,
     onChangeTextArea,
-    onChangeUploadFileName,
   } = useEditSkill(data);
 
   const [editSkillInfoMutation] = useMutation(EditSkillInfoDocument);
 
   const handleCancelButtonClick = () => {
-    push(PATHS.PROFILE);
+    push("/user/profile");
   };
 
   const handleKeepButtonClick = async () => {
@@ -58,11 +52,9 @@ export const EditSkill = () => {
         frameWork: selectedFrameWorks,
         portfolio,
         selfPr: textArea,
-        fileTitle: uploadFileName,
-        filePath: uploadFilePath,
       },
     }),
-      push(PATHS.PROFILE);
+      push("/user/profile");
   };
 
   return (
@@ -176,22 +168,13 @@ export const EditSkill = () => {
       </Styles.DivItem>
 
       <Styles.DivButtonWrapper>
-        <Button
-          text="キャンセル"
-          width={400}
-          borderColor={COLOR.LIGHT_GRAY.code}
-          backGround={COLOR.WHITE.code}
-          fontColor={COLOR.LIGHT_GRAY.code}
-          onClick={handleCancelButtonClick}
-        />
+        <Button variant="outlined" onClick={handleCancelButtonClick}>
+          キャンセル
+        </Button>
 
-        <Button
-          text="保存する"
-          width={400}
-          backGround={COLOR.BASE_COLOR.code}
-          fontColor={COLOR.WHITE.code}
-          onClick={handleKeepButtonClick}
-        />
+        <Button variant="contained" onClick={handleKeepButtonClick}>
+          保存する
+        </Button>
       </Styles.DivButtonWrapper>
     </Styles.DivEditBasicInfoWrapper>
   );

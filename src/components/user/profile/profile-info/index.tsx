@@ -1,24 +1,21 @@
 import { useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import EditIcon from "@mui/icons-material/Edit";
-import * as Styles from "./styles";
-import FileUploader from "@/components/user/profile/common/file-upload-download";
-import { useProfile } from "@/components/user/profile/hooks/use-profile";
-import { GetUserInfoDocument } from "@/lib/graphql/graphql";
-import type { GetUserInfoQuery, GetUserInfoQueryVariables } from "@/lib/graphql/graphql";
-import { COLOR } from "@/styles/colors";
-import { KeywordTag } from "@/components/user/edit/common/keyword-tag";
-import Link from "next/link";
 import LaunchIcon from "@mui/icons-material/Launch";
+import Link from "next/link";
+import * as Styles from "./styles";
+import { KeywordTag } from "@/components/user/edit/common/keyword-tag";
 import FileUploadDownloadComponent from "@/components/user/profile/common/file-upload-download";
+import { GetUserDocument } from "@/lib/graphql/graphql";
+import type { GetUserQueryVariables, GetUserQuery } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
 export const ProfileInfo = () => {
   const { user } = useUser();
-  const { data, loading } = useQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(GetUserInfoDocument, {
+  const { data, loading } = useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, {
     variables: { id: user?.sub },
   });
   const userInfo = data?.users[0];
-  const { uploadFile, onChangeUploadFile } = useProfile(userInfo?.file_name);
 
   return (
     <>

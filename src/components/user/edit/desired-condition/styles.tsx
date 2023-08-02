@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { SCREEN_SIZE } from "@/const/screen-size";
 
 export const DivEditBasicInfoWrapper = styled.div`
   max-width: 980px;
@@ -13,10 +12,8 @@ export const HeadTitle = styled.h2`
 `;
 
 export const DivItem = styled.div`
-  @media (min-width: ${SCREEN_SIZE.isPcSize}) {
-    display: flex;
-    margin-top: 32px;
-  }
+  display: flex;
+  margin-top: 32px;
 `;
 
 export const DivItemWrapper = styled.div`

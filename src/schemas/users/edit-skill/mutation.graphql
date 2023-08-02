@@ -33,7 +33,7 @@ mutation editSkillInfo(
   }
 }
 
-mutation UploadSkillSheet($id: String, $filename: String!, $filedata: String!) {
+mutation UploadSkillSheet($id: String!, $filename: String!, $filedata: String!) {
   update_users_by_pk(pk_columns: { id: $id }, _set: { file_name: $filename, file_data: $filedata }) {
     file_name
     file_data

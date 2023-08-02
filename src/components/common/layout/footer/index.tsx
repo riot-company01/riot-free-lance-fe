@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import OutboundIcon from "@mui/icons-material/Outbound";
+import NextLink from "next/link";
 import { COLOR } from "@/styles/colors";
 
 export const LayoutFooter: React.FC = () => {
@@ -7,23 +8,23 @@ export const LayoutFooter: React.FC = () => {
     <Wrapper>
       <div>
         <OutboundIcon fontSize="small" />
-        運営会社
+        <NextLink href="https://riot-company.com/top/">運営会社</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        利用規約
+        <NextLink href="/preparation">利用規約</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        プライバシーポリシー
+        <NextLink href="/preparation">プライバシーポリシー</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        お問い合わせ
+        <NextLink href="https://riot-company.com/contact/">お問い合わせ</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        ご利用ガイド
+        <NextLink href="/preparation">ご利用ガイド</NextLink>
       </div>
     </Wrapper>
   );
@@ -48,10 +49,3 @@ const Wrapper = styled.footer`
     }
   }
 `;
-
-// 運営会社
-// 利用規約
-// プライバシーポリシー
-// 提携パートナー
-// お問い合わせ
-// ご利用ガイド

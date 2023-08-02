@@ -1,184 +1,171 @@
 import { useQuery } from "@apollo/client";
-import { css } from "@emotion/css";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import styled from "@emotion/styled";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import ReportIcon from "@mui/icons-material/Report";
-import { Chip } from "@mui/material";
-import type { GetServerSideProps } from "next";
+import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { CustomCard } from "@/components/works/card";
+import { Detail } from "@/components/works/detail";
 import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
+import { NotResult } from "@/components/works/not-result";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
-import { GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
+import type { GetSkillsQuery } from "@/lib/graphql/graphql";
+import { Order_By, GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const client = initializeApollo({});
+const languages = (skillId: string) => {
+  return { languages: { skill_id: { _eq: Number(skillId) } } };
+};
 
-  const selectedSkillIds = (ctx.query["skill-ids"] as string | undefined)?.split(",") || [];
-
-  await client.query({
-    query: GetWorksDocument,
-    variables: {
-      where: {
-        _and: [
-          ...selectedSkillIds.map((skillId) => {
-            return { languages: { skill_id: { _eq: Number(skillId) } } };
-          }),
-        ],
-      },
-    },
-  });
-
-  await client.query({
-    query: GetSkillsDocument,
-    variables: {
-      skillsWhere: {
-        works_aggregate: {
-          count: { predicate: { _gt: 0 } },
-        },
-        _and: [
-          ...selectedSkillIds.map((skillId) => {
-            return { works: { work: { languages: { skill_id: { _eq: Number(skillId) } } } } };
-          }),
-        ],
-      },
-      worksWhere: {
-        _and: [
-          ...selectedSkillIds.map((skillId) => {
-            return { work: { languages: { skill_id: { _eq: Number(skillId) } } } };
-          }),
-        ],
-      },
-    },
-  });
-
-  const documentProps = addApolloState(client, {
-    props: {},
-  });
+const direction = (keyword: string) => {
   return {
-    props: documentProps.props,
+    description: {
+      _ilike: `%${keyword}%`,
+    },
   };
 };
 
-export default function Works() {
+const title = (keyword: string) => {
+  return {
+    title: {
+      _ilike: `%${keyword}%`,
+    },
+  };
+};
+
+export const getServerSideProps = withPageAuthRequired({
+  // @ts-ignore
+  async getServerSideProps() {
+    const client = initializeApollo({});
+    const documentProps = addApolloState(client, {
+      props: {},
+    });
+    return {
+      props: documentProps.props,
+    };
+  },
+});
+
+function Works() {
   const router = useRouter();
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
+  const inputKeyword = (router.query["keyword"] as string) || "";
+  const sort = (router.query["sort"] as string) || "";
+  const [skills, setSkills] = useState<GetSkillsQuery["skills"] | undefined>([]);
+  const order = sort === "new" ? { createAt: Order_By.Desc } : { maxMonthlyPrice: Order_By.Desc };
 
-  const { data: works } = useQuery(GetWorksDocument, {
+  const { data: worksData } = useQuery(GetWorksDocument, {
     variables: {
+      order_by: {
+        ...order,
+      },
       where: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { languages: { skill_id: { _eq: Number(skillId) } } };
+            return languages(skillId);
           }),
+          { _or: [direction(inputKeyword), title(inputKeyword)] },
         ],
       },
     },
   });
 
-  const { data: skills } = useQuery(GetSkillsDocument, {
+  const { data: skillsData } = useQuery(GetSkillsDocument, {
     variables: {
       skillsWhere: {
         works_aggregate: {
           count: { predicate: { _gt: 0 } },
         },
-        _and: [
-          ...selectedSkillIds.map((skillId) => {
-            return { works: { work: { languages: { skill_id: { _eq: Number(skillId) } } } } };
-          }),
+        _or: [
+          {
+            works: {
+              work: direction(inputKeyword),
+            },
+          },
+          {
+            works: {
+              work: title(inputKeyword),
+            },
+          },
         ],
+        works: {
+          work: {
+            _and: [
+              ...selectedSkillIds.map((skillId) => {
+                return languages(skillId);
+              }),
+            ],
+          },
+        },
       },
       worksWhere: {
         _and: [
           ...selectedSkillIds.map((skillId) => {
-            return { work: { languages: { skill_id: { _eq: Number(skillId) } } } };
+            return { work: languages(skillId) };
           }),
+          {
+            _or: [
+              {
+                work: direction(inputKeyword),
+              },
+              {
+                work: title(inputKeyword),
+              },
+            ],
+          },
         ],
       },
     },
   });
+
+  useEffect(() => {
+    if (skillsData) {
+      setSkills(skillsData?.skills);
+    }
+  }, [skillsData?.skills]);
+
+  if (worksData?.works.length === 0) {
+    return <NotResult />;
+  }
 
   return (
     <Wrapper>
       <NavigContainer>
         <Navig>
-          <LeftNavig defaultFilters={skills?.skills} selectedSkillIds={selectedSkillIds} />
+          {skills?.length !== 0 ? (
+            <LeftNavig defaultFilters={skills} selectedSkillIds={selectedSkillIds} />
+          ) : (
+            <CustomSkeleton variant="rectangular" height={"100vh"} />
+          )}
         </Navig>
       </NavigContainer>
       <KeyWordContainer>
         <KeyWordFixed>
-          <Filter defaultFilters={skills?.skills} selectedSkillIds={selectedSkillIds} worksLength={works?.work.length} />
+          <Filter defaultFilters={skills} selectedSkillIds={selectedSkillIds} worksLength={worksData?.works.length} />
         </KeyWordFixed>
         <WorksContainer>
           <Column>
-            {works?.work.map((item, idx) => {
-              return (
-                <Card key={idx}>
-                  <Title>
-                    <div>{item.title}</div>
-                    <FavoriteIcon>
-                      <FavoriteBorderIcon fontSize="large" />
-                    </FavoriteIcon>
-                  </Title>
-                  <MonthlyPrice>
-                    <Icon>
-                      <MonetizationOnIcon fontSize="small" />
-                    </Icon>
-                    <Strong>{item.minMonthlyPrice}</Strong>~<Strong>{item.maxMonthlyPrice}</Strong>
-                    <Span>万円/月額 (想定年収: 2400万円)</Span>
-                  </MonthlyPrice>
-                  <FlexContainer>
-                    <Icon>
-                      <ReportIcon />
-                    </Icon>
-                    <div>{item.contractType}</div>
-                  </FlexContainer>
-                  <FlexContainer>
-                    <Icon>
-                      <LocationOnIcon />
-                    </Icon>
-                    <div>{item.location}</div>
-                  </FlexContainer>
-                  <FlexContainer>
-                    {item.languages.map((value, idx) => {
-                      return (
-                        <Chip
-                          key={idx}
-                          label={value.skill?.name}
-                          sx={{
-                            borderRadius: 0,
-                            marginRight: "4px",
-                          }}
-                        />
-                      );
-                    })}
-                  </FlexContainer>
-                  <FlexContainer>
-                    大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝 ・計画書作成
-                    ・進捗管理、報告資料作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                    ・計画書作成大規模コンシューマー向けWEBシステム開発におけるクライアントの開発管理に携わって頂きます。 ・社内外との折衝
-                    ・計画書作成...
-                  </FlexContainer>
-                </Card>
-              );
-            })}
+            {worksData
+              ? worksData?.works.map((item, idx) => {
+                  return <CustomCard key={idx} item={item} />;
+                })
+              : [...Array(5)].map((_, idx) => {
+                  return (
+                    <WrapperSkeleton key={idx}>
+                      <CustomSkeleton key={idx} variant="rectangular" height={"100%"} />
+                    </WrapperSkeleton>
+                  );
+                })}
+            <PaginationWrapper>
+              <Pagination count={1} variant="outlined" shape="rounded" size="large" />
+            </PaginationWrapper>
           </Column>
-          <div
-            className={css`
-              width: 100%;
-              max-width: calc(1320px - 180px - 400px);
-              border: 1px solid rgb(224, 224, 224);
-              margin-left: 32px;
-            `}
-          >
-            <DetailContainer>村山マークダウンエリア</DetailContainer>
-          </div>
+          {/* // TODO 変える */}
+          <DetailWrapper>{<Detail defaultWorkId={worksData?.works[0].id} />}</DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
     </Wrapper>
@@ -187,9 +174,10 @@ export default function Works() {
 
 const Wrapper = styled.div`
   display: flex;
+  margin-bottom: 160px;
 `;
 
-const Card = styled.div`
+const WrapperSkeleton = styled.div`
   border: 1px solid rgb(224, 224, 224);
   padding: 16px;
   width: 480px;
@@ -202,34 +190,23 @@ const Card = styled.div`
   border-radius: 8px;
 `;
 
-const Title = styled.div`
-  font-weight: bold;
-  display: flex;
+const CustomSkeleton = styled(Skeleton)`
+  border-radius: 8px;
 `;
 
-const MonthlyPrice = styled.div`
-  font-size: 20px;
-  padding-top: 8px;
-  display: flex;
-  align-items: center;
+const DetailWrapper = styled.div`
+  width: 100%;
+  max-width: calc(1320px - 200px - 400px);
+  margin-left: 32px;
 `;
-
-// const Detail = styled.div`
-//   border: 1px solid rgb(224, 224, 224);
-//   padding: 16px;
-//   height: 80dvh;
-//   right: 0px;
-//   width: 720px;
-//   position: fixed;
-// `;
 
 const Navig = styled.div`
   padding: 16px;
-  width: 180px;
+  width: 200px;
 `;
 
 const NavigContainer = styled.div`
-  min-width: 180px;
+  min-width: 200px;
   position: sticky;
   top: 78px;
   overflow: auto;
@@ -248,53 +225,25 @@ const KeyWordFixed = styled.div`
   top: 78px;
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
-  width: calc(100% - 180px);
+
   background-color: #f5f5f5;
-  max-width: calc(1320px - 180px);
+  max-width: calc(1320px - 200px);
 `;
 
 const WorksContainer = styled.div`
   position: sticky;
   display: flex;
-  width: calc(100% - 180px);
-  max-width: calc(1320px - 180px);
-`;
 
-const DetailContainer = styled.div`
-  padding: 16px;
-  position: fixed;
-`;
-
-const Strong = styled.div`
-  color: #f86986;
-  font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, sans-serif;
-`;
-
-const Span = styled.div`
-  font-size: 12px;
-`;
-
-const Icon = styled.div`
-  display: flex;
-  align-items: center;
-  padding-right: 8px;
-  svg {
-    font-size: 16px;
-  }
-`;
-
-const FlexContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding-top: 8px;
-  font-size: 14px;
-`;
-
-const FavoriteIcon = styled.div`
-  font-weight: normal;
+  max-width: calc(1320px - 200px);
 `;
 
 const Column = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+const PaginationWrapper = styled.div`
+  padding: 40px 0;
+`;
+
+export default Works;

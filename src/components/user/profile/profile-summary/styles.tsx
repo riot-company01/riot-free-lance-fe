@@ -1,12 +1,9 @@
 import styled from "@emotion/styled";
-import { SCREEN_SIZE } from "@/const/screen-size";
 import { COLOR } from "@/styles/colors";
 
 export const DivProfileSummaryWrapper = styled.div`
   width: 280px;
-  @media (min-width: ${SCREEN_SIZE.isSpSize}) {
-    margin-right: 16px;
-  }
+  margin-right: 16px;
 `;
 
 export const DivWrapper = styled.div`

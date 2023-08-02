@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
-import { Button } from "@/components/common/button";
 import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
 import {
   INDUSTRIES,
@@ -16,14 +16,8 @@ import { Tag } from "@/components/user/edit/common/tag";
 import { DesiredSkill } from "@/components/user/edit/desired-condition/desired-skill";
 import { useDesiredCondition } from "@/components/user/edit/desired-condition/hooks/use-desired-condition";
 import { OperationStartDate } from "@/components/user/edit/desired-condition/operation-start-date";
-import { PATHS } from "@/const/paths";
-import {
-  EditDesiredConditionDocument,
-  GetUserDesiredConditionDocument,
-  UseEditBasicInfoDocument,
-} from "@/lib/graphql/graphql";
+import { EditDesiredConditionDocument, GetUserDesiredConditionDocument } from "@/lib/graphql/graphql";
 import type { GetUserDesiredConditionQuery, GetUserDesiredConditionQueryVariables } from "@/lib/graphql/graphql";
-import { COLOR } from "@/styles/colors";
 
 export const DesiredCondition = () => {
   const { push } = useRouter();
@@ -62,7 +56,7 @@ export const DesiredCondition = () => {
   const [editDesiredConditionMutation] = useMutation(EditDesiredConditionDocument);
 
   const handleCancelButtonClick = () => {
-    push(PATHS.PROFILE);
+    push("/user/profile");
   };
 
   const handleKeepButtonClick = async () => {
@@ -82,7 +76,7 @@ export const DesiredCondition = () => {
         projectStartMounth: String(selectedMonth),
       },
     });
-    push(PATHS.PROFILE);
+    push("/user/profile");
   };
 
   return (
@@ -229,21 +223,13 @@ export const DesiredCondition = () => {
       </Styles.DivItem>
 
       <Styles.DivButtonWrapper>
-        <Button
-          text="キャンセル"
-          width={400}
-          borderColor={COLOR.LIGHT_GRAY.code}
-          backGround={COLOR.WHITE.code}
-          fontColor={COLOR.LIGHT_GRAY.code}
-          onClick={handleCancelButtonClick}
-        />
-        <Button
-          text="保存する"
-          width={400}
-          backGround={COLOR.BASE_COLOR.code}
-          fontColor={COLOR.WHITE.code}
-          onClick={handleKeepButtonClick}
-        />
+        <Button variant="outlined" onClick={handleCancelButtonClick}>
+          キャンセル
+        </Button>
+
+        <Button variant="contained" onClick={handleKeepButtonClick}>
+          保存する
+        </Button>
       </Styles.DivButtonWrapper>
     </Styles.DivEditBasicInfoWrapper>
   );

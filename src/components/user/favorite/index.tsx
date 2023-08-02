@@ -1,10 +1,7 @@
+import { Button } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
-import { Button } from "@/components/common/button";
-import { ProjectContent } from "@/components/user/common/project-content";
-import { MOCK_PROJECT_DATA } from "@/components/user/favorite/const";
-import { COLOR } from "@/styles/colors";
 
 export const Fovarite = () => {
   const { push } = useRouter();
@@ -31,23 +28,19 @@ export const Fovarite = () => {
           </Styles.DivSummary>
         </Styles.DivWrapper>
         <Styles.DivProjectList>
-          {MOCK_PROJECT_DATA ? (
+          {/* {MOCK_PROJECT_DATA ? (
             MOCK_PROJECT_DATA.map((item) => <ProjectContent key={item.id} item={item} />)
-          ) : (
-            <Styles.DivNotFavoriteContents>
-              <Styles.DivNotFavoriteItem>
-                <Styles.PerNotFavoriteItem>まだお気に入りの案件はありません</Styles.PerNotFavoriteItem>
-              </Styles.DivNotFavoriteItem>
+          ) : ( */}
+          <Styles.DivNotFavoriteContents>
+            <Styles.DivNotFavoriteItem>
+              <Styles.PerNotFavoriteItem>まだお気に入りの案件はありません</Styles.PerNotFavoriteItem>
+            </Styles.DivNotFavoriteItem>
 
-              <Button
-                text="保存する"
-                width={400}
-                backGround={COLOR.BASE_COLOR.code}
-                fontColor={COLOR.WHITE.code}
-                onClick={handleSearchProjectButtonClick}
-              />
-            </Styles.DivNotFavoriteContents>
-          )}
+            <Button variant="contained" onClick={handleSearchProjectButtonClick}>
+              保存する
+            </Button>
+          </Styles.DivNotFavoriteContents>
+          {/* )} */}
         </Styles.DivProjectList>
       </Styles.DivWrapperContent>
     </Styles.DivFavoriteWrapper>

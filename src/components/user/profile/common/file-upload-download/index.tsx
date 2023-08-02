@@ -1,14 +1,10 @@
-import React, { useState, ChangeEvent } from "react";
-import {
-  GetSkillSheetDocument,
-  GetSkillSheetQuery,
-  GetSkillSheetQueryVariables,
-  UploadSkillSheetDocument,
-} from "@/lib/graphql/graphql";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { useQuery, useMutation } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import React, { useState } from "react";
+import type { ChangeEvent } from "react";
 import * as Styles from "./styles";
-import { Document, Page } from "react-pdf";
+import type { GetSkillSheetQuery, GetSkillSheetQueryVariables } from "@/lib/graphql/graphql";
+import { GetSkillSheetDocument, UploadSkillSheetDocument } from "@/lib/graphql/graphql";
 
 const FileUploadDownloadComponent: React.FC = () => {
   const { user } = useUser();
