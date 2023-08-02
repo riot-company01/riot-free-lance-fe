@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 import { Skeleton } from "@mui/material";
+
 import { useRouter } from "next/router";
 import { Modal } from "@/components/common/modal";
 import { Card } from "@/components/works/md/card";
 import { Detail } from "@/components/works/md/detail";
+import { Filter } from "@/components/works/md/filter";
 import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
@@ -17,6 +19,7 @@ export function WorksMd({ worksData }: Props) {
   const id = Number(router.query["work-id"]);
   return (
     <div>
+      <Filter />
       <Wrapper>
         {worksData
           ? worksData?.works.map((item, idx) => {
