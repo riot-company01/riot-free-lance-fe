@@ -3,9 +3,9 @@ import { Box, Button, Modal } from "@mui/material";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import * as Styles from "./styles";
-import { KeywordTag } from "@/components/user/edit/common/keyword-tag";
-import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
-import { LANGUAGE_LIBRARIES } from "@/components/user/edit/common/multi-select-items/mock";
+import { KeywordTag } from "@/components/user/profile/common/keyword-tag";
+import { MultiSelectItems } from "@/components/user/profile/common/multi-select-items";
+import { LANGUAGE_LIBRARIES } from "@/components/user/profile/common/multi-select-items/mock";
 import { COLOR } from "@/styles/colors";
 
 type LanguageLibrariesProps = {

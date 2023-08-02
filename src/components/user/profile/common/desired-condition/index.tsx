@@ -3,19 +3,23 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import * as Styles from "./styles";
-import { MultiSelectItems } from "@/components/user/edit/common/multi-select-items";
+import { MultiSelectItems } from "@/components/user/profile/common/multi-select-items";
 import {
   INDUSTRIES,
   MODE_OF_OPERATION,
   PROFESSIONAL_EXPERIENCES,
-} from "@/components/user/edit/common/multi-select-items/mock";
-import { SelectPrefecture } from "@/components/user/edit/common/select-prefecture";
-import { SingleSelectItem } from "@/components/user/edit/common/single-select-item";
-import { AMOUNT_OF_MONEY, AVAILABLE_DAYS, COMMUTING_TIME } from "@/components/user/edit/common/single-select-item/mock";
-import { Tag } from "@/components/user/edit/common/tag";
-import { DesiredSkill } from "@/components/user/edit/desired-condition/desired-skill";
-import { useDesiredCondition } from "@/components/user/edit/desired-condition/hooks/use-desired-condition";
-import { OperationStartDate } from "@/components/user/edit/desired-condition/operation-start-date";
+} from "@/components/user/profile/common/multi-select-items/mock";
+import { SelectPrefecture } from "@/components/user/profile/common/select-prefecture";
+import { SingleSelectItem } from "@/components/user/profile/common/single-select-item";
+import {
+  AMOUNT_OF_MONEY,
+  AVAILABLE_DAYS,
+  COMMUTING_TIME,
+} from "@/components/user/profile/common/single-select-item/mock";
+import { Tag } from "@/components/user/profile/common/tag";
+import { DesiredSkill } from "@/components/user/profile/common/desired-condition/desired-skill";
+import { useDesiredCondition } from "@/components/user/profile/common/desired-condition/hooks/use-desired-condition";
+import { OperationStartDate } from "@/components/user/profile/common/desired-condition/operation-start-date";
 import { EditDesiredConditionDocument, GetUserDesiredConditionDocument } from "@/lib/graphql/graphql";
 import type { GetUserDesiredConditionQuery, GetUserDesiredConditionQueryVariables } from "@/lib/graphql/graphql";
 

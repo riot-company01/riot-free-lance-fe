@@ -13,8 +13,8 @@ const FileUploadDownloadComponent: React.FC = () => {
     variables: { id: user?.sub || "" },
   });
   const [uploadSkillSheetMutation] = useMutation(UploadSkillSheetDocument);
-  const [uploadFileName, setUploadFileName] = useState(data?.users[0].file_name);
-  const [uploadFileData, setUploadFileData] = useState(data?.users[0].file_data);
+  const [uploadFileName, setUploadFileName] = useState(data?.users[0]?.file_name);
+  const [uploadFileData, setUploadFileData] = useState(data?.users[0]?.file_data);
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       console.log("aaaa");

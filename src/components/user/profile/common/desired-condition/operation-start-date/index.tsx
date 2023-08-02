@@ -2,8 +2,8 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
 import type { Dispatch, SetStateAction } from "react";
 import * as Styles from "./styles";
-import { SingleSelectItem } from "@/components/user/edit/common/single-select-item";
-import { OPERATION_START_DATE } from "@/components/user/edit/common/single-select-item/mock";
+import { SingleSelectItem } from "@/components/user/profile/common/single-select-item";
+import { OPERATION_START_DATE } from "@/components/user/profile/common/single-select-item/mock";
 import { selectBigStyle, selectSmallStyle } from "@/components/user/edit/const";
 
 type OperationStartDateProps = {

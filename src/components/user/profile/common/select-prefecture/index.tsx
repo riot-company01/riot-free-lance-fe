@@ -2,7 +2,7 @@ import { FormControl, MenuItem, Select } from "@mui/material";
 import type { SelectChangeEvent } from "@mui/material";
 import React from "react";
 import type { Dispatch, SetStateAction } from "react";
-import { PREFECTURES } from "@/components/user/edit/common/select-prefecture/mock";
+import { PREFECTURES } from "@/components/user/profile/common/select-prefecture/mock";
 import { selectBigStyle } from "@/components/user/edit/const";
 
 type SelectPrefectureProps = {
