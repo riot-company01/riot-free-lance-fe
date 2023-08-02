@@ -5,14 +5,14 @@ import { Button, FormControl, MenuItem, Select, TextField } from "@mui/material"
 import { useRouter } from "next/router";
 import { Tag } from "@/components/profile/tag";
 import { useProfile } from "@/components/profile/hooks/use-profile";
-import { GetUserQuery } from "@/lib/graphql/graphql";
+import { EditProfileDocument, GetProfileQuery } from "@/lib/graphql/graphql";
 
 type Args = {
   userInfo?: UserProfile;
-  userData?: GetUserQuery;
+  userData?: GetProfileQuery;
 };
 
-export const Profile = (args: Args) => {
+export const BasicProfile = (args: Args) => {
   const { userInfo, userData } = args;
   const { push } = useRouter();
 
@@ -46,7 +46,7 @@ export const Profile = (args: Args) => {
     onChangePhoneNumber,
   } = useProfile(userData);
 
-  const [editProfileMutation] = useMutation(UseEditBasicInfoDocument);
+  const [editProfileMutation] = useMutation(EditProfileDocument);
 
   const generateYearOptions = () => {
     const currentYear = new Date().getFullYear();

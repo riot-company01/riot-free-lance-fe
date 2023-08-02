@@ -1,0 +1,13 @@
+query GetProfile($id: String) @cached(ttl: 600) {
+  users(where: { id: { _eq: $id } }) {
+    last_name
+    first_name
+    last_name_kana
+    first_name_kana
+    birthday_year
+    birthday_mounth
+    birthday_day
+    mail
+    tel
+  }
+}

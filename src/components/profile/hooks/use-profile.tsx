@@ -1,8 +1,9 @@
 import type { SelectChangeEvent } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
+import { GetProfileQuery } from "@/lib/graphql/graphql";
 
-export const useProfile = (data: GetUserBasicInfoQuery | undefined) => {
+export const useProfile = (data: GetProfileQuery | undefined) => {
   const userBasicInfo = data?.users[0];
 
   const [userFirstName, setUserFirstName] = useState(userBasicInfo?.first_name);

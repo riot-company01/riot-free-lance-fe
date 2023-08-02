@@ -1,4 +1,6 @@
+import { BasicProfile } from "@/components/profile/basic-profile";
+
 function Profile() {
-    return </>
+  return <BasicProfile />;
 }
 export default Profile;

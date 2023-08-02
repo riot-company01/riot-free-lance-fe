@@ -1,0 +1,37 @@
+mutation EditProfile(
+  $id: String!
+  $lastName: String
+  $firstName: String
+  $lastNameKana: String
+  $firstNameKana: String
+  $birthdayYear: String
+  $birthdayMounth: String
+  $birthdayDay: String
+  $mail: String
+  $tel: String
+) {
+  update_users_by_pk(
+    pk_columns: { id: $id }
+    _set: {
+      last_name: $lastName
+      first_name: $firstName
+      last_name_kana: $lastNameKana
+      first_name_kana: $firstNameKana
+      birthday_year: $birthdayYear
+      birthday_mounth: $birthdayMounth
+      birthday_day: $birthdayDay
+      mail: $mail
+      tel: $tel
+    }
+  ) {
+    last_name
+    first_name
+    last_name_kana
+    first_name_kana
+    birthday_year
+    birthday_mounth
+    birthday_day
+    mail
+    tel
+  }
+}
