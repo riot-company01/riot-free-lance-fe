@@ -9,18 +9,11 @@ import { LayoutFooter } from "@/components/common/layout/footer";
 import { LayoutHeader } from "@/components/common/layout/header";
 import { useCustomApollo } from "@/lib/apollo/client";
 import { GLOBAL_STYLE } from "@/styles/global-style";
+import "large-small-dynamic-viewport-units-polyfill";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const client = useCustomApollo(pageProps);
   const { user } = pageProps;
-  // const { isPcSize } = useMatchMedia();
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   if (!isPcSize) {
-  //     router.push("/maintenance");
-  //   }
-  // }, [isPcSize]);
 
   return (
     <UserProvider user={user}>

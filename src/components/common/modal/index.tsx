@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { AppBar, Container, Toolbar, Typography } from "@mui/material";
@@ -6,6 +5,7 @@ import { useRouter } from "next/router";
 
 import type { ReactNode } from "react";
 import { useLayoutEffect, useState, useEffect, useRef, forwardRef } from "react";
+import { BREAK_POINT } from "@/constants";
 
 export type Size = "middle" | "large" | "fullScreen";
 
@@ -77,8 +77,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>((props) => {
             </Toolbar>
           </Container>
         </AppBar>
-
-        <Wrapper ref={resizeWatchRef}>{children}</Wrapper>
+        <Body ref={resizeWatchRef}>{children}</Body>
       </Layout>
     </>
   );
@@ -103,29 +102,25 @@ const Layout = styled.div<{
   position: fixed;
   overflow: auto;
   overscroll-behavior: contain;
+  height: 100vh;
+  height: calc(var(--1dvh, 1vh) * 100);
+  height: 100dvh;
+  border-radius: 0px;
+  @media screen and (min-width: ${BREAK_POINT.sm}px) {
+    height: 90vh;
+    height: calc(var(--1dvh, 1vh) * 90);
+    height: 90dvh;
+    border-radius: 8px;
+  }
   top: 50%;
   left: 50%;
-  max-width: 768px;
   width: 100%;
-  max-height: 90%;
-  background-color: white;
+  max-width: 736px;
   transform: translate(-50%, -50%);
   z-index: 10002;
-  border-radius: 8px;
-  ${({ stylingCenter }) =>
-    !stylingCenter &&
-    css`
-      top: 0%;
-      border-radius: 0px;
-      height: 100vh;
-      height: 100dvh;
-      max-height: 100vh;
-      max-height: 100dvh;
-      transform: translate(-50%, 0%);
-    `}
 `;
 
-const Wrapper = styled.div`
+const Body = styled.div`
   word-wrap: break-word;
   overflow-wrap: break-word;
 `;
