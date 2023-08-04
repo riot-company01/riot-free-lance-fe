@@ -5,6 +5,7 @@ import ReportIcon from "@mui/icons-material/Report";
 import { Card, CardActionArea, Chip } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
+import { WORKS_Z_INDEX } from "@/components/works/constants";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 
 export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
@@ -110,7 +111,7 @@ const Closed = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1001;
+  z-index: ${WORKS_Z_INDEX.CLOSE_OVERLAY}; // TODO
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 `;
