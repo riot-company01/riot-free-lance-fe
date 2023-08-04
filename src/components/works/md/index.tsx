@@ -14,12 +14,12 @@ type Props = {
   worksData?: GetWorksQuery;
 };
 
-export function WorksMd({ worksData }: Props) {
+export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
   const router = useRouter();
   const id = Number(router.query["work-id"]);
   return (
-    <div>
-      <Filter />
+    <Div>
+      <Filter defaultFilters={skills} selectedSkillIds={selectedSkillIds} worksLength={worksData?.works.length} />
       <Wrapper>
         {worksData
           ? worksData?.works.map((item, idx) => {
@@ -29,18 +29,27 @@ export function WorksMd({ worksData }: Props) {
               return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;
             })}
       </Wrapper>
-      <Modal open={!!id}>
+      <Modal
+        open={!!id}
+        title="案件詳細"
+        onClose={() => {
+          router.back();
+        }}
+      >
         <Detail defaultWorkId={id} />
       </Modal>
-    </div>
+    </Div>
   );
 }
 
 const Wrapper = styled.div`
   display: grid;
   grid-gap: 16px;
-  padding: 16px;
   @media (min-width: 700px) {
     grid-template-columns: 1fr 1fr;
   }
+`;
+
+const Div = styled.div`
+  padding: 0 16px;
 `;

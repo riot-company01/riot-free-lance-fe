@@ -6,7 +6,7 @@ import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
-import { Button, Card, Skeleton } from "@mui/material";
+import { Button, Card, Skeleton, styled as MuiStyled } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
@@ -177,7 +177,7 @@ const Description = styled.div`
   }
 `;
 
-const CustomCardActionArea = styled(Card)<{ isSelected: boolean }>`
+const CustomCardActionArea = MuiStyled(Card)<{ isSelected: boolean }>`
   padding: 16px;
   border-radius: 8px;
   max-height: ${({ isSelected }) => (isSelected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};

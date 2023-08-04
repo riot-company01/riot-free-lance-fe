@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import OutboundIcon from "@mui/icons-material/Outbound";
 import NextLink from "next/link";
+import { COMMON_Z_INDEX } from "@/constants";
 import { COLOR } from "@/styles/colors";
 
 export const LayoutFooter: React.FC = () => {
@@ -12,26 +13,14 @@ export const LayoutFooter: React.FC = () => {
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        <NextLink href="/preparation">利用規約</NextLink>
-      </div>
-      <div>
-        <OutboundIcon fontSize="small" />
-        <NextLink href="/preparation">プライバシーポリシー</NextLink>
-      </div>
-      <div>
-        <OutboundIcon fontSize="small" />
         <NextLink href="https://riot-company.com/contact/">お問い合わせ</NextLink>
-      </div>
-      <div>
-        <OutboundIcon fontSize="small" />
-        <NextLink href="/preparation">ご利用ガイド</NextLink>
       </div>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.footer`
-  z-index: 1000;
+  z-index: ${COMMON_Z_INDEX.HEADER};
   height: 78px;
   display: flex;
   justify-content: space-around;

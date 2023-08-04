@@ -26,6 +26,6 @@ export const BREAK_POINT = {
 };
 
 export const COMMON_Z_INDEX = {
-  HEADER: responsiveFontSizes(createTheme()).zIndex.appBar,
-  MODAL: responsiveFontSizes(createTheme()).zIndex.modal,
-};
+  HEADER: responsiveFontSizes(createTheme()).zIndex.appBar as 1100,
+  MODAL: responsiveFontSizes(createTheme()).zIndex.modal as 1300,
+} as const;

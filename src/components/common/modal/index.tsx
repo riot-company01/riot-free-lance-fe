@@ -1,27 +1,27 @@
 import styled from "@emotion/styled";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { AppBar, Container, Toolbar, Typography } from "@mui/material";
-import { useRouter } from "next/router";
 
+import { useState, useEffect, useRef, forwardRef } from "react";
 import type { ReactNode } from "react";
-import { useLayoutEffect, useState, useEffect, useRef, forwardRef } from "react";
-import { BREAK_POINT } from "@/constants";
+import { BREAK_POINT, COMMON_Z_INDEX } from "@/constants";
 
 export type Size = "middle" | "large" | "fullScreen";
 
 export type ModalProps = {
   children: ReactNode;
   open: boolean;
+  onClose: () => void;
+  title: string;
 };
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>((props) => {
-  const { children, open } = props;
+  const { children, open, onClose, title } = props;
   const resizeWatchRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const [stylingCenter, setStylingCenter] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
-  const router = useRouter();
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!open) return;
     if (modalRef.current === null) return;
 
@@ -52,11 +52,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>((props) => {
         <AppBar position="sticky">
           <Container maxWidth="xl">
             <Toolbar disableGutters>
-              <div
-                onClick={() => {
-                  router.back();
-                }}
-              >
+              <div onClick={onClose}>
                 <ArrowBackIcon fontSize="medium" />
               </div>
               <Typography
@@ -72,7 +68,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>((props) => {
                   textDecoration: "none",
                 }}
               >
-                案件詳細
+                {title}
               </Typography>
             </Toolbar>
           </Container>
@@ -91,7 +87,7 @@ const Overlay = styled.div`
   left: 0;
   height: 100dvh;
   width: 100%;
-  z-index: 10001;
+  z-index: ${COMMON_Z_INDEX.MODAL - 1};
   box-sizing: content-box;
   background: rgba(0, 0, 0, 0.8);
 `;
@@ -117,7 +113,7 @@ const Layout = styled.div<{
   width: 100%;
   max-width: 736px;
   transform: translate(-50%, -50%);
-  z-index: 10002;
+  z-index: ${COMMON_Z_INDEX.MODAL};
 `;
 
 const Body = styled.div`
