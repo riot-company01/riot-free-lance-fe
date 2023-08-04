@@ -13,6 +13,7 @@ export const GLOBAL_STYLE = css`
   }
   ::-webkit-scrollbar {
     width: 4px;
+    height: 4px;
     width: thin;
   }
 
