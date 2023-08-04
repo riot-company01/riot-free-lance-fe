@@ -94,7 +94,7 @@ const Navig = styled.div`
 `;
 
 const NavigContainer = styled.div`
-  min-width: 200px;
+  min-width: 204px;
   position: sticky;
   top: 78px;
   overflow: auto;
