@@ -11,15 +11,6 @@ export const GLOBAL_STYLE = css`
     --sab: env(safe-area-inset-bottom);
     --sal: env(safe-area-inset-left);
   }
-  ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-    width: thin;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: gray;
-  }
 
   html {
     padding: var(--sat) var(--sar) var(--sab) var(--sal);
