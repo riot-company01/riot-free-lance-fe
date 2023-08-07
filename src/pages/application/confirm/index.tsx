@@ -1,14 +1,14 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
-import { Button, TextField } from "@mui/material";
+import { Button, Dialog, DialogTitle, TextField } from "@mui/material";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
-import { ChangeEvent, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
+import type { ChangeEvent } from "react";
 import { CustomCard } from "@/components/application/card";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
-import { COLOR } from "@/styles/colors";
 import { SCREEN_SIZE } from "@/styles/width";
 
 function ApplicationConfirm() {
@@ -17,7 +17,7 @@ function ApplicationConfirm() {
   const backToUrl = useReactiveVar(backToWorksUrlVar);
   const fixBackToUrl = backToUrl === undefined ? "/works" : String(backToUrl);
 
-  const [sendMail, setSendMail] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const [userName, setUserName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
 
@@ -38,8 +38,7 @@ function ApplicationConfirm() {
     };
 
     send("service_3mxaipn", "template_lop0qms", template_param, "N0Z9VGngtSAYrSpz0").then(() => {
-      window.alert("案件に応募しました");
-      setSendMail(true);
+      setOpenDialog(true);
     });
   };
 
@@ -48,7 +47,7 @@ function ApplicationConfirm() {
   };
 
   return (
-    <WorkInfo>
+    <>
       <CustomCard item={data?.works_by_pk} />
       <ProfileInfo>
         <Description>
@@ -72,35 +71,19 @@ function ApplicationConfirm() {
           <p>マイページ作成後に実装</p>
         </Section>
 
-        {sendMail ? (
-          <SendButton variant="outlined" onClick={backToWorkList}>
-            案件一覧に戻る
-          </SendButton>
-        ) : (
-          <SendButton variant="contained" onClick={applicationWork}>
-            案件に応募する
-          </SendButton>
-        )}
+        <SendButton variant="contained" onClick={applicationWork}>
+          案件に応募する
+        </SendButton>
       </ProfileInfo>
-    </WorkInfo>
+      <Dialog open={openDialog}>
+        <DialogTitle>案件への応募が完了しました</DialogTitle>
+        <BackButton variant="outlined" onClick={backToWorkList}>
+          一覧に戻る
+        </BackButton>
+      </Dialog>
+    </>
   );
 }
-
-const WorkInfo = styled.div`
-  border-radius: 8px;
-
-  @media screen and (max-width: ${SCREEN_SIZE.PC}) {
-    margin: 16px;
-    padding: 16px;
-  }
-
-  @media screen and (min-width: ${SCREEN_SIZE.TABLET}) {
-    background-color: ${COLOR.RIGHT_WHITE.code};
-    width: 600px;
-    margin: 32px auto;
-    padding: 16px;
-  }
-`;
 
 const ProfileInfo = styled.div`
   display: flex;
@@ -132,6 +115,10 @@ const Section = styled.section`
 
 const SendButton = styled(Button)`
   margin: 32px 16px;
+`;
+
+const BackButton = styled(Button)`
+  margin: 0 16px 16px 16px;
 `;
 
 export default ApplicationConfirm;

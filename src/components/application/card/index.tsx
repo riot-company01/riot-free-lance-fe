@@ -4,10 +4,12 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
 import { Chip } from "@mui/material";
 import type { GetWorkQuery } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
+import { SCREEN_SIZE } from "@/styles/width";
 
 export function CustomCard({ item }: { item: GetWorkQuery["works_by_pk"] }) {
   return (
-    <>
+    <WorkInfo>
       <Title>
         <div>{item?.title}</div>
       </Title>
@@ -61,9 +63,25 @@ export function CustomCard({ item }: { item: GetWorkQuery["works_by_pk"] }) {
           );
         })}
       </FlexContainerLabel>
-    </>
+    </WorkInfo>
   );
 }
+
+const WorkInfo = styled.div`
+  border-radius: 8px;
+
+  @media screen and (max-width: ${SCREEN_SIZE.PC}) {
+    margin: 16px;
+    padding: 16px;
+  }
+
+  @media screen and (min-width: ${SCREEN_SIZE.TABLET}) {
+    background-color: ${COLOR.RIGHT_WHITE.code};
+    width: 600px;
+    margin: 32px auto;
+    padding: 16px;
+  }
+`;
 
 const Title = styled.div`
   font-weight: bold;
