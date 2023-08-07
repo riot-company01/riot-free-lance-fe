@@ -8,6 +8,7 @@ import { useState } from "react";
 import { CustomCard } from "@/components/application/card";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
+import { COLOR } from "@/styles/colors";
 import { SCREEN_SIZE } from "@/styles/width";
 
 function ApplicationConfirm() {
@@ -42,7 +43,7 @@ function ApplicationConfirm() {
   };
 
   return (
-    <>
+    <WorkInfo>
       <CustomCard item={data?.works_by_pk} />
       <ProfileInfo>
         <Description>
@@ -75,17 +76,29 @@ function ApplicationConfirm() {
           </SendButton>
         )}
       </ProfileInfo>
-    </>
+    </WorkInfo>
   );
 }
+
+const WorkInfo = styled.div`
+  border-radius: 8px;
+
+  @media screen and (max-width: ${SCREEN_SIZE.PC}) {
+    margin: 16px;
+    padding: 16px;
+  }
+
+  @media screen and (min-width: ${SCREEN_SIZE.TABLET}) {
+    background-color: ${COLOR.RIGHT_WHITE.code};
+    width: 600px;
+    margin: 32px auto;
+    padding: 16px;
+  }
+`;
 
 const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
-
-  @media screen and (max-width: ${SCREEN_SIZE.SP}) {
-    margin: 0 16px;
-  }
 
   @media screen and (min-width: ${SCREEN_SIZE.SP}) {
     align-items: center;
@@ -97,9 +110,9 @@ const Description = styled.div`
   flex-direction: column;
   align-items: center;
   @media screen and (max-width: ${SCREEN_SIZE.SP}) {
-    margin-bottom: 16px;
+    margin: 16px 0;
   }
-  margin-bottom: 32px;
+  margin: 32px 0;
 `;
 
 const Section = styled.section`
