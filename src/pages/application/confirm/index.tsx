@@ -1,7 +1,7 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
 import { useState } from "react";
@@ -53,12 +53,13 @@ function ApplicationConfirm() {
 
         <Section>
           <h3>氏名</h3>
-          <p>{user?.name}</p>
+
+          <TextField fullWidth placeholder={user?.name || ""} />
         </Section>
 
         <Section>
           <h3>メールアドレス</h3>
-          <p>{user?.email}</p>
+          <TextField fullWidth placeholder={user?.email || ""} />
         </Section>
 
         <Section>

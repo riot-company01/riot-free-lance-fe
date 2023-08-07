@@ -18,11 +18,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   const { isPcSize } = useMatchMedia();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isPcSize) {
-      router.push("/maintenance");
-    }
-  }, [isPcSize]);
+  // useEffect(() => {
+  //   if (!isPcSize) {
+  //     router.push("/maintenance");
+  //   }
+  // }, [isPcSize]);
 
   return (
     <UserProvider user={user}>
