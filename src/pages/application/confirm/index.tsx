@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { Button, TextField } from "@mui/material";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
-import { useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { CustomCard } from "@/components/application/card";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
@@ -18,12 +18,17 @@ function ApplicationConfirm() {
   const fixBackToUrl = backToUrl === undefined ? "/works" : String(backToUrl);
 
   const [sendMail, setSendMail] = useState(false);
+  const [userName, setUserName] = useState(user?.name);
+  const [email, setEmail] = useState(user?.email);
 
   const { data } = useQuery(GetWorkDocument, {
     variables: {
       id: Number(query.id),
     },
   });
+
+  const onChangeUserName = useCallback((e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value), []);
+  const onChangeEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value), []);
 
   const applicationWork = () => {
     const template_param = {
@@ -54,12 +59,12 @@ function ApplicationConfirm() {
         <Section>
           <h3>氏名</h3>
 
-          <TextField fullWidth placeholder={user?.name || ""} />
+          <TextField fullWidth value={userName} onChange={onChangeUserName} />
         </Section>
 
         <Section>
           <h3>メールアドレス</h3>
-          <TextField fullWidth placeholder={user?.email || ""} />
+          <TextField fullWidth value={email} onChange={onChangeEmail} />
         </Section>
 
         <Section>
