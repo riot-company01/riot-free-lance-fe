@@ -68,7 +68,9 @@ export function CustomCard({ item }: { item: GetWorkQuery["works_by_pk"] }) {
 }
 
 const WorkInfo = styled.div`
+  border-radius: 8px;
   background-color: ${COLOR.RIGHT_WHITE.code};
+
   @media screen and (max-width: ${SCREEN_SIZE.PC}) {
     margin: 16px;
     padding: 16px;
