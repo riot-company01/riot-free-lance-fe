@@ -108,9 +108,6 @@ const Section = styled.section`
     margin-top: 16px;
   }
   margin: 0 16px;
-  @media screen and (min-width: ${SCREEN_SIZE.SP}) {
-    width: 320px;
-  }
 `;
 
 const SendButton = styled(Button)`
