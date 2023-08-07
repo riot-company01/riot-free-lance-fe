@@ -8,7 +8,6 @@ import removeMd from "remove-markdown";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 
 export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
-  console.log(item.isClosed);
   return (
     <CustomCardActionArea
       sx={{ width: 480, cursor: "pointer", borderRadius: 2 }}
@@ -57,7 +56,9 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
               return (
                 <>
                   <Strong>{item.minMonthlyPrice || item.maxMonthlyPrice}</Strong>
-                  <Span>万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)</Span>
+                  <Span>
+                    万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)
+                  </Span>
                 </>
               );
             } else {
