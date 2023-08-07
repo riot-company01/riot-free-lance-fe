@@ -6,7 +6,7 @@ import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import type { ChangeEvent } from "react";
-import { CustomCard } from "@/components/application/card";
+import { CustomCard } from "@/components/apply-jobs/card";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 import { SCREEN_SIZE } from "@/styles/width";
@@ -57,7 +57,6 @@ function ApplicationConfirm() {
 
         <Section>
           <h3>氏名</h3>
-
           <TextField fullWidth value={userName} onChange={onChangeUserName} />
         </Section>
 
@@ -108,6 +107,7 @@ const Section = styled.section`
   :not(:first-of-type) {
     margin-top: 16px;
   }
+  margin: 0 16px;
   @media screen and (min-width: ${SCREEN_SIZE.SP}) {
     width: 320px;
   }

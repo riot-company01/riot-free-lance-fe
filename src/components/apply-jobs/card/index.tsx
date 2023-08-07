@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Chip } from "@mui/material";
+import { Card, Chip } from "@mui/material";
 import type { GetWorkQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 import { SCREEN_SIZE } from "@/styles/width";
@@ -67,7 +67,7 @@ export function CustomCard({ item }: { item: GetWorkQuery["works_by_pk"] }) {
   );
 }
 
-const WorkInfo = styled.div`
+const WorkInfo = styled(Card)`
   border-radius: 8px;
 
   @media screen and (max-width: ${SCREEN_SIZE.PC}) {

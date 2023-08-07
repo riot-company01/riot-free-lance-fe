@@ -30,7 +30,7 @@ export function Detail({ defaultWorkId }: Props) {
     backToWorksUrlVar(router.asPath);
 
     router.push({
-      pathname: "application/confirm",
+      pathname: "apply-jobs",
       query: {
         id,
       },
