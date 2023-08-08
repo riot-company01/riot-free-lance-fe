@@ -21,7 +21,7 @@ export const LayoutFooter: React.FC = () => {
 
 const Wrapper = styled.footer`
   z-index: ${COMMON_Z_INDEX.HEADER};
-  height: 78px;
+  height: 73px;
   display: flex;
   justify-content: space-around;
   width: 100%;

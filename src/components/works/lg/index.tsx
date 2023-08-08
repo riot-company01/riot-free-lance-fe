@@ -96,9 +96,9 @@ const Navig = styled.div`
 const NavigContainer = styled.div`
   min-width: 204px;
   position: sticky;
-  top: 78px;
+  top: 73px;
   overflow: auto;
-  height: calc(100dvh - 78px);
+  height: calc(100dvh - 73px);
 `;
 
 const KeyWordContainer = styled.div`
@@ -110,7 +110,7 @@ const KeyWordContainer = styled.div`
 const KeyWordFixed = styled.div`
   width: 100%;
   position: sticky;
-  top: 78px;
+  top: 73px;
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
 

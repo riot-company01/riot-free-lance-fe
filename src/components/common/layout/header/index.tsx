@@ -1,22 +1,22 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
-import { alpha, Avatar, InputBase, Menu, MenuItem, styled as muiStyled } from "@mui/material";
+import { alpha, Avatar, InputBase, Menu, MenuItem, styled as muiStyled, Toolbar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import * as React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { BREAK_POINT } from "@/constants";
 import { removeObjectKey } from "@/util/remove-object-key";
 
 export function LayoutHeader() {
   const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
   const { user } = useUser();
+  const toolbarRef = useRef(null);
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
 
@@ -42,9 +42,9 @@ export function LayoutHeader() {
   };
 
   return (
-    <AppBar position="sticky">
+    <CustomAppBar position="sticky">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters ref={toolbarRef}>
           <Typography
             variant="h6"
             noWrap
@@ -159,12 +159,19 @@ export function LayoutHeader() {
           </Box>
         </Toolbar>
       </Container>
-    </AppBar>
+    </CustomAppBar>
   );
 }
 
 const Logo = styled.img`
   width: 68px;
+`;
+
+const CustomAppBar = styled(AppBar)`
+  height: 64px;
+  @media screen and (min-width: ${BREAK_POINT.md}px) {
+    height: 73px;
+  }
 `;
 
 const Search = muiStyled("div")(({ theme }) => ({

@@ -47,14 +47,14 @@ export function Detail({ defaultWorkId }: Props) {
 
   if (!work)
     return (
-      <CustomCardActionArea isSelected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionArea selected={!!router.query["skill-ids"]} ref={ref}>
         <Skeleton variant="rectangular" height={"100vh"} />
       </CustomCardActionArea>
     );
 
   return (
     <>
-      <CustomCardActionArea isSelected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionArea selected={!!router.query["skill-ids"]} ref={ref}>
         <Title>{work.title}</Title>
         <MonthlyPrice>
           <Icon>
@@ -171,19 +171,19 @@ const Text = styled.div`
   font-size: 12px;
 `;
 
-const Description = styled.div`
-  * {
-    all: revert;
-  }
-`;
-
-const CustomCardActionArea = MuiStyled(Card)<{ isSelected: boolean }>`
+const CustomCardActionArea = MuiStyled(Card)<{ selected: boolean }>`
   padding: 16px;
   border-radius: 8px;
-  max-height: ${({ isSelected }) => (isSelected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  max-height: ${({ selected }) => (selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
   overflow: scroll;
   border: 1px solid rgb(224, 224, 224);
   background-color: white;
   position: sticky;
-  top: ${({ isSelected }) => (isSelected ? "198px" : "166px")};
+  top: ${({ selected }) => (selected ? "198px" : "166px")};
+`;
+
+const Description = styled.div`
+  * {
+    all: revert;
+  }
 `;

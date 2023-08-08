@@ -15,7 +15,7 @@ export type ModalProps = {
   title: string;
 };
 
-export const Modal = forwardRef<HTMLDivElement, ModalProps>((props) => {
+export const Modal = forwardRef<HTMLDivElement, ModalProps>((props, ref) => {
   const { children, open, onClose, title } = props;
   const resizeWatchRef = useRef<HTMLDivElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -46,8 +46,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>((props) => {
   if (!open) return null;
 
   return (
-    <>
-      <Overlay />
+    <div ref={ref}>
+      <Overlay onClick={onClose} />
       <Layout ref={modalRef} stylingCenter={stylingCenter}>
         <AppBar position="sticky">
           <Container maxWidth="xl">
@@ -75,7 +75,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>((props) => {
         </AppBar>
         <Body ref={resizeWatchRef}>{children}</Body>
       </Layout>
-    </>
+    </div>
   );
 });
 
