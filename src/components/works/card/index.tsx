@@ -7,12 +7,28 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import router from "next/router";
 import removeMd from "remove-markdown";
-import type { GetWorksQuery } from "@/lib/graphql/graphql";
-import { useState } from "react";
+import { GetFavariteWorksDocument, GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
+import { useFavoriteButton } from "@/components/works/card/use-favorite-button";
+import { useState } from "react";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useQuery } from "@apollo/client";
 
 export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { user } = useUser();
+  const { data } = useQuery(GetFavariteWorksDocument);
+  const [isFavorite, setIsFavorite] = useState(
+    data?.user_to_works.some((work) => {
+      work.work_id === item.id;
+    })
+  );
+  console.log(data?.user_to_works[0]);
+  console.log(isFavorite);
+
+  const { handleClickAddFavoriteClick, handleClickdeleteFavoriteClick } = useFavoriteButton({
+    userId: user?.sub || "",
+    workId: item.id,
+  });
 
   return (
     <CustomCardActionArea
@@ -48,7 +64,8 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
           {isFavorite ? (
             <IconButton
               onClick={() => {
-                setIsFavorite(false);
+                handleClickdeleteFavoriteClick();
+                setIsFavorite(true);
               }}
             >
               <FavoriteIcon fontSize="large" sx={{ color: COLOR.RED.code }} />
@@ -56,7 +73,8 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
           ) : (
             <IconButton
               onClick={() => {
-                setIsFavorite(true);
+                handleClickAddFavoriteClick();
+                setIsFavorite(false);
               }}
             >
               <FavoriteBorderIcon color="disabled" fontSize="large" />

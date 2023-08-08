@@ -4,3 +4,9 @@ query GetUser($id: String) @cached(ttl: 600) {
     name
   }
 }
+
+query GetFavariteWorks($id: String) {
+  user_to_works(where: { user_id: { _eq: $id } }) {
+    work_id
+  }
+}

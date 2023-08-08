@@ -3,3 +3,9 @@ mutation InsertFavoriteMutation($id: String!, $workId: Int!) {
     favorite
   }
 }
+
+mutation DeleteFavoriteMutation($id: String!, $workId: Int!) {
+  delete_user_to_works(where: { _and: { user_id: { _eq: $id }, work_id: { _eq: $workId } } }) {
+    affected_rows
+  }
+}
