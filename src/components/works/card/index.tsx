@@ -13,6 +13,7 @@ import { COLOR } from "@/styles/colors";
 
 export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
   const [isFavorite, setIsFavorite] = useState(false);
+
   return (
     <CustomCardActionArea
       sx={{ width: 480, cursor: "pointer", borderRadius: 2 }}
@@ -47,7 +48,7 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
           {isFavorite ? (
             <IconButton
               onClick={() => {
-                setIsFavorite((prev) => !prev);
+                setIsFavorite(false);
               }}
             >
               <FavoriteIcon fontSize="large" sx={{ color: COLOR.RED.code }} />
@@ -55,7 +56,7 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
           ) : (
             <IconButton
               onClick={() => {
-                setIsFavorite((prev) => !prev);
+                setIsFavorite(true);
               }}
             >
               <FavoriteBorderIcon color="disabled" fontSize="large" />
