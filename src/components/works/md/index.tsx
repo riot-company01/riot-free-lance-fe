@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Skeleton } from "@mui/material";
+import { Pagination, Skeleton } from "@mui/material";
 
 import { useRouter } from "next/router";
 import { Modal } from "@/components/common/modal";
@@ -29,6 +29,9 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
               return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;
             })}
       </Wrapper>
+      <PaginationWrapper>
+        <Pagination count={1} variant="outlined" shape="rounded" size="large" />
+      </PaginationWrapper>
       <Modal
         open={!!id}
         title="案件詳細"
@@ -52,4 +55,8 @@ const Wrapper = styled.div`
 
 const Div = styled.div`
   padding: 0px 16px 56px 16px;
+`;
+
+const PaginationWrapper = styled.div`
+  padding: 40px 0;
 `;
