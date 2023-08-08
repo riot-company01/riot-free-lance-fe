@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { Button, Dialog, DialogTitle, TextField } from "@mui/material";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import type { ChangeEvent } from "react";
 import { CustomCard } from "@/components/apply-jobs/card";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
@@ -27,8 +27,8 @@ function ApplicationConfirm() {
     },
   });
 
-  const onChangeUserName = useCallback((e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value), []);
-  const onChangeEmail = useCallback((e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value), []);
+  const onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
 
   const applicationWork = () => {
     const template_param = {
