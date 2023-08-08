@@ -147,7 +147,7 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
               );
             })}
           {inputKeyword && (
-            <Chip
+            <CustomChip
               icon={<SearchIcon fontSize="small" />}
               key={inputKeyword}
               label={inputKeyword}
@@ -253,7 +253,6 @@ const CustomChip = styled(Chip)`
 const ChipWrapper = styled.div`
   overflow: auto;
   display: flex;
-  padding-top: 16px;
 `;
 
 const Content = styled.div`
