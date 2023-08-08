@@ -25,10 +25,22 @@ type Filterer = {
   word: GetSkillsQuery["skills"];
 };
 
+const list = [
+  {
+    value: "price",
+    displayName: "高単価順",
+  },
+  {
+    value: "new",
+    displayName: "新着順",
+  },
+];
+
 export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const [viewList, setViewList] = useState<Filterer[]>([]);
+  const sort = (router.query["sort"] as string) || "price";
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,8 +64,6 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
     ).reverse();
     setViewList(filterers);
   }, [JSON.stringify(defaultFilters)]);
-
-  console.log(defaultFilters);
 
   return (
     <>
@@ -80,16 +90,26 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <Check />
-                  </ListItemIcon>
-                  高単価順
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>{/* <Check /> */}</ListItemIcon>
-                  新着順
-                </MenuItem>
+                {list.map((i) => {
+                  return (
+                    <MenuItem
+                      key={i.value}
+                      value={i.value}
+                      onClick={() => {
+                        handleClose();
+                        router.push({
+                          query: {
+                            ...router.query,
+                            sort: i.value,
+                          },
+                        });
+                      }}
+                    >
+                      <ListItemIcon>{sort === i.value && <Check />}</ListItemIcon>
+                      {i.displayName}
+                    </MenuItem>
+                  );
+                })}
               </Menu>
             </div>
             <div
