@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import Check from "@mui/icons-material/Check";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import SearchIcon from "@mui/icons-material/Search";
 import SortIcon from "@mui/icons-material/Sort";
 import { Checkbox, Chip, FormControlLabel, FormGroup, Menu, MenuItem } from "@mui/material";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -41,6 +42,7 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
   const router = useRouter();
   const [viewList, setViewList] = useState<Filterer[]>([]);
   const sort = (router.query["sort"] as string) || "price";
+  const inputKeyword = (router.query["keyword"] as string) || "";
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -72,14 +74,13 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
           restProperty={css`
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0px;
           `}
         >
           <Title>案件数:{worksLength}件</Title>
           <FlexContainer>
             <div>
               <button onClick={handleClick}>
-                <SortIcon fontSize="large" />
+                <SortIcon fontSize="medium" />
               </button>
               <Menu
                 id="basic-menu"
@@ -117,7 +118,7 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
                 setIsOpen(true);
               }}
             >
-              <FilterAltIcon fontSize="large" />
+              <FilterAltIcon fontSize="medium" />
             </div>
           </FlexContainer>
         </FlexContainer>
@@ -145,6 +146,20 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
                 />
               );
             })}
+          {inputKeyword && (
+            <Chip
+              icon={<SearchIcon fontSize="small" />}
+              key={inputKeyword}
+              label={inputKeyword}
+              onDelete={() => {
+                router.push({
+                  query: {
+                    ...removeObjectKey(router.query, "keyword"),
+                  },
+                });
+              }}
+            />
+          )}
         </ChipWrapper>
       </ColumnWrapper>
       <Modal
@@ -216,6 +231,7 @@ const ColumnWrapper = styled.div`
   position: sticky;
   background-color: #f5f5f5;
   top: 64px;
+  padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
 `;
 
@@ -225,7 +241,7 @@ const FlexContainer = styled.div<{ restProperty?: SerializedStyles }>`
 `;
 
 const Title = styled.div`
-  font-size: 20px;
+  font-size: 16px;
 `;
 
 const CustomChip = styled(Chip)`
@@ -235,9 +251,9 @@ const CustomChip = styled(Chip)`
 `;
 
 const ChipWrapper = styled.div`
-  padding: 8px 0;
   overflow: auto;
   display: flex;
+  padding-top: 16px;
 `;
 
 const Content = styled.div`

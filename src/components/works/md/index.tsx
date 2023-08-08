@@ -6,6 +6,7 @@ import { Modal } from "@/components/common/modal";
 import { Card } from "@/components/works/md/card";
 import { Detail } from "@/components/works/md/detail";
 import { Filter } from "@/components/works/md/filter";
+import { BREAK_POINT } from "@/constants";
 import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
@@ -48,7 +49,7 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
 const Wrapper = styled.div`
   display: grid;
   grid-gap: 16px;
-  @media (min-width: 700px) {
+  @media (min-width: ${BREAK_POINT.sm}px) {
     grid-template-columns: 1fr 1fr;
   }
 `;
