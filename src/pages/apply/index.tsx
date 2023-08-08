@@ -6,11 +6,9 @@ import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
-import { CustomCard } from "@/components/apply-jobs/card";
+import { CustomCard } from "@/components/apply/card";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
-import { SCREEN_SIZE } from "@/styles/width";
-import { px } from "framer-motion";
 
 function ApplicationConfirm() {
   const { user } = useUser();
