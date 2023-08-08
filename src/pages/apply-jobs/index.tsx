@@ -1,7 +1,7 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
-import { Button, Dialog, DialogTitle, TextField } from "@mui/material";
+import { Button, Dialog, DialogTitle, TextField, styled as muiStyled } from "@mui/material";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import { CustomCard } from "@/components/apply-jobs/card";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 import { SCREEN_SIZE } from "@/styles/width";
+import { px } from "framer-motion";
 
 function ApplicationConfirm() {
   const { user } = useUser();
@@ -84,31 +85,36 @@ function ApplicationConfirm() {
   );
 }
 
-const ProfileInfo = styled.div`
-  display: flex;
-  flex-direction: column;
+const ProfileInfo = muiStyled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
 
-  @media screen and (min-width: ${SCREEN_SIZE.SP}) {
-    align-items: center;
-  }
-`;
+  [theme.breakpoints.up("sm")]: {
+    alignItems: "center",
+  },
+}));
 
-const Description = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media screen and (max-width: ${SCREEN_SIZE.SP}) {
-    margin: 16px 0;
-  }
-  margin: 32px 0;
-`;
+const Description = muiStyled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  margin: "32px 0",
 
-const Section = styled.section`
-  :not(:first-of-type) {
-    margin-top: 16px;
-  }
-  margin: 0 16px;
-`;
+  [theme.breakpoints.down("sm")]: {
+    margin: "16px 0",
+  },
+}));
+
+const Section = muiStyled("section")(({ theme }) => ({
+  ":not(:first-of-type)": {
+    marginTop: "16px",
+  },
+  margin: "0 16px",
+
+  [theme.breakpoints.up("sm")]: {
+    width: "600px",
+  },
+}));
 
 const SendButton = styled(Button)`
   margin: 32px 16px;

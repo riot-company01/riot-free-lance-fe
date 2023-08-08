@@ -5,7 +5,7 @@ import ReportIcon from "@mui/icons-material/Report";
 import { Card, Chip } from "@mui/material";
 import type { GetWorkQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
-import { SCREEN_SIZE } from "@/styles/width";
+import { styled as muiStyled } from "@mui/material";
 
 export function CustomCard({ item }: { item: GetWorkQuery["works_by_pk"] }) {
   return (
@@ -67,21 +67,19 @@ export function CustomCard({ item }: { item: GetWorkQuery["works_by_pk"] }) {
   );
 }
 
-const WorkInfo = styled(Card)`
-  border-radius: 8px;
+const WorkInfo = muiStyled(Card)(({ theme }) => ({
+  borderRadius: "8px",
+  margin: "16px",
+  padding: "16px",
+  backgroundColor: `${COLOR.RIGHT_WHITE.code}`,
 
-  @media screen and (max-width: ${SCREEN_SIZE.PC}) {
-    margin: 16px;
-    padding: 16px;
-  }
-
-  @media screen and (min-width: ${SCREEN_SIZE.TABLET}) {
-    background-color: ${COLOR.RIGHT_WHITE.code};
-    width: 600px;
-    margin: 32px auto;
-    padding: 16px;
-  }
-`;
+  [theme.breakpoints.up("sm")]: {
+    width: "600px",
+    margin: "32px auto",
+    padding: "16px",
+    backgroundColor: `${COLOR.RIGHT_WHITE.code}`,
+  },
+}));
 
 const Title = styled.div`
   font-weight: bold;
