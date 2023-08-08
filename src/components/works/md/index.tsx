@@ -51,5 +51,5 @@ const Wrapper = styled.div`
 `;
 
 const Div = styled.div`
-  padding: 0 16px;
+  padding: 0px 16px 56px 16px;
 `;

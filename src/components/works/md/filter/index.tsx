@@ -26,7 +26,14 @@ type Filterer = {
 export function Filter({ defaultFilters, selectedSkillIds }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [viewList, setViewList] = useState<Filterer[]>([]);
-  console.log(defaultFilters);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     if (!defaultFilters) return;
@@ -56,21 +63,25 @@ export function Filter({ defaultFilters, selectedSkillIds }: Props) {
           <Title>案件数:1000件</Title>
           <FlexContainer>
             <div>
-              <SortIcon fontSize="large" />
+              <button onClick={handleClick}>
+                <SortIcon fontSize="large" />
+              </button>
               <Menu
                 id="basic-menu"
-                open={false}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
                 MenuListProps={{
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem>
+                <MenuItem onClick={handleClose}>
                   <ListItemIcon>
                     <Check />
                   </ListItemIcon>
                   高単価順
                 </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={handleClose}>
                   <ListItemIcon>{/* <Check /> */}</ListItemIcon>
                   新着順
                 </MenuItem>
