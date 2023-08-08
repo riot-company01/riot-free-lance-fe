@@ -98,14 +98,14 @@ const Layout = styled.div<{
   position: fixed;
   overflow: auto;
   overscroll-behavior: contain;
-  height: 100vh;
-  height: calc(var(--1dvh, 1vh) * 100);
-  height: 100dvh;
+  max-height: 100vh;
+  max-height: calc(var(--1dvh, 1vh) * 100);
+  max-height: 100dvh;
   border-radius: 0px;
   @media screen and (min-width: ${BREAK_POINT.sm}px) {
-    height: 90vh;
-    height: calc(var(--1dvh, 1vh) * 90);
-    height: 90dvh;
+    max-height: 90vh;
+    max-height: calc(var(--1dvh, 1vh) * 90);
+    max-height: 90dvh;
     border-radius: 8px;
   }
   top: 50%;

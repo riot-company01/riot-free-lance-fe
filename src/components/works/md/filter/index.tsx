@@ -8,10 +8,12 @@ import { Checkbox, Chip, FormControlLabel, FormGroup, Menu, MenuItem } from "@mu
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { sortBy, map, groupBy } from "lodash-es";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Modal } from "@/components/common/modal";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
+import { removeObjectKey } from "@/util/remove-object-key";
 
 type Props = {
   defaultFilters?: GetSkillsQuery["skills"];
@@ -23,8 +25,9 @@ type Filterer = {
   word: GetSkillsQuery["skills"];
 };
 
-export function Filter({ defaultFilters, selectedSkillIds }: Props) {
+export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   const [viewList, setViewList] = useState<Filterer[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -60,7 +63,7 @@ export function Filter({ defaultFilters, selectedSkillIds }: Props) {
             padding: 8px 0px;
           `}
         >
-          <Title>案件数:1000件</Title>
+          <Title>案件数:{worksLength}件</Title>
           <FlexContainer>
             <div>
               <button onClick={handleClick}>
@@ -97,15 +100,25 @@ export function Filter({ defaultFilters, selectedSkillIds }: Props) {
           </FlexContainer>
         </FlexContainer>
         <ChipWrapper>
-          {["Java", "PHP", "Kotlin", "Kotlin", "Kotlin", "Kotlin", "Kotlin"].map((value, idx) => {
+          {selectedSkillIds.map((value, idx) => {
+            const skillIds = selectedSkillIds.filter((i) => i !== value);
             return (
               <CustomChip
                 key={idx}
-                label={value}
+                label={defaultFilters?.find((i) => i.id === Number(value))?.name}
                 onDelete={() => {
-                  //
+                  router.push({
+                    query:
+                      skillIds.length !== 0
+                        ? {
+                            ...router.query,
+                            [`skill-ids`]: `${skillIds.join()}`,
+                          }
+                        : {
+                            ...removeObjectKey(router.query, "skill-ids"),
+                          },
+                  });
                 }}
-                sx={{}}
               />
             );
           })}
@@ -131,9 +144,27 @@ export function Filter({ defaultFilters, selectedSkillIds }: Props) {
                   }}
                 >
                   {node.word.map((keyword) => {
-                    // const strId = keyword.id.toString();
+                    const strId = keyword.id.toString();
+                    const skillIds = selectedSkillIds.includes(strId) ? selectedSkillIds.filter((i) => i !== strId) : [...selectedSkillIds, strId];
                     return (
-                      <Link passHref key={keyword.id} href="">
+                      <Link
+                        passHref
+                        key={keyword.id}
+                        href={{
+                          query:
+                            skillIds.length !== 0
+                              ? {
+                                  ...router.query,
+                                  [`skill-ids`]: `${skillIds.join()}`,
+                                }
+                              : {
+                                  ...removeObjectKey(router.query, "skill-ids"),
+                                },
+                        }}
+                        onClick={() => {
+                          setIsOpen(false);
+                        }}
+                      >
                         <FormControlLabel
                           control={<Checkbox size="small" />}
                           checked={selectedSkillIds.some((i) => i === keyword.id.toString())}
