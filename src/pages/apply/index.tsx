@@ -1,7 +1,7 @@
+import { Box } from "@mui/material";
 import { ApplyLg } from "@/components/apply/lg";
 import { ApplyMd } from "@/components/apply/md";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
-import { Box } from "@mui/material";
 
 function Apply() {
   return (
