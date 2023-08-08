@@ -16,13 +16,15 @@ import { useQuery } from "@apollo/client";
 
 export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
   const { user } = useUser();
-  const { data } = useQuery(GetFavariteWorksDocument);
+  const { data } = useQuery(GetFavariteWorksDocument, { variables: { id: user?.sub } });
+
   const [isFavorite, setIsFavorite] = useState(
     data?.user_to_works.some((work) => {
       work.work_id === item.id;
     })
   );
-  console.log(data?.user_to_works[0]);
+  console.log(data?.user_to_works);
+  console.log(item.id);
   console.log(isFavorite);
 
   const { handleClickAddFavoriteClick, handleClickdeleteFavoriteClick } = useFavoriteButton({
