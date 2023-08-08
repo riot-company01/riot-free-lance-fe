@@ -2,13 +2,17 @@ import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Card, CardActionArea, Chip } from "@mui/material";
+import { Card, CardActionArea, Chip, IconButton } from "@mui/material";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
+import { useState } from "react";
+import { COLOR } from "@/styles/colors";
 
 export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
-  console.log(item.isClosed);
+  const [isFavorite, setIsFavorite] = useState(false);
   return (
     <CustomCardActionArea
       sx={{ width: 480, cursor: "pointer", borderRadius: 2 }}
@@ -36,9 +40,29 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
           minHeight: 400,
         }}
       >
-        <Title>
-          <div>{item.title}</div>
-        </Title>
+        <TitleWrapper>
+          <Title>
+            <div>{item.title}</div>
+          </Title>
+          {isFavorite ? (
+            <IconButton
+              onClick={() => {
+                setIsFavorite((prev) => !prev);
+              }}
+            >
+              <FavoriteIcon fontSize="large" sx={{ color: COLOR.RED.code }} />
+            </IconButton>
+          ) : (
+            <IconButton
+              onClick={() => {
+                setIsFavorite((prev) => !prev);
+              }}
+            >
+              <FavoriteBorderIcon color="disabled" fontSize="large" />
+            </IconButton>
+          )}
+        </TitleWrapper>
+
         <MonthlyPrice>
           <Icon>
             <MonetizationOnIcon fontSize="small" />
@@ -57,7 +81,9 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
               return (
                 <>
                   <Strong>{item.minMonthlyPrice || item.maxMonthlyPrice}</Strong>
-                  <Span>万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)</Span>
+                  <Span>
+                    万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)
+                  </Span>
                 </>
               );
             } else {
@@ -123,6 +149,11 @@ const Msg = styled.div`
   font-size: 20px;
   height: 100%;
   width: 100%;
+  align-items: center;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
   align-items: center;
 `;
 
