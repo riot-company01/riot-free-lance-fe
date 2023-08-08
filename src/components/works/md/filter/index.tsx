@@ -53,6 +53,8 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
     setViewList(filterers);
   }, [JSON.stringify(defaultFilters)]);
 
+  console.log(defaultFilters);
+
   return (
     <>
       <ColumnWrapper>
@@ -100,28 +102,29 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
           </FlexContainer>
         </FlexContainer>
         <ChipWrapper>
-          {selectedSkillIds.map((value, idx) => {
-            const skillIds = selectedSkillIds.filter((i) => i !== value);
-            return (
-              <CustomChip
-                key={idx}
-                label={defaultFilters?.find((i) => i.id === Number(value))?.name}
-                onDelete={() => {
-                  router.push({
-                    query:
-                      skillIds.length !== 0
-                        ? {
-                            ...router.query,
-                            [`skill-ids`]: `${skillIds.join()}`,
-                          }
-                        : {
-                            ...removeObjectKey(router.query, "skill-ids"),
-                          },
-                  });
-                }}
-              />
-            );
-          })}
+          {defaultFilters?.length !== 0 &&
+            selectedSkillIds.map((value, idx) => {
+              const skillIds = selectedSkillIds.filter((i) => i !== value);
+              return (
+                <CustomChip
+                  key={idx}
+                  label={defaultFilters?.find((i) => i.id === Number(value))?.name}
+                  onDelete={() => {
+                    router.push({
+                      query:
+                        skillIds.length !== 0
+                          ? {
+                              ...router.query,
+                              [`skill-ids`]: `${skillIds.join()}`,
+                            }
+                          : {
+                              ...removeObjectKey(router.query, "skill-ids"),
+                            },
+                    });
+                  }}
+                />
+              );
+            })}
         </ChipWrapper>
       </ColumnWrapper>
       <Modal
