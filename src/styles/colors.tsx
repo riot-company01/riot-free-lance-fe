@@ -11,6 +11,9 @@ export const COLOR = {
   WHITE: {
     code: "#f5f5f5",
   },
+  RIGHT_WHITE: {
+    code: "#fff",
+  },
   BLACK: {
     code: "#000000",
   },
