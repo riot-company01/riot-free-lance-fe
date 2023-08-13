@@ -10,8 +10,9 @@ import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
 import { NotResult } from "@/components/works/not-result";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
-import type { GetSkillsQuery } from "@/lib/graphql/graphql";
+import { GetFavariteWorksDocument, GetSkillsQuery } from "@/lib/graphql/graphql";
 import { Order_By, GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
@@ -56,7 +57,10 @@ function Works() {
   const inputKeyword = (router.query["keyword"] as string) || "";
   const sort = (router.query["sort"] as string) || "";
   const [skills, setSkills] = useState<GetSkillsQuery["skills"] | undefined>([]);
+  const [hasFavorite, setHasFavorite] = useState<boolean | undefined>(false);
   const order = sort === "new" ? { createAt: Order_By.Desc } : { maxMonthlyPrice: Order_By.Desc };
+  const { user } = useUser();
+  const { data } = useQuery(GetFavariteWorksDocument, { variables: { id: user?.sub } });
 
   const { data: worksData } = useQuery(GetWorksDocument, {
     variables: {
@@ -129,6 +133,16 @@ function Works() {
     }
   }, [skillsData?.skills]);
 
+  useEffect(() => {
+    worksData?.works.map((item) => {
+      setHasFavorite(
+        data?.user_to_works.some(({ work_id }) => {
+          item.id === work_id;
+        })
+      );
+    });
+  }, [hasFavorite]);
+
   if (worksData?.works.length === 0) {
     return <NotResult />;
   }
@@ -152,7 +166,15 @@ function Works() {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  return <CustomCard key={idx} item={item} />;
+                  if (data) {
+                    setHasFavorite(
+                      data.user_to_works.some(({ work_id }) => {
+                        return item.id === work_id;
+                      })
+                    );
+                  }
+
+                  return <CustomCard key={idx} item={item} hasFavorite={hasFavorite} setHasFavorite={setHasFavorite} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (

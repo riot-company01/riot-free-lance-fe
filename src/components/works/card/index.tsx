@@ -7,30 +7,33 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import router from "next/router";
 import removeMd from "remove-markdown";
-import { GetFavariteWorksDocument, GetWorksQuery } from "@/lib/graphql/graphql";
+import { GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 import { useFavoriteButton } from "@/components/works/card/use-favorite-button";
-import { useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { useQuery } from "@apollo/client";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
-export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
+export function CustomCard({
+  item,
+  hasFavorite,
+  setHasFavorite,
+}: {
+  item: GetWorksQuery["works"][number];
+  hasFavorite: boolean | undefined;
+  setHasFavorite: Dispatch<SetStateAction<boolean | undefined>>;
+}) {
   const { user } = useUser();
-  const { data } = useQuery(GetFavariteWorksDocument, { variables: { id: user?.sub } });
-
-  const [isFavorite, setIsFavorite] = useState(
-    data?.user_to_works.some((work) => {
-      work.work_id === item.id;
-    })
-  );
-  console.log(data?.user_to_works);
-  console.log(item.id);
-  console.log(isFavorite);
 
   const { handleClickAddFavoriteClick, handleClickdeleteFavoriteClick } = useFavoriteButton({
     userId: user?.sub || "",
     workId: item.id,
   });
+
+  useEffect(() => {
+    console.log("aaa");
+    console.log(hasFavorite);
+    setHasFavorite((prev) => !prev);
+  }, [hasFavorite]);
 
   return (
     <CustomCardActionArea
@@ -63,11 +66,12 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
           <Title>
             <div>{item.title}</div>
           </Title>
-          {isFavorite ? (
+          {hasFavorite ? (
             <IconButton
               onClick={() => {
+                console.log("bb");
                 handleClickdeleteFavoriteClick();
-                setIsFavorite(true);
+                setHasFavorite(true);
               }}
             >
               <FavoriteIcon fontSize="large" sx={{ color: COLOR.RED.code }} />
@@ -75,8 +79,9 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
           ) : (
             <IconButton
               onClick={() => {
+                console.log("ccc");
                 handleClickAddFavoriteClick();
-                setIsFavorite(false);
+                setHasFavorite(false);
               }}
             >
               <FavoriteBorderIcon color="disabled" fontSize="large" />
