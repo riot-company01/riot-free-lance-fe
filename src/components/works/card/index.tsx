@@ -8,7 +8,6 @@ import removeMd from "remove-markdown";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 
 export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
-  console.log(item.isClosed);
   return (
     <CustomCardActionArea
       sx={{ width: 480, cursor: "pointer", borderRadius: 2 }}

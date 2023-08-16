@@ -1,0 +1,29 @@
+query GetFavoried($id: String) {
+  users(where: { works: { user_id: { _eq: $id } } }) {
+    works(where: { favorite: { _eq: true } }) {
+      application
+      favorite
+      work {
+        contractType
+        createAt
+        description
+        id
+        isClosed
+        location
+        maxMonthlyPrice
+        maxWorkHours
+        minMonthlyPrice
+        minWorkHours
+        title
+        isClosed
+        languages {
+          skill {
+            id
+            name
+            type
+          }
+        }
+      }
+    }
+  }
+}
