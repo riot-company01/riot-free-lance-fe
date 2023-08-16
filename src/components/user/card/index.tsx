@@ -1,4 +1,3 @@
-import { GetFavoriteQueryQuery } from "@/lib/graphql/graphql";
 import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -6,6 +5,7 @@ import ReportIcon from "@mui/icons-material/Report";
 import { Card, CardActionArea, Chip } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
+import type { GetFavoriteQueryQuery } from "@/lib/graphql/graphql";
 
 export function CustomCard({ item }: { item: GetFavoriteQueryQuery["users"][number]["works"][number]["work"] }) {
   return (

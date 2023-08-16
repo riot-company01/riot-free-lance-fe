@@ -1,10 +1,10 @@
-import { CustomCard } from "@/components/user/card";
-import { Detail } from "@/components/user/detail";
-import { Pagination, Skeleton } from "@mui/material";
-import styled from "@emotion/styled";
-import { GetFavoriteQueryDocument } from "@/lib/graphql/graphql";
 import { useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import styled from "@emotion/styled";
+import { Pagination, Skeleton } from "@mui/material";
+import { CustomCard } from "@/components/user/card";
+import { Detail } from "@/components/user/detail";
+import { GetFavoriteQueryDocument } from "@/lib/graphql/graphql";
 
 function Apply() {
   const { user } = useUser();
