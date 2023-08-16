@@ -1,4 +1,4 @@
-query GetFavoriteQuery($id: String) {
+query GetApplied($id: String) {
   users(where: { works: { user_id: { _eq: $id } } }) {
     works(where: { application: { _eq: true } }) {
       application
@@ -15,7 +15,7 @@ query GetFavoriteQuery($id: String) {
         minMonthlyPrice
         minWorkHours
         title
-        is_closed
+        isClosed
         languages {
           skill {
             id

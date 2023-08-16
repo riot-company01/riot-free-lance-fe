@@ -6,7 +6,7 @@ import { CustomCard } from "@/components/user/card";
 import { Detail } from "@/components/user/detail";
 import { GetAppliedDocument } from "@/lib/graphql/graphql";
 
-function Apply() {
+function Favorite() {
   const { user } = useUser();
   const { data: worksData } = useQuery(GetAppliedDocument, {
     variables: {
@@ -74,4 +74,4 @@ const DetailWrapper = styled.div`
   max-width: calc(1320px - 200px - 400px);
 `;
 
-export default Apply;
+export default Favorite;

@@ -5,9 +5,9 @@ import ReportIcon from "@mui/icons-material/Report";
 import { Card, CardActionArea, Chip } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
-import type { GetFavoriteQueryQuery } from "@/lib/graphql/graphql";
+import type { GetAppliedQuery } from "@/lib/graphql/graphql";
 
-export function CustomCard({ item }: { item: GetFavoriteQueryQuery["users"][number]["works"][number]["work"] }) {
+export function CustomCard({ item }: { item: GetAppliedQuery["users"][number]["works"][number]["work"] }) {
   return (
     <CustomCardActionArea
       sx={{ width: 480, cursor: "pointer", borderRadius: 2 }}
