@@ -9,6 +9,7 @@ import type { ChangeEvent } from "react";
 import { CustomCard } from "@/components/apply/lg/card";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
+import { Tag } from "@mui/icons-material";
 
 export const ApplyLg = () => {
   const { user } = useUser();
@@ -53,7 +54,7 @@ export const ApplyLg = () => {
           <p>上記の案件に応募します</p>
           <p>下記のボタンより案件へご応募ください</p>
         </Description>
-
+        {/* 
         <Section>
           <h3>氏名</h3>
           <TextField fullWidth value={userName} onChange={onChangeUserName} />
@@ -62,7 +63,102 @@ export const ApplyLg = () => {
         <Section>
           <h3>メールアドレス</h3>
           <TextField fullWidth value={email} onChange={onChangeEmail} />
-        </Section>
+        </Section> */}
+
+        <Styles.DivItem>
+          <Styles.DivItemWrapper>
+            <Styles.DivTitleWrapper>
+              <Styles.HeadContentTitle>姓</Styles.HeadContentTitle>
+              <Tag isRequired />
+            </Styles.DivTitleWrapper>
+            <TextField
+              sx={myStyle}
+              variant="outlined"
+              name="userFirstName"
+              value={userLastName}
+              placeholder="例:田中"
+              onChange={onChangeUserLastName}
+            />
+          </Styles.DivItemWrapper>
+          <Styles.DivItemWrapper>
+            <Styles.DivTitleWrapper>
+              <Styles.HeadContentTitle>名</Styles.HeadContentTitle>
+              <Tag isRequired />
+            </Styles.DivTitleWrapper>
+            <TextField
+              variant="outlined"
+              sx={myStyle}
+              name="userFirstName"
+              value={userFirstName}
+              placeholder="例：太郎"
+              onChange={onChangeUserFirstName}
+            />
+          </Styles.DivItemWrapper>
+        </Styles.DivItem>
+        <Styles.DivItem>
+          <Styles.DivItemWrapper>
+            <Styles.DivTitleWrapper>
+              <Styles.HeadContentTitle>せい</Styles.HeadContentTitle>
+              <Tag isRequired={false} />
+            </Styles.DivTitleWrapper>
+            <TextField
+              variant="outlined"
+              sx={myStyle}
+              type="text"
+              name="userLastName"
+              value={userLastNameKana}
+              placeholder="例：たなか"
+              onChange={onChangeUserLastNameKana}
+            />
+          </Styles.DivItemWrapper>
+          <Styles.DivItemWrapper>
+            <Styles.DivTitleWrapper>
+              <Styles.HeadContentTitle>めい</Styles.HeadContentTitle>
+              <Tag isRequired={false} />
+            </Styles.DivTitleWrapper>
+            <TextField
+              variant="outlined"
+              sx={myStyle}
+              type="text"
+              name="userFirstName"
+              value={userFirstNameKana}
+              placeholder="例：たろう"
+              onChange={onChangeUserFirstNameKana}
+            />
+          </Styles.DivItemWrapper>
+        </Styles.DivItem>
+        <Styles.DivWrpper>
+          <Styles.DivTitleWrapper>
+            <Styles.HeadContentTitle>メールアドレス</Styles.HeadContentTitle>
+            <Tag isRequired />
+          </Styles.DivTitleWrapper>
+
+          <TextField
+            variant="outlined"
+            sx={myStyle}
+            type="text"
+            name="mailAddres"
+            value={mailAddress}
+            placeholder={user?.email ? user?.email : ""}
+            onChange={onChangeMailAddress}
+          />
+        </Styles.DivWrpper>
+        <Styles.DivWrpper>
+          <Styles.DivTitleWrapper>
+            <Styles.HeadContentTitle>電話番号</Styles.HeadContentTitle>
+            <Tag isRequired />
+          </Styles.DivTitleWrapper>
+
+          <TextField
+            variant="outlined"
+            sx={myStyle}
+            type="tel"
+            name="phone"
+            value={phoneNumber}
+            placeholder={"080xxxxxxxx"}
+            onChange={onChangePhoneNumber}
+          />
+        </Styles.DivWrpper>
 
         <Section>
           <h3>スキルシート</h3>
@@ -111,3 +207,97 @@ const SendButton = styled(Button)`
 const BackButton = styled(Button)`
   margin: 0 16px 16px 16px;
 `;
+
+// import { useMutation
+
+// export const EditBasicInfo = () => {
+//   const { user } = useUser();
+//   const { data } = useQuery<GetUserBasicInfoQuery, GetUserBasicInfoQueryVariables>(GetUserBasicInfoDocument, {
+//     variables: { id: user?.sub },
+//   });
+//   const { push } = useRouter();
+
+//   const {
+//     userFirstName,
+//     userLastName,
+//     userFirstNameKana,
+//     userLastNameKana,
+//     selectedYear,
+//     selectedMonth,
+//     selectedDay,
+//     mailAddress,
+//     phoneNumber,
+//     selectedCurrentSituation,
+//     selectedPrefecture,
+//     onChangeUserFirstName,
+//     onChangeUserLastName,
+//     onChangeUserFirstNameKana,
+//     onChangeUserLastNameKana,
+//     selectYear,
+//     selectMonth,
+//     selectDay,
+//     onChangeMailAddress,
+//     onChangePhoneNumber,
+//     setSelectedCurrentSituation,
+//     setSelectedPrefecture,
+//   } = useBasicInfo(data);
+
+//   const [editProfileMutation] = useMutation(UseEditBasicInfoDocument);
+
+//   const generateYearOptions = () => {
+//     const currentYear = new Date().getFullYear();
+//     const years = [];
+
+//     for (let i = currentYear; i >= currentYear - 100; i--) {
+//       years.push(
+//         <MenuItem key={i} value={i}>
+//           {i}
+//         </MenuItem>
+//       );
+//     }
+
+//     return years;
+//   };
+
+//   const generateMonthDayOptions = (mounthDay: number) => {
+//     const months = [];
+
+//     for (let i = 1; i <= mounthDay; i++) {
+//       months.push(
+//         <MenuItem key={i} value={i}>
+//           {i}
+//         </MenuItem>
+//       );
+//     }
+
+//     return months;
+//   };
+
+//   const handleCancelButtonClick = () => {
+//     push("/user/profile");
+//   };
+
+//   const handleKeepButtonClick = async () => {
+//     await editProfileMutation({
+//       variables: {
+//         id: user?.sub || "",
+//         lastName: userLastName || "",
+//         firstName: userFirstName || "",
+//         lastNameKana: userLastNameKana || "",
+//         firstNameKana: userFirstNameKana || "",
+//         birthdayYear: String(selectedYear) || "",
+//         birthdayMounth: String(selectedMonth) || "",
+//         birthdayDay: String(selectedDay) || "",
+//         mail: mailAddress || "",
+//         tel: phoneNumber || "",
+//         prefectures: selectedPrefecture || "",
+//         currentSituation: selectedCurrentSituation || "",
+//       },
+//     });
+//     push("/user/profile");
+//   };
+
+//   return (
+
+//   );
+// };
