@@ -1,10 +1,11 @@
-import { EditProfileDocument, GetUserDocument, GetWorkDocument } from "@/lib/graphql/graphql";
-import { backToWorksUrlVar } from "@/stores";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
+import type { ChangeEvent } from "react";
+import { EditProfileDocument, GetUserDocument, GetWorkDocument } from "@/lib/graphql/graphql";
+import { backToWorksUrlVar } from "@/stores";
 
 export const useApplication = () => {
   const { user } = useUser();

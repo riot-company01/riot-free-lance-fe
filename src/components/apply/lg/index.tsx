@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Button, Dialog, DialogTitle, Skeleton, TextField } from "@mui/material";
-import { CustomCard } from "@/components/apply/lg/card";
 import { useApplication } from "@/components/apply/hooks/use-application";
+import { CustomCard } from "@/components/apply/lg/card";
 
 export const ApplyLg = () => {
   const {
