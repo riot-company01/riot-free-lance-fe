@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Modal } from "@/components/common/modal";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
+import { MD_GLOBAL_NAVIGATION } from "@/constants";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 import { removeObjectKey } from "@/util/remove-object-key";
 
@@ -230,7 +231,7 @@ const ColumnWrapper = styled.div`
   flex-direction: column;
   position: sticky;
   background-color: #f5f5f5;
-  top: 64px;
+  top: ${MD_GLOBAL_NAVIGATION.HEADER}px;
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
 `;

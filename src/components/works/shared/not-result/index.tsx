@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import router from "next/router";
+import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
 
 export function NotResult() {
   return (
@@ -33,7 +34,10 @@ const NotResultWrapper = styled.div`
   justify-content: center;
   text-align: center;
   gap: 16px;
-  padding-top: 10%;
+  height: calc(100dvh - ${MD_GLOBAL_NAVIGATION.HEADER}px - ${MD_GLOBAL_NAVIGATION.FOOTER}px);
+  @media screen and (min-width: ${BREAK_POINT.md}px) {
+    height: calc(100dvh - ${LG_GLOBAL_NAVIGATION.HEADER}px - ${LG_GLOBAL_NAVIGATION.FOOTER}px);
+  }
   flex-direction: column;
 `;
 

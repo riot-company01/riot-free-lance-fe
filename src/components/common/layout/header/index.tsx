@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
-import { BREAK_POINT } from "@/constants";
+import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
 import { removeObjectKey } from "@/util/remove-object-key";
 
 export function LayoutHeader() {
@@ -168,9 +168,9 @@ const Logo = styled.img`
 `;
 
 const CustomAppBar = styled(AppBar)`
-  height: 64px;
+  height: ${MD_GLOBAL_NAVIGATION.HEADER}px;
   @media screen and (min-width: ${BREAK_POINT.md}px) {
-    height: 73px;
+    height: ${LG_GLOBAL_NAVIGATION.HEADER}px;
   }
 `;
 

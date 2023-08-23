@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import OutboundIcon from "@mui/icons-material/Outbound";
 import NextLink from "next/link";
-import { COMMON_Z_INDEX } from "@/constants";
+import { BREAK_POINT, COMMON_Z_INDEX, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
 import { COLOR } from "@/styles/colors";
 
 export const LayoutFooter: React.FC = () => {
@@ -29,7 +29,11 @@ export const LayoutFooter: React.FC = () => {
 
 const Wrapper = styled.footer`
   z-index: ${COMMON_Z_INDEX.HEADER};
-  height: 73px;
+
+  height: ${MD_GLOBAL_NAVIGATION.FOOTER}px;
+  @media screen and (min-width: ${BREAK_POINT.md}px) {
+    height: ${LG_GLOBAL_NAVIGATION.FOOTER}px;
+  }
   display: flex;
   justify-content: space-around;
   width: 100%;

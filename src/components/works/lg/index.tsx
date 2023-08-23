@@ -5,6 +5,7 @@ import { CustomCard } from "@/components/works/lg/card";
 import { Detail } from "@/components/works/lg/detail";
 import { Filter } from "@/components/works/lg/filter";
 import { LeftNavig } from "@/components/works/lg/left-navig";
+import { LG_GLOBAL_NAVIGATION } from "@/constants";
 import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
@@ -96,9 +97,9 @@ const Navig = styled.div`
 const NavigContainer = styled.div`
   min-width: 204px;
   position: sticky;
-  top: 73px;
+  top: ${LG_GLOBAL_NAVIGATION.HEADER}px;
   overflow: auto;
-  height: calc(100dvh - 73px);
+  height: calc(100dvh - ${LG_GLOBAL_NAVIGATION.HEADER}px);
 `;
 
 const KeyWordContainer = styled.div`
@@ -110,7 +111,7 @@ const KeyWordContainer = styled.div`
 const KeyWordFixed = styled.div`
   width: 100%;
   position: sticky;
-  top: 73px;
+  top: ${LG_GLOBAL_NAVIGATION.HEADER}px;
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
 
