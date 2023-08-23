@@ -47,14 +47,14 @@ export function Detail({ defaultWorkId }: Props) {
 
   if (!work)
     return (
-      <CustomCardActionArea isSelected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionArea ref={ref}>
         <Skeleton variant="rectangular" height={"100vh"} />
       </CustomCardActionArea>
     );
 
   return (
     <>
-      <CustomCardActionArea isSelected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionArea ref={ref}>
         <Title>{work.title}</Title>
         <MonthlyPrice>
           <Icon>
@@ -128,7 +128,7 @@ export function Detail({ defaultWorkId }: Props) {
 }
 
 const Title = styled.div`
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
 `;
 
@@ -177,13 +177,7 @@ const Description = styled.div`
   }
 `;
 
-const CustomCardActionArea = styled(Card)<{ isSelected: boolean }>`
+const CustomCardActionArea = styled(Card)`
   padding: 16px;
-  border-radius: 8px;
-  max-height: ${({ isSelected }) => (isSelected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
-  overflow: scroll;
-  border: 1px solid rgb(224, 224, 224);
   background-color: white;
-  position: sticky;
-  top: ${({ isSelected }) => (isSelected ? "198px" : "166px")};
 `;
