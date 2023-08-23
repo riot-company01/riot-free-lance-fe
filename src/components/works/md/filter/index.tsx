@@ -81,7 +81,7 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
           <FlexContainer>
             <div>
               <button onClick={handleClick}>
-                <SortIcon fontSize="medium" />
+                <SortIcon fontSize="large" />
               </button>
               <Menu
                 id="basic-menu"
@@ -114,13 +114,13 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
                 })}
               </Menu>
             </div>
-            <div
+            <FilterAltIconWrapper
               onClick={() => {
                 setIsOpen(true);
               }}
             >
-              <FilterAltIcon fontSize="medium" />
-            </div>
+              <FilterAltIcon fontSize="large" />
+            </FilterAltIconWrapper>
           </FlexContainer>
         </FlexContainer>
         <ChipWrapper>
@@ -242,7 +242,7 @@ const FlexContainer = styled.div<{ restProperty?: SerializedStyles }>`
 `;
 
 const Title = styled.div`
-  font-size: 16px;
+  font-size: 20px;
 `;
 
 const CustomChip = styled(Chip)`
@@ -266,4 +266,8 @@ const Content = styled.div`
 const Head = styled.div`
   font-size: 18px;
   font-weight: bold;
+`;
+
+const FilterAltIconWrapper = styled.div`
+  padding-left: 4px;
 `;
