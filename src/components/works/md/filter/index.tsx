@@ -254,6 +254,7 @@ const CustomChip = styled(Chip)`
 const ChipWrapper = styled.div`
   overflow: auto;
   display: flex;
+  padding-top: 8px;
 `;
 
 const Content = styled.div`
