@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
@@ -10,9 +11,8 @@ import { Filter } from "@/components/works/filter";
 import { LeftNavig } from "@/components/works/left-navig";
 import { NotResult } from "@/components/works/not-result";
 import { addApolloState, initializeApollo } from "@/lib/apollo/client";
-import { GetFavariteWorksDocument, GetSkillsQuery } from "@/lib/graphql/graphql";
-import { Order_By, GetSkillsDocument, GetWorksDocument } from "@/lib/graphql/graphql";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import type { GetSkillsQuery } from "@/lib/graphql/graphql";
+import { Order_By, GetSkillsDocument, GetWorksDocument, GetFavariteWorksDocument } from "@/lib/graphql/graphql";
 
 export const WORKS_Z_INDEX = {
   FILTER: 10,
@@ -57,7 +57,7 @@ function Works() {
   const inputKeyword = (router.query["keyword"] as string) || "";
   const sort = (router.query["sort"] as string) || "";
   const [skills, setSkills] = useState<GetSkillsQuery["skills"] | undefined>([]);
-  const [hasFavorite, setHasFavorite] = useState<boolean | undefined>(false);
+  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
   const order = sort === "new" ? { createAt: Order_By.Desc } : { maxMonthlyPrice: Order_By.Desc };
   const { user } = useUser();
   const { data } = useQuery(GetFavariteWorksDocument, { variables: { id: user?.sub } });
@@ -128,24 +128,17 @@ function Works() {
   });
 
   useEffect(() => {
-    if (skillsData) {
-      setSkills(skillsData?.skills);
-    }
+    if (skillsData) setSkills(skillsData.skills);
   }, [skillsData?.skills]);
 
   useEffect(() => {
-    worksData?.works.map((item) => {
-      setHasFavorite(
-        data?.user_to_works.some(({ work_id }) => {
-          item.id === work_id;
-        })
-      );
-    });
-  }, [hasFavorite]);
+    if (!data || !worksData) return;
 
-  if (worksData?.works.length === 0) {
-    return <NotResult />;
-  }
+    const userFavoriteWorkData = data.user_to_works.map((item) => item.work_id);
+    setHasFavoriteIdArray(userFavoriteWorkData);
+  }, [data, worksData]);
+
+  if (worksData?.works.length === 0) return <NotResult />;
 
   return (
     <Wrapper>
@@ -166,15 +159,11 @@ function Works() {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  if (data) {
-                    setHasFavorite(
-                      data.user_to_works.some(({ work_id }) => {
-                        return item.id === work_id;
-                      })
-                    );
-                  }
+                  const isFavorite = data?.user_to_works.some(({ work_id }) => {
+                    return item.id === work_id;
+                  });
 
-                  return <CustomCard key={idx} item={item} hasFavorite={hasFavorite} setHasFavorite={setHasFavorite} />;
+                  return <CustomCard key={`item-${idx}`} item={item} hasFavorite={isFavorite} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (
@@ -187,8 +176,11 @@ function Works() {
               <Pagination count={1} variant="outlined" shape="rounded" size="large" />
             </PaginationWrapper>
           </Column>
-          {/* // TODO 変える */}
-          <DetailWrapper>{<Detail defaultWorkId={worksData?.works[0].id} />}</DetailWrapper>
+
+          {/** TODO : 変える */}
+          <DetailWrapper>
+            <Detail defaultWorkId={worksData?.works[0].id} hasFavoriteIdArray={hasFavoriteIdArray} />
+          </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
     </Wrapper>

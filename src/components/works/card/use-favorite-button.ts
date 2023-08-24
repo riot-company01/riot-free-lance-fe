@@ -1,5 +1,11 @@
-import { DeleteFavoriteMutationDocument, InsertFavoriteMutationDocument } from "@/lib/graphql/graphql";
 import { useMutation } from "@apollo/client";
+import { useState } from "react";
+import {
+  DeleteFavoriteMutationDocument,
+  GetFavariteWorksDocument,
+  GetWorksDocument,
+  InsertFavoriteMutationDocument,
+} from "@/lib/graphql/graphql";
 
 type Args = {
   userId: string;
@@ -8,25 +14,43 @@ type Args = {
 
 export const useFavoriteButton = (props: Args) => {
   const { userId, workId } = props;
-  const [insertMutation] = useMutation(InsertFavoriteMutationDocument);
-  const [deleteMutation] = useMutation(DeleteFavoriteMutationDocument);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const [insertMutation] = useMutation(InsertFavoriteMutationDocument, {
+    refetchQueries: [GetWorksDocument, GetFavariteWorksDocument],
+  });
+  const [deleteMutation] = useMutation(DeleteFavoriteMutationDocument, {
+    refetchQueries: [GetWorksDocument, GetFavariteWorksDocument],
+  });
 
   const handleClickAddFavoriteClick = async () => {
-    await insertMutation({
-      variables: {
-        id: userId,
-        workId,
-      },
-    });
+    if (!isButtonDisabled) {
+      setIsButtonDisabled(true);
+      await insertMutation({
+        variables: {
+          id: userId,
+          workId,
+        },
+      });
+      setTimeout(() => {
+        setIsButtonDisabled(false);
+      }, 100);
+    }
   };
 
   const handleClickdeleteFavoriteClick = async () => {
-    await deleteMutation({
-      variables: {
-        id: userId,
-        workId,
-      },
-    });
+    if (!isButtonDisabled) {
+      setIsButtonDisabled(true);
+      await deleteMutation({
+        variables: {
+          id: userId,
+          workId,
+        },
+      });
+      setTimeout(() => {
+        setIsButtonDisabled(false);
+      }, 1000); // 連打防止を解除するまでの待機時間
+    }
   };
 
   return {

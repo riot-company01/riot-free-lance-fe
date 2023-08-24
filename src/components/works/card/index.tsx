@@ -1,26 +1,23 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
 import { Card, CardActionArea, Chip, IconButton } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import router from "next/router";
 import removeMd from "remove-markdown";
-import { GetWorksQuery } from "@/lib/graphql/graphql";
-import { COLOR } from "@/styles/colors";
 import { useFavoriteButton } from "@/components/works/card/use-favorite-button";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import type { GetWorksQuery } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
 export function CustomCard({
   item,
   hasFavorite,
-  setHasFavorite,
 }: {
   item: GetWorksQuery["works"][number];
   hasFavorite: boolean | undefined;
-  setHasFavorite: Dispatch<SetStateAction<boolean | undefined>>;
 }) {
   const { user } = useUser();
 
@@ -28,12 +25,6 @@ export function CustomCard({
     userId: user?.sub || "",
     workId: item.id,
   });
-
-  useEffect(() => {
-    console.log("aaa");
-    console.log(hasFavorite);
-    setHasFavorite((prev) => !prev);
-  }, [hasFavorite]);
 
   return (
     <CustomCardActionArea
@@ -69,9 +60,7 @@ export function CustomCard({
           {hasFavorite ? (
             <IconButton
               onClick={() => {
-                console.log("bb");
                 handleClickdeleteFavoriteClick();
-                setHasFavorite(true);
               }}
             >
               <FavoriteIcon fontSize="large" sx={{ color: COLOR.RED.code }} />
@@ -79,9 +68,7 @@ export function CustomCard({
           ) : (
             <IconButton
               onClick={() => {
-                console.log("ccc");
                 handleClickAddFavoriteClick();
-                setHasFavorite(false);
               }}
             >
               <FavoriteBorderIcon color="disabled" fontSize="large" />
@@ -239,34 +226,3 @@ const PublicationDate = styled.div`
   padding-top: 8px;
   font-size: 12px;
 `;
-
-// import * as React from 'react';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import Typography from '@mui/material/Typography';
-// import { CardActionArea } from '@mui/material';
-
-// export default function ActionAreaCard() {
-//   return (
-//     <Card sx={{ maxWidth: 345 }}>
-//       <CardActionArea>
-//         <CardMedia
-//           component="img"
-//           height="140"
-//           image="/static/images/cards/contemplative-reptile.jpg"
-//           alt="green iguana"
-//         />
-//         <CardContent>
-//           <Typography gutterBottom variant="h5" component="div">
-//             Lizard
-//           </Typography>
-//           <Typography variant="body2" color="text.secondary">
-//             Lizards are a widespread group of squamate reptiles, with over 6,000
-//             species, ranging across all continents except Antarctica
-//           </Typography>
-//         </CardContent>
-//       </CardActionArea>
-//     </Card>
-//   );
-// }
