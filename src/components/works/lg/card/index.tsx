@@ -5,12 +5,13 @@ import ReportIcon from "@mui/icons-material/Report";
 import { Card, CardActionArea, Chip } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
+import { WORKS_Z_INDEX } from "@/components/works/constants";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 
 export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
   return (
     <CustomCardActionArea
-      sx={{ width: 480, cursor: "pointer", borderRadius: 2 }}
+      sx={{ cursor: "pointer", borderRadius: 2 }}
       onClick={() => {
         router.push(
           {
@@ -104,6 +105,7 @@ const CustomCardActionArea = styled(Card)`
   :not(:first-of-type) {
     margin-top: 16px;
   }
+  width: 480px;
 `;
 
 const Closed = styled.div`
@@ -111,7 +113,7 @@ const Closed = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1001;
+  z-index: ${WORKS_Z_INDEX.CLOSE_OVERLAY}; // TODO
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 `;
@@ -183,34 +185,3 @@ const PublicationDate = styled.div`
   padding-top: 8px;
   font-size: 12px;
 `;
-
-// import * as React from 'react';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import Typography from '@mui/material/Typography';
-// import { CardActionArea } from '@mui/material';
-
-// export default function ActionAreaCard() {
-//   return (
-//     <Card sx={{ maxWidth: 345 }}>
-//       <CardActionArea>
-//         <CardMedia
-//           component="img"
-//           height="140"
-//           image="/static/images/cards/contemplative-reptile.jpg"
-//           alt="green iguana"
-//         />
-//         <CardContent>
-//           <Typography gutterBottom variant="h5" component="div">
-//             Lizard
-//           </Typography>
-//           <Typography variant="body2" color="text.secondary">
-//             Lizards are a widespread group of squamate reptiles, with over 6,000
-//             species, ranging across all continents except Antarctica
-//           </Typography>
-//         </CardContent>
-//       </CardActionArea>
-//     </Card>
-//   );
-// }

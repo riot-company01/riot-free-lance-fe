@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
-import { backToWorksUrlVar } from "@/stores";
 
 type Props = {
   defaultWorkId?: number;
@@ -19,22 +18,16 @@ type Props = {
 
 export function Detail({ defaultWorkId }: Props) {
   const router = useRouter();
-
   const ref = useRef<HTMLDivElement>(null);
   const id = Number(router.query["work-id"]) || defaultWorkId;
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
 
-  const applicationWork = () => {
-    backToWorksUrlVar(router.asPath);
-
-    router.push({
-      pathname: "apply",
-      query: {
-        id,
-      },
-    });
+  const copyUrlHandler = async () => {
+    const currentUrl = location.href;
+    await navigator.clipboard.writeText(currentUrl);
+    alert("urlがコピーされました");
   };
 
   useEffect(() => {
@@ -54,14 +47,14 @@ export function Detail({ defaultWorkId }: Props) {
 
   if (!work)
     return (
-      <CustomCardActionArea isSelected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionArea ref={ref}>
         <Skeleton variant="rectangular" height={"100vh"} />
       </CustomCardActionArea>
     );
 
   return (
     <>
-      <CustomCardActionArea isSelected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionArea ref={ref}>
         <Title>{work.title}</Title>
         <MonthlyPrice>
           <Icon>
@@ -82,9 +75,7 @@ export function Detail({ defaultWorkId }: Props) {
               return (
                 <>
                   <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
-                  <Span>
-                    万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)
-                  </Span>
+                  <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
                 </>
               );
             } else {
@@ -127,8 +118,8 @@ export function Detail({ defaultWorkId }: Props) {
         </Description>
 
         <FlexContainer>
-          <Button variant="contained" onClick={applicationWork}>
-            案件に応募する
+          <Button variant="contained" onClick={copyUrlHandler}>
+            案件のURLをコピーする
           </Button>
         </FlexContainer>
       </CustomCardActionArea>
@@ -137,7 +128,7 @@ export function Detail({ defaultWorkId }: Props) {
 }
 
 const Title = styled.div`
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
 `;
 
@@ -186,13 +177,7 @@ const Description = styled.div`
   }
 `;
 
-const CustomCardActionArea = styled(Card)<{ isSelected: boolean }>`
+const CustomCardActionArea = styled(Card)`
   padding: 16px;
-  border-radius: 8px;
-  max-height: ${({ isSelected }) => (isSelected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
-  overflow: scroll;
-  border: 1px solid rgb(224, 224, 224);
   background-color: white;
-  position: sticky;
-  top: ${({ isSelected }) => (isSelected ? "198px" : "166px")};
 `;
