@@ -2,9 +2,9 @@ import { useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
-import { CustomCard } from "@/components/user/card";
-import { Detail } from "@/components/user/detail";
-import { NoItem } from "@/components/user/no-item";
+import { NoItem } from "@/components/user/lg/no-item";
+import { CustomCard } from "@/components/works/lg/card";
+import { Detail } from "@/components/works/lg/detail";
 import { GetAppliedDocument } from "@/lib/graphql/graphql";
 
 function Apply() {

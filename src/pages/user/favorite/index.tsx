@@ -1,11 +1,10 @@
 import { useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import styled from "@emotion/styled";
 import { Box } from "@mui/material";
-import { GetFavoriedDocument } from "@/lib/graphql/graphql";
-import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
 import FavoriteLg from "@/components/user/lg";
 import FavoriteMd from "@/components/user/md";
+import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
+import { GetFavoriedDocument } from "@/lib/graphql/graphql";
 
 function Favorite() {
   const { user } = useUser();

@@ -3,7 +3,7 @@ import { Pagination, Skeleton } from "@mui/material";
 import { CustomCard } from "@/components/user/lg/card";
 import { Detail } from "@/components/user/lg/detail";
 import { NoItem } from "@/components/user/lg/no-item";
-import { GetFavoriedQuery } from "@/lib/graphql/graphql";
+import type { GetFavoriedQuery } from "@/lib/graphql/graphql";
 
 type FavoriteListProps = {
   worksData: GetFavoriedQuery | undefined;
