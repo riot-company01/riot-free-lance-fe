@@ -12,6 +12,7 @@ import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { backToWorksUrlVar } from "@/stores";
 
 type Props = {
   defaultWorkId?: number;
@@ -36,10 +37,15 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
     workId: id || 0,
   });
 
-  const copyUrlHandler = async () => {
-    const currentUrl = location.href;
-    await navigator.clipboard.writeText(currentUrl);
-    alert("urlがコピーされました");
+  const applicationWork = () => {
+    backToWorksUrlVar(router.asPath);
+
+    router.push({
+      pathname: "apply",
+      query: {
+        id,
+      },
+    });
   };
 
   useEffect(() => {
@@ -146,8 +152,8 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
         </Description>
 
         <FlexButtonContainer>
-          <Button variant="contained" onClick={copyUrlHandler}>
-            案件のURLをコピーする
+          <Button variant="contained" onClick={applicationWork}>
+            案件に応募する
           </Button>
           {isFavorite ? (
             <Button variant="contained" color={"error"} onClick={handleClickdeleteFavoriteClick}>

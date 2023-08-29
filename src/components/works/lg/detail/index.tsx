@@ -12,6 +12,7 @@ import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { backToWorksUrlVar } from "@/stores";
 
 type Props = {
   defaultWorkId?: number;
@@ -20,6 +21,7 @@ type Props = {
 
 export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
   const router = useRouter();
+
   const ref = useRef<HTMLDivElement>(null);
   const id = Number(router.query["work-id"]) || defaultWorkId;
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
@@ -35,10 +37,15 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
     workId: id || 0,
   });
 
-  const copyUrlHandler = async () => {
-    const currentUrl = location.href;
-    await navigator.clipboard.writeText(currentUrl);
-    alert("urlがコピーされました");
+  const applicationWork = () => {
+    backToWorksUrlVar(router.asPath);
+
+    router.push({
+      pathname: "apply",
+      query: {
+        id,
+      },
+    });
   };
 
   useEffect(() => {
@@ -127,6 +134,13 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
                 <Text>{work.location}</Text>
               </Icon>
             </FlexContainer>
+
+            <FlexContainer>
+              <Icon>
+                <LocationOnIcon fontSize="small" />
+                <Text>{work.location}</Text>
+              </Icon>
+            </FlexContainer>
           </div>
           <FavoriteButtonWrapper>
             {isFavorite ? (
@@ -145,8 +159,8 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
         </Description>
 
         <FlexButtonContainer>
-          <Button variant="contained" onClick={copyUrlHandler}>
-            案件のURLをコピーする
+          <Button variant="contained" onClick={applicationWork}>
+            案件に応募する
           </Button>
           {isFavorite ? (
             <Button variant="contained" color={"error"} onClick={handleClickdeleteFavoriteClick}>
