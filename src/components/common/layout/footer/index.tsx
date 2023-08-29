@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import OutboundIcon from "@mui/icons-material/Outbound";
 import NextLink from "next/link";
+import { BREAK_POINT, COMMON_Z_INDEX, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
 import { COLOR } from "@/styles/colors";
 
 export const LayoutFooter: React.FC = () => {
@@ -22,17 +23,17 @@ export const LayoutFooter: React.FC = () => {
         <OutboundIcon fontSize="small" />
         <NextLink href="https://riot-company.com/contact/">お問い合わせ</NextLink>
       </div>
-      <div>
-        <OutboundIcon fontSize="small" />
-        <NextLink href="/preparation">ご利用ガイド</NextLink>
-      </div>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.footer`
-  z-index: 1000;
-  height: 78px;
+  z-index: ${COMMON_Z_INDEX.HEADER};
+
+  height: ${MD_GLOBAL_NAVIGATION.FOOTER}px;
+  @media screen and (min-width: ${BREAK_POINT.md}px) {
+    height: ${LG_GLOBAL_NAVIGATION.FOOTER}px;
+  }
   display: flex;
   justify-content: space-around;
   width: 100%;

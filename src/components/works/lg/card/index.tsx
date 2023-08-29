@@ -8,9 +8,10 @@ import ReportIcon from "@mui/icons-material/Report";
 import { Card, CardActionArea, Chip, IconButton } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
-import { useFavoriteButton } from "@/components/works/card/use-favorite-button";
+import { WORKS_Z_INDEX } from "@/components/works/constants";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
+import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
 
 export function CustomCard({
   item,
@@ -28,7 +29,7 @@ export function CustomCard({
 
   return (
     <CustomCardActionArea
-      sx={{ width: 480, cursor: "pointer", borderRadius: 2 }}
+      sx={{ cursor: "pointer", borderRadius: 2 }}
       onClick={() => {
         router.push(
           {
@@ -142,6 +143,7 @@ const CustomCardActionArea = styled(Card)`
   :not(:first-of-type) {
     margin-top: 16px;
   }
+  width: 480px;
 `;
 
 const Closed = styled.div`
@@ -149,7 +151,7 @@ const Closed = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1001;
+  z-index: ${WORKS_Z_INDEX.CLOSE_OVERLAY}; // TODO
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 `;

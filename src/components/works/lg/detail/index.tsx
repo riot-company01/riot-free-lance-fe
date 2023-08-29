@@ -6,12 +6,12 @@ import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
-import { Button, Card, Skeleton } from "@mui/material";
+import { Button, Card, Skeleton, styled as MuiStyled } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { useFavoriteButton } from "@/components/works/card/use-favorite-button";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
 
 type Props = {
   defaultWorkId?: number;
@@ -58,14 +58,14 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
 
   if (!work)
     return (
-      <CustomCardActionArea isSelected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionArea selected={!!router.query["skill-ids"]} ref={ref}>
         <Skeleton variant="rectangular" height={"100vh"} />
       </CustomCardActionArea>
     );
 
   return (
     <>
-      <CustomCardActionArea isSelected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionArea selected={!!router.query["skill-ids"]} ref={ref}>
         <Title>{work.title}</Title>
         <WrapperContent>
           <div>
@@ -211,6 +211,16 @@ const WrapperContent = styled.div`
   display: flex;
   justify-content: space-around;
 `;
+const CustomCardActionArea = MuiStyled(Card)<{ selected: boolean }>`
+  padding: 16px;
+  border-radius: 8px;
+  max-height: ${({ selected }) => (selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  overflow: scroll;
+  border: 1px solid rgb(224, 224, 224);
+  background-color: white;
+  position: sticky;
+  top: ${({ selected }) => (selected ? "198px" : "166px")};
+`;
 
 const Description = styled.div`
   * {
@@ -220,17 +230,6 @@ const Description = styled.div`
 
 const FavoriteButtonWrapper = styled.div`
   margin: auto;
-`;
-
-const CustomCardActionArea = styled(Card)<{ isSelected: boolean }>`
-  padding: 16px;
-  border-radius: 8px;
-  max-height: ${({ isSelected }) => (isSelected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
-  overflow: scroll;
-  border: 1px solid rgb(224, 224, 224);
-  background-color: white;
-  position: sticky;
-  top: ${({ isSelected }) => (isSelected ? "198px" : "166px")};
 `;
 
 const FlexButtonContainer = styled.div`

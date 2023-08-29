@@ -35,6 +35,7 @@ export function Filter({ defaultFilters, selectedSkillIds, worksLength }: Props)
           size="small"
           sx={{
             width: 220,
+            marginRight: 4,
           }}
         >
           <Select value={sort}>
