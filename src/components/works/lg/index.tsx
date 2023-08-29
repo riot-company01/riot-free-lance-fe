@@ -6,7 +6,10 @@ import { Detail } from "@/components/works/lg/detail";
 import { Filter } from "@/components/works/lg/filter";
 import { LeftNavig } from "@/components/works/lg/left-navig";
 import { LG_GLOBAL_NAVIGATION } from "@/constants";
-import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
+import { GetFavariteWorksDocument, GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
+import { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 type Props = {
   skills?: GetSkillsQuery["skills"];
@@ -15,6 +18,15 @@ type Props = {
 };
 
 export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
+  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
+  const { user } = useUser();
+  const { data } = useQuery(GetFavariteWorksDocument, { variables: { id: user?.sub } });
+  useEffect(() => {
+    if (!data || !worksData) return;
+
+    const userFavoriteWorkData = data.user_to_works.map((item) => item.work_id);
+    setHasFavoriteIdArray(userFavoriteWorkData);
+  }, [data, worksData]);
   return (
     <Wrapper>
       <NavigContainer>
@@ -34,7 +46,10 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  return <CustomCard key={idx} item={item} />;
+                  const isFavorite = data?.user_to_works.some(({ work_id }) => {
+                    return item.id === work_id;
+                  });
+                  return <CustomCard key={idx} item={item} hasFavorite={isFavorite} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (
@@ -55,7 +70,9 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
             </PaginationWrapper>
           </Column>
 
-          <DetailWrapper>{<Detail defaultWorkId={worksData?.works[0].id} />}</DetailWrapper>
+          <DetailWrapper>
+            <Detail defaultWorkId={worksData?.works[0].id} hasFavoriteIdArray={hasFavoriteIdArray} />
+          </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
     </Wrapper>

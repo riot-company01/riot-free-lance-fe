@@ -11,18 +11,31 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 type Props = {
   defaultWorkId?: number;
+  hasFavoriteIdArray?: number[];
 };
 
-export function Detail({ defaultWorkId }: Props) {
+export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const id = Number(router.query["work-id"]) || defaultWorkId;
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
+  const isFavorite = hasFavoriteIdArray?.some((item) => {
+    return item === id;
+  });
+
+  const { user } = useUser();
+
+  const { handleClickAddFavoriteClick, handleClickdeleteFavoriteClick } = useFavoriteButton({
+    userId: user?.sub || "",
+    workId: id || 0,
+  });
 
   const copyUrlHandler = async () => {
     const currentUrl = location.href;
@@ -56,72 +69,97 @@ export function Detail({ defaultWorkId }: Props) {
     <>
       <CustomCardActionArea ref={ref}>
         <Title>{work.title}</Title>
-        <MonthlyPrice>
-          <Icon>
-            <MonetizationOnIcon fontSize="small" />
-          </Icon>
+        <WrapperContent>
+          <div>
+            <MonthlyPrice>
+              <Icon>
+                <MonetizationOnIcon fontSize="small" />
+              </Icon>
 
-          {(() => {
-            if (work.minMonthlyPrice && work.maxMonthlyPrice) {
-              return (
-                <>
-                  <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
-                  <Span>
-                    万円/月額 (想定年収: {work.minMonthlyPrice * 12}~{work.maxMonthlyPrice * 12}万円)
-                  </Span>
-                </>
-              );
-            } else if (work.minMonthlyPrice || work.maxMonthlyPrice) {
-              return (
-                <>
-                  <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
-                  <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
-                </>
-              );
-            } else {
-              return <Span>要相談</Span>;
-            }
-          })()}
-        </MonthlyPrice>
-        <FlexContainer>
-          <Info>
-            <Icon>
-              <AccessTimeIcon fontSize="small" />
-              <Text>
-                {work.minWorkHours}~{work.maxWorkHours}時間
-              </Text>
-            </Icon>
-          </Info>
-          <Info>
-            <Icon>
-              <PaymentIcon fontSize="small" />
-              <Text>30日</Text>
-            </Icon>
-          </Info>
-          <Info>
-            <Icon>
-              <DocumentScannerIcon fontSize="small" />
-              <Text>{work.contractType}</Text>
-            </Icon>
-          </Info>
-        </FlexContainer>
+              {(() => {
+                if (work.minMonthlyPrice && work.maxMonthlyPrice) {
+                  return (
+                    <>
+                      <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
+                      <Span>
+                        万円/月額 (想定年収: {work.minMonthlyPrice * 12}~{work.maxMonthlyPrice * 12}万円)
+                      </Span>
+                    </>
+                  );
+                } else if (work.minMonthlyPrice || work.maxMonthlyPrice) {
+                  return (
+                    <>
+                      <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
+                      <Span>
+                        万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)
+                      </Span>
+                    </>
+                  );
+                } else {
+                  return <Span>要相談</Span>;
+                }
+              })()}
+            </MonthlyPrice>
+            <FlexContainer>
+              <Info>
+                <Icon>
+                  <AccessTimeIcon fontSize="small" />
+                  <Text>
+                    {work.minWorkHours}~{work.maxWorkHours}時間
+                  </Text>
+                </Icon>
+              </Info>
+              <Info>
+                <Icon>
+                  <PaymentIcon fontSize="small" />
+                  <Text>30日</Text>
+                </Icon>
+              </Info>
+              <Info>
+                <Icon>
+                  <DocumentScannerIcon fontSize="small" />
+                  <Text>{work.contractType}</Text>
+                </Icon>
+              </Info>
+            </FlexContainer>
 
-        <FlexContainer>
-          <Icon>
-            <LocationOnIcon fontSize="small" />
-            <Text>{work.location}</Text>
-          </Icon>
-        </FlexContainer>
-
+            <FlexContainer>
+              <Icon>
+                <LocationOnIcon fontSize="small" />
+                <Text>{work.location}</Text>
+              </Icon>
+            </FlexContainer>
+          </div>
+          <FavoriteButtonWrapper>
+            {isFavorite ? (
+              <Button variant="contained" color={"error"} onClick={handleClickdeleteFavoriteClick}>
+                お気に入り登録済み
+              </Button>
+            ) : (
+              <Button variant="outlined" color="error" onClick={handleClickAddFavoriteClick}>
+                お気に入り登録する
+              </Button>
+            )}
+          </FavoriteButtonWrapper>
+        </WrapperContent>
         <Description>
           <ReactMarkdown>{work.description}</ReactMarkdown>
         </Description>
 
-        <FlexContainer>
+        <FlexButtonContainer>
           <Button variant="contained" onClick={copyUrlHandler}>
             案件のURLをコピーする
           </Button>
-        </FlexContainer>
+          {isFavorite ? (
+            <Button variant="contained" color={"error"} onClick={handleClickdeleteFavoriteClick}>
+              お気に入り登録済み
+            </Button>
+          ) : (
+            <Button variant="outlined" color="error" onClick={handleClickAddFavoriteClick}>
+              お気に入り登録する
+            </Button>
+          )}
+        </FlexButtonContainer>
       </CustomCardActionArea>
     </>
   );
@@ -180,4 +218,16 @@ const Description = styled.div`
 const CustomCardActionArea = styled(Card)`
   padding: 16px;
   background-color: white;
+`;
+const WrapperContent = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+const FavoriteButtonWrapper = styled.div`
+  margin: auto;
+`;
+
+const FlexButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
 `;

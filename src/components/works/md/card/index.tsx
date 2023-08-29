@@ -1,14 +1,31 @@
 import styled from "@emotion/styled";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { CardActionArea, Chip, Card as MuiCard } from "@mui/material";
+import { CardActionArea, Chip, Card as MuiCard, IconButton } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
+import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
-export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
+export function Card({
+  item,
+  hasFavorite,
+}: {
+  item: GetWorksQuery["works"][number];
+  hasFavorite: boolean | undefined;
+}) {
+  const { user } = useUser();
+  const { handleClickAddFavoriteClick, handleClickdeleteFavoriteClick } = useFavoriteButton({
+    userId: user?.sub || "",
+    workId: item.id,
+  });
+
   return (
     <CustomCardActionArea
       sx={{ cursor: "pointer", borderRadius: 2, overflow: "scroll" }}
@@ -35,9 +52,28 @@ export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
           padding: 2,
         }}
       >
-        <Title>
-          <div>{item.title}</div>
-        </Title>
+        <TitleWrapper>
+          <Title>
+            <div>{item.title}</div>
+          </Title>
+          {hasFavorite ? (
+            <IconButton
+              onClick={() => {
+                handleClickdeleteFavoriteClick();
+              }}
+            >
+              <FavoriteIcon fontSize="large" sx={{ color: COLOR.RED.code }} />
+            </IconButton>
+          ) : (
+            <IconButton
+              onClick={() => {
+                handleClickAddFavoriteClick();
+              }}
+            >
+              <FavoriteBorderIcon color="disabled" fontSize="large" />
+            </IconButton>
+          )}
+        </TitleWrapper>
         <MonthlyPrice>
           <Icon>
             <MonetizationOnIcon fontSize="small" />
@@ -56,7 +92,9 @@ export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
               return (
                 <>
                   <Strong>{item.minMonthlyPrice || item.maxMonthlyPrice}</Strong>
-                  <Span>万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)</Span>
+                  <Span>
+                    万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)
+                  </Span>
                 </>
               );
             } else {
@@ -121,6 +159,12 @@ const Msg = styled.div`
   text-align: center;
   width: 100%;
   align-items: center;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Title = styled.div`
