@@ -9,9 +9,9 @@ import { Card, CardActionArea, Chip, IconButton } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
+import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
-import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
 
 export function CustomCard({
   item,

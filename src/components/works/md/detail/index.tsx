@@ -1,6 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
-
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -10,9 +10,8 @@ import { Button, Card, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { GetWorkDocument } from "@/lib/graphql/graphql";
 
 type Props = {
   defaultWorkId?: number;

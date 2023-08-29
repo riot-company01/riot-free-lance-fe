@@ -1,16 +1,16 @@
+import { useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
-
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import { Modal } from "@/components/common/modal";
 import { Card } from "@/components/works/md/card";
 import { Detail } from "@/components/works/md/detail";
 import { Filter } from "@/components/works/md/filter";
 import { BREAK_POINT } from "@/constants";
-import { GetFavariteWorksDocument, GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
-import { useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { useState, useEffect } from "react";
+import { GetFavariteWorksDocument } from "@/lib/graphql/graphql";
+import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
   skills?: GetSkillsQuery["skills"];

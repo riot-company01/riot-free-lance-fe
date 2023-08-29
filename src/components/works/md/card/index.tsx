@@ -1,3 +1,4 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -8,10 +9,9 @@ import { CardActionArea, Chip, Card as MuiCard, IconButton } from "@mui/material
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
+import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
-import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
-import { useUser } from "@auth0/nextjs-auth0/client";
 
 export function Card({
   item,

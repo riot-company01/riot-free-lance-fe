@@ -10,8 +10,8 @@ import { Button, Card, Skeleton, styled as MuiStyled } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
+import { GetWorkDocument } from "@/lib/graphql/graphql";
 
 type Props = {
   defaultWorkId?: number;
