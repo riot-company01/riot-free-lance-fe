@@ -29,3 +29,13 @@ export const COMMON_Z_INDEX = {
   HEADER: responsiveFontSizes(createTheme()).zIndex.appBar as 1100,
   MODAL: responsiveFontSizes(createTheme()).zIndex.modal as 1300,
 } as const;
+
+export const LG_GLOBAL_NAVIGATION = {
+  HEADER: 73,
+  FOOTER: 73,
+};
+
+export const MD_GLOBAL_NAVIGATION = {
+  HEADER: 64,
+  FOOTER: 64,
+};

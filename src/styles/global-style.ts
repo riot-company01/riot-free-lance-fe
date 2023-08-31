@@ -14,11 +14,9 @@ export const GLOBAL_STYLE = css`
 
   html {
     padding: var(--sat) var(--sar) var(--sab) var(--sal);
+    scrollbar-width: thin;
   }
 
-  #__next {
-    padding-top: 78px;
-  }
   :is(input, textarea, button, select, a):focus-visible {
     outline: 2px solid ${COLOR.BASE_COLOR.code};
     outline-offset: -2px;
