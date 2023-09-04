@@ -29,7 +29,7 @@ export function CustomCard({
 
   return (
     <CustomCardActionArea
-      sx={{ cursor: "pointer", borderRadius: 2 }}
+      sx={{ cursor: "pointer", borderRadius: 2, marginLeft: "2px" }}
       onClick={() => {
         router.push(
           {
