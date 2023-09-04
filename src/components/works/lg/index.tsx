@@ -91,7 +91,6 @@ const DetailWrapper = styled.div`
 
 const Navig = styled.div`
   padding: 16px;
-  width: 200px;
 `;
 
 const NavigContainer = styled.div`
