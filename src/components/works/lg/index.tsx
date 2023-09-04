@@ -95,7 +95,7 @@ const Navig = styled.div`
 `;
 
 const NavigContainer = styled.div`
-  min-width: 204px;
+  min-width: 200px;
   position: sticky;
   top: ${LG_GLOBAL_NAVIGATION.HEADER}px;
   overflow: auto;
