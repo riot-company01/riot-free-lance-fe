@@ -8,7 +8,7 @@ import { WorksMd } from "@/components/works/md";
 import { NotResult } from "@/components/works/shared/not-result";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
 import { initializeApollo, addApolloState } from "@/lib/apollo/client";
-import type { GetSkillsQuery } from "@/lib/graphql/graphql";
+import type { GetSkillsQuery, Works } from "@/lib/graphql/graphql";
 
 export const getServerSideProps = withPageAuthRequired({
   // @ts-ignore
