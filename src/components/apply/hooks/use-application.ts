@@ -26,6 +26,7 @@ export const useApplication = () => {
   });
 
   const [openDialog, setOpenDialog] = useState(false);
+
   const [userName, setUserName] = useState(userData?.users[0].userName);
   const [userNameKana, setUserNameKana] = useState(userData?.users[0].userNameKana);
   const [phoneNumber, setPhoneNumber] = useState(userData?.users[0].tel);

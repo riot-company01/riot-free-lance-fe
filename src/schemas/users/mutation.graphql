@@ -9,3 +9,15 @@ mutation DeleteFavoriteMutation($id: String!, $workId: Int!) {
     affected_rows
   }
 }
+
+mutation EditProfile($id: String!, $userName: String, $userNameKana: String, $mail: String, $tel: String) {
+  update_users_by_pk(
+    pk_columns: { id: $id }
+    _set: { userName: $userName, userNameKana: $userNameKana, mail: $mail, tel: $tel }
+  ) {
+    userName
+    userNameKana
+    mail
+    tel
+  }
+}
