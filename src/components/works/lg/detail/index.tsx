@@ -47,9 +47,9 @@ export function Detail({ defaultWorkId }: Props) {
 
   if (!work)
     return (
-      <CustomCardActionArea selected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionSkeletonArea selected={!!router.query["skill-ids"]} ref={ref}>
         <Skeleton variant="rectangular" height={"100vh"} />
-      </CustomCardActionArea>
+      </CustomCardActionSkeletonArea>
     );
 
   return (
@@ -173,6 +173,16 @@ const Text = styled.div`
 
 const CustomCardActionArea = MuiStyled(Card)<{ selected: boolean }>`
   padding: 16px;
+  border-radius: 8px;
+  max-height: ${({ selected }) => (selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  overflow: scroll;
+  border: 1px solid rgb(224, 224, 224);
+  background-color: white;
+  position: sticky;
+  top: ${({ selected }) => (selected ? "198px" : "166px")};
+`;
+
+const CustomCardActionSkeletonArea = MuiStyled(Card)<{ selected: boolean }>`
   border-radius: 8px;
   max-height: ${({ selected }) => (selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
   overflow: scroll;
