@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import {
   DeleteFavoriteMutationDocument,
-  GetFavariteWorksDocument,
+  GetFavoriteWorksDocument,
   GetWorksDocument,
   InsertFavoriteMutationDocument,
 } from "@/lib/graphql/graphql";
@@ -17,10 +17,10 @@ export const useFavoriteButton = (props: Args) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const [insertMutation] = useMutation(InsertFavoriteMutationDocument, {
-    refetchQueries: [GetWorksDocument, GetFavariteWorksDocument],
+    refetchQueries: [GetWorksDocument, GetFavoriteWorksDocument],
   });
   const [deleteMutation] = useMutation(DeleteFavoriteMutationDocument, {
-    refetchQueries: [GetWorksDocument, GetFavariteWorksDocument],
+    refetchQueries: [GetWorksDocument, GetFavoriteWorksDocument],
   });
 
   const handleClickAddFavoriteClick = async () => {
@@ -34,11 +34,11 @@ export const useFavoriteButton = (props: Args) => {
       });
       setTimeout(() => {
         setIsButtonDisabled(false);
-      }, 100);
+      }, 200);
     }
   };
 
-  const handleClickdeleteFavoriteClick = async () => {
+  const handleClickDeleteFavoriteClick = async () => {
     if (!isButtonDisabled) {
       setIsButtonDisabled(true);
       await deleteMutation({
@@ -49,12 +49,12 @@ export const useFavoriteButton = (props: Args) => {
       });
       setTimeout(() => {
         setIsButtonDisabled(false);
-      }, 1000); // 連打防止を解除するまでの待機時間
+      }, 200);
     }
   };
 
   return {
-    handleClickdeleteFavoriteClick,
+    handleClickDeleteFavoriteClick,
     handleClickAddFavoriteClick,
   };
 };

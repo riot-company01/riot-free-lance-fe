@@ -32,7 +32,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
 
   const { user } = useUser();
 
-  const { handleClickAddFavoriteClick, handleClickdeleteFavoriteClick } = useFavoriteButton({
+  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
     userId: user?.sub || "",
     workId: id || 0,
   });
@@ -137,7 +137,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
           </div>
           <FavoriteButtonWrapper>
             {isFavorite ? (
-              <Button variant="contained" color={"error"} onClick={handleClickdeleteFavoriteClick}>
+              <Button variant="contained" color={"error"} onClick={handleClickDeleteFavoriteClick}>
                 お気に入り登録済み
               </Button>
             ) : (
@@ -156,7 +156,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
             案件に応募する
           </Button>
           {isFavorite ? (
-            <Button variant="contained" color={"error"} onClick={handleClickdeleteFavoriteClick}>
+            <Button variant="contained" color={"error"} onClick={handleClickDeleteFavoriteClick}>
               お気に入り登録済み
             </Button>
           ) : (

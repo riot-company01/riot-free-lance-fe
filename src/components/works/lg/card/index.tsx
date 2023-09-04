@@ -22,7 +22,7 @@ export function CustomCard({
 }) {
   const { user } = useUser();
 
-  const { handleClickAddFavoriteClick, handleClickdeleteFavoriteClick } = useFavoriteButton({
+  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
     userId: user?.sub || "",
     workId: item.id,
   });
@@ -61,7 +61,7 @@ export function CustomCard({
           {hasFavorite ? (
             <IconButton
               onClick={() => {
-                handleClickdeleteFavoriteClick();
+                handleClickDeleteFavoriteClick();
               }}
             >
               <FavoriteIcon fontSize="large" sx={{ color: COLOR.RED.code }} />

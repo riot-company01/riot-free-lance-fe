@@ -21,7 +21,7 @@ export function Card({
   hasFavorite: boolean | undefined;
 }) {
   const { user } = useUser();
-  const { handleClickAddFavoriteClick, handleClickdeleteFavoriteClick } = useFavoriteButton({
+  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
     userId: user?.sub || "",
     workId: item.id,
   });
@@ -58,15 +58,17 @@ export function Card({
           </Title>
           {hasFavorite ? (
             <IconButton
-              onClick={() => {
-                handleClickdeleteFavoriteClick();
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClickDeleteFavoriteClick();
               }}
             >
               <FavoriteIcon fontSize="large" sx={{ color: COLOR.RED.code }} />
             </IconButton>
           ) : (
             <IconButton
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 handleClickAddFavoriteClick();
               }}
             >

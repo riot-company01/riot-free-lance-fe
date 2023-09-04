@@ -9,7 +9,7 @@ import { Detail } from "@/components/works/lg/detail";
 import { Filter } from "@/components/works/lg/filter";
 import { LeftNavig } from "@/components/works/lg/left-navig";
 import { LG_GLOBAL_NAVIGATION } from "@/constants";
-import { GetFavariteWorksDocument } from "@/lib/graphql/graphql";
+import { GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
 import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
@@ -21,11 +21,11 @@ type Props = {
 export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
   const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
   const { user } = useUser();
-  const { data } = useQuery(GetFavariteWorksDocument, { variables: { id: user?.sub } });
+  const { data } = useQuery(GetFavoriteWorksDocument, { variables: { id: user?.sub } });
   useEffect(() => {
     if (!data || !worksData) return;
 
-    const userFavoriteWorkData = data.user_to_works.map((item) => item.work_id);
+    const userFavoriteWorkData = data.users[0].works.map((item) => item.work_id);
     setHasFavoriteIdArray(userFavoriteWorkData);
   }, [data, worksData]);
   return (
@@ -47,7 +47,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  const isFavorite = data?.user_to_works.some(({ work_id }) => {
+                  const isFavorite = data?.users[0].works.some(({ work_id }) => {
                     return item.id === work_id;
                   });
                   return <CustomCard key={idx} item={item} hasFavorite={isFavorite} />;

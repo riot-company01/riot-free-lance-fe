@@ -5,8 +5,10 @@ query GetUser($id: String) @cached(ttl: 600) {
   }
 }
 
-query GetFavariteWorks($id: String) {
-  user_to_works(where: { user_id: { _eq: $id } }) {
-    work_id
+query GetFavoriteWorks($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    works {
+      work_id
+    }
   }
 }
