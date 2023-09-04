@@ -127,14 +127,6 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
                 </Icon>
               </Info>
             </FlexContainer>
-
-            <FlexContainer>
-              <Icon>
-                <LocationOnIcon fontSize="small" />
-                <Text>{work.location}</Text>
-              </Icon>
-            </FlexContainer>
-
             <FlexContainer>
               <Icon>
                 <LocationOnIcon fontSize="small" />

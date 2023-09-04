@@ -11,9 +11,9 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
+import { BREAK_POINT } from "@/constants";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
-import { BREAK_POINT } from "@/constants";
 
 type Props = {
   defaultWorkId?: number;
