@@ -1,7 +1,9 @@
-query GetUser($id: String) @cached(ttl: 600) {
+query GetUser($id: String) @cached(ttl: 0) {
   users(where: { id: { _eq: $id } }) {
-    id
-    name
+    userName
+    userNameKana
+    mail
+    tel
   }
 }
 
