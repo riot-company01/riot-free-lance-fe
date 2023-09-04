@@ -2,69 +2,88 @@ import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Card, Chip, styled as muiStyled } from "@mui/material";
+import { Card, Card, Chip, Skeleton, styled as muiStyled } from "@mui/material";
 import type { GetWorkQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
-export function CustomCard({ item }: { item: GetWorkQuery["works_by_pk"] }) {
+export function CustomCard({ item, loading }: { item: GetWorkQuery["works_by_pk"]; loading: boolean }) {
   return (
-    <WorkInfo>
-      <Title>
-        <div>{item?.title}</div>
-      </Title>
-      <MonthlyPrice>
-        <Icon>
-          <MonetizationOnIcon fontSize="small" />
-        </Icon>
-        {(() => {
-          if (item?.minMonthlyPrice && item?.maxMonthlyPrice) {
-            return (
-              <>
-                <Strong>{item?.minMonthlyPrice}</Strong>~<Strong>{item?.maxMonthlyPrice}</Strong>
-                <Span>万円/月額</Span>
-              </>
-            );
-          } else if (item?.minMonthlyPrice || item?.maxMonthlyPrice) {
-            return (
-              <>
-                <Strong>{item?.minMonthlyPrice || item?.maxMonthlyPrice}</Strong>
-                <Span>万円/月額</Span>
-              </>
-            );
-          } else {
-            return <Span>要相談</Span>;
-          }
-        })()}
-      </MonthlyPrice>
-      <FlexContainer>
-        <Icon>
-          <ReportIcon />
-        </Icon>
-        <div>{item?.contractType}</div>
-      </FlexContainer>
-      <FlexContainer>
-        <Icon>
-          <LocationOnIcon />
-        </Icon>
-        <div>{item?.location}</div>
-      </FlexContainer>
-      <FlexContainerLabel>
-        {item?.languages.map((value, idx) => {
-          return (
-            <Chip
-              key={idx}
-              label={value.skill?.name}
-              sx={{
-                borderRadius: 0,
-                fontWeight: "bold",
-              }}
-            />
-          );
-        })}
-      </FlexContainerLabel>
-    </WorkInfo>
+    <>
+      {!loading ? (
+        <WorkInfo>
+          <Title>
+            <div>{item?.title}</div>
+          </Title>
+          <MonthlyPrice>
+            <Icon>
+              <MonetizationOnIcon fontSize="small" />
+            </Icon>
+            {(() => {
+              if (item?.minMonthlyPrice && item?.maxMonthlyPrice) {
+                return (
+                  <>
+                    <Strong>{item?.minMonthlyPrice}</Strong>~<Strong>{item?.maxMonthlyPrice}</Strong>
+                    <Span>万円/月額</Span>
+                  </>
+                );
+              } else if (item?.minMonthlyPrice || item?.maxMonthlyPrice) {
+                return (
+                  <>
+                    <Strong>{item?.minMonthlyPrice || item?.maxMonthlyPrice}</Strong>
+                    <Span>万円/月額</Span>
+                  </>
+                );
+              } else {
+                return <Span>要相談</Span>;
+              }
+            })()}
+          </MonthlyPrice>
+          <FlexContainer>
+            <Icon>
+              <ReportIcon />
+            </Icon>
+            <div>{item?.contractType}</div>
+          </FlexContainer>
+          <FlexContainer>
+            <Icon>
+              <LocationOnIcon />
+            </Icon>
+            <div>{item?.location}</div>
+          </FlexContainer>
+          <FlexContainerLabel>
+            {item?.languages.map((value, idx) => {
+              return (
+                <Chip
+                  key={idx}
+                  label={value.skill?.name}
+                  sx={{
+                    borderRadius: 0,
+                    fontWeight: "bold",
+                  }}
+                />
+              );
+            })}
+          </FlexContainerLabel>
+        </WorkInfo>
+      ) : (
+        <WrapperSkeleton>
+          <CustomSkeleton variant="rectangular" height={"100%"} />
+        </WrapperSkeleton>
+      )}
+    </>
   );
 }
+
+const WrapperSkeleton = styled.div`
+  border-radius: 8px;
+  margin: 32px auto;
+  width: 600px;
+  height: 260px;
+`;
+
+const CustomSkeleton = styled(Skeleton)`
+  border-radius: 8px;
+`;
 
 const WorkInfo = muiStyled(Card)(({ theme }) => ({
   borderRadius: "8px",

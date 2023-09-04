@@ -1,0 +1,23 @@
+mutation InsertFavoriteMutation($id: String!, $workId: Int!) {
+  insert_user_to_works_one(object: { user_id: $id, work_id: $workId, favorite: true }) {
+    favorite
+  }
+}
+
+mutation DeleteFavoriteMutation($id: String!, $workId: Int!) {
+  delete_user_to_works(where: { _and: { user_id: { _eq: $id }, work_id: { _eq: $workId } } }) {
+    affected_rows
+  }
+}
+
+mutation EditProfile($id: String!, $userName: String, $userNameKana: String, $mail: String, $tel: String) {
+  update_users_by_pk(
+    pk_columns: { id: $id }
+    _set: { userName: $userName, userNameKana: $userNameKana, mail: $mail, tel: $tel }
+  ) {
+    userName
+    userNameKana
+    mail
+    tel
+  }
+}
