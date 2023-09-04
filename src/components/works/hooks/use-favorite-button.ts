@@ -3,7 +3,6 @@ import { useState } from "react";
 import {
   DeleteFavoriteMutationDocument,
   GetFavoriteWorksDocument,
-  GetWorksDocument,
   InsertFavoriteMutationDocument,
 } from "@/lib/graphql/graphql";
 
@@ -17,10 +16,10 @@ export const useFavoriteButton = (props: Args) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const [insertMutation] = useMutation(InsertFavoriteMutationDocument, {
-    refetchQueries: [GetWorksDocument, GetFavoriteWorksDocument],
+    refetchQueries: [GetFavoriteWorksDocument],
   });
   const [deleteMutation] = useMutation(DeleteFavoriteMutationDocument, {
-    refetchQueries: [GetWorksDocument, GetFavoriteWorksDocument],
+    refetchQueries: [GetFavoriteWorksDocument],
   });
 
   const handleClickAddFavoriteClick = async () => {

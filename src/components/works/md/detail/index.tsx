@@ -13,6 +13,7 @@ import ReactMarkdown from "react-markdown";
 import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
+import { BREAK_POINT } from "@/constants";
 
 type Props = {
   defaultWorkId?: number;
@@ -227,6 +228,11 @@ const CustomCardActionArea = styled(Card)`
 const WrapperContent = styled.div`
   display: flex;
   justify-content: space-around;
+  @media (max-width: ${BREAK_POINT.sm}px) {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 `;
 const FavoriteButtonWrapper = styled.div`
   margin: auto;
@@ -235,4 +241,9 @@ const FavoriteButtonWrapper = styled.div`
 const FlexButtonContainer = styled.div`
   display: flex;
   justify-content: space-around;
+  @media (max-width: ${BREAK_POINT.sm}px) {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 `;
