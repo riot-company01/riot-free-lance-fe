@@ -1,6 +1,16 @@
 query GetUser($id: String) @cached(ttl: 600) {
   users(where: { id: { _eq: $id } }) {
-    id
-    name
+    userName
+    userNameKana
+    mail
+    tel
+  }
+}
+
+query GetFavoriteWorks($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    works {
+      work_id
+    }
   }
 }
