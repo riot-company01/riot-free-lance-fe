@@ -2,7 +2,13 @@ query GetUser($id: String) @cached(ttl: 600) {
   users(where: { id: { _eq: $id } }) {
     id
     name
-    last_seen
-    slackUrl
+  }
+}
+
+query GetFavoriteWorks($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    works {
+      work_id
+    }
   }
 }

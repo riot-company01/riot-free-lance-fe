@@ -1,11 +1,15 @@
+import { useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
+import { useEffect, useState } from "react";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
 import { CustomCard } from "@/components/works/lg/card";
 import { Detail } from "@/components/works/lg/detail";
 import { Filter } from "@/components/works/lg/filter";
 import { LeftNavig } from "@/components/works/lg/left-navig";
 import { LG_GLOBAL_NAVIGATION } from "@/constants";
+import { GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
 import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
@@ -15,6 +19,15 @@ type Props = {
 };
 
 export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
+  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
+  const { user } = useUser();
+  const { data } = useQuery(GetFavoriteWorksDocument, { variables: { id: user?.sub } });
+  useEffect(() => {
+    if (!data || !worksData) return;
+
+    const userFavoriteWorkData = data.users[0].works.map((item) => item.work_id);
+    setHasFavoriteIdArray(userFavoriteWorkData);
+  }, [data, worksData]);
   return (
     <Wrapper>
       <NavigContainer>
@@ -34,7 +47,10 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  return <CustomCard key={idx} item={item} />;
+                  const isFavorite = data?.users[0].works.some(({ work_id }) => {
+                    return item.id === work_id;
+                  });
+                  return <CustomCard key={idx} item={item} hasFavorite={isFavorite} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (
@@ -55,7 +71,9 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
             </PaginationWrapper>
           </Column>
 
-          <DetailWrapper>{<Detail defaultWorkId={worksData?.works[0].id} />}</DetailWrapper>
+          <DetailWrapper>
+            <Detail defaultWorkId={worksData?.works[0].id} hasFavoriteIdArray={hasFavoriteIdArray} />
+          </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
     </Wrapper>
@@ -91,11 +109,10 @@ const DetailWrapper = styled.div`
 
 const Navig = styled.div`
   padding: 16px;
-  width: 200px;
 `;
 
 const NavigContainer = styled.div`
-  min-width: 204px;
+  min-width: 200px;
   position: sticky;
   top: ${LG_GLOBAL_NAVIGATION.HEADER}px;
   overflow: auto;

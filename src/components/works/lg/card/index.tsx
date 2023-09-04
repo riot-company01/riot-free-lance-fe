@@ -1,17 +1,35 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Card, CardActionArea, Chip } from "@mui/material";
+import { Card, CardActionArea, Chip, IconButton } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
+import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
-export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
+export function CustomCard({
+  item,
+  hasFavorite,
+}: {
+  item: GetWorksQuery["works"][number];
+  hasFavorite: boolean | undefined;
+}) {
+  const { user } = useUser();
+
+  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
+    userId: user?.sub || "",
+    workId: item.id,
+  });
+
   return (
     <CustomCardActionArea
-      sx={{ cursor: "pointer", borderRadius: 2 }}
+      sx={{ cursor: "pointer", borderRadius: 2, marginLeft: "2px" }}
       onClick={() => {
         router.push(
           {
@@ -36,9 +54,29 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
           minHeight: 400,
         }}
       >
-        <Title>
-          <div>{item.title}</div>
-        </Title>
+        <TitleWrapper>
+          <Title>
+            <div>{item.title}</div>
+          </Title>
+          {hasFavorite ? (
+            <IconButton
+              onClick={() => {
+                handleClickDeleteFavoriteClick();
+              }}
+            >
+              <FavoriteIcon fontSize="large" sx={{ color: COLOR.RED.code }} />
+            </IconButton>
+          ) : (
+            <IconButton
+              onClick={() => {
+                handleClickAddFavoriteClick();
+              }}
+            >
+              <FavoriteBorderIcon color="disabled" fontSize="large" />
+            </IconButton>
+          )}
+        </TitleWrapper>
+
         <MonthlyPrice>
           <Icon>
             <MonetizationOnIcon fontSize="small" />
@@ -127,6 +165,12 @@ const Msg = styled.div`
   height: 100%;
   width: 100%;
   align-items: center;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Title = styled.div`
