@@ -9,7 +9,15 @@ query GetUser($id: String) @cached(ttl: 0) {
 
 query GetFavoriteWorks($id: String) {
   users(where: { id: { _eq: $id } }) {
-    works {
+    works(where: { favorite: { _eq: true } }) {
+      work_id
+    }
+  }
+}
+
+query GetAppliedWorks($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    works(where: { application: { _eq: true } }) {
       work_id
     }
   }

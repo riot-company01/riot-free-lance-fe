@@ -1,16 +1,34 @@
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Card, CardActionArea, Chip } from "@mui/material";
+import { CardActionArea, Chip, Card as MuiCard, IconButton } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
-import type { GetAppliedQuery } from "@/lib/graphql/graphql";
+import { WORKS_Z_INDEX } from "@/components/works/constants";
+import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
+import type { GetWorksQuery } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
-export function CustomCard({ item }: { item: GetAppliedQuery["users"][number]["works"][number]["work"] }) {
+export function Card({
+  item,
+  hasFavorite,
+}: {
+  item: GetWorksQuery["works"][number];
+  hasFavorite: boolean | undefined;
+}) {
+  const { user } = useUser();
+  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
+    userId: user?.sub || "",
+    workId: item.id,
+  });
+
   return (
     <CustomCardActionArea
-      sx={{ width: 480, cursor: "pointer", borderRadius: 2 }}
+      sx={{ cursor: "pointer", borderRadius: 2, overflow: "scroll", marginLeft: "2px" }}
       onClick={() => {
         router.push(
           {
@@ -32,12 +50,32 @@ export function CustomCard({ item }: { item: GetAppliedQuery["users"][number]["w
       <CardActionArea
         sx={{
           padding: 2,
-          minHeight: 400,
         }}
       >
-        <Title>
-          <div>{item.title}</div>
-        </Title>
+        <TitleWrapper>
+          <Title>
+            <div>{item.title}</div>
+          </Title>
+          {hasFavorite ? (
+            <IconButton
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClickDeleteFavoriteClick();
+              }}
+            >
+              <FavoriteIcon fontSize="large" sx={{ color: COLOR.RED.code }} />
+            </IconButton>
+          ) : (
+            <IconButton
+              onClick={(e) => {
+                e.stopPropagation();
+                handleClickAddFavoriteClick();
+              }}
+            >
+              <FavoriteBorderIcon color="disabled" fontSize="large" />
+            </IconButton>
+          )}
+        </TitleWrapper>
         <MonthlyPrice>
           <Icon>
             <MonetizationOnIcon fontSize="small" />
@@ -99,11 +137,8 @@ export function CustomCard({ item }: { item: GetAppliedQuery["users"][number]["w
   );
 }
 
-const CustomCardActionArea = styled(Card)`
+const CustomCardActionArea = styled(MuiCard)`
   position: relative;
-  :not(:first-of-type) {
-    margin-top: 16px;
-  }
 `;
 
 const Closed = styled.div`
@@ -111,7 +146,7 @@ const Closed = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1001;
+  z-index: ${WORKS_Z_INDEX.CLOSE_OVERLAY};
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 `;
@@ -123,8 +158,15 @@ const Msg = styled.div`
   display: flex;
   font-size: 20px;
   height: 100%;
+  text-align: center;
   width: 100%;
   align-items: center;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Title = styled.div`
@@ -145,7 +187,7 @@ const Strong = styled.div`
 `;
 
 const Span = styled.div`
-  font-size: 12px;
+  font-size: 10px;
 `;
 
 const Icon = styled.div`
@@ -166,14 +208,13 @@ const FlexContainer = styled.div`
 
 const FlexContainerLabel = styled(FlexContainer)`
   overflow: auto;
-  flex-wrap: wrap;
   gap: 4px;
 `;
 
 const MdWrapper = styled.div`
-  padding-top: 8px;
+  padding-top: 4px;
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 14px;
