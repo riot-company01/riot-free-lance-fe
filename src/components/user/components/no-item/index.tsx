@@ -1,13 +1,9 @@
-import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
+import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
 
-type NoItemProps = {
-  title: string;
-};
-
-export const NoItem = (props: NoItemProps) => {
+export const NoItem = () => {
   const router = useRouter();
 
   return (

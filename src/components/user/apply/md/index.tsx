@@ -5,11 +5,12 @@ import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Modal } from "@/components/common/modal";
+import { NoItem } from "@/components/user/components/no-item";
 import { Card } from "@/components/user/favorite/md/card";
 import { Detail } from "@/components/user/favorite/md/detail";
 import { BREAK_POINT } from "@/constants";
-import { GetAppliedQuery, GetAppliedWorksDocument } from "@/lib/graphql/graphql";
-import { NoItem } from "@/components/user/components/no-item";
+import { GetAppliedWorksDocument } from "@/lib/graphql/graphql";
+import type { GetAppliedQuery } from "@/lib/graphql/graphql";
 
 type Props = {
   worksData: GetAppliedQuery | undefined;
@@ -60,7 +61,7 @@ function AppliedMd({ worksData }: Props) {
           </Modal>
         </Div>
       ) : (
-        <NoItem title="apply" />
+        <NoItem />
       )}
       );
     </>

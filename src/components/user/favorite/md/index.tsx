@@ -8,7 +8,8 @@ import { Modal } from "@/components/common/modal";
 import { Card } from "@/components/user/favorite/md/card";
 import { Detail } from "@/components/user/favorite/md/detail";
 import { BREAK_POINT } from "@/constants";
-import { GetFavoriedQuery, GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
+import { GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
+import type { GetFavoriedQuery } from "@/lib/graphql/graphql";
 
 type Props = {
   worksData: GetFavoriedQuery | undefined;

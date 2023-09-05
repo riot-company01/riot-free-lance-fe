@@ -1,19 +1,18 @@
+import { useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import { alpha, Avatar, InputBase, Menu, MenuItem, styled as muiStyled, Toolbar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
 import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
-import { removeObjectKey } from "@/util/remove-object-key";
 import { GetUserDocument } from "@/lib/graphql/graphql";
-import { useQuery } from "@apollo/client";
+import { removeObjectKey } from "@/util/remove-object-key";
 
 export function LayoutHeader() {
   const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
@@ -44,10 +43,13 @@ export function LayoutHeader() {
     switch (target) {
       case "LOGOUT":
         router.push("/api/auth/logout");
+        break;
       case "お気に入り案件一覧":
         router.push("/user/favorite");
+        break;
       case "応募済み案件一覧":
         router.push("/user/apply");
+        break;
       default:
         setAnchorElNav(null);
     }

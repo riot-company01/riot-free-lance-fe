@@ -1,13 +1,14 @@
-import styled from "@emotion/styled";
-import { Pagination, Skeleton } from "@mui/material";
-import { CustomCard } from "@/components/user/favorite/lg/card";
-import { Detail } from "@/components/user/favorite/lg/detail";
-import { GetAppliedQuery, GetAppliedWorksDocument } from "@/lib/graphql/graphql";
 import { useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import styled from "@emotion/styled";
+import { Pagination, Skeleton } from "@mui/material";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { NoItem } from "@/components/user/components/no-item";
-import { useRouter } from "next/router";
+import { CustomCard } from "@/components/user/favorite/lg/card";
+import { Detail } from "@/components/user/favorite/lg/detail";
+import { GetAppliedWorksDocument } from "@/lib/graphql/graphql";
+import type { GetAppliedQuery } from "@/lib/graphql/graphql";
 
 type AppliedListProps = {
   worksData: GetAppliedQuery | undefined;
@@ -69,7 +70,7 @@ function AppliedLg({ worksData }: AppliedListProps) {
           </DetailWrapper>
         </>
       ) : (
-        <NoItem title="apply" />
+        <NoItem />
       )}
     </WorksContainer>
   );
