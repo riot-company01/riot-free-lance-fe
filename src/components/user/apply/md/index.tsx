@@ -1,5 +1,3 @@
-import { useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
@@ -9,19 +7,18 @@ import { NoItem } from "@/components/user/components/no-item";
 import { Card } from "@/components/user/favorite/md/card";
 import { Detail } from "@/components/user/favorite/md/detail";
 import { BREAK_POINT } from "@/constants";
-import { GetAppliedWorksDocument } from "@/lib/graphql/graphql";
+import { GetAppliedWorksQuery } from "@/lib/graphql/graphql";
 import type { GetAppliedQuery } from "@/lib/graphql/graphql";
 
 type Props = {
   worksData: GetAppliedQuery | undefined;
+  data: GetAppliedWorksQuery | undefined;
 };
 
-function AppliedMd({ worksData }: Props) {
+function AppliedMd({ worksData, data }: Props) {
   const router = useRouter();
   const id = Number(router.query["work-id"]);
   const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
-  const { user } = useUser();
-  const { data } = useQuery(GetAppliedWorksDocument, { variables: { id: user?.sub } });
 
   useEffect(() => {
     if (!data || !worksData) return;
@@ -61,7 +58,7 @@ function AppliedMd({ worksData }: Props) {
           </Modal>
         </Div>
       ) : (
-        <NoItem />
+        <NoItem pageTitle="apply" />
       )}
       );
     </>

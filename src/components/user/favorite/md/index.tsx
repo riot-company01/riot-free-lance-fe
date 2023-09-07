@@ -1,26 +1,24 @@
-import { useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Modal } from "@/components/common/modal";
+import { NoItem } from "@/components/user/components/no-item";
 import { Card } from "@/components/user/favorite/md/card";
 import { Detail } from "@/components/user/favorite/md/detail";
 import { BREAK_POINT } from "@/constants";
-import { GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
+import { GetFavoriteWorksQuery } from "@/lib/graphql/graphql";
 import type { GetFavoriedQuery } from "@/lib/graphql/graphql";
 
 type Props = {
   worksData: GetFavoriedQuery | undefined;
+  data: GetFavoriteWorksQuery | undefined;
 };
 
-export function FavoriteMd({ worksData }: Props) {
+export function FavoriteMd({ worksData, data }: Props) {
   const router = useRouter();
   const id = Number(router.query["work-id"]);
   const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
-  const { user } = useUser();
-  const { data } = useQuery(GetFavoriteWorksDocument, { variables: { id: user?.sub } });
 
   useEffect(() => {
     if (!data || !worksData) return;
@@ -30,33 +28,39 @@ export function FavoriteMd({ worksData }: Props) {
   }, [data, worksData]);
 
   return (
-    <Div>
-      <Wrapper>
-        {worksData
-          ? worksData?.users[0].works.map(({ work }, idx) => {
-              const isFavorite = data?.users[0].works.some(({ work_id }) => {
-                return work.id === work_id;
-              });
+    <>
+      {worksData?.users[0].works.length !== 0 ? (
+        <Div>
+          <Wrapper>
+            {worksData
+              ? worksData?.users[0].works.map(({ work }, idx) => {
+                  const isFavorite = data?.users[0].works.some(({ work_id }) => {
+                    return work.id === work_id;
+                  });
 
-              return <Card key={idx} item={work} hasFavorite={isFavorite} />;
-            })
-          : [...Array(5)].map((_, idx) => {
-              return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;
-            })}
-      </Wrapper>
-      <PaginationWrapper>
-        <Pagination count={1} variant="outlined" shape="rounded" size="large" />
-      </PaginationWrapper>
-      <Modal
-        open={!!id}
-        title="案件詳細"
-        onClose={() => {
-          router.back();
-        }}
-      >
-        <Detail defaultWorkId={id} hasFavoriteIdArray={hasFavoriteIdArray} />
-      </Modal>
-    </Div>
+                  return <Card key={idx} item={work} hasFavorite={isFavorite} />;
+                })
+              : [...Array(5)].map((_, idx) => {
+                  return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;
+                })}
+          </Wrapper>
+          <PaginationWrapper>
+            <Pagination count={1} variant="outlined" shape="rounded" size="large" />
+          </PaginationWrapper>
+          <Modal
+            open={!!id}
+            title="案件詳細"
+            onClose={() => {
+              router.back();
+            }}
+          >
+            <Detail defaultWorkId={id} hasFavoriteIdArray={hasFavoriteIdArray} />
+          </Modal>
+        </Div>
+      ) : (
+        <NoItem pageTitle="favorite" />
+      )}
+    </>
   );
 }
 

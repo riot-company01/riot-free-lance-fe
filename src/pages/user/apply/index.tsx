@@ -4,7 +4,8 @@ import { Box } from "@mui/material";
 import AppliedLg from "@/components/user/apply/lg";
 import AppliedMd from "@/components/user/apply/md";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
-import { GetAppliedDocument } from "@/lib/graphql/graphql";
+import { GetAppliedDocument, GetAppliedWorksDocument } from "@/lib/graphql/graphql";
+import { NoItem } from "@/components/user/components/no-item";
 
 function Apply() {
   const { user } = useUser();
@@ -14,6 +15,10 @@ function Apply() {
     },
   });
 
+  const { data } = useQuery(GetAppliedWorksDocument, { variables: { id: user?.sub } });
+  if (worksData?.users[0].works.length === 0) {
+    return <NoItem pageTitle="apply" />;
+  }
   return (
     <>
       <Box
@@ -22,7 +27,7 @@ function Apply() {
           display: { ...LG_BREAK_POINT },
         }}
       >
-        <AppliedLg worksData={worksData} />
+        <AppliedLg worksData={worksData} data={data} />
       </Box>
       <Box
         component="div"
@@ -30,7 +35,7 @@ function Apply() {
           display: { ...MD_BREAK_POINT },
         }}
       >
-        <AppliedMd worksData={worksData} />
+        <AppliedMd worksData={worksData} data={data} />
       </Box>
     </>
   );

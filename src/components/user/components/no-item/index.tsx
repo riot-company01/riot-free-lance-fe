@@ -3,12 +3,19 @@ import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
 
-export const NoItem = () => {
+type NoItemProps = {
+  pageTitle: "apply" | "favorite";
+};
+
+export const NoItem = ({ pageTitle }: NoItemProps) => {
   const router = useRouter();
+
+  const title = pageTitle === "favorite" ? "お気に入り登録" : "応募";
 
   return (
     <NotResultWrapper>
-      <As>該当する案件がありません</As>
+      <As>{title}済み案件がありません</As>
+      <p>{title}することでこちらのページに案件が表示されます</p>
 
       <Button
         variant="contained"
@@ -18,7 +25,7 @@ export const NoItem = () => {
         }}
         onClick={() => {
           router.push({
-            pathname: "works/",
+            pathname: "/works",
           });
         }}
       >
