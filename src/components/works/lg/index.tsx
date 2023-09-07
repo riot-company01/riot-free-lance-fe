@@ -17,7 +17,7 @@ type Props = {
 export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
   return (
     <Wrapper>
-      aaaaaaaaaa
+      ccccccccc
       <NavigContainer>
         <Navig>
           {skills?.length !== 0 ? (
