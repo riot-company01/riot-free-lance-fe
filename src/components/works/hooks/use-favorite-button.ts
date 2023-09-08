@@ -64,6 +64,7 @@ export const useFavoriteButton = (props: Args) => {
   };
 
   const handleClickDeleteFavoriteClick = async () => {
+    console.log("aaaa");
     if (!isButtonDisabled) {
       setIsButtonDisabled(true);
       await updateMutation({
