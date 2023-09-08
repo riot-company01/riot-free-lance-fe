@@ -73,11 +73,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           </Column>
 
           <DetailWrapper>
-            <Detail
-              defaultWorkId={worksData?.works[0].id}
-              hasFavoriteIdArray={hasFavoriteIdArray}
-              favoriteData={data?.users[0].user_to_works}
-            />
+            <Detail defaultWorkId={worksData?.works[0].id} hasFavoriteIdArray={hasFavoriteIdArray} />
           </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
