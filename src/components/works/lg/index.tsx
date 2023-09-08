@@ -19,16 +19,18 @@ type Props = {
 };
 
 export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
-  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
+  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
   const { user } = useUser();
   const { data } = useQuery(GetFavoriteWorksDocument, { variables: { id: user?.sub } });
-  console.log(worksData);
-  console.log(data);
 
   useEffect(() => {
     if (!data || !worksData) return;
 
-    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => item.work_id);
+    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => {
+      if (item.favorite) {
+        return item.work_id;
+      }
+    });
     setHasFavoriteIdArray(userFavoriteWorkData);
   }, [data, worksData]);
 
@@ -51,10 +53,19 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  const isFavorite = data?.users[0].user_to_works.some(({ work_id }) => {
-                    return item.id === work_id;
+                  const isFavorite = data?.users[0].user_to_works.some(({ favorite, work_id }) => {
+                    if (favorite) {
+                      return work_id === item.id;
+                    }
                   });
-                  return <CustomCard key={idx} item={item} hasFavorite={isFavorite} />;
+                  return (
+                    <CustomCard
+                      key={idx}
+                      item={item}
+                      hasFavorite={isFavorite}
+                      userToWorksData={data?.users[0].user_to_works}
+                    />
+                  );
                 })
               : [...Array(5)].map((_, idx) => {
                   return (
@@ -76,7 +87,11 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           </Column>
 
           <DetailWrapper>
-            <Detail defaultWorkId={worksData?.works[0].id} hasFavoriteIdArray={hasFavoriteIdArray} />
+            <Detail
+              defaultWorkId={worksData?.works[0].id}
+              hasFavoriteIdArray={hasFavoriteIdArray}
+              userToWorksData={data?.users[0].user_to_works}
+            />
           </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>

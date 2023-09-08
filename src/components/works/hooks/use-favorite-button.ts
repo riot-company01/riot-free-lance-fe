@@ -1,36 +1,62 @@
 import { useMutation } from "@apollo/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  DeleteFavoriteMutationDocument,
   GetFavoriteWorksDocument,
+  GetFavoriteWorksQuery,
   InsertFavoriteMutationDocument,
+  UpdateFavoriteDocument,
 } from "@/lib/graphql/graphql";
 
 type Args = {
   userId: string;
   workId: number;
+  userToWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
 };
 
 export const useFavoriteButton = (props: Args) => {
-  const { userId, workId } = props;
+  const { userId, workId, userToWorksData } = props;
+
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isExsistUserToWorksData, setIsExsistUserToWorksData] = useState(false);
 
   const [insertMutation] = useMutation(InsertFavoriteMutationDocument, {
     refetchQueries: [GetFavoriteWorksDocument],
   });
-  const [deleteMutation] = useMutation(DeleteFavoriteMutationDocument, {
+  const [updateMutation] = useMutation(UpdateFavoriteDocument, {
     refetchQueries: [GetFavoriteWorksDocument],
   });
+
+  useEffect(() => {
+    if (!userToWorksData) return;
+
+    const hasUserToWorksData = userToWorksData.some((item) => {
+      return item.work_id === workId;
+    });
+
+    setIsExsistUserToWorksData(hasUserToWorksData);
+  }, userToWorksData);
 
   const handleClickAddFavoriteClick = async () => {
     if (!isButtonDisabled) {
       setIsButtonDisabled(true);
-      await insertMutation({
-        variables: {
-          id: userId,
-          workId,
-        },
-      });
+
+      if (isExsistUserToWorksData) {
+        await updateMutation({
+          variables: {
+            id: userId,
+            workId,
+            favorite: true,
+          },
+        });
+      } else {
+        await insertMutation({
+          variables: {
+            id: userId,
+            workId,
+          },
+        });
+      }
+
       setTimeout(() => {
         setIsButtonDisabled(false);
       }, 200);
@@ -40,10 +66,11 @@ export const useFavoriteButton = (props: Args) => {
   const handleClickDeleteFavoriteClick = async () => {
     if (!isButtonDisabled) {
       setIsButtonDisabled(true);
-      await deleteMutation({
+      await updateMutation({
         variables: {
           id: userId,
           workId,
+          favorite: false,
         },
       });
       setTimeout(() => {
