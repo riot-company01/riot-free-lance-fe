@@ -21,14 +21,18 @@ type Props = {
 export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
   const router = useRouter();
   const id = Number(router.query["work-id"]);
-  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
+  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
   const { user } = useUser();
   const { data } = useQuery(GetFavoriteWorksDocument, { variables: { id: user?.sub } });
 
   useEffect(() => {
     if (!data || !worksData) return;
 
-    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => item.work_id);
+    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => {
+      if (item.favorite) {
+        return item.work_id;
+      }
+    });
     setHasFavoriteIdArray(userFavoriteWorkData);
   }, [data, worksData]);
 
@@ -38,11 +42,15 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
       <Wrapper>
         {worksData
           ? worksData?.works.map((item, idx) => {
-              const isFavorite = data?.users[0].user_to_works.some(({ work_id }) => {
-                return item.id === work_id;
+              const isFavorite = data?.users[0].user_to_works.some(({ favorite, work_id }) => {
+                if (favorite) {
+                  return work_id === item.id;
+                }
               });
 
-              return <Card key={idx} item={item} hasFavorite={isFavorite} />;
+              return (
+                <Card key={idx} item={item} hasFavorite={isFavorite} userToWorksData={data?.users[0].user_to_works} />
+              );
             })
           : [...Array(5)].map((_, idx) => {
               return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;
@@ -58,7 +66,11 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
           router.back();
         }}
       >
-        <Detail defaultWorkId={id} hasFavoriteIdArray={hasFavoriteIdArray} />
+        <Detail
+          defaultWorkId={worksData?.works[0].id}
+          hasFavoriteIdArray={hasFavoriteIdArray}
+          userToWorksData={data?.users[0].user_to_works}
+        />
       </Modal>
     </Div>
   );

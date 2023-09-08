@@ -3,7 +3,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import FavoriteLg from "@/components/user/favorite/lg";
 import { FavoriteMd } from "@/components/user/favorite/md";
-import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
+import { LG_BREAK_POINT, MD_BREAK_POINT, MD_GLOBAL_NAVIGATION } from "@/constants";
 import { GetFavoriedDocument, GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
 import { NoItem } from "@/components/user/components/no-item";
 
@@ -41,6 +41,7 @@ function Favorite() {
         component="div"
         sx={{
           display: { ...MD_BREAK_POINT },
+          minHeight: `calc(100dvh - ${MD_GLOBAL_NAVIGATION.HEADER}px - ${MD_GLOBAL_NAVIGATION.FOOTER}px - 40px)`,
         }}
       >
         <FavoriteMd worksData={worksData} data={data} />
