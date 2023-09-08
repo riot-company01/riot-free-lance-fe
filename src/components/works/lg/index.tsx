@@ -22,6 +22,9 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
   const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
   const { user } = useUser();
   const { data } = useQuery(GetFavoriteWorksDocument, { variables: { id: user?.sub } });
+  console.log(worksData);
+  console.log(data);
+
   useEffect(() => {
     if (!data || !worksData) return;
 
