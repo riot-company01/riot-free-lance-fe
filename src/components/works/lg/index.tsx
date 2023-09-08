@@ -25,9 +25,10 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
   useEffect(() => {
     if (!data || !worksData) return;
 
-    const userFavoriteWorkData = data.users[0].works.map((item) => item.work_id);
+    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => item.work_id);
     setHasFavoriteIdArray(userFavoriteWorkData);
   }, [data, worksData]);
+
   return (
     <Wrapper>
       <NavigContainer>
@@ -47,7 +48,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  const isFavorite = data?.users[0].works.some(({ work_id }) => {
+                  const isFavorite = data?.users[0].user_to_works.some(({ work_id }) => {
                     return item.id === work_id;
                   });
                   return <CustomCard key={idx} item={item} hasFavorite={isFavorite} />;
@@ -72,7 +73,11 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           </Column>
 
           <DetailWrapper>
-            <Detail defaultWorkId={worksData?.works[0].id} hasFavoriteIdArray={hasFavoriteIdArray} />
+            <Detail
+              defaultWorkId={worksData?.works[0].id}
+              hasFavoriteIdArray={hasFavoriteIdArray}
+              favoriteData={data?.users[0].user_to_works}
+            />
           </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>

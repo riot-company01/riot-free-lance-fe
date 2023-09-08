@@ -1,6 +1,6 @@
 query GetFavoried($id: String) {
-  users(where: { works: { user_id: { _eq: $id } } }) {
-    works(where: { favorite: { _eq: true } }) {
+  users(where: { user_to_works: { user_id: { _eq: $id } } }) {
+    user_to_works(where: { favorite: { _eq: true } }) {
       application
       favorite
       work {
@@ -24,6 +24,14 @@ query GetFavoried($id: String) {
           }
         }
       }
+    }
+  }
+}
+
+query GetFavoriteWorks($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    user_to_works(where: { favorite: { _eq: true } }) {
+      work_id
     }
   }
 }

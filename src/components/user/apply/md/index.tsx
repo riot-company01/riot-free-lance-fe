@@ -23,18 +23,18 @@ function AppliedMd({ worksData, data }: Props) {
   useEffect(() => {
     if (!data || !worksData) return;
 
-    const userFavoriteWorkData = data.users[0].works.map((item) => item.work_id);
+    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => item.work_id);
     setHasFavoriteIdArray(userFavoriteWorkData);
   }, [data, worksData]);
 
   return (
     <>
-      {worksData?.users[0].works.length !== 0 ? (
+      {worksData?.users[0].user_to_works.length !== 0 ? (
         <Div>
           <Wrapper>
             {worksData
-              ? worksData?.users[0].works.map(({ work }, idx) => {
-                  const isFavorite = data?.users[0].works.some(({ work_id }) => {
+              ? worksData?.users[0].user_to_works.map(({ work }, idx) => {
+                  const isFavorite = data?.users[0].user_to_works.some(({ work_id }) => {
                     return work.id === work_id;
                   });
 

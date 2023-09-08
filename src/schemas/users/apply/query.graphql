@@ -1,6 +1,6 @@
 query GetApplied($id: String) {
-  users(where: { works: { user_id: { _eq: $id } } }) {
-    works(where: { application: { _eq: true } }) {
+  users(where: { user_to_works: { user_id: { _eq: $id } } }) {
+    user_to_works(where: { application: { _eq: true } }) {
       application
       favorite
       work {
@@ -24,6 +24,14 @@ query GetApplied($id: String) {
           }
         }
       }
+    }
+  }
+}
+
+query GetAppliedWorks($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    user_to_works(where: { application: { _eq: true } }) {
+      work_id
     }
   }
 }

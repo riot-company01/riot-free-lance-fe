@@ -18,7 +18,7 @@ function Favorite() {
 
   const { data } = useQuery(GetFavoriteWorksDocument, { fetchPolicy: "network-only", variables: { id: user?.sub } });
 
-  if (worksData?.users[0].works.length === 0 || data?.users[0].works.length === 0) {
+  if (worksData?.users[0].user_to_works.length === 0 || data?.users[0].user_to_works.length === 0) {
     return <NoItem pageTitle="favorite" />;
   }
 

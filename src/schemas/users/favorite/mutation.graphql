@@ -5,7 +5,19 @@ mutation InsertFavoriteMutation($id: String!, $workId: Int!) {
 }
 
 mutation DeleteFavoriteMutation($id: String!, $workId: Int!) {
-  delete_user_to_works(where: { _and: { user_id: { _eq: $id }, work_id: { _eq: $workId } } }) {
+  delete_user_to_works(
+    where: {
+      _and: { user_id: { _eq: $id }, work_id: { _eq: $workId } }
+      favorite: { _eq: true }
+      application: { _eq: false }
+    }
+  ) {
+    affected_rows
+  }
+}
+
+mutation UpdateFavorite($id: String!, $workId: Int!, $favorite: Boolean!) {
+  update_user_to_works(where: { user_id: { _eq: $id }, work_id: { _eq: $workId } }, _set: { favorite: $favorite }) {
     affected_rows
   }
 }
