@@ -12,15 +12,16 @@ import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
 import { BREAK_POINT } from "@/constants";
-import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { GetFavoriteWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 
 type Props = {
   defaultWorkId?: number;
-  hasFavoriteIdArray?: number[];
+  hasFavoriteIdArray?: (number | undefined)[];
+  userToWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
 };
 
-export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
+export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const id = Number(router.query["work-id"]) || defaultWorkId;
@@ -36,6 +37,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
   const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
     userId: user?.sub || "",
     workId: id || 0,
+    userToWorksData,
   });
 
   const applicationWork = () => {
