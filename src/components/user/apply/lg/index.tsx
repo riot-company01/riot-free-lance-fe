@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { CustomCard } from "@/components/user/favorite/lg/card";
-import { Detail } from "@/components/user/favorite/lg/detail";
+import { CustomCard } from "@/components/user/apply/lg/card";
+import { Detail } from "@/components/user/apply/lg/detail";
 import { GetAppliedWorksQuery } from "@/lib/graphql/graphql";
 import type { GetAppliedQuery } from "@/lib/graphql/graphql";
 
@@ -14,12 +14,16 @@ type AppliedListProps = {
 
 function AppliedLg({ worksData, data }: AppliedListProps) {
   const router = useRouter();
-  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
+  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
 
   useEffect(() => {
     if (!data || !worksData) return;
 
-    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => item.work_id);
+    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => {
+      if (item.favorite) {
+        return item.work_id;
+      }
+    });
     setHasFavoriteIdArray(userFavoriteWorkData);
   }, [data, worksData]);
 
@@ -43,10 +47,19 @@ function AppliedLg({ worksData, data }: AppliedListProps) {
         <Column>
           {worksData
             ? worksData?.users[0].user_to_works.map(({ work }, idx) => {
-                const isFavorite = data?.users[0].user_to_works.some(({ work_id }) => {
-                  return work.id === work_id;
+                const isFavorite = data?.users[0].user_to_works.some(({ favorite, work_id }) => {
+                  if (favorite) {
+                    return work_id === work.id;
+                  }
                 });
-                return <CustomCard key={idx} item={work} hasFavorite={isFavorite} />;
+                return (
+                  <CustomCard
+                    key={idx}
+                    item={work}
+                    hasFavorite={isFavorite}
+                    userToWorksData={data?.users[0].user_to_works}
+                  />
+                );
               })
             : [...Array(5)].map((_, idx) => {
                 return (
@@ -61,7 +74,11 @@ function AppliedLg({ worksData, data }: AppliedListProps) {
         </Column>
 
         <DetailWrapper>
-          <Detail defaultWorkId={data?.users[0].user_to_works[0].work_id} hasFavoriteIdArray={hasFavoriteIdArray} />
+          <Detail
+            defaultWorkId={worksData?.users[0].user_to_works[0].work.id}
+            hasFavoriteIdArray={hasFavoriteIdArray}
+            userToWorksData={data?.users[0].user_to_works}
+          />
         </DetailWrapper>
       </>
     </WorksContainer>

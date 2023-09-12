@@ -4,7 +4,12 @@ import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
-import { EditProfileDocument, GetUserDocument, GetWorkDocument } from "@/lib/graphql/graphql";
+import {
+  EditProfileDocument,
+  GetUserDocument,
+  GetWorkDocument,
+  InsertAppliedMutationDocument,
+} from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 
 export const useApplication = () => {
@@ -24,6 +29,8 @@ export const useApplication = () => {
       id: user?.sub,
     },
   });
+
+  const [insertMutation] = useMutation(InsertAppliedMutationDocument, {});
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -49,6 +56,13 @@ export const useApplication = () => {
 
     send("service_3mxaipn", "template_lop0qms", template_param, "N0Z9VGngtSAYrSpz0").then(() => {
       setOpenDialog(true);
+    });
+
+    await insertMutation({
+      variables: {
+        id: user?.sub || "",
+        workId: Number(query.id),
+      },
     });
 
     await editProfileMutation({

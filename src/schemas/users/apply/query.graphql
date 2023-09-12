@@ -32,6 +32,7 @@ query GetAppliedWorks($id: String) {
   users(where: { id: { _eq: $id } }) {
     user_to_works(where: { application: { _eq: true } }) {
       work_id
+      favorite
     }
   }
 }

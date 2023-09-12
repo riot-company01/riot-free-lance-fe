@@ -16,7 +16,8 @@ function Apply() {
   });
 
   const { data } = useQuery(GetAppliedWorksDocument, { variables: { id: user?.sub } });
-  if (worksData?.users[0].works.length === 0) {
+
+  if (worksData?.users.length === 0 || worksData?.users[0].user_to_works.length === 0) {
     return <NoItem pageTitle="apply" />;
   }
   return (
