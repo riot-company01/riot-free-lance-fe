@@ -30,7 +30,9 @@ export const useFavoriteButton = (props: Args) => {
     if (!userToWorksData) return;
 
     const hasUserToWorksData = userToWorksData.some((item) => {
-      return item.work_id === workId;
+      if (item.favorite) {
+        return item.work_id === workId;
+      }
     });
 
     setIsExsistUserToWorksData(hasUserToWorksData);

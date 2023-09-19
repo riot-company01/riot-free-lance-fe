@@ -11,13 +11,13 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useFavoriteButton } from "@/components/hooks/use-favorite-button";
-import { GetFavoriteWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
+import { GetUserToWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 
 type Props = {
   defaultWorkId?: number;
   hasFavoriteIdArray?: (number | undefined)[];
-  userToWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
 };
 
 export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData }: Props) {

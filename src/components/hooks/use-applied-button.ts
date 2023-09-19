@@ -32,7 +32,9 @@ export const useAppliedButton = (props: Args) => {
     if (!userToWorksData) return;
 
     const hasUserToWorksData = userToWorksData.some((item) => {
-      return item.work_id === workId;
+      if (item.application) {
+        return item.work_id === workId;
+      }
     });
 
     setIsExsistUserToWorksData(hasUserToWorksData);
