@@ -52,14 +52,6 @@ export const useAppliedButton = (props: Args) => {
             application: true,
           },
         });
-        backToWorksUrlVar(router.asPath);
-
-        router.push({
-          pathname: "apply",
-          query: {
-            id: userId,
-          },
-        });
       } else {
         await insertMutation({
           variables: {
@@ -67,16 +59,16 @@ export const useAppliedButton = (props: Args) => {
             workId,
           },
         });
-
-        backToWorksUrlVar(router.asPath);
-
-        router.push({
-          pathname: "apply",
-          query: {
-            id: userId,
-          },
-        });
       }
+
+      backToWorksUrlVar(router.asPath);
+
+      router.push({
+        pathname: "apply",
+        query: {
+          id: userId,
+        },
+      });
 
       setTimeout(() => {
         setIsButtonDisabled(false);
