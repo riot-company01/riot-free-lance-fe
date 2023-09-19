@@ -6,11 +6,12 @@ import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
-import { Button, Card, Skeleton, styled as MuiStyled } from "@mui/material";
+import { Button, Card, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { useFavoriteButton } from "@/components/common/hooks/use-favorite-button";
+import { useFavoriteButton } from "@/components/hooks/use-favorite-button";
+import { BREAK_POINT } from "@/constants";
 import { GetFavoriteWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 
@@ -22,16 +23,15 @@ type Props = {
 
 export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData }: Props) {
   const router = useRouter();
-
   const ref = useRef<HTMLDivElement>(null);
   const id = Number(router.query["work-id"]) || defaultWorkId;
-
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
   const isFavorite = hasFavoriteIdArray?.some((item) => {
     return item === id;
   });
+
   const { user } = useUser();
 
   const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
@@ -68,14 +68,14 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData }: P
 
   if (!work)
     return (
-      <CustomCardActionSkeletonArea selected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionArea ref={ref}>
         <Skeleton variant="rectangular" height={"100vh"} />
-      </CustomCardActionSkeletonArea>
+      </CustomCardActionArea>
     );
 
   return (
     <>
-      <CustomCardActionArea selected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionArea ref={ref}>
         <Title>{work.title}</Title>
         <WrapperContent>
           <div>
@@ -130,6 +130,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData }: P
                 </Icon>
               </Info>
             </FlexContainer>
+
             <FlexContainer>
               <Icon>
                 <LocationOnIcon fontSize="small" />
@@ -173,7 +174,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData }: P
 }
 
 const Title = styled.div`
-  font-size: 30px;
+  font-size: 20px;
   font-weight: bold;
 `;
 
@@ -216,37 +217,25 @@ const Text = styled.div`
   font-size: 12px;
 `;
 
-const WrapperContent = styled.div`
-  display: flex;
-  justify-content: space-around;
-`;
-const CustomCardActionArea = MuiStyled(Card)<{ selected: boolean }>`
-  padding: 16px;
-  border-radius: 8px;
-  max-height: 100dvh;
-  overflow: scroll;
-  border: 1px solid rgb(224, 224, 224);
-  background-color: white;
-  position: sticky;
-  top: ${({ selected }) => (selected ? "198px" : "116px")};
-`;
-
-const CustomCardActionSkeletonArea = MuiStyled(Card)<{ selected: boolean }>`
-  border-radius: 8px;
-  max-height: 100dvh;
-  overflow: scroll;
-  border: 1px solid rgb(224, 224, 224);
-  background-color: white;
-  position: sticky;
-  top: ${({ selected }) => (selected ? "198px" : "116px")};
-`;
-
 const Description = styled.div`
   * {
     all: revert;
   }
 `;
 
+const CustomCardActionArea = styled(Card)`
+  padding: 16px;
+  background-color: white;
+`;
+const WrapperContent = styled.div`
+  display: flex;
+  justify-content: space-around;
+  @media (max-width: ${BREAK_POINT.sm}px) {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+`;
 const FavoriteButtonWrapper = styled.div`
   margin: auto;
 `;
@@ -254,4 +243,9 @@ const FavoriteButtonWrapper = styled.div`
 const FlexButtonContainer = styled.div`
   display: flex;
   justify-content: space-around;
+  @media (max-width: ${BREAK_POINT.sm}px) {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 `;

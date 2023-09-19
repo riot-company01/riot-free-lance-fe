@@ -10,14 +10,14 @@ import { Button, Card, Skeleton, styled as MuiStyled } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { useFavoriteButton } from "@/components/common/hooks/use-favorite-button";
-import { GetFavoriteWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
-import { backToWorksUrlVar } from "@/stores";
+import { useFavoriteButton } from "@/components/hooks/use-favorite-button";
+import { GetUserToWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
+import { useAppliedButton } from "@/components/hooks/use-applied-button";
 
 type Props = {
   defaultWorkId?: number;
   hasFavoriteIdArray?: (number | undefined)[];
-  userToWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
 };
 
 export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData }: Props) {
@@ -40,14 +40,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData }: P
   });
 
   const applicationWork = () => {
-    backToWorksUrlVar(router.asPath);
-
-    router.push({
-      pathname: "apply",
-      query: {
-        id,
-      },
-    });
+    useAppliedButton({ userId: user?.sub || "", workId: id || 0, userToWorksData });
   };
 
   useEffect(() => {

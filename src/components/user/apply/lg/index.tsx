@@ -2,30 +2,30 @@ import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { CustomCard } from "@/components/user/apply/lg/card";
-import { Detail } from "@/components/user/apply/lg/detail";
-import { GetAppliedWorksQuery } from "@/lib/graphql/graphql";
-import type { GetAppliedQuery } from "@/lib/graphql/graphql";
+import { CustomCard } from "@/components/user/common/card/lg";
+import { Detail } from "@/components/user/common/detail/lg";
+
+import type { GetAppliedQuery, GetFavoriedQuery } from "@/lib/graphql/graphql";
 
 type AppliedListProps = {
-  worksData: GetAppliedQuery | undefined;
-  data: GetAppliedWorksQuery | undefined;
+  allAppliedWorksData: GetAppliedQuery | undefined;
 };
 
-function AppliedLg({ worksData, data }: AppliedListProps) {
+function AppliedLg({ allAppliedWorksData }: AppliedListProps) {
   const router = useRouter();
   const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
 
   useEffect(() => {
-    if (!data || !worksData) return;
+    if (!allAppliedWorksData) return;
 
-    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => {
+    const userFavoriteWorkData = allAppliedWorksData.users[0].user_to_works.map((item) => {
       if (item.favorite) {
         return item.work_id;
       }
     });
+    console.log(userFavoriteWorkData);
     setHasFavoriteIdArray(userFavoriteWorkData);
-  }, [data, worksData]);
+  }, [allAppliedWorksData]);
 
   useEffect(() => {
     // ページをリロード時に指定のURLに遷移させる
@@ -45,9 +45,9 @@ function AppliedLg({ worksData, data }: AppliedListProps) {
     <WorksContainer>
       <>
         <Column>
-          {worksData
-            ? worksData?.users[0].user_to_works.map(({ work }, idx) => {
-                const isFavorite = data?.users[0].user_to_works.some(({ favorite, work_id }) => {
+          {allAppliedWorksData
+            ? allAppliedWorksData?.users[0].user_to_works.map(({ work }, idx) => {
+                const isFavorite = allAppliedWorksData?.users[0].user_to_works.some(({ favorite, work_id }) => {
                   if (favorite) {
                     return work_id === work.id;
                   }
@@ -57,7 +57,7 @@ function AppliedLg({ worksData, data }: AppliedListProps) {
                     key={idx}
                     item={work}
                     hasFavorite={isFavorite}
-                    userToWorksData={data?.users[0].user_to_works}
+                    userToWorksData={allAppliedWorksData?.users[0].user_to_works}
                   />
                 );
               })
@@ -75,9 +75,9 @@ function AppliedLg({ worksData, data }: AppliedListProps) {
 
         <DetailWrapper>
           <Detail
-            defaultWorkId={worksData?.users[0].user_to_works[0].work.id}
+            defaultWorkId={allAppliedWorksData?.users[0].user_to_works[0].work.id}
             hasFavoriteIdArray={hasFavoriteIdArray}
-            userToWorksData={data?.users[0].user_to_works}
+            userToWorksData={allAppliedWorksData?.users[0].user_to_works}
           />
         </DetailWrapper>
       </>

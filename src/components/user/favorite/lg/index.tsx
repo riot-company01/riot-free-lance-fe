@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { CustomCard } from "@/components/user/favorite/lg/card";
-import { Detail } from "@/components/user/favorite/lg/detail";
+import { CustomCard } from "@/components/user/common/card/lg";
+import { Detail } from "@/components/user/common/detail/lg";
 import { GetFavoriteWorksQuery } from "@/lib/graphql/graphql";
 import type { GetFavoriedQuery } from "@/lib/graphql/graphql";
 

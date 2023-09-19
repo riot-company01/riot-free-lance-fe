@@ -6,3 +6,13 @@ query GetUser($id: String) @cached(ttl: 0) {
     tel
   }
 }
+
+query GetUserToWorks($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    user_to_works {
+      work_id
+      favorite
+      application
+    }
+  }
+}

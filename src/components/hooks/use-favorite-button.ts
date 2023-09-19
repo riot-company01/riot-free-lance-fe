@@ -1,8 +1,8 @@
 import { useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import {
-  GetAppliedWorksQuery,
   GetFavoriteWorksDocument,
+  GetUserToWorksQuery,
   InsertFavoriteMutationDocument,
   UpdateFavoriteDocument,
 } from "@/lib/graphql/graphql";
@@ -10,10 +10,10 @@ import {
 type Args = {
   userId: string;
   workId: number;
-  userToWorksData?: GetAppliedWorksQuery["users"][0]["user_to_works"];
+  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
 };
 
-export const useAppliedButton = (props: Args) => {
+export const useFavoriteButton = (props: Args) => {
   const { userId, workId, userToWorksData } = props;
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -63,7 +63,7 @@ export const useAppliedButton = (props: Args) => {
     }
   };
 
-  const handleClickUpdateAppliedClick = async () => {
+  const handleClickDeleteFavoriteClick = async () => {
     if (!isButtonDisabled) {
       setIsButtonDisabled(true);
       await updateMutation({
@@ -80,7 +80,7 @@ export const useAppliedButton = (props: Args) => {
   };
 
   return {
-    handleClickUpdateAppliedClick,
+    handleClickDeleteFavoriteClick,
     handleClickAddFavoriteClick,
   };
 };

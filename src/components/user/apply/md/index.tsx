@@ -4,37 +4,36 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Modal } from "@/components/common/modal";
 import { NoItem } from "@/components/user/components/no-item";
-import { Card } from "@/components/user/favorite/md/card";
-import { Detail } from "@/components/user/favorite/md/detail";
+import { Card } from "@/components/user/common/card/md";
+import { Detail } from "@/components/user/common/detail/md";
 import { BREAK_POINT } from "@/constants";
-import { GetAppliedWorksQuery } from "@/lib/graphql/graphql";
+
 import type { GetAppliedQuery } from "@/lib/graphql/graphql";
 
 type Props = {
-  worksData: GetAppliedQuery | undefined;
-  data: GetAppliedWorksQuery | undefined;
+  allAppliedWorksData: GetAppliedQuery | undefined;
 };
 
-function AppliedMd({ worksData, data }: Props) {
+function AppliedMd({ allAppliedWorksData }: Props) {
   const router = useRouter();
   const id = Number(router.query["work-id"]);
   const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<number[]>([]);
 
   useEffect(() => {
-    if (!data || !worksData) return;
+    if (!allAppliedWorksData) return;
 
-    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => item.work_id);
+    const userFavoriteWorkData = allAppliedWorksData.users[0].user_to_works.map((item) => item.work_id);
     setHasFavoriteIdArray(userFavoriteWorkData);
-  }, [data, worksData]);
+  }, [allAppliedWorksData]);
 
   return (
     <>
-      {worksData?.users[0].user_to_works.length !== 0 ? (
+      {allAppliedWorksData?.users[0].user_to_works.length !== 0 ? (
         <Div>
           <Wrapper>
-            {worksData
-              ? worksData?.users[0].user_to_works.map(({ work }, idx) => {
-                  const isFavorite = data?.users[0].user_to_works.some(({ work_id }) => {
+            {allAppliedWorksData
+              ? allAppliedWorksData?.users[0].user_to_works.map(({ work }, idx) => {
+                  const isFavorite = allAppliedWorksData?.users[0].user_to_works.some(({ work_id }) => {
                     return work.id === work_id;
                   });
 

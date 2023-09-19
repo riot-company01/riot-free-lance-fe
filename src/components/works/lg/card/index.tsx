@@ -9,8 +9,8 @@ import { Card, CardActionArea, Chip, IconButton } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
-import { useFavoriteButton } from "@/components/common/hooks/use-favorite-button";
-import type { GetFavoriteWorksQuery, GetWorksQuery } from "@/lib/graphql/graphql";
+import { useFavoriteButton } from "@/components/hooks/use-favorite-button";
+import type { GetFavoriteWorksQuery, GetUserToWorksQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 export function CustomCard({
@@ -20,7 +20,7 @@ export function CustomCard({
 }: {
   item: GetWorksQuery["works"][number];
   hasFavorite: boolean | undefined;
-  userToWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
 }) {
   const { user } = useUser();
 

@@ -1,29 +1,31 @@
+import {
+  GetAppliedDocument,
+  GetUserToWorksQuery,
+  InsertAppliedMutationDocument,
+  UpdateApplicatedDocument,
+} from "@/lib/graphql/graphql";
 import { useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
-import {
-  GetFavoriteWorksDocument,
-  GetFavoriteWorksQuery,
-  InsertFavoriteMutationDocument,
-  UpdateFavoriteDocument,
-} from "@/lib/graphql/graphql";
+import { backToWorksUrlVar } from "@/stores";
+import router from "next/router";
 
 type Args = {
   userId: string;
   workId: number;
-  userToWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
 };
 
-export const useFavoriteButton = (props: Args) => {
+export const useAppliedButton = (props: Args) => {
   const { userId, workId, userToWorksData } = props;
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isExsistUserToWorksData, setIsExsistUserToWorksData] = useState(false);
 
-  const [insertMutation] = useMutation(InsertFavoriteMutationDocument, {
-    refetchQueries: [GetFavoriteWorksDocument],
+  const [insertMutation] = useMutation(InsertAppliedMutationDocument, {
+    refetchQueries: [GetAppliedDocument],
   });
-  const [updateMutation] = useMutation(UpdateFavoriteDocument, {
-    refetchQueries: [GetFavoriteWorksDocument],
+  const [updateMutation] = useMutation(UpdateApplicatedDocument, {
+    refetchQueries: [GetAppliedDocument],
   });
 
   useEffect(() => {
@@ -45,7 +47,15 @@ export const useFavoriteButton = (props: Args) => {
           variables: {
             id: userId,
             workId,
-            favorite: true,
+            application: true,
+          },
+        });
+        backToWorksUrlVar(router.asPath);
+
+        router.push({
+          pathname: "apply",
+          query: {
+            id: userId,
           },
         });
       } else {
@@ -53,6 +63,15 @@ export const useFavoriteButton = (props: Args) => {
           variables: {
             id: userId,
             workId,
+          },
+        });
+
+        backToWorksUrlVar(router.asPath);
+
+        router.push({
+          pathname: "apply",
+          query: {
+            id: userId,
           },
         });
       }
@@ -63,15 +82,22 @@ export const useFavoriteButton = (props: Args) => {
     }
   };
 
-  const handleClickDeleteFavoriteClick = async () => {
-    console.log("aaaa");
+  const handleClickUpdateAppliedClick = async () => {
     if (!isButtonDisabled) {
       setIsButtonDisabled(true);
       await updateMutation({
         variables: {
           id: userId,
           workId,
-          favorite: false,
+          application: false,
+        },
+      });
+      backToWorksUrlVar(router.asPath);
+
+      router.push({
+        pathname: "apply",
+        query: {
+          id: userId,
         },
       });
       setTimeout(() => {
@@ -81,7 +107,7 @@ export const useFavoriteButton = (props: Args) => {
   };
 
   return {
-    handleClickDeleteFavoriteClick,
+    handleClickUpdateAppliedClick,
     handleClickAddFavoriteClick,
   };
 };

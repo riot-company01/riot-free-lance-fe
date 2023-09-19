@@ -3,6 +3,7 @@ query GetFavoried($id: String) {
     user_to_works(where: { favorite: { _eq: true } }) {
       application
       favorite
+      work_id
       work {
         contractType
         createAt

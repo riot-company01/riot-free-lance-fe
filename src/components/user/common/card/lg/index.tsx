@@ -5,30 +5,35 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { CardActionArea, Chip, Card as MuiCard, IconButton } from "@mui/material";
+import { Card, CardActionArea, Chip, IconButton } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
-import { useFavoriteButton } from "@/components/common/hooks/use-favorite-button";
-import type { GetWorksQuery } from "@/lib/graphql/graphql";
+import { useFavoriteButton } from "@/components/hooks/use-favorite-button";
+import type { GetFavoriteWorksQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
-export function Card({
+export function CustomCard({
   item,
   hasFavorite,
+  userToWorksData,
 }: {
   item: GetWorksQuery["works"][number];
   hasFavorite: boolean | undefined;
+  userToWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  // | GetAppliedWorksQuery["users"][0]["user_to_works"];
 }) {
   const { user } = useUser();
+
   const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
     userId: user?.sub || "",
     workId: item.id,
+    userToWorksData,
   });
 
   return (
     <CustomCardActionArea
-      sx={{ cursor: "pointer", borderRadius: 2, overflow: "scroll", marginLeft: "2px" }}
+      sx={{ cursor: "pointer", borderRadius: 2, marginLeft: "2px" }}
       onClick={() => {
         router.push(
           {
@@ -50,6 +55,7 @@ export function Card({
       <CardActionArea
         sx={{
           padding: 2,
+          minHeight: 400,
         }}
       >
         <TitleWrapper>
@@ -58,8 +64,7 @@ export function Card({
           </Title>
           {hasFavorite ? (
             <IconButton
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 handleClickDeleteFavoriteClick();
               }}
             >
@@ -67,8 +72,7 @@ export function Card({
             </IconButton>
           ) : (
             <IconButton
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 handleClickAddFavoriteClick();
               }}
             >
@@ -76,6 +80,7 @@ export function Card({
             </IconButton>
           )}
         </TitleWrapper>
+
         <MonthlyPrice>
           <Icon>
             <MonetizationOnIcon fontSize="small" />
@@ -137,8 +142,12 @@ export function Card({
   );
 }
 
-const CustomCardActionArea = styled(MuiCard)`
+const CustomCardActionArea = styled(Card)`
   position: relative;
+  :not(:first-of-type) {
+    margin-top: 16px;
+  }
+  width: 480px;
 `;
 
 const Closed = styled.div`
@@ -146,7 +155,7 @@ const Closed = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  z-index: ${WORKS_Z_INDEX.CLOSE_OVERLAY};
+  z-index: ${WORKS_Z_INDEX.CLOSE_OVERLAY}; // TODO
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 `;
@@ -158,7 +167,6 @@ const Msg = styled.div`
   display: flex;
   font-size: 20px;
   height: 100%;
-  text-align: center;
   width: 100%;
   align-items: center;
 `;
@@ -187,7 +195,7 @@ const Strong = styled.div`
 `;
 
 const Span = styled.div`
-  font-size: 10px;
+  font-size: 12px;
 `;
 
 const Icon = styled.div`
@@ -208,13 +216,14 @@ const FlexContainer = styled.div`
 
 const FlexContainerLabel = styled(FlexContainer)`
   overflow: auto;
+  flex-wrap: wrap;
   gap: 4px;
 `;
 
 const MdWrapper = styled.div`
-  padding-top: 4px;
+  padding-top: 8px;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 14px;
