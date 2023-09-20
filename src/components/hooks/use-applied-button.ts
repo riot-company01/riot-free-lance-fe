@@ -1,107 +1,39 @@
-import {
-  GetAppliedDocument,
-  GetUserToWorksQuery,
-  InsertAppliedMutationDocument,
-  UpdateApplicatedDocument,
-} from "@/lib/graphql/graphql";
+import { GetAppliedDocument, InsertAppliedMutationDocument } from "@/lib/graphql/graphql";
 import { useMutation } from "@apollo/client";
-import { useEffect, useState } from "react";
 import { backToWorksUrlVar } from "@/stores";
 import router from "next/router";
 
 type Args = {
   userId: string;
   workId: number;
-  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
 };
 
 export const useAppliedButton = (props: Args) => {
-  const { userId, workId, userToWorksData } = props;
+  const { userId, workId } = props;
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [isExsistUserToWorksData, setIsExsistUserToWorksData] = useState(false);
+  console.log(userId, workId);
 
-  const [insertMutation] = useMutation(InsertAppliedMutationDocument, {
-    refetchQueries: [GetAppliedDocument],
-  });
-  const [updateMutation] = useMutation(UpdateApplicatedDocument, {
-    refetchQueries: [GetAppliedDocument],
-  });
+  const [insertMutation] = useMutation(InsertAppliedMutationDocument);
 
-  useEffect(() => {
-    if (!userToWorksData) return;
-
-    const hasUserToWorksData = userToWorksData.some((item) => {
-      if (item.application) {
-        return item.work_id === workId;
-      }
+  const handleClickAddAppliedClick = async () => {
+    await insertMutation({
+      variables: {
+        id: userId,
+        workId,
+      },
     });
 
-    setIsExsistUserToWorksData(hasUserToWorksData);
-  }, userToWorksData);
+    backToWorksUrlVar(router.asPath);
 
-  const handleClickAddFavoriteClick = async () => {
-    if (!isButtonDisabled) {
-      setIsButtonDisabled(true);
-
-      if (isExsistUserToWorksData) {
-        await updateMutation({
-          variables: {
-            id: userId,
-            workId,
-            application: true,
-          },
-        });
-      } else {
-        await insertMutation({
-          variables: {
-            id: userId,
-            workId,
-          },
-        });
-      }
-
-      backToWorksUrlVar(router.asPath);
-
-      router.push({
-        pathname: "apply",
-        query: {
-          id: userId,
-        },
-      });
-
-      setTimeout(() => {
-        setIsButtonDisabled(false);
-      }, 200);
-    }
-  };
-
-  const handleClickUpdateAppliedClick = async () => {
-    if (!isButtonDisabled) {
-      setIsButtonDisabled(true);
-      await updateMutation({
-        variables: {
-          id: userId,
-          workId,
-          application: false,
-        },
-      });
-      backToWorksUrlVar(router.asPath);
-
-      router.push({
-        pathname: "apply",
-        query: {
-          id: userId,
-        },
-      });
-      setTimeout(() => {
-        setIsButtonDisabled(false);
-      }, 200);
-    }
+    router.push({
+      pathname: "apply",
+      query: {
+        id: userId,
+      },
+    });
   };
 
   return {
-    handleClickUpdateAppliedClick,
-    handleClickAddFavoriteClick,
+    handleClickAddAppliedClick,
   };
 };

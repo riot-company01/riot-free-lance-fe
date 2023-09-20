@@ -9,7 +9,7 @@ import { Card } from "@/components/works/md/card";
 import { Detail } from "@/components/works/md/detail";
 import { Filter } from "@/components/works/md/filter";
 import { BREAK_POINT } from "@/constants";
-import { GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
+import { GetAppliedWorksDocument, GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
 import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
@@ -21,20 +21,29 @@ type Props = {
 export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
   const router = useRouter();
   const id = Number(router.query["work-id"]);
-  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
   const { user } = useUser();
-  const { data } = useQuery(GetFavoriteWorksDocument, { variables: { id: user?.sub } });
+  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
+  const [hasAppliedIdArray, setHasAppliedIdArray] = useState<(number | undefined)[]>([]);
+  const { data: favoriteData } = useQuery(GetFavoriteWorksDocument, { variables: { id: user?.sub } });
+  const { data: appliedData } = useQuery(GetAppliedWorksDocument, { variables: { id: user?.sub } });
 
   useEffect(() => {
-    if (!data || !worksData) return;
+    if (!favoriteData || !worksData || !appliedData) return;
 
-    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => {
+    const userFavoriteWorkData = favoriteData.users[0].user_to_works.map((item) => {
       if (item.favorite) {
         return item.work_id;
       }
     });
     setHasFavoriteIdArray(userFavoriteWorkData);
-  }, [data, worksData]);
+
+    const userAppliedWorkData = appliedData.users[0].user_to_works.map((item) => {
+      if (item.application) {
+        return item.work_id;
+      }
+    });
+    setHasAppliedIdArray(userAppliedWorkData);
+  }, [favoriteData, worksData, appliedData]);
 
   return (
     <Div>
@@ -42,14 +51,19 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
       <Wrapper>
         {worksData
           ? worksData?.works.map((item, idx) => {
-              const isFavorite = data?.users[0].user_to_works.some(({ favorite, work_id }) => {
+              const isFavorite = favoriteData?.users[0].user_to_works.some(({ favorite, work_id }) => {
                 if (favorite) {
                   return work_id === item.id;
                 }
               });
 
               return (
-                <Card key={idx} item={item} hasFavorite={isFavorite} userToWorksData={data?.users[0].user_to_works} />
+                <Card
+                  key={idx}
+                  item={item}
+                  hasFavorite={isFavorite}
+                  userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
+                />
               );
             })
           : [...Array(5)].map((_, idx) => {
@@ -69,7 +83,8 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
         <Detail
           defaultWorkId={worksData?.works[0].id}
           hasFavoriteIdArray={hasFavoriteIdArray}
-          userToWorksData={data?.users[0].user_to_works}
+          userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
+          hasAppliedIdArray={hasAppliedIdArray}
         />
       </Modal>
     </Div>

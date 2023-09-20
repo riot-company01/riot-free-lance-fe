@@ -30,7 +30,7 @@ export const useApplication = () => {
     },
   });
 
-  const [insertMutation] = useMutation(InsertAppliedMutationDocument, {});
+  const [insertMutation] = useMutation(InsertAppliedMutationDocument);
 
   const [openDialog, setOpenDialog] = useState(false);
 

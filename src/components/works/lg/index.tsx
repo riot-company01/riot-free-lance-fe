@@ -9,7 +9,7 @@ import { Detail } from "@/components/works/lg/detail";
 import { Filter } from "@/components/works/lg/filter";
 import { LeftNavig } from "@/components/works/lg/left-navig";
 import { LG_GLOBAL_NAVIGATION } from "@/constants";
-import { GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
+import { GetAppliedWorksDocument, GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
 import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
@@ -20,11 +20,13 @@ type Props = {
 
 export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
   const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
+  const [hasAppliedIdArray, setHasAppliedIdArray] = useState<(number | undefined)[]>([]);
   const { user } = useUser();
   const { data: favoriteData } = useQuery(GetFavoriteWorksDocument, { variables: { id: user?.sub } });
+  const { data: appliedData } = useQuery(GetAppliedWorksDocument, { variables: { id: user?.sub } });
 
   useEffect(() => {
-    if (!favoriteData || !worksData) return;
+    if (!favoriteData || !worksData || !appliedData) return;
 
     const userFavoriteWorkData = favoriteData.users[0].user_to_works.map((item) => {
       if (item.favorite) {
@@ -32,7 +34,14 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
       }
     });
     setHasFavoriteIdArray(userFavoriteWorkData);
-  }, [favoriteData, worksData]);
+
+    const userAppliedWorkData = appliedData.users[0].user_to_works.map((item) => {
+      if (item.application) {
+        return item.work_id;
+      }
+    });
+    setHasAppliedIdArray(userAppliedWorkData);
+  }, [favoriteData, worksData, appliedData]);
 
   return (
     <Wrapper>
@@ -91,6 +100,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
               defaultWorkId={worksData?.works[0].id}
               hasFavoriteIdArray={hasFavoriteIdArray}
               userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
+              hasAppliedIdArray={hasAppliedIdArray}
             />
           </DetailWrapper>
         </WorksContainer>
