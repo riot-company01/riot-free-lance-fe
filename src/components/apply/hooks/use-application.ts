@@ -7,12 +7,14 @@ import type { ChangeEvent } from "react";
 import {
   EditProfileDocument,
   GetUserDocument,
+  GetUserToWorksQuery,
   GetWorkDocument,
   InsertAppliedMutationDocument,
+  UpdateApplicatedDocument,
 } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 
-export const useApplication = () => {
+export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"]) => {
   const { user } = useUser();
   const { query } = useRouter();
   const backToUrl = useReactiveVar(backToWorksUrlVar);
@@ -31,9 +33,11 @@ export const useApplication = () => {
   });
 
   const [insertMutation] = useMutation(InsertAppliedMutationDocument);
+  const [InsertAppliedMutation] = useMutation(InsertAppliedMutationDocument);
+  const [updateAppliedMutation] = useMutation(UpdateApplicatedDocument);
 
   const [openDialog, setOpenDialog] = useState(false);
-
+  const [isExsistUserToWorksData, setIsExsistUserToWorksData] = useState(false);
   const [userName, setUserName] = useState(userData?.users[0].userName);
   const [userNameKana, setUserNameKana] = useState(userData?.users[0].userNameKana);
   const [phoneNumber, setPhoneNumber] = useState(userData?.users[0].tel);
@@ -58,12 +62,24 @@ export const useApplication = () => {
       setOpenDialog(true);
     });
 
-    await insertMutation({
-      variables: {
-        id: user?.sub || "",
-        workId: Number(query.id),
-      },
-    });
+    if (isExsistUserToWorksData) {
+      console.log("aaaa");
+      await updateAppliedMutation({
+        variables: {
+          id: user?.sub || "",
+          workId: Number(query.id),
+          application: true,
+        },
+      });
+    } else {
+      console.log("bbbb");
+      await InsertAppliedMutation({
+        variables: {
+          id: user?.sub || "",
+          workId: Number(query.id),
+        },
+      });
+    }
 
     await editProfileMutation({
       variables: {
@@ -79,6 +95,16 @@ export const useApplication = () => {
   const backToWorkList = () => {
     router.push(fixBackToUrl);
   };
+
+  useEffect(() => {
+    if (!userToWorksData) return;
+
+    const hasUserToWorksData = userToWorksData.some((item) => {
+      return item.work_id === Number(query.id);
+    });
+
+    setIsExsistUserToWorksData(hasUserToWorksData);
+  }, [userToWorksData]);
 
   useEffect(() => {
     setUserName(userData?.users[0].userName);

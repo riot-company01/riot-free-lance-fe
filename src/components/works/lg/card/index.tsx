@@ -9,25 +9,25 @@ import { Card, CardActionArea, Chip, IconButton } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
-import { useFavoriteButton } from "@/components/hooks/use-favorite-button";
-import type { GetFavoriteWorksQuery, GetWorksQuery } from "@/lib/graphql/graphql";
+import { useFavoriteAppliedButton } from "@/components/hooks/use-favorite-applied-button";
+import type { GetUserToWorksQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 export function CustomCard({
   item,
   hasFavorite,
-  userToFavoriteWorksData,
+  userToWorksData,
 }: {
   item: GetWorksQuery["works"][number];
   hasFavorite: boolean | undefined;
-  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
 }) {
   const { user } = useUser();
 
-  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
+  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteAppliedButton({
     userId: user?.sub || "",
     workId: item.id,
-    userToFavoriteWorksData,
+    userToWorksData,
   });
 
   return (

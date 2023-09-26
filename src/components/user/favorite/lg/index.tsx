@@ -4,28 +4,40 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { CustomCard } from "@/components/user/common/card/lg";
 import { Detail } from "@/components/user/common/detail/lg";
-import { GetFavoriteWorksQuery } from "@/lib/graphql/graphql";
+import { GetAppliedWorksDocument, GetFavoriteWorksDocument, GetFavoriteWorksQuery } from "@/lib/graphql/graphql";
 import type { GetFavoriedQuery } from "@/lib/graphql/graphql";
+import { useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 type FavoriteListProps = {
   worksData: GetFavoriedQuery | undefined;
-  data: GetFavoriteWorksQuery | undefined;
+  favoriteData: GetFavoriteWorksQuery | undefined;
 };
 
-function FavoriteLg({ worksData, data }: FavoriteListProps) {
+function FavoriteLg({ worksData, favoriteData }: FavoriteListProps) {
   const router = useRouter();
   const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
+  const [hasAppliedIdArray, setHasAppliedIdArray] = useState<(number | undefined)[]>([]);
+  const { user } = useUser();
+  const { data: appliedData } = useQuery(GetAppliedWorksDocument, { variables: { id: user?.sub } });
 
   useEffect(() => {
-    if (!data || !worksData) return;
+    if (!favoriteData || !worksData || !appliedData) return;
 
-    const userFavoriteWorkData = data.users[0].user_to_works.map((item) => {
+    const userFavoriteWorkData = favoriteData.users[0].user_to_works.map((item) => {
       if (item.favorite) {
         return item.work_id;
       }
     });
     setHasFavoriteIdArray(userFavoriteWorkData);
-  }, [data, worksData]);
+
+    const userAppliedWorkData = appliedData.users[0].user_to_works.map((item) => {
+      if (item.application) {
+        return item.work_id;
+      }
+    });
+    setHasAppliedIdArray(userAppliedWorkData);
+  }, [favoriteData, worksData, appliedData]);
 
   useEffect(() => {
     // ページをリロード時に指定のURLに遷移させる
@@ -47,17 +59,18 @@ function FavoriteLg({ worksData, data }: FavoriteListProps) {
         <Column>
           {worksData
             ? worksData?.users[0].user_to_works.map(({ work }, idx) => {
-                const isFavorite = data?.users[0].user_to_works.some(({ favorite, work_id }) => {
+                const isFavorite = favoriteData?.users[0].user_to_works.some(({ favorite, work_id }) => {
                   if (favorite) {
                     return work_id === work.id;
                   }
                 });
+                console.log(isFavorite);
                 return (
                   <CustomCard
                     key={idx}
                     item={work}
                     hasFavorite={isFavorite}
-                    userToWorksData={data?.users[0].user_to_works}
+                    userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
                   />
                 );
               })
@@ -77,7 +90,8 @@ function FavoriteLg({ worksData, data }: FavoriteListProps) {
           <Detail
             defaultWorkId={worksData?.users[0].user_to_works[0].work.id}
             hasFavoriteIdArray={hasFavoriteIdArray}
-            userToWorksData={data?.users[0].user_to_works}
+            userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
+            hasAppliedIdArray={hasAppliedIdArray}
           />
         </DetailWrapper>
       </>

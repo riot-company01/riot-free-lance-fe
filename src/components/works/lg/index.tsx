@@ -9,7 +9,7 @@ import { Detail } from "@/components/works/lg/detail";
 import { Filter } from "@/components/works/lg/filter";
 import { LeftNavig } from "@/components/works/lg/left-navig";
 import { LG_GLOBAL_NAVIGATION } from "@/constants";
-import { GetAppliedWorksDocument, GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
+import { GetUserToWorksDocument } from "@/lib/graphql/graphql";
 import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
@@ -22,26 +22,25 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
   const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
   const [hasAppliedIdArray, setHasAppliedIdArray] = useState<(number | undefined)[]>([]);
   const { user } = useUser();
-  const { data: favoriteData } = useQuery(GetFavoriteWorksDocument, { variables: { id: user?.sub } });
-  const { data: appliedData } = useQuery(GetAppliedWorksDocument, { variables: { id: user?.sub } });
+  const { data: userToWorksData } = useQuery(GetUserToWorksDocument, { variables: { id: user?.sub } });
 
   useEffect(() => {
-    if (!favoriteData || !worksData || !appliedData) return;
+    if (!worksData || !userToWorksData) return;
 
-    const userFavoriteWorkData = favoriteData.users[0].user_to_works.map((item) => {
+    const userFavoriteWorkData = userToWorksData.users[0].user_to_works.map((item) => {
       if (item.favorite) {
         return item.work_id;
       }
     });
     setHasFavoriteIdArray(userFavoriteWorkData);
 
-    const userAppliedWorkData = appliedData.users[0].user_to_works.map((item) => {
+    const userAppliedWorkData = userToWorksData.users[0].user_to_works.map((item) => {
       if (item.application) {
         return item.work_id;
       }
     });
     setHasAppliedIdArray(userAppliedWorkData);
-  }, [favoriteData, worksData, appliedData]);
+  }, [worksData, userToWorksData]);
 
   return (
     <Wrapper>
@@ -62,7 +61,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  const isFavorite = favoriteData?.users[0].user_to_works.some(({ favorite, work_id }) => {
+                  const isFavorite = userToWorksData?.users[0].user_to_works.some(({ favorite, work_id }) => {
                     if (favorite) {
                       return work_id === item.id;
                     }
@@ -72,7 +71,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
                       key={idx}
                       item={item}
                       hasFavorite={isFavorite}
-                      userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
+                      userToWorksData={userToWorksData?.users[0].user_to_works}
                     />
                   );
                 })
@@ -99,7 +98,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
             <Detail
               defaultWorkId={worksData?.works[0].id}
               hasFavoriteIdArray={hasFavoriteIdArray}
-              userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
+              userToWorksData={userToWorksData?.users[0].user_to_works}
               hasAppliedIdArray={hasAppliedIdArray}
             />
           </DetailWrapper>

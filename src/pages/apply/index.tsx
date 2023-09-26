@@ -2,8 +2,13 @@ import { Box } from "@mui/material";
 import { ApplyLg } from "@/components/apply/lg";
 import { ApplyMd } from "@/components/apply/md";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
+import { GetUserToWorksDocument } from "@/lib/graphql/graphql";
+import { useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 function Apply() {
+  const { user } = useUser();
+  const { data: userToWorksData } = useQuery(GetUserToWorksDocument, { variables: { id: user?.sub } });
   return (
     <>
       <Box
@@ -12,7 +17,7 @@ function Apply() {
           display: { ...LG_BREAK_POINT },
         }}
       >
-        <ApplyLg />
+        <ApplyLg userToWorksData={userToWorksData?.users[0].user_to_works} />
       </Box>
       <Box
         component="div"
@@ -20,7 +25,7 @@ function Apply() {
           display: { ...MD_BREAK_POINT },
         }}
       >
-        <ApplyMd />
+        <ApplyMd userToWorksData={userToWorksData?.users[0].user_to_works} />
       </Box>
     </>
   );

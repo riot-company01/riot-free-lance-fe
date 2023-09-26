@@ -10,7 +10,7 @@ import { Button, Card, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { useFavoriteButton } from "@/components/hooks/use-favorite-button";
+import { useFavoriteAppliedButton } from "@/components/hooks/use-favorite-applied-button";
 import { BREAK_POINT } from "@/constants";
 import { GetUserToWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
@@ -34,7 +34,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData }: P
 
   const { user } = useUser();
 
-  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
+  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteAppliedButton({
     userId: user?.sub || "",
     workId: id || 0,
     userToWorksData,

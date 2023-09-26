@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import {
   GetFavoriteWorksDocument,
-  GetFavoriteWorksQuery,
+  GetUserToWorksQuery,
   InsertFavoriteMutationDocument,
   UpdateFavoriteDocument,
 } from "@/lib/graphql/graphql";
@@ -10,40 +10,40 @@ import {
 type Args = {
   userId: string;
   workId: number;
-  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
 };
 
-export const useFavoriteButton = (props: Args) => {
-  const { userId, workId, userToFavoriteWorksData } = props;
+export const useFavoriteAppliedButton = (props: Args) => {
+  const { userId, workId, userToWorksData } = props;
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isExsistUserToWorksData, setIsExsistUserToWorksData] = useState(false);
 
-  const [insertMutation] = useMutation(InsertFavoriteMutationDocument, {
+  const [insertFavoriteMutation] = useMutation(InsertFavoriteMutationDocument, {
     refetchQueries: [GetFavoriteWorksDocument],
   });
-  const [updateMutation] = useMutation(UpdateFavoriteDocument, {
+
+  const [updateFavoriteMutation] = useMutation(UpdateFavoriteDocument, {
     refetchQueries: [GetFavoriteWorksDocument],
   });
 
   useEffect(() => {
-    if (!userToFavoriteWorksData) return;
+    if (!userToWorksData) return;
 
-    const hasUserToWorksData = userToFavoriteWorksData.some((item) => {
-      if (item.favorite) {
-        return item.work_id === workId;
-      }
+    const hasUserToWorksData = userToWorksData.some((item) => {
+      return item.work_id === workId;
     });
 
     setIsExsistUserToWorksData(hasUserToWorksData);
-  }, userToFavoriteWorksData);
+    console.log(isExsistUserToWorksData);
+  }, userToWorksData);
 
   const handleClickAddFavoriteClick = async () => {
     if (!isButtonDisabled) {
       setIsButtonDisabled(true);
 
       if (isExsistUserToWorksData) {
-        await updateMutation({
+        await updateFavoriteMutation({
           variables: {
             id: userId,
             workId,
@@ -51,7 +51,7 @@ export const useFavoriteButton = (props: Args) => {
           },
         });
       } else {
-        await insertMutation({
+        await insertFavoriteMutation({
           variables: {
             id: userId,
             workId,
@@ -68,7 +68,7 @@ export const useFavoriteButton = (props: Args) => {
   const handleClickDeleteFavoriteClick = async () => {
     if (!isButtonDisabled) {
       setIsButtonDisabled(true);
-      await updateMutation({
+      await updateFavoriteMutation({
         variables: {
           id: userId,
           workId,

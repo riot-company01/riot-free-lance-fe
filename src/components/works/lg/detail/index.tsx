@@ -10,18 +10,18 @@ import { Button, Card, Skeleton, styled as MuiStyled } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { useFavoriteButton } from "@/components/hooks/use-favorite-button";
-import { GetFavoriteWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
+import { useFavoriteAppliedButton } from "@/components/hooks/use-favorite-applied-button";
+import { GetUserToWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 
 type Props = {
   defaultWorkId?: number;
-  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
   hasFavoriteIdArray?: (number | undefined)[];
   hasAppliedIdArray?: (number | undefined)[];
 };
 
-export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksData, hasAppliedIdArray }: Props) {
+export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData, hasAppliedIdArray }: Props) {
   const router = useRouter();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -39,10 +39,10 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksD
 
   const { user } = useUser();
 
-  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
+  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteAppliedButton({
     userId: user?.sub || "",
     workId: id || 0,
-    userToFavoriteWorksData,
+    userToWorksData,
   });
 
   const handleClickApplied = () => {

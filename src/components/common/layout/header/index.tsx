@@ -43,12 +43,15 @@ export function LayoutHeader() {
     switch (target) {
       case "LOGOUT":
         router.push("/api/auth/logout");
+        setAnchorElNav(null);
         break;
       case "お気に入り案件一覧":
         router.push("/user/favorite");
+        setAnchorElNav(null);
         break;
       case "応募済み案件一覧":
         router.push("/user/apply");
+        setAnchorElNav(null);
         break;
       default:
         setAnchorElNav(null);

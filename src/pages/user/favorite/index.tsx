@@ -16,13 +16,16 @@ function Favorite() {
     },
   });
 
-  const { data } = useQuery(GetFavoriteWorksDocument, { fetchPolicy: "network-only", variables: { id: user?.sub } });
+  const { data: favoriteData } = useQuery(GetFavoriteWorksDocument, {
+    fetchPolicy: "network-only",
+    variables: { id: user?.sub },
+  });
 
   if (
     worksData?.users.length === 0 ||
     worksData?.users[0].user_to_works.length === 0 ||
-    data?.users.length === 0 ||
-    data?.users[0].user_to_works.length === 0
+    favoriteData?.users.length === 0 ||
+    favoriteData?.users[0].user_to_works.length === 0
   ) {
     return <NoItem pageTitle="favorite" />;
   }
@@ -35,7 +38,7 @@ function Favorite() {
           display: { ...LG_BREAK_POINT },
         }}
       >
-        <FavoriteLg worksData={worksData} data={data} />
+        <FavoriteLg worksData={worksData} favoriteData={favoriteData} />
       </Box>
       <Box
         component="div"
@@ -44,7 +47,7 @@ function Favorite() {
           minHeight: `calc(100dvh - ${MD_GLOBAL_NAVIGATION.HEADER}px - ${MD_GLOBAL_NAVIGATION.FOOTER}px - 40px)`,
         }}
       >
-        <FavoriteMd worksData={worksData} data={data} />
+        <FavoriteMd worksData={worksData} data={favoriteData} />
       </Box>
     </>
   );
