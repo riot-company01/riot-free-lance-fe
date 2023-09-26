@@ -11,17 +11,17 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useFavoriteAppliedButton } from "@/components/hooks/use-favorite-applied-button";
-import { GetUserToWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
+import { GetFavoriteWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 
 type Props = {
   defaultWorkId?: number;
-  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
+  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
   hasFavoriteIdArray?: (number | undefined)[];
   hasAppliedIdArray?: (number | undefined)[];
 };
 
-export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData, hasAppliedIdArray }: Props) {
+export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksData, hasAppliedIdArray }: Props) {
   const router = useRouter();
 
   const ref = useRef<HTMLDivElement>(null);
@@ -42,7 +42,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData, has
   const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteAppliedButton({
     userId: user?.sub || "",
     workId: id || 0,
-    userToWorksData,
+    userToFavoriteWorksData,
   });
 
   const handleClickApplied = () => {
@@ -160,11 +160,9 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToWorksData, has
 
         <FlexButtonContainer>
           {isApplied ? (
-            <Button variant="outlined" color="success">
-              案件に応募済み
-            </Button>
+            <Button variant="contained">案件に応募済み</Button>
           ) : (
-            <Button variant="contained" onClick={handleClickApplied}>
+            <Button variant="outlined" onClick={handleClickApplied}>
               案件に応募する
             </Button>
           )}

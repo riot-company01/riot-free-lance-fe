@@ -160,11 +160,9 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksD
 
         <FlexButtonContainer>
           {isApplied ? (
-            <Button variant="outlined" color="success">
-              案件に応募済み
-            </Button>
+            <Button variant="contained">案件に応募済み</Button>
           ) : (
-            <Button variant="contained" onClick={handleClickApplied}>
+            <Button variant="outlined" onClick={handleClickApplied}>
               案件に応募する
             </Button>
           )}

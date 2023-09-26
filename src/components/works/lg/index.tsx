@@ -98,7 +98,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
             <Detail
               defaultWorkId={worksData?.works[0].id}
               hasFavoriteIdArray={hasFavoriteIdArray}
-              userToWorksData={userToWorksData?.users[0].user_to_works}
+              userToFavoriteWorksData={userToWorksData?.users[0].user_to_works}
               hasAppliedIdArray={hasAppliedIdArray}
             />
           </DetailWrapper>

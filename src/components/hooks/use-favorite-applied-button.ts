@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import {
   GetFavoriteWorksDocument,
-  GetUserToWorksQuery,
+  GetFavoriteWorksQuery,
   InsertFavoriteMutationDocument,
   UpdateFavoriteDocument,
 } from "@/lib/graphql/graphql";
@@ -10,11 +10,11 @@ import {
 type Args = {
   userId: string;
   workId: number;
-  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
+  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
 };
 
 export const useFavoriteAppliedButton = (props: Args) => {
-  const { userId, workId, userToWorksData } = props;
+  const { userId, workId, userToFavoriteWorksData } = props;
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isExsistUserToWorksData, setIsExsistUserToWorksData] = useState(false);
@@ -28,15 +28,15 @@ export const useFavoriteAppliedButton = (props: Args) => {
   });
 
   useEffect(() => {
-    if (!userToWorksData) return;
+    if (!userToFavoriteWorksData) return;
 
-    const hasUserToWorksData = userToWorksData.some((item) => {
+    const hasUserToWorksData = userToFavoriteWorksData.some((item) => {
       return item.work_id === workId;
     });
 
     setIsExsistUserToWorksData(hasUserToWorksData);
     console.log(isExsistUserToWorksData);
-  }, userToWorksData);
+  }, userToFavoriteWorksData);
 
   const handleClickAddFavoriteClick = async () => {
     if (!isButtonDisabled) {
