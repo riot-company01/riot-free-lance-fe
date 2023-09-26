@@ -71,7 +71,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
                       key={idx}
                       item={item}
                       hasFavorite={isFavorite}
-                      userToWorksData={userToWorksData?.users[0].user_to_works}
+                      userToFavoriteWorksData={userToWorksData?.users[0].user_to_works}
                     />
                   );
                 })
