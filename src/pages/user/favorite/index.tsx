@@ -47,7 +47,7 @@ function Favorite() {
           minHeight: `calc(100dvh - ${MD_GLOBAL_NAVIGATION.HEADER}px - ${MD_GLOBAL_NAVIGATION.FOOTER}px - 40px)`,
         }}
       >
-        <FavoriteMd worksData={worksData} data={favoriteData} />
+        <FavoriteMd worksData={worksData} favoriteData={favoriteData} />
       </Box>
     </>
   );

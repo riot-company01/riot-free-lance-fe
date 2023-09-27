@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
@@ -7,18 +7,16 @@ import type { ChangeEvent } from "react";
 import {
   EditProfileDocument,
   GetUserDocument,
+  GetUserToWorksDocument,
   GetUserToWorksQuery,
   GetWorkDocument,
   InsertAppliedMutationDocument,
   UpdateApplicatedDocument,
 } from "@/lib/graphql/graphql";
-import { backToWorksUrlVar } from "@/stores";
 
 export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"]) => {
   const { user } = useUser();
   const { query } = useRouter();
-  const backToUrl = useReactiveVar(backToWorksUrlVar);
-  const fixBackToUrl = backToUrl === undefined ? "/works" : String(backToUrl);
 
   const { data: workData, loading: workLoading } = useQuery(GetWorkDocument, {
     variables: {
@@ -32,9 +30,12 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
     },
   });
 
-  const [insertMutation] = useMutation(InsertAppliedMutationDocument);
-  const [InsertAppliedMutation] = useMutation(InsertAppliedMutationDocument);
-  const [updateAppliedMutation] = useMutation(UpdateApplicatedDocument);
+  const [InsertAppliedMutation] = useMutation(InsertAppliedMutationDocument, {
+    refetchQueries: [GetUserToWorksDocument],
+  });
+  const [updateAppliedMutation] = useMutation(UpdateApplicatedDocument, {
+    refetchQueries: [GetUserToWorksDocument],
+  });
 
   const [openDialog, setOpenDialog] = useState(false);
   const [isExsistUserToWorksData, setIsExsistUserToWorksData] = useState(false);
@@ -63,7 +64,6 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
     });
 
     if (isExsistUserToWorksData) {
-      console.log("aaaa");
       await updateAppliedMutation({
         variables: {
           id: user?.sub || "",
@@ -72,7 +72,6 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
         },
       });
     } else {
-      console.log("bbbb");
       await InsertAppliedMutation({
         variables: {
           id: user?.sub || "",
@@ -93,7 +92,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
   };
 
   const backToWorkList = () => {
-    router.push(fixBackToUrl);
+    router.back();
   };
 
   useEffect(() => {

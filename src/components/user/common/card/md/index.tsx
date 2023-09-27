@@ -10,23 +10,23 @@ import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
 import { useFavoriteAppliedButton } from "@/components/hooks/use-favorite-applied-button";
-import type { GetUserToWorksQuery, GetWorksQuery } from "@/lib/graphql/graphql";
+import type { GetFavoriteWorksQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 export function Card({
   item,
   hasFavorite,
-  userToWorksData,
+  userToFavoriteWorksData,
 }: {
   item: GetWorksQuery["works"][number];
   hasFavorite: boolean | undefined;
-  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
+  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
 }) {
   const { user } = useUser();
   const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteAppliedButton({
     userId: user?.sub || "",
     workId: item.id,
-    userToWorksData,
+    userToFavoriteWorksData,
   });
 
   return (

@@ -55,45 +55,43 @@ function AppliedLg({ worksData, favoriteData }: AppliedListProps) {
 
   return (
     <WorksContainer>
-      <>
-        <Column>
-          {worksData
-            ? worksData?.users[0].user_to_works.map(({ work }, idx) => {
-                const isFavorite = favoriteData?.users[0].user_to_works.some(({ favorite, work_id }) => {
-                  if (favorite) {
-                    return work_id === work.id;
-                  }
-                });
-                return (
-                  <CustomCard
-                    key={idx}
-                    item={work}
-                    hasFavorite={isFavorite}
-                    userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
-                  />
-                );
-              })
-            : [...Array(5)].map((_, idx) => {
-                return (
-                  <WrapperSkeleton key={idx}>
-                    <CustomSkeleton key={idx} variant="rectangular" height={"100%"} />
-                  </WrapperSkeleton>
-                );
-              })}
-          <PaginationWrapper>
-            <Pagination count={1} variant="outlined" shape="rounded" size="large" />
-          </PaginationWrapper>
-        </Column>
+      <Column>
+        {worksData
+          ? worksData?.users[0].user_to_works.map(({ work }, idx) => {
+              const isFavorite = favoriteData?.users[0].user_to_works.some(({ favorite, work_id }) => {
+                if (favorite) {
+                  return work_id === work.id;
+                }
+              });
+              return (
+                <CustomCard
+                  key={idx}
+                  item={work}
+                  hasFavorite={isFavorite}
+                  userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
+                />
+              );
+            })
+          : [...Array(5)].map((_, idx) => {
+              return (
+                <WrapperSkeleton key={idx}>
+                  <CustomSkeleton key={idx} variant="rectangular" height={"100%"} />
+                </WrapperSkeleton>
+              );
+            })}
+        <PaginationWrapper>
+          <Pagination count={1} variant="outlined" shape="rounded" size="large" />
+        </PaginationWrapper>
+      </Column>
 
-        <DetailWrapper>
-          <Detail
-            defaultWorkId={worksData?.users[0].user_to_works[0].work.id}
-            hasFavoriteIdArray={hasFavoriteIdArray}
-            userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
-            hasAppliedIdArray={hasAppliedIdArray}
-          />
-        </DetailWrapper>
-      </>
+      <DetailWrapper>
+        <Detail
+          defaultWorkId={worksData?.users[0].user_to_works[0].work.id}
+          hasFavoriteIdArray={hasFavoriteIdArray}
+          userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
+          hasAppliedIdArray={hasAppliedIdArray}
+        />
+      </DetailWrapper>
     </WorksContainer>
   );
 }

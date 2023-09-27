@@ -15,7 +15,7 @@ export const NoItem = ({ pageTitle }: NoItemProps) => {
   return (
     <NotResultWrapper>
       <As>{title}済み案件がありません</As>
-      <p>{title}することでこちらのページに案件が表示されます</p>
+      <PerDescription>{title}することでこちらのページに案件が表示されます</PerDescription>
 
       <Button
         variant="contained"
@@ -52,4 +52,13 @@ const NotResultWrapper = styled.div`
 const As = styled.div`
   font-size: 24px;
   font-weight: bold;
+  @media (max-width: ${BREAK_POINT.sm}px) {
+    font-size: 18px;
+  }
+`;
+
+const PerDescription = styled.p`
+  @media (max-width: ${BREAK_POINT.sm}px) {
+    font-size: 12px;
+  }
 `;
