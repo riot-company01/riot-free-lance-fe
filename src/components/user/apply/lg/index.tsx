@@ -1,13 +1,13 @@
+import { useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { CustomCard } from "@/components/user/common/card/lg";
 import { Detail } from "@/components/user/common/detail/lg";
-
-import { GetAppliedQuery, GetAppliedWorksDocument, GetFavoriteWorksQuery } from "@/lib/graphql/graphql";
-import { useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { GetAppliedWorksDocument } from "@/lib/graphql/graphql";
+import type { GetFavoriteWorksQuery, GetAppliedQuery } from "@/lib/graphql/graphql";
 
 type AppliedListProps = {
   worksData: GetAppliedQuery | undefined;

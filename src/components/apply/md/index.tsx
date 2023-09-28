@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Button, Dialog, DialogTitle, Skeleton, TextField } from "@mui/material";
 import { useApplication } from "@/components/apply/hooks/use-application";
 import { CustomCard } from "@/components/apply/md/card";
-import { GetUserToWorksQuery } from "@/lib/graphql/graphql";
+import type { GetUserToWorksQuery } from "@/lib/graphql/graphql";
 
 type ApplyMdProps = {
   userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];

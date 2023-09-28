@@ -8,11 +8,11 @@ import {
   EditProfileDocument,
   GetUserDocument,
   GetUserToWorksDocument,
-  GetUserToWorksQuery,
   GetWorkDocument,
   InsertAppliedMutationDocument,
   UpdateApplicatedDocument,
 } from "@/lib/graphql/graphql";
+import type { GetUserToWorksQuery } from "@/lib/graphql/graphql";
 
 export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"]) => {
   const { user } = useUser();

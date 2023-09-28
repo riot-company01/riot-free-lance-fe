@@ -2,10 +2,10 @@ import { useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import {
   GetFavoriteWorksDocument,
-  GetFavoriteWorksQuery,
   InsertFavoriteMutationDocument,
   UpdateFavoriteDocument,
 } from "@/lib/graphql/graphql";
+import type { GetFavoriteWorksQuery } from "@/lib/graphql/graphql";
 
 type Args = {
   userId: string;

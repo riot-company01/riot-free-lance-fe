@@ -8,8 +8,8 @@ import ReportIcon from "@mui/icons-material/Report";
 import { Card, CardActionArea, Chip, IconButton } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
-import { WORKS_Z_INDEX } from "@/components/works/constants";
 import { useFavoriteAppliedButton } from "@/components/hooks/use-favorite-applied-button";
+import { WORKS_Z_INDEX } from "@/components/works/constants";
 import type { GetFavoriteWorksQuery, GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 

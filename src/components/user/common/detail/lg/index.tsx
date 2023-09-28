@@ -11,7 +11,8 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useFavoriteAppliedButton } from "@/components/hooks/use-favorite-applied-button";
-import { GetFavoriteWorksQuery, GetWorkDocument } from "@/lib/graphql/graphql";
+import { GetWorkDocument } from "@/lib/graphql/graphql";
+import type { GetFavoriteWorksQuery } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 
 type Props = {

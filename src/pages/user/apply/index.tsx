@@ -3,9 +3,9 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import AppliedLg from "@/components/user/apply/lg";
 import AppliedMd from "@/components/user/apply/md";
+import { NoItem } from "@/components/user/components/no-item";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
 import { GetAppliedDocument, GetFavoriteWorksDocument } from "@/lib/graphql/graphql";
-import { NoItem } from "@/components/user/components/no-item";
 
 function Apply() {
   const { user } = useUser();

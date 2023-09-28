@@ -1,10 +1,10 @@
+import { useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import { ApplyLg } from "@/components/apply/lg";
 import { ApplyMd } from "@/components/apply/md";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
 import { GetUserToWorksDocument } from "@/lib/graphql/graphql";
-import { useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
 
 function Apply() {
   const { user } = useUser();
