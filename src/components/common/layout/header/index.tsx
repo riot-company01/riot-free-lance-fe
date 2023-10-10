@@ -61,11 +61,7 @@ export function LayoutHeader() {
   return (
     <CustomAppBar position="sticky">
       <Container maxWidth="xl">
-        <Toolbar
-          disableGutters
-          ref={toolbarRef}
-          sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" }, justifyContent: "space-between" }}
-        >
+        <Toolbar disableGutters ref={toolbarRef} sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" }, justifyContent: "space-between" }}>
           <Typography
             variant="h6"
             noWrap
@@ -178,6 +174,7 @@ const Logo = styled.img`
 `;
 
 const CustomAppBar = styled(AppBar)`
+  background-color: #121d59;
   height: ${MD_GLOBAL_NAVIGATION.HEADER}px;
   @media screen and (min-width: ${BREAK_POINT.md}px) {
     height: ${LG_GLOBAL_NAVIGATION.HEADER}px;

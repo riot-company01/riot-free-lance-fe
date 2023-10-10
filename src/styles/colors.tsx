@@ -24,7 +24,7 @@ export const COLOR = {
     code: "#f7979c",
   },
   BASE_COLOR: {
-    code: "#2c345c",
+    code: "#121d59",
   },
   LIGHT_BLUE: {
     code: "#edf4fc",
