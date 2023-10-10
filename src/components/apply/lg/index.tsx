@@ -2,8 +2,14 @@ import styled from "@emotion/styled";
 import { Button, Dialog, DialogTitle, Skeleton, TextField } from "@mui/material";
 import { useApplication } from "@/components/apply/hooks/use-application";
 import { CustomCard } from "@/components/apply/lg/card";
+import type { GetUserToWorksQuery } from "@/lib/graphql/graphql";
 
-export const ApplyLg = () => {
+type ApplyLgProps = {
+  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
+};
+
+export const ApplyLg = (props: ApplyLgProps) => {
+  const { userToWorksData } = props;
   const {
     userName,
     userNameKana,
@@ -19,7 +25,7 @@ export const ApplyLg = () => {
     onChangeEmail,
     applicationWork,
     backToWorkList,
-  } = useApplication();
+  } = useApplication(userToWorksData);
 
   return (
     <>

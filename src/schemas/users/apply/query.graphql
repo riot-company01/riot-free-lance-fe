@@ -1,0 +1,39 @@
+query GetApplied($id: String) {
+  users(where: { user_to_works: { user_id: { _eq: $id } } }) {
+    user_to_works(where: { application: { _eq: true } }) {
+      application
+      favorite
+      work_id
+      work {
+        contractType
+        createAt
+        description
+        id
+        isClosed
+        location
+        maxMonthlyPrice
+        maxWorkHours
+        minMonthlyPrice
+        minWorkHours
+        title
+        isClosed
+        languages {
+          skill {
+            id
+            name
+            type
+          }
+        }
+      }
+    }
+  }
+}
+
+query GetAppliedWorks($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    user_to_works {
+      work_id
+      application
+    }
+  }
+}

@@ -10,17 +10,20 @@ import { Button, Card, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { useFavoriteButton } from "@/components/works/hooks/use-favorite-button";
+import { useFavoriteAppliedButton } from "@/components/hooks/use-favorite-applied-button";
 import { BREAK_POINT } from "@/constants";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import type { GetFavoriteWorksQuery } from "@/lib/graphql/graphql";
 import { backToWorksUrlVar } from "@/stores";
 
 type Props = {
   defaultWorkId?: number;
-  hasFavoriteIdArray?: number[];
+  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  hasFavoriteIdArray?: (number | undefined)[];
+  hasAppliedIdArray?: (number | undefined)[];
 };
 
-export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
+export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksData, hasAppliedIdArray }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const id = Number(router.query["work-id"]) || defaultWorkId;
@@ -30,15 +33,19 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
   const isFavorite = hasFavoriteIdArray?.some((item) => {
     return item === id;
   });
+  const isApplied = hasAppliedIdArray?.some((item) => {
+    return item === id;
+  });
 
   const { user } = useUser();
 
-  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteButton({
+  const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteAppliedButton({
     userId: user?.sub || "",
     workId: id || 0,
+    userToFavoriteWorksData,
   });
 
-  const applicationWork = () => {
+  const handleClickApplied = () => {
     backToWorksUrlVar(router.asPath);
 
     router.push({
@@ -153,9 +160,13 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray }: Props) {
         </Description>
 
         <FlexButtonContainer>
-          <Button variant="contained" onClick={applicationWork}>
-            案件に応募する
-          </Button>
+          {isApplied ? (
+            <Button variant="contained">案件に応募済み</Button>
+          ) : (
+            <Button variant="outlined" onClick={handleClickApplied}>
+              案件に応募する
+            </Button>
+          )}
           {isFavorite ? (
             <Button variant="contained" color={"error"} onClick={handleClickDeleteFavoriteClick}>
               お気に入り登録済み

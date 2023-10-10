@@ -7,10 +7,12 @@ query GetUser($id: String) @cached(ttl: 0) {
   }
 }
 
-query GetFavoriteWorks($id: String) {
+query GetUserToWorks($id: String) {
   users(where: { id: { _eq: $id } }) {
-    works {
+    user_to_works {
       work_id
+      favorite
+      application
     }
   }
 }

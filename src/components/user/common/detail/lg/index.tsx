@@ -27,6 +27,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksD
 
   const ref = useRef<HTMLDivElement>(null);
   const id = Number(router.query["work-id"]) || defaultWorkId;
+
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
@@ -50,7 +51,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksD
     backToWorksUrlVar(router.asPath);
 
     router.push({
-      pathname: "apply",
+      pathname: "/apply",
       query: {
         id,
       },
@@ -167,9 +168,8 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksD
               案件に応募する
             </Button>
           )}
-
           {isFavorite ? (
-            <Button variant="contained" color="error" onClick={handleClickDeleteFavoriteClick}>
+            <Button variant="contained" color={"error"} onClick={handleClickDeleteFavoriteClick}>
               お気に入り登録済み
             </Button>
           ) : (
@@ -234,22 +234,22 @@ const WrapperContent = styled.div`
 const CustomCardActionArea = MuiStyled(Card)<{ selected: boolean }>`
   padding: 16px;
   border-radius: 8px;
-  max-height: ${({ selected }) => (selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  max-height: 100dvh;
   overflow: scroll;
   border: 1px solid rgb(224, 224, 224);
   background-color: white;
   position: sticky;
-  top: ${({ selected }) => (selected ? "198px" : "166px")};
+  top: ${({ selected }) => (selected ? "198px" : "116px")};
 `;
 
 const CustomCardActionSkeletonArea = MuiStyled(Card)<{ selected: boolean }>`
   border-radius: 8px;
-  max-height: ${({ selected }) => (selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  max-height: 100dvh;
   overflow: scroll;
   border: 1px solid rgb(224, 224, 224);
   background-color: white;
   position: sticky;
-  top: ${({ selected }) => (selected ? "198px" : "166px")};
+  top: ${({ selected }) => (selected ? "198px" : "116px")};
 `;
 
 const Description = styled.div`
