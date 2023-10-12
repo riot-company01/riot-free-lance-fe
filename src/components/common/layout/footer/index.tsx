@@ -13,7 +13,7 @@ export const LayoutFooter: React.FC = () => {
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        <NextLink href="/preparation">利用規約</NextLink>
+        <NextLink href="/terms">利用規約</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
