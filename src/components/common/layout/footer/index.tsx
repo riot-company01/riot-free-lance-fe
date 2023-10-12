@@ -9,7 +9,7 @@ export const LayoutFooter: React.FC = () => {
     <Wrapper>
       <div>
         <OutboundIcon fontSize="small" />
-        <NextLink href="https://riot-company.com/top/">運営会社</NextLink>
+        <NextLink href="https://www.riot-company.com/">運営会社</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
@@ -21,7 +21,7 @@ export const LayoutFooter: React.FC = () => {
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        <NextLink href="https://riot-company.com/contact/">お問い合わせ</NextLink>
+        <NextLink href="https://www.riot-company.com/#contact">お問い合わせ</NextLink>
       </div>
     </Wrapper>
   );
