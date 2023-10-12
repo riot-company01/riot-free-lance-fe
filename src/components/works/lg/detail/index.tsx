@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
 type Props = {
   defaultWorkId?: number;
@@ -149,7 +150,7 @@ const Icon = styled.div`
 `;
 
 const Strong = styled.div`
-  color: #f86986;
+  color: ${COLOR.RED.code};
   font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, sans-serif;
 `;
 
@@ -176,7 +177,6 @@ const CustomCardActionArea = MuiStyled(Card)<{ selected: boolean }>`
   border-radius: 8px;
   max-height: ${({ selected }) => (selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
   overflow: scroll;
-  border: 1px solid rgb(224, 224, 224);
   background-color: white;
   position: sticky;
   top: ${({ selected }) => (selected ? "198px" : "166px")};
@@ -186,7 +186,6 @@ const CustomCardActionSkeletonArea = MuiStyled(Card)<{ selected: boolean }>`
   border-radius: 8px;
   max-height: ${({ selected }) => (selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
   overflow: scroll;
-  border: 1px solid rgb(224, 224, 224);
   background-color: white;
   position: sticky;
   top: ${({ selected }) => (selected ? "198px" : "166px")};

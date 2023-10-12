@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
-import { CustomCard } from "@/components/works/lg/card";
 import { Detail } from "@/components/works/lg/detail";
 import { Filter } from "@/components/works/lg/filter";
+import { Item } from "@/components/works/lg/item";
 import { LeftNavig } from "@/components/works/lg/left-navig";
 import { LG_GLOBAL_NAVIGATION } from "@/constants";
 import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
 type Props = {
   skills?: GetSkillsQuery["skills"];
@@ -34,7 +35,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  return <CustomCard key={idx} item={item} />;
+                  return <Item key={idx} item={item} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (
@@ -68,8 +69,8 @@ const Wrapper = styled.div`
 `;
 
 const WrapperSkeleton = styled.div`
-  border: 1px solid rgb(224, 224, 224);
   width: 480px;
+  margin-left: 2px;
   :not(:first-of-type) {
     margin-top: 16px;
   }
@@ -114,7 +115,7 @@ const KeyWordFixed = styled.div`
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
 
-  background-color: #f5f5f5;
+  background-color: ¥ ${COLOR.WHITE.code};
   max-width: calc(1320px - 200px);
 `;
 

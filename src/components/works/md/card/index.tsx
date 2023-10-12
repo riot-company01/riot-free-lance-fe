@@ -7,6 +7,7 @@ import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
 export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
   return (
@@ -136,7 +137,7 @@ const MonthlyPrice = styled.div`
 `;
 
 const Strong = styled.div`
-  color: #f86986;
+  color: ${COLOR.RED.code};
   font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, sans-serif;
 `;
 

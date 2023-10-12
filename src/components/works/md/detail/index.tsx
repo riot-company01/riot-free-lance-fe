@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
 type Props = {
   defaultWorkId?: number;
@@ -149,7 +150,7 @@ const Icon = styled.div`
 `;
 
 const Strong = styled.div`
-  color: #f86986;
+  color: ${COLOR.RED.code};
   font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, sans-serif;
 `;
 

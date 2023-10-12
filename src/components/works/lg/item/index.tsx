@@ -2,40 +2,36 @@ import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Card, CardActionArea, Chip } from "@mui/material";
+import { Card as _Card, CardActionArea as _CardActionArea, Chip } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
+import { Tags } from "@/components/works/lg/item/tags";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
-export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
+export function Item({ item }: { item: GetWorksQuery["works"][number] }) {
+  function onItemClick() {
+    router.push(
+      {
+        query: {
+          ...router.query,
+          "work-id": item.id,
+        },
+      },
+      undefined,
+      { scroll: false }
+    );
+  }
   return (
-    <CustomCardActionArea
-      sx={{ cursor: "pointer", borderRadius: 2, marginLeft: "2px" }}
-      onClick={() => {
-        router.push(
-          {
-            query: {
-              ...router.query,
-              "work-id": item.id,
-            },
-          },
-          undefined,
-          { scroll: false }
-        );
-      }}
-    >
+    <Card onClick={onItemClick}>
       {item.isClosed && (
         <Closed>
           <Msg>この案件の募集は終了しました。</Msg>
         </Closed>
       )}
-      <CardActionArea
-        sx={{
-          padding: 2,
-          minHeight: 400,
-        }}
-      >
+      <CardActionArea>
+        <Tags />
         <Title>
           <div>{item.title}</div>
         </Title>
@@ -94,16 +90,28 @@ export function CustomCard({ item }: { item: GetWorksQuery["works"][number] }) {
         <MdWrapper>{removeMd(item.description)}</MdWrapper>
         <PublicationDate>掲載日:{item.createAt}</PublicationDate>
       </CardActionArea>
-    </CustomCardActionArea>
+    </Card>
   );
 }
 
-const CustomCardActionArea = styled(Card)`
+const Card = styled(_Card)`
+  border-radius: 8px;
   position: relative;
+  cursor: pointer;
+  margin-left: 2px;
   :not(:first-of-type) {
     margin-top: 16px;
   }
   width: 480px;
+`;
+
+const CardActionArea = styled(_CardActionArea)`
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  justify-content: flex-start;
 `;
 
 const Closed = styled.div`
@@ -130,6 +138,7 @@ const Msg = styled.div`
 const Title = styled.div`
   font-weight: bold;
   display: flex;
+  padding-top: 34px;
 `;
 
 const MonthlyPrice = styled.div`
@@ -140,7 +149,7 @@ const MonthlyPrice = styled.div`
 `;
 
 const Strong = styled.div`
-  color: #f86986;
+  color: ${COLOR.RED.code};
   font-family: "HelveticaNeue-CondensedBold", Helvetica, Arial, sans-serif;
 `;
 
