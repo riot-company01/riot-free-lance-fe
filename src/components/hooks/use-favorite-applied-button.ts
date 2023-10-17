@@ -35,7 +35,6 @@ export const useFavoriteAppliedButton = (props: Args) => {
     });
 
     setIsExsistUserToWorksData(hasUserToWorksData);
-    console.log(isExsistUserToWorksData);
   }, userToFavoriteWorksData);
 
   const handleClickAddFavoriteClick = async () => {

@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import AppliedLg from "@/components/user/apply/lg";
 import AppliedMd from "@/components/user/apply/md";
@@ -9,7 +9,7 @@ import { GetAppliedDocument, GetFavoriteWorksDocument } from "@/lib/graphql/grap
 
 function Apply() {
   const { user } = useUser();
-  console.log(user);
+
   const { data: worksData } = useQuery(GetAppliedDocument, {
     fetchPolicy: "network-only",
     variables: {
@@ -21,7 +21,7 @@ function Apply() {
     fetchPolicy: "network-only",
     variables: { id: user?.sub },
   });
-  console.log(favoriteData);
+
   if (
     worksData?.users.length === 0 ||
     worksData?.users[0].user_to_works.length === 0 ||
@@ -52,4 +52,4 @@ function Apply() {
   );
 }
 
-export default Apply;
+export default withPageAuthRequired(Apply);

@@ -45,9 +45,8 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksD
     workId: id || 0,
     userToFavoriteWorksData,
   });
-  console.log(router.asPath);
+
   const handleClickApplied = () => {
-    console.log(router.asPath);
     backToWorksUrlVar(router.asPath);
 
     router.push({

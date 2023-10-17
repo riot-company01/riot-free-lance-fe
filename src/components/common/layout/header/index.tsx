@@ -23,7 +23,6 @@ export function LayoutHeader() {
     },
   });
 
-  console.log("userData", userData);
   const toolbarRef = useRef(null);
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");

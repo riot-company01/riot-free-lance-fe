@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import { NoItem } from "@/components/user/components/no-item";
 import FavoriteLg from "@/components/user/favorite/lg";
@@ -9,6 +9,7 @@ import { GetFavoriedDocument, GetFavoriteWorksDocument } from "@/lib/graphql/gra
 
 function Favorite() {
   const { user } = useUser();
+
   const { data: worksData } = useQuery(GetFavoriedDocument, {
     fetchPolicy: "network-only",
     variables: {
@@ -53,4 +54,4 @@ function Favorite() {
   );
 }
 
-export default Favorite;
+export default withPageAuthRequired(Favorite);

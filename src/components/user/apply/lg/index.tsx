@@ -52,7 +52,6 @@ function AppliedLg({ worksData, favoriteData }: AppliedListProps) {
       }
     }
   }, []);
-  console.log(favoriteData);
 
   return (
     <WorksContainer>

@@ -92,7 +92,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
   };
 
   const backToWorkList = () => {
-    router.back();
+    router.push("/works");
   };
 
   useEffect(() => {
