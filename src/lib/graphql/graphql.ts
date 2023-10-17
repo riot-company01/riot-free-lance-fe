@@ -1597,7 +1597,7 @@ export type Search_Variance_Fields = {
 export type Skills = {
   __typename?: 'skills';
   id: Scalars['Int']['output'];
-  name?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
   type?: Maybe<Scalars['String']['output']>;
   /** An array relationship */
   works: Array<Work_To_Detail>;
@@ -1675,6 +1675,8 @@ export type Skills_Bool_Exp = {
 
 /** unique or primary key constraints on table "skills" */
 export enum Skills_Constraint {
+  /** unique or primary key constraint on columns "name" */
+  SkillsNameKey = 'skills_name_key',
   /** unique or primary key constraint on columns "id" */
   SkillsPkey = 'skills_pkey'
 }
@@ -3430,7 +3432,7 @@ export type GetSkillsQueryVariables = Exact<{
 }>;
 
 
-export type GetSkillsQuery = { __typename?: 'query_root', skills: Array<{ __typename?: 'skills', id: number, type?: string | null, name?: string | null, works_aggregate: { __typename?: 'work_to_detail_aggregate', aggregate?: { __typename?: 'work_to_detail_aggregate_fields', count: number } | null } }> };
+export type GetSkillsQuery = { __typename?: 'query_root', skills: Array<{ __typename?: 'skills', id: number, type?: string | null, name: string, works_aggregate: { __typename?: 'work_to_detail_aggregate', aggregate?: { __typename?: 'work_to_detail_aggregate_fields', count: number } | null } }> };
 
 export type InsertAppliedMutationMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -3454,7 +3456,7 @@ export type GetAppliedQueryVariables = Exact<{
 }>;
 
 
-export type GetAppliedQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', user_to_works: Array<{ __typename?: 'user_to_works', application: boolean, favorite: boolean, work_id: number, work: { __typename?: 'works', contractType?: string | null, createAt: any, description: string, id: number, isClosed: boolean, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, title: string, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> } }> }> };
+export type GetAppliedQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', user_to_works: Array<{ __typename?: 'user_to_works', application: boolean, favorite: boolean, work_id: number, work: { __typename?: 'works', contractType?: string | null, createAt: any, description: string, id: number, isClosed: boolean, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, title: string, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name: string, type?: string | null } | null }> } }> }> };
 
 export type GetAppliedWorksQueryVariables = Exact<{
   id?: InputMaybe<Scalars['String']['input']>;
@@ -3485,7 +3487,7 @@ export type GetFavoriedQueryVariables = Exact<{
 }>;
 
 
-export type GetFavoriedQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', user_to_works: Array<{ __typename?: 'user_to_works', application: boolean, favorite: boolean, work_id: number, work: { __typename?: 'works', contractType?: string | null, createAt: any, description: string, id: number, isClosed: boolean, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, title: string, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> } }> }> };
+export type GetFavoriedQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', user_to_works: Array<{ __typename?: 'user_to_works', application: boolean, favorite: boolean, work_id: number, work: { __typename?: 'works', contractType?: string | null, createAt: any, description: string, id: number, isClosed: boolean, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, title: string, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name: string, type?: string | null } | null }> } }> }> };
 
 export type GetFavoriteWorksQueryVariables = Exact<{
   id?: InputMaybe<Scalars['String']['input']>;
@@ -3524,7 +3526,7 @@ export type GetWorkQueryVariables = Exact<{
 }>;
 
 
-export type GetWorkQuery = { __typename?: 'query_root', works_by_pk?: { __typename?: 'works', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, createAt: any, isClosed: boolean, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> } | null };
+export type GetWorkQuery = { __typename?: 'query_root', works_by_pk?: { __typename?: 'works', id: number, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, createAt: any, isClosed: boolean, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name: string, type?: string | null } | null }> } | null };
 
 export type GetWorksQueryVariables = Exact<{
   where?: InputMaybe<Works_Bool_Exp>;
@@ -3532,7 +3534,7 @@ export type GetWorksQueryVariables = Exact<{
 }>;
 
 
-export type GetWorksQuery = { __typename?: 'query_root', works: Array<{ __typename?: 'works', id: number, isClosed: boolean, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, createAt: any, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name?: string | null, type?: string | null } | null }> }> };
+export type GetWorksQuery = { __typename?: 'query_root', works: Array<{ __typename?: 'works', id: number, isClosed: boolean, title: string, contractType?: string | null, location?: string | null, maxMonthlyPrice?: number | null, maxWorkHours?: number | null, minMonthlyPrice?: number | null, minWorkHours?: number | null, description: string, createAt: any, languages: Array<{ __typename?: 'work_to_detail', skill?: { __typename?: 'skills', id: number, name: string, type?: string | null } | null }> }> };
 
 
 export const GetAllProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllProject"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"cached"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"keyword"}},{"kind":"Field","name":{"kind":"Name","value":"projectName"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllProjectQuery, GetAllProjectQueryVariables>;

@@ -9,6 +9,7 @@ import { GetAppliedDocument, GetFavoriteWorksDocument } from "@/lib/graphql/grap
 
 function Apply() {
   const { user } = useUser();
+  console.log(user);
   const { data: worksData } = useQuery(GetAppliedDocument, {
     fetchPolicy: "network-only",
     variables: {
@@ -20,7 +21,7 @@ function Apply() {
     fetchPolicy: "network-only",
     variables: { id: user?.sub },
   });
-
+  console.log(favoriteData);
   if (
     worksData?.users.length === 0 ||
     worksData?.users[0].user_to_works.length === 0 ||

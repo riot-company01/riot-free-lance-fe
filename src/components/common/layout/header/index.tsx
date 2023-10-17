@@ -22,11 +22,18 @@ export function LayoutHeader() {
       id: user?.sub,
     },
   });
+
+  console.log("userData", userData);
   const toolbarRef = useRef(null);
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
 
-  const pages = [userData?.users[0].userName, "お気に入り案件一覧", "応募済み案件一覧", "LOGOUT"];
+  const pages = [
+    userData?.users[0].userName && userData?.users[0].userName,
+    "お気に入り案件一覧",
+    "応募済み案件一覧",
+    "LOGOUT",
+  ];
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
