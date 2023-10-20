@@ -64,7 +64,6 @@ function FavoriteLg({ worksData, favoriteData }: FavoriteListProps) {
                     return work_id === work.id;
                   }
                 });
-                console.log(isFavorite);
                 return (
                   <CustomCard
                     key={idx}
