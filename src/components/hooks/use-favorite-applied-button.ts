@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
   GetFavoriteWorksDocument,
@@ -6,7 +7,6 @@ import {
   UpdateFavoriteDocument,
 } from "@/lib/graphql/graphql";
 import type { GetFavoriteWorksQuery } from "@/lib/graphql/graphql";
-import { useRouter } from "next/router";
 
 type Args = {
   userId: string;

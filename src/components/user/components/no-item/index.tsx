@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
-import { useReactiveVar } from "@apollo/client";
 
 type NoItemProps = {
   pageTitle: "apply" | "favorite";
