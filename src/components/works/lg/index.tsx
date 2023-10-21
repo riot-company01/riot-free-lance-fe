@@ -115,7 +115,7 @@ const KeyWordFixed = styled.div`
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
 
-  background-color: ¥ ${COLOR.WHITE.code};
+  background: ${COLOR.WHITE.code};
   max-width: calc(1320px - 200px);
 `;
 

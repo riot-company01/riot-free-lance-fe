@@ -11,7 +11,6 @@ export function Tags() {
     e.stopPropagation();
     setIsFavorite((prev) => !prev);
   };
-  FavoriteIcon;
   return (
     <Wrapper>
       <NewTag>New</NewTag>

@@ -23,10 +23,10 @@ export const GLOBAL_STYLE = css`
   }
   html,
   body {
-    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", sans-serif;
     line-height: 1.6;
     overscroll-behavior: none;
-    font-weight: 300;
+    font-weight: 500;
     background-color: ${COLOR.WHITE.code};
   }
 `;

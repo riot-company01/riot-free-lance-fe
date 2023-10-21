@@ -28,8 +28,12 @@ export const COLOR = {
   LIGHT_RED: {
     code: "#f7979c",
   },
+  BLUE: {
+    code: "#B0E0E6",
+    rgb: "176, 224, 230",
+  },
   BASE_COLOR: {
-    code: "#1976d2;",
+    code: "#1976d2",
   },
   LIGHT_BLUE: {
     code: "#edf4fc",
