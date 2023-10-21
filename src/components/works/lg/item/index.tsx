@@ -103,6 +103,12 @@ const Card = styled(_Card)`
     margin-top: 16px;
   }
   width: 480px;
+  :hover {
+    outline: 1px solid ${COLOR.BASE_COLOR.code};
+  }
+  :first-child {
+    margin-top: 1px;
+  }
 `;
 
 const CardActionArea = styled(_CardActionArea)`
