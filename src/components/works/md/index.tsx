@@ -49,7 +49,7 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
 const Wrapper = styled.div`
   display: grid;
   grid-gap: 16px;
-  @media (min-width: ${BREAK_POINT.sm}px) {
+  @media (min-width: ${BREAK_POINT.md}px) {
     grid-template-columns: 1fr 1fr;
   }
 `;
