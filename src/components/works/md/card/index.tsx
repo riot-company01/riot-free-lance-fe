@@ -6,6 +6,7 @@ import { CardActionArea, Chip, Card as MuiCard } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
+import { Tags } from "@/components/works/lg/item/tags";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
@@ -36,6 +37,7 @@ export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
           padding: 2,
         }}
       >
+        <Tags />
         <Title>
           <div>{item.title}</div>
         </Title>
@@ -127,6 +129,7 @@ const Msg = styled.div`
 const Title = styled.div`
   font-weight: bold;
   display: flex;
+  padding-top: 36px;
 `;
 
 const MonthlyPrice = styled.div`
