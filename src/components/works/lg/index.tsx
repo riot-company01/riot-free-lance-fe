@@ -114,7 +114,6 @@ const KeyWordFixed = styled.div`
   top: ${LG_GLOBAL_NAVIGATION.HEADER}px;
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
-
   background: ${COLOR.WHITE.code};
   max-width: calc(1320px - 200px);
 `;
