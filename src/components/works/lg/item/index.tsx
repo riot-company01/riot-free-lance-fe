@@ -124,7 +124,7 @@ const Card = styled(_Card)`
   :hover {
     outline: 1px solid ${COLOR.BASE_COLOR.code};
   }
-  :first-child {
+  :first-of-type {
     margin-top: 1px;
   }
 `;

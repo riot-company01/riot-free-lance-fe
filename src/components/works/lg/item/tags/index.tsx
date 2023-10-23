@@ -20,7 +20,7 @@ export function Tags({ isViewed }: { isViewed: boolean }) {
         <CustomTag>面談一回</CustomTag>
         <CustomTag>高単価</CustomTag>
       </CustomTagWrapper>
-      <FavoriteButton onClick={onClick}>
+      <FavoriteButton onClick={onClick} role="button">
         {isFavorite ? (
           <FavoriteIcon
             fontSize="large"
@@ -77,7 +77,7 @@ const CustomTagWrapper = styled.div`
   padding-left: 48px;
 `;
 
-const FavoriteButton = styled.button`
+const FavoriteButton = styled.div`
   position: absolute;
   top: 0;
   right: 0;

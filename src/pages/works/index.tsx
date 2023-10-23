@@ -1,4 +1,4 @@
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -9,18 +9,18 @@ import { NotResult } from "@/components/works/shared/not-result";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 
-// export const getServerSideProps = withPageAuthRequired({
-//   // @ts-ignore
-//   async getServerSideProps() {
-//     const client = initializeApollo({});
-//     const documentProps = addApolloState(client, {
-//       props: {},
-//     });
-//     return {
-//       props: documentProps.props,
-//     };
-//   },
-// });
+export const getServerSideProps = withPageAuthRequired({
+  // @ts-ignore
+  async getServerSideProps() {
+    // const client = initializeApollo({});
+    // const documentProps = addApolloState(client, {
+    //   props: {},
+    // });
+    return {
+      // props: documentProps.props,
+    };
+  },
+});
 
 function Works() {
   const { skillsData, worksData } = useApiRequest();
