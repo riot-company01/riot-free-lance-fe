@@ -9,8 +9,16 @@ import { WORKS_Z_INDEX } from "@/components/works/constants";
 import { Tags } from "@/components/works/lg/item/tags";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
+import { handleLocalStorage } from "@/util/handle-local-storage";
+
+type Work = {
+  workId: number;
+};
 
 export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
+  const { getLocalStorage, setLocalStorage } = handleLocalStorage();
+  const viewedWorks = getLocalStorage<Work[]>("viewedWorks");
+  const isViewed = viewedWorks?.some((i) => i.workId === item.id);
   return (
     <CustomCardActionArea
       sx={{ cursor: "pointer", borderRadius: 2, overflow: "scroll", marginLeft: "2px" }}
@@ -25,6 +33,15 @@ export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
           undefined,
           { scroll: false }
         );
+        if (viewedWorks && viewedWorks?.length !== 0) {
+          const viewedWork = { workId: item.id };
+          if (viewedWorks.some((i) => i.workId === item.id)) return;
+          viewedWorks.push(viewedWork);
+          setLocalStorage("viewedWorks", viewedWorks);
+        } else {
+          const viewedWork = { workId: item.id };
+          setLocalStorage("viewedWorks", [viewedWork]);
+        }
       }}
     >
       {item.isClosed && (
@@ -37,7 +54,7 @@ export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
           padding: 2,
         }}
       >
-        <Tags />
+        <Tags isViewed={!!isViewed} />
         <Title>
           <div>{item.title}</div>
         </Title>
