@@ -1,4 +1,4 @@
-import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -7,17 +7,18 @@ import { WorksLg } from "@/components/works/lg";
 import { WorksMd } from "@/components/works/md";
 import { NotResult } from "@/components/works/shared/not-result";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
+import { initializeApollo, addApolloState } from "@/lib/apollo/client";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 
 export const getServerSideProps = withPageAuthRequired({
   // @ts-ignore
   async getServerSideProps() {
-    // const client = initializeApollo({});
-    // const documentProps = addApolloState(client, {
-    //   props: {},
-    // });
+    const client = initializeApollo({});
+    const documentProps = addApolloState(client, {
+      props: {},
+    });
     return {
-      // props: documentProps.props,
+      props: documentProps.props,
     };
   },
 });
@@ -25,10 +26,8 @@ export const getServerSideProps = withPageAuthRequired({
 function Works() {
   const { skillsData, worksData } = useApiRequest();
   const router = useRouter();
-  const data = useUser();
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
   const [skills, setSkills] = useState<GetSkillsQuery["skills"] | undefined>([]);
-  console.log(data);
   useEffect(() => {
     if (skillsData) {
       setSkills(skillsData?.skills);
