@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import AppliedLg from "@/components/user/apply/lg";
 import AppliedMd from "@/components/user/apply/md";
@@ -51,4 +51,4 @@ function Apply() {
   );
 }
 
-export default Apply;
+export default withPageAuthRequired(Apply);

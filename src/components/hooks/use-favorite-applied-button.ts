@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
   GetFavoriteWorksDocument,
@@ -15,6 +16,7 @@ type Args = {
 
 export const useFavoriteAppliedButton = (props: Args) => {
   const { userId, workId, userToFavoriteWorksData } = props;
+  const router = useRouter();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isExsistUserToWorksData, setIsExsistUserToWorksData] = useState(false);
@@ -35,10 +37,13 @@ export const useFavoriteAppliedButton = (props: Args) => {
     });
 
     setIsExsistUserToWorksData(hasUserToWorksData);
-    console.log(isExsistUserToWorksData);
   }, userToFavoriteWorksData);
 
   const handleClickAddFavoriteClick = async () => {
+    if (!userId) {
+      router.push("/user/favorite/");
+      return;
+    }
     if (!isButtonDisabled) {
       setIsButtonDisabled(true);
 

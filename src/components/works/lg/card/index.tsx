@@ -6,7 +6,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
 import { Card, CardActionArea, Chip, IconButton } from "@mui/material";
-import router from "next/router";
+import { useRouter } from "next/router";
 import removeMd from "remove-markdown";
 import { useFavoriteAppliedButton } from "@/components/hooks/use-favorite-applied-button";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
@@ -23,6 +23,7 @@ export function CustomCard({
   userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
 }) {
   const { user } = useUser();
+  const router = useRouter();
 
   const { handleClickAddFavoriteClick, handleClickDeleteFavoriteClick } = useFavoriteAppliedButton({
     userId: user?.sub || "",
@@ -72,6 +73,11 @@ export function CustomCard({
           ) : (
             <IconButton
               onClick={() => {
+                if (!user) {
+                  router.push("/user/favorite/");
+                  return;
+                }
+
                 handleClickAddFavoriteClick();
               }}
             >
