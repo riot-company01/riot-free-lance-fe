@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -5,7 +6,7 @@ import type { MouseEventHandler } from "react";
 import { useState } from "react";
 import { COLOR } from "@/styles/colors";
 
-export function Tags() {
+export function Tags({ isViewed }: { isViewed: boolean }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
@@ -13,7 +14,7 @@ export function Tags() {
   };
   return (
     <Wrapper>
-      <NewTag>New</NewTag>
+      <NewTag isViewed={isViewed}>{isViewed ? "閲覧済" : "New"}</NewTag>
       <CustomTagWrapper>
         <CustomTag>リモートワーク</CustomTag>
         <CustomTag>面談一回</CustomTag>
@@ -48,7 +49,7 @@ const Wrapper = styled.div`
   width: calc(100% - 32px);
 `;
 
-const NewTag = styled.div`
+const NewTag = styled.div<{ isViewed: boolean }>`
   width: 80px;
   height: 80px;
   transform: rotate(-45deg);
@@ -62,6 +63,11 @@ const NewTag = styled.div`
   align-items: end;
   justify-content: center;
   background-color: ${COLOR.RED.code};
+  ${({ isViewed }) =>
+    isViewed &&
+    css`
+      background-color: ${COLOR.GRAY.code};
+    `}
 `;
 
 const CustomTagWrapper = styled.div`

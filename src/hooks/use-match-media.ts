@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const pcQuery = "(max-width:1024px)";
 
-const runningInBrowser = typeof window !== "undefined";
+export const runningInBrowser = typeof window !== "undefined";
 
 /**
  * BREAK POINT
