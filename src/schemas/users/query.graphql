@@ -2,7 +2,59 @@ query GetUser($id: String) @cached(ttl: 600) {
   users(where: { id: { _eq: $id } }) {
     id
     name
-    last_seen
-    slackUrl
+  }
+}
+
+query GetUserToWorks($id: String) {
+  users(where: { id: { _eq: $id } }) {
+    userToWorks {
+      workId
+      favorite
+      application
+    }
+  }
+}
+
+
+{
+  "data": {
+    "users": [
+      {
+        "id": "auth0|64b0bc251e94a96b00c2d11b"
+      },
+      {
+        "id": "auth0|649bcfcd43b4788481d1bb17"
+      },
+      {
+        "id": "auth0|649bcf9967956ddc54d76b80"
+      },
+      {
+        "id": "auth0|649bd3a5a20b3750e8a4f4b5"
+      },
+      {
+        "id": "auth0|64acf6901e94a96b00c17b06"
+      },
+      {
+        "id": "auth0|64984b948ceebad9a1e6caf7"
+      },
+      {
+        "id": "auth0|652e42d145dd073e7d8b67db"
+      },
+      {
+        "id": "auth0|652e535e45dd073e7d8b728e"
+      },
+      {
+        "id": "auth0|652e76b6edc85dfbb80e2a37"
+      },
+      {
+        "id": "auth0|649a8b955ac25532f4af7655"
+      },
+      {
+        "id": "auth0|0123456789"
+      },
+      {
+        "id": "google-oauth2|113221960273628135105"
+      }
+    ]
   }
 }
