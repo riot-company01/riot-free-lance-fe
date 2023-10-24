@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "query GetAllProject @cached {\n  project {\n    id\n    keyword\n    projectName\n    price\n  }\n}\n\nquery GetDetailProject($id: Int) @cached {\n  project(where: {id: {_eq: $id}}) {\n    id\n    businessContent\n    contentBusiness\n    developmentEnvironment\n    keyword\n    personnelSought\n    price\n    projectName\n    recruitmentBackground\n    recruitmentNumber\n    requiredSkills\n    welcomeSkills\n    workingConditions\n  }\n}": types.GetAllProjectDocument,
     "query GetSkills($skillsWhere: skills_bool_exp = {_and: []}, $worksWhere: work_to_detail_bool_exp = {_and: []}) @cached(ttl: 600) {\n  skills(where: $skillsWhere) {\n    id\n    type\n    name\n    works_aggregate(where: $worksWhere) {\n      aggregate {\n        count\n      }\n    }\n  }\n}": types.GetSkillsDocument,
-    "query GetUser($id: String) @cached(ttl: 600) {\n  users(where: {id: {_eq: $id}}) {\n    id\n    name\n    last_seen\n  }\n}\n\nquery GetUserToWorks($id: String) {\n  users(where: {id: {_eq: $id}}) {\n    user_to_works {\n      work_id\n      favorite\n      application\n    }\n  }\n}": types.GetUserDocument,
+    "query GetUserToWorks($id: String!) {\n  users_by_pk(id: $id) {\n    userToWorks {\n      workId\n      favorite\n      application\n    }\n  }\n}": types.GetUserToWorksDocument,
     "query GetWork($id: Int!) @cached(ttl: 600) {\n  works_by_pk(id: $id) {\n    id\n    title\n    contractType\n    location\n    maxMonthlyPrice\n    maxWorkHours\n    minMonthlyPrice\n    minWorkHours\n    description\n    createAt\n    isClosed\n    languages {\n      skill {\n        id\n        name\n        type\n      }\n    }\n  }\n}\n\nquery GetWorks($where: works_bool_exp = {_and: []}, $order_by: [works_order_by!] = {}) @cached(ttl: 600) {\n  works(where: $where, order_by: $order_by) {\n    id\n    isClosed\n    title\n    contractType\n    location\n    maxMonthlyPrice\n    maxWorkHours\n    minMonthlyPrice\n    minWorkHours\n    description\n    createAt\n    languages {\n      skill {\n        id\n        name\n        type\n      }\n    }\n  }\n}": types.GetWorkDocument,
 };
 
@@ -44,7 +44,7 @@ export function graphql(source: "query GetSkills($skillsWhere: skills_bool_exp =
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetUser($id: String) @cached(ttl: 600) {\n  users(where: {id: {_eq: $id}}) {\n    id\n    name\n    last_seen\n  }\n}\n\nquery GetUserToWorks($id: String) {\n  users(where: {id: {_eq: $id}}) {\n    user_to_works {\n      work_id\n      favorite\n      application\n    }\n  }\n}"): (typeof documents)["query GetUser($id: String) @cached(ttl: 600) {\n  users(where: {id: {_eq: $id}}) {\n    id\n    name\n    last_seen\n  }\n}\n\nquery GetUserToWorks($id: String) {\n  users(where: {id: {_eq: $id}}) {\n    user_to_works {\n      work_id\n      favorite\n      application\n    }\n  }\n}"];
+export function graphql(source: "query GetUserToWorks($id: String!) {\n  users_by_pk(id: $id) {\n    userToWorks {\n      workId\n      favorite\n      application\n    }\n  }\n}"): (typeof documents)["query GetUserToWorks($id: String!) {\n  users_by_pk(id: $id) {\n    userToWorks {\n      workId\n      favorite\n      application\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

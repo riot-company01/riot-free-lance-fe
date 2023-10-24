@@ -19,14 +19,6 @@ export function LayoutHeader() {
   const toolbarRef = useRef(null);
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
-  // const { data } = useQuery(GetUserDocument, {
-  //   skip: !!user?.sub,
-  //   variables: {
-  //     id: user?.sub,
-  //   },
-  // });
-
-  // console.log(data);
 
   const pages = [user?.email, "LOGOUT"];
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {

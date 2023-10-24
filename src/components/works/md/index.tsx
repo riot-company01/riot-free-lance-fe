@@ -1,3 +1,4 @@
+import type { UserProfile } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 
@@ -13,6 +14,7 @@ type Props = {
   skills?: GetSkillsQuery["skills"];
   selectedSkillIds: string[];
   worksData?: GetWorksQuery;
+  user?: UserProfile;
 };
 
 export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {

@@ -15,7 +15,7 @@ type Work = {
   workId: number;
 };
 
-export function Item({ item }: { item: GetWorksQuery["works"][number] }) {
+export function Item({ item, hasBookmark }: { item: GetWorksQuery["works"][number]; hasBookmark: boolean }) {
   const { getLocalStorage, setLocalStorage } = handleLocalStorage();
   const viewedWorks = getLocalStorage<Work[]>("viewedWorks");
   const isViewed = viewedWorks?.some((i) => i.workId === item.id);
@@ -41,6 +41,7 @@ export function Item({ item }: { item: GetWorksQuery["works"][number] }) {
       setLocalStorage("viewedWorks", [viewedWork]);
     }
   }
+
   return (
     <Card onClick={onItemClick}>
       {item.isClosed && (
@@ -49,7 +50,8 @@ export function Item({ item }: { item: GetWorksQuery["works"][number] }) {
         </Closed>
       )}
       <CardActionArea>
-        <Tags isViewed={!!isViewed} />
+        <>{console.log(hasBookmark)}</>
+        <Tags isViewed={!!isViewed} hasBookmark={hasBookmark} />
         <Title>
           <div>{item.title}</div>
         </Title>

@@ -1,3 +1,5 @@
+import { useQuery } from "@apollo/client";
+import type { UserProfile } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
@@ -6,16 +8,23 @@ import { Filter } from "@/components/works/lg/filter";
 import { Item } from "@/components/works/lg/item";
 import { LeftNavig } from "@/components/works/lg/left-navig";
 import { LG_GLOBAL_NAVIGATION } from "@/constants";
-import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
+import { GetUserToWorksDocument, type GetSkillsQuery, type GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 type Props = {
   skills?: GetSkillsQuery["skills"];
   selectedSkillIds: string[];
   worksData?: GetWorksQuery;
+  user?: UserProfile;
 };
 
-export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
+export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
+  const { data: userData } = useQuery(GetUserToWorksDocument, {
+    skip: !user?.sub,
+    variables: {
+      id: user?.sub as string,
+    },
+  });
   return (
     <Wrapper>
       <NavigContainer>
@@ -33,9 +42,10 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
         </KeyWordFixed>
         <WorksContainer>
           <Column>
-            {worksData
+            {worksData && userData
               ? worksData?.works.map((item, idx) => {
-                  return <Item key={idx} item={item} />;
+                  const hasBookmark = userData.users_by_pk?.userToWorks.some((i) => i.workId === item.id);
+                  return <Item key={idx} item={item} hasBookmark={!!hasBookmark} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (

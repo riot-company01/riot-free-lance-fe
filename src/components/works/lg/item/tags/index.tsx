@@ -6,9 +6,9 @@ import type { MouseEventHandler } from "react";
 import { useState } from "react";
 import { COLOR } from "@/styles/colors";
 
-export function Tags({ isViewed }: { isViewed: boolean }) {
-  const [isFavorite, setIsFavorite] = useState(false);
-  const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+export function Tags({ isViewed, hasBookmark }: { isViewed: boolean; hasBookmark: boolean }) {
+  const [isFavorite, setIsFavorite] = useState(hasBookmark);
+  const onClick: MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation();
     setIsFavorite((prev) => !prev);
   };

@@ -27,10 +27,10 @@ export const getServerSideProps = withPageAuthRequired({
 function Works() {
   const { skillsData, worksData } = useApiRequest();
   const router = useRouter();
-  const data = useUser();
+  const { user } = useUser();
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
   const [skills, setSkills] = useState<GetSkillsQuery["skills"] | undefined>([]);
-  console.log(data);
+
   useEffect(() => {
     if (skillsData) {
       setSkills(skillsData?.skills);
@@ -49,7 +49,7 @@ function Works() {
           display: { ...LG_BREAK_POINT },
         }}
       >
-        <WorksLg skills={skills} selectedSkillIds={selectedSkillIds} worksData={worksData} />
+        <WorksLg skills={skills} selectedSkillIds={selectedSkillIds} worksData={worksData} user={user} />
       </Box>
       <Box
         component="div"
@@ -57,7 +57,7 @@ function Works() {
           display: { ...MD_BREAK_POINT },
         }}
       >
-        <WorksMd skills={skills} selectedSkillIds={selectedSkillIds} worksData={worksData} />
+        <WorksMd skills={skills} selectedSkillIds={selectedSkillIds} worksData={worksData} user={user} />
       </Box>
     </>
   );
