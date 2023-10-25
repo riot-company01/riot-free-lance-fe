@@ -116,7 +116,7 @@ export function Detail({ id, hasBookmark }: Props) {
           </FlexContainer>
           <ButtonWrapper>
             <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
-              この案件の話を聞く
+              {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
             </Button>
             <Button variant="outlined" color="secondary">
               {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
@@ -130,7 +130,7 @@ export function Detail({ id, hasBookmark }: Props) {
 
         <ButtonWrapper>
           <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
-            案件の話を聞く
+            {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
           </Button>
           <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
             {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
