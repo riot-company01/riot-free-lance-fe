@@ -57,62 +57,76 @@ export function Detail({ defaultWorkId }: Props) {
     <>
       <CustomCardActionArea selected={!!router.query["skill-ids"]} ref={ref}>
         <Title>{work.title}</Title>
-        <MonthlyPrice>
-          <Icon>
-            <MonetizationOnIcon fontSize="small" />
-          </Icon>
+        <div id="shimono">
+          <MonthlyPrice>
+            <Icon>
+              <MonetizationOnIcon fontSize="small" />
+            </Icon>
 
-          {(() => {
-            if (work.minMonthlyPrice && work.maxMonthlyPrice) {
-              return (
-                <>
-                  <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
-                  <Span>
-                    万円/月額 (想定年収: {work.minMonthlyPrice * 12}~{work.maxMonthlyPrice * 12}万円)
-                  </Span>
-                </>
-              );
-            } else if (work.minMonthlyPrice || work.maxMonthlyPrice) {
-              return (
-                <>
-                  <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
-                  <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
-                </>
-              );
-            } else {
-              return <Span>要相談</Span>;
-            }
-          })()}
-        </MonthlyPrice>
-        <FlexContainer>
-          <Info>
-            <Icon>
-              <AccessTimeIcon fontSize="small" />
-              <Text>
-                {work.minWorkHours}~{work.maxWorkHours}時間
-              </Text>
-            </Icon>
-          </Info>
-          <Info>
-            <Icon>
-              <PaymentIcon fontSize="small" />
-              <Text>30日</Text>
-            </Icon>
-          </Info>
-          <Info>
-            <Icon>
-              <DocumentScannerIcon fontSize="small" />
-              <Text>{work.contractType}</Text>
-            </Icon>
-          </Info>
-        </FlexContainer>
+            {(() => {
+              if (work.minMonthlyPrice && work.maxMonthlyPrice) {
+                return (
+                  <>
+                    <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
+                    <Span>
+                      万円/月額 (想定年収: {work.minMonthlyPrice * 12}~{work.maxMonthlyPrice * 12}万円)
+                    </Span>
+                  </>
+                );
+              } else if (work.minMonthlyPrice || work.maxMonthlyPrice) {
+                return (
+                  <>
+                    <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
+                    <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
+                  </>
+                );
+              } else {
+                return <Span>要相談</Span>;
+              }
+            })()}
+          </MonthlyPrice>
 
-        <FlexContainer>
-          <Icon>
-            <LocationOnIcon fontSize="small" />
-            <Text>{work.location}</Text>
-          </Icon>
-        </FlexContainer>
+          <FlexContainer>
+            <Info>
+              <Icon>
+                <AccessTimeIcon fontSize="small" />
+                <Text>
+                  {work.minWorkHours}~{work.maxWorkHours}時間
+                </Text>
+              </Icon>
+            </Info>
+            <Info>
+              <Icon>
+                <PaymentIcon fontSize="small" />
+                <Text>30日</Text>
+              </Icon>
+            </Info>
+            <Info>
+              <Icon>
+                <DocumentScannerIcon fontSize="small" />
+                <Text>{work.contractType}</Text>
+              </Icon>
+            </Info>
+          </FlexContainer>
+
+          <FlexContainer>
+            <Icon>
+              <LocationOnIcon fontSize="small" />
+              <Text>{work.location}</Text>
+            </Icon>
+          </FlexContainer>
+          <ButtonWrapper>
+            <Button variant="contained">話を聞く</Button>
+            <Button
+              variant="contained"
+              sx={{
+                background: `${COLOR.RED.code}`,
+              }}
+            >
+              お気に入り
+            </Button>
+          </ButtonWrapper>
+        </div>
 
         <Description>
           <ReactMarkdown>{work.description}</ReactMarkdown>
@@ -195,4 +209,10 @@ const Description = styled.div`
   * {
     all: revert;
   }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  padding-top: 16px;
+  gap: 8px;
 `;

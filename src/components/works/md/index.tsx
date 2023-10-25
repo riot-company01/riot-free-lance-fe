@@ -9,7 +9,7 @@ import { Detail } from "@/components/works/md/detail";
 import { Filter } from "@/components/works/md/filter";
 import { Item } from "@/components/works/shared/item";
 import { BREAK_POINT } from "@/constants";
-import { GetUserToWorksDocument, type GetSkillsQuery, type GetWorksQuery } from "@/lib/graphql/graphql";
+import { GetUserToFavoritedWorksDocument, type GetSkillsQuery, type GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
   skills?: GetSkillsQuery["skills"];
@@ -20,7 +20,7 @@ type Props = {
 
 export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
   const router = useRouter();
-  const { data: userData } = useQuery(GetUserToWorksDocument, {
+  const { data: userData } = useQuery(GetUserToFavoritedWorksDocument, {
     skip: !user?.sub,
     variables: {
       id: user?.sub as string,
@@ -33,7 +33,7 @@ export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
       <Wrapper>
         {worksData && userData
           ? worksData?.works.map((item, idx) => {
-              const hasBookmark = userData.users_by_pk?.userToWorks.some((i) => i.workId === item.id);
+              const hasBookmark = userData.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
               return <Item key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData.users_by_pk?.id} />;
             })
           : [...Array(5)].map((_, idx) => {

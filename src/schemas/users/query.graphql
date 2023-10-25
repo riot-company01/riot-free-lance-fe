@@ -1,10 +1,8 @@
-query GetUserToWorks($id: String!) {
+query GetUserToFavoritedWorks($id: String!) {
   users_by_pk(id: $id) {
     id
-    userToWorks {
+    userToFavoritedWorks {
       workId
-      favorite
-      application
     }
   }
 }
