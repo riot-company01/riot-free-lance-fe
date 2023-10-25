@@ -2,9 +2,9 @@ import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Card as _Card, CardActionArea as _CardActionArea, Chip } from "@mui/material";
+import { Card as _Card, CardActionArea as _CardActionArea, Chip, css } from "@mui/material";
 import { blue } from "@mui/material/colors";
-import router from "next/router";
+import { useRouter } from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
 import { Tags } from "@/components/works/shared/tags";
@@ -24,9 +24,11 @@ type Props = {
 };
 
 export function Item({ item, hasBookmark, userId }: Props) {
+  const router = useRouter();
   const { getLocalStorage, setLocalStorage } = handleLocalStorage();
   const viewedWorks = getLocalStorage<Work[]>("viewedWorks");
   const isViewed = viewedWorks?.some((i) => i.workId === item.id);
+  const isSelected = Number(router.query["work-id"]) === item.id;
 
   function onItemClick() {
     router.push(
@@ -51,7 +53,7 @@ export function Item({ item, hasBookmark, userId }: Props) {
   }
 
   return (
-    <Card onClick={onItemClick}>
+    <Card onClick={onItemClick} isSelected={isSelected}>
       {item.isClosed && (
         <Closed>
           <Msg>この案件の募集は終了しました。</Msg>
@@ -121,9 +123,14 @@ export function Item({ item, hasBookmark, userId }: Props) {
   );
 }
 
-const Card = styled(_Card)`
+const Card = styled(_Card)<{ isSelected: boolean }>`
   position: relative;
   margin-left: 2px;
+  ${({ isSelected }) =>
+    isSelected &&
+    css`
+      outline: 2px solid ${blue[500]};
+    `}
   @media screen and (min-width: ${BREAK_POINT.md}px) {
     border-radius: 8px;
     cursor: pointer;
@@ -132,11 +139,8 @@ const Card = styled(_Card)`
     }
     max-width: 480px;
     width: 100%;
-    :hover {
-      outline: 1px solid ${blue[500]};
-    }
     :first-of-type {
-      margin-top: 1px;
+      margin-top: 2px;
     }
   }
 `;
