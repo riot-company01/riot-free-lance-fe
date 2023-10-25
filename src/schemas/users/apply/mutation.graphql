@@ -1,14 +1,11 @@
 mutation InsertAppliedMutation($id: String!, $workId: Int!) {
-  insert_user_to_works_one(object: { user_id: $id, work_id: $workId, application: true }) {
-    application
+  insert_user_to_apply_works_one(object: { userId: $id, workId: $workId, isApplicated: true }) {
+    isApplicated
   }
 }
 
-mutation UpdateApplicated($id: String!, $workId: Int!, $application: Boolean!) {
-  update_user_to_works(
-    where: { user_id: { _eq: $id }, work_id: { _eq: $workId } }
-    _set: { application: $application }
-  ) {
-    affected_rows
+mutation DeleteApplicatedMutation($id: String!, $workId: Int!) {
+  delete_user_to_apply_works_by_pk(userId: $id, workId: $workId) {
+    isApplicated
   }
 }
