@@ -25,12 +25,6 @@ export function Detail({ defaultWorkId }: Props) {
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
 
-  const copyUrlHandler = async () => {
-    const currentUrl = location.href;
-    await navigator.clipboard.writeText(currentUrl);
-    alert("urlがコピーされました");
-  };
-
   useEffect(() => {
     if (id == undefined) return;
     (async () => {
@@ -116,8 +110,10 @@ export function Detail({ defaultWorkId }: Props) {
             </Icon>
           </FlexContainer>
           <ButtonWrapper>
-            <Button variant="contained">話を聞く</Button>
             <Button variant="contained" color="secondary">
+              案件の話を聞く
+            </Button>
+            <Button variant="outlined" color="secondary">
               お気に入り
             </Button>
           </ButtonWrapper>
@@ -127,11 +123,14 @@ export function Detail({ defaultWorkId }: Props) {
           <ReactMarkdown>{work.description}</ReactMarkdown>
         </Description>
 
-        <FlexContainer>
-          <Button variant="contained" onClick={copyUrlHandler}>
-            案件のURLをコピーする
+        <ButtonWrapper>
+          <Button variant="contained" color="secondary">
+            案件の話を聞く
           </Button>
-        </FlexContainer>
+          <Button variant="outlined" color="secondary">
+            お気に入り
+          </Button>
+        </ButtonWrapper>
       </CustomCardActionArea>
     </>
   );
