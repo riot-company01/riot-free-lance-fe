@@ -111,7 +111,7 @@ export function Detail({ defaultWorkId }: Props) {
           </FlexContainer>
           <ButtonWrapper>
             <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
-              案件の話を聞く
+              この案件の話を聞く
             </Button>
             <Button variant="outlined" color="secondary">
               お気に入り
@@ -177,7 +177,7 @@ const FlexContainer = styled.div`
 
 const Text = styled.div`
   padding-left: 8px;
-  font-size: 12px;
+  font-size: 14px;
 `;
 
 const CustomCardActionArea = MuiStyled(Card)<{ selected: boolean }>`
