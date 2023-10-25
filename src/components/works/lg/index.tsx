@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import type { UserProfile } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
+import { useRouter } from "next/router";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
 import { Detail } from "@/components/works/lg/detail";
 import { Filter } from "@/components/works/lg/filter";
@@ -19,12 +20,17 @@ type Props = {
 };
 
 export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
+  const router = useRouter();
   const { data: userData } = useQuery(GetUserToFavoritedWorksDocument, {
     skip: !user?.sub,
     variables: {
       id: user?.sub as string,
     },
   });
+
+  const id = Number(router.query["work-id"]) || worksData?.works[0].id;
+  const focusItemHasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
+
   return (
     <Wrapper>
       <NavigContainer>
@@ -66,7 +72,9 @@ export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
             </PaginationWrapper>
           </Column>
 
-          <DetailWrapper>{<Detail defaultWorkId={worksData?.works[0].id} />}</DetailWrapper>
+          <DetailWrapper>
+            <Detail id={id} hasBookmark={!!focusItemHasBookmark} />
+          </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
     </Wrapper>

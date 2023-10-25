@@ -24,12 +24,10 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 function Works() {
-  const { skillsData, worksData, user, userFavoriteData } = useApiRequest();
+  const { skillsData, worksData, user } = useApiRequest();
   const router = useRouter();
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
   const [skills, setSkills] = useState<GetSkillsQuery["skills"] | undefined>([]);
-
-  console.log(userFavoriteData?.users_by_pk?.userToFavoritedWorks);
 
   useEffect(() => {
     if (skillsData) {

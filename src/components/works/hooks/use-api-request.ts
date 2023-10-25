@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
-import { GetWorksDocument, GetSkillsDocument, Order_By, GetUserToFavoritedWorksDocument } from "@/lib/graphql/graphql";
+import { GetWorksDocument, GetSkillsDocument, Order_By } from "@/lib/graphql/graphql";
 
 const languages = (skillId: string) => {
   return { languages: { skill_id: { _eq: Number(skillId) } } };
@@ -95,11 +95,6 @@ export function useApiRequest() {
       },
     },
   });
-  const { data: userFavoriteData } = useQuery(GetUserToFavoritedWorksDocument, {
-    skip: !user?.sub,
-    variables: {
-      id: user?.sub as string,
-    },
-  });
-  return { skillsData, worksData, user, userFavoriteData };
+
+  return { skillsData, worksData, user };
 }

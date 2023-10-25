@@ -5,8 +5,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { blue } from "@mui/material/colors";
 import type { MouseEventHandler } from "react";
-import { useState } from "react";
-import { AddFavoriteDocument, DeleteFavoriteDocument } from "@/lib/graphql/graphql";
+import { AddFavoriteDocument, DeleteFavoriteDocument, GetUserToFavoritedWorksDocument } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 type Props = {
@@ -17,11 +16,14 @@ type Props = {
 };
 
 export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
-  const [isFavorite, setIsFavorite] = useState(hasBookmark);
-  const [addFavorite] = useMutation(AddFavoriteDocument);
-  const [deleteFavorite] = useMutation(DeleteFavoriteDocument);
+  const [addFavorite] = useMutation(AddFavoriteDocument, {
+    refetchQueries: [GetUserToFavoritedWorksDocument],
+  });
+  const [deleteFavorite] = useMutation(DeleteFavoriteDocument, {
+    refetchQueries: [GetUserToFavoritedWorksDocument],
+  });
   const onClick: MouseEventHandler<HTMLDivElement> = (e) => {
-    if (userId && !isFavorite) {
+    if (userId && !hasBookmark) {
       addFavorite({
         variables: {
           userId,
@@ -29,8 +31,7 @@ export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
         },
       });
     }
-
-    if (userId && isFavorite) {
+    if (userId && hasBookmark) {
       deleteFavorite({
         variables: {
           userId,
@@ -38,9 +39,7 @@ export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
         },
       });
     }
-
     e.stopPropagation();
-    setIsFavorite((prev) => !prev);
   };
   return (
     <Wrapper>
@@ -51,7 +50,7 @@ export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
         <CustomTag>高単価</CustomTag>
       </CustomTagWrapper>
       <FavoriteButton onClick={onClick} role="button">
-        {isFavorite ? (
+        {hasBookmark ? (
           <FavoriteIcon
             fontSize="large"
             style={{

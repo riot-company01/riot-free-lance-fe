@@ -14,13 +14,14 @@ import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 type Props = {
-  defaultWorkId?: number;
+  id?: number;
+  hasBookmark: boolean;
 };
 
-export function Detail({ defaultWorkId }: Props) {
+export function Detail({ id, hasBookmark }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
-  const id = Number(router.query["work-id"]) || defaultWorkId;
+
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
@@ -118,7 +119,7 @@ export function Detail({ defaultWorkId }: Props) {
               この案件の話を聞く
             </Button>
             <Button variant="outlined" color="secondary">
-              お気に入り
+              {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
             </Button>
           </ButtonWrapper>
         </div>
@@ -132,7 +133,7 @@ export function Detail({ defaultWorkId }: Props) {
             案件の話を聞く
           </Button>
           <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
-            お気に入り
+            {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
           </Button>
         </ButtonWrapper>
       </CustomCardActionArea>
