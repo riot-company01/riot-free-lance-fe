@@ -10,11 +10,10 @@ import {
   GetUserToWorksDocument,
   GetWorkDocument,
   InsertAppliedMutationDocument,
-  UpdateApplicatedDocument,
 } from "@/lib/graphql/graphql";
 import type { GetUserToWorksQuery } from "@/lib/graphql/graphql";
 
-export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"]) => {
+export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]["userToApplyWorks"]) => {
   const { user } = useUser();
   const { query } = useRouter();
 
@@ -31,9 +30,6 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
   });
 
   const [InsertAppliedMutation] = useMutation(InsertAppliedMutationDocument, {
-    refetchQueries: [GetUserToWorksDocument],
-  });
-  const [updateAppliedMutation] = useMutation(UpdateApplicatedDocument, {
     refetchQueries: [GetUserToWorksDocument],
   });
 
@@ -63,21 +59,15 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
       setOpenDialog(true);
     });
 
-    if (isExsistUserToWorksData) {
-      await updateAppliedMutation({
-        variables: {
-          id: user?.sub || "",
-          workId: Number(query.id),
-          application: true,
-        },
-      });
-    } else {
+    if (!isExsistUserToWorksData) {
       await InsertAppliedMutation({
         variables: {
           id: user?.sub || "",
           workId: Number(query.id),
         },
       });
+    } else {
+      return;
     }
 
     await editProfileMutation({
@@ -99,7 +89,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
     if (!userToWorksData) return;
 
     const hasUserToWorksData = userToWorksData.some((item) => {
-      return item.work_id === Number(query.id);
+      return item.workId === Number(query.id);
     });
 
     setIsExsistUserToWorksData(hasUserToWorksData);

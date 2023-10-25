@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import {
   GetFavoriteWorksDocument,
   InsertFavoriteMutationDocument,
-  UpdateFavoriteDocument,
+  DeleteFavoritedMutationDocument,
 } from "@/lib/graphql/graphql";
 import type { GetFavoriteWorksQuery } from "@/lib/graphql/graphql";
 
 type Args = {
   userId: string;
   workId: number;
-  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["userToFavoritedWorks"];
 };
 
 export const useFavoriteAppliedButton = (props: Args) => {
@@ -25,7 +25,7 @@ export const useFavoriteAppliedButton = (props: Args) => {
     refetchQueries: [GetFavoriteWorksDocument],
   });
 
-  const [updateFavoriteMutation] = useMutation(UpdateFavoriteDocument, {
+  const [deleteFavoriteMutation] = useMutation(DeleteFavoritedMutationDocument, {
     refetchQueries: [GetFavoriteWorksDocument],
   });
 
@@ -33,11 +33,11 @@ export const useFavoriteAppliedButton = (props: Args) => {
     if (!userToFavoriteWorksData) return;
 
     const hasUserToWorksData = userToFavoriteWorksData.some((item) => {
-      return item.work_id === workId;
+      return item.workId === workId;
     });
 
     setIsExsistUserToWorksData(hasUserToWorksData);
-  }, userToFavoriteWorksData);
+  }, [userToFavoriteWorksData]);
 
   const handleClickAddFavoriteClick = async () => {
     if (!userId) {
@@ -48,11 +48,10 @@ export const useFavoriteAppliedButton = (props: Args) => {
       setIsButtonDisabled(true);
 
       if (isExsistUserToWorksData) {
-        await updateFavoriteMutation({
+        await deleteFavoriteMutation({
           variables: {
             id: userId,
             workId,
-            favorite: true,
           },
         });
       } else {
@@ -73,11 +72,10 @@ export const useFavoriteAppliedButton = (props: Args) => {
   const handleClickDeleteFavoriteClick = async () => {
     if (!isButtonDisabled) {
       setIsButtonDisabled(true);
-      await updateFavoriteMutation({
+      await deleteFavoriteMutation({
         variables: {
           id: userId,
           workId,
-          favorite: false,
         },
       });
       setTimeout(() => {

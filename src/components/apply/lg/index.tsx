@@ -5,7 +5,7 @@ import { CustomCard } from "@/components/apply/lg/card";
 import type { GetUserToWorksQuery } from "@/lib/graphql/graphql";
 
 type ApplyLgProps = {
-  userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"];
+  userToWorksData?: GetUserToWorksQuery["users"][0]["userToApplyWorks"];
 };
 
 export const ApplyLg = (props: ApplyLgProps) => {
