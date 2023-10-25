@@ -25,6 +25,10 @@ export function Detail({ defaultWorkId }: Props) {
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
 
+  const onClickFavorite = () => {
+    console.log("onClickFavorite");
+  };
+
   useEffect(() => {
     if (id == undefined) return;
     (async () => {
@@ -127,7 +131,7 @@ export function Detail({ defaultWorkId }: Props) {
           <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
             案件の話を聞く
           </Button>
-          <Button variant="outlined" color="secondary">
+          <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
             お気に入り
           </Button>
         </ButtonWrapper>

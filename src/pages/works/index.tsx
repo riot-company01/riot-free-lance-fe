@@ -1,5 +1,4 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -25,11 +24,12 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 function Works() {
-  const { skillsData, worksData } = useApiRequest();
+  const { skillsData, worksData, user, userFavoriteData } = useApiRequest();
   const router = useRouter();
-  const { user } = useUser();
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
   const [skills, setSkills] = useState<GetSkillsQuery["skills"] | undefined>([]);
+
+  console.log(userFavoriteData?.users_by_pk?.userToFavoritedWorks);
 
   useEffect(() => {
     if (skillsData) {
@@ -37,10 +37,7 @@ function Works() {
     }
   }, [skillsData?.skills]);
 
-  if (worksData?.works.length === 0) {
-    return <NotResult />;
-  }
-
+  if (worksData?.works.length === 0) return <NotResult />;
   return (
     <>
       <Box

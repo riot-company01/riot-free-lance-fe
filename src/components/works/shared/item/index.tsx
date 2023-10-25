@@ -58,7 +58,6 @@ export function Item({ item, hasBookmark, userId }: Props) {
         </Closed>
       )}
       <CardActionArea>
-        <>{console.log(hasBookmark)}</>
         <Tags isViewed={!!isViewed} hasBookmark={hasBookmark} userId={userId} workId={item.id} />
         <Title>
           <div>{item.title}</div>
