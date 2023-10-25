@@ -10,11 +10,11 @@ import {
   GetUserToWorksDocument,
   GetWorkDocument,
   InsertAppliedMutationDocument,
-  UpdateApplicatedDocument,
+  DeleteApplicatedMutationDocument,
 } from "@/lib/graphql/graphql";
 import type { GetUserToWorksQuery } from "@/lib/graphql/graphql";
 
-export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]["user_to_works"]) => {
+export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]["userToApplyWorks"]) => {
   const { user } = useUser();
   const { query } = useRouter();
 
@@ -33,7 +33,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
   const [InsertAppliedMutation] = useMutation(InsertAppliedMutationDocument, {
     refetchQueries: [GetUserToWorksDocument],
   });
-  const [updateAppliedMutation] = useMutation(UpdateApplicatedDocument, {
+  const [deleteAppliedMutation] = useMutation(DeleteApplicatedMutationDocument, {
     refetchQueries: [GetUserToWorksDocument],
   });
 
@@ -64,11 +64,10 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
     });
 
     if (isExsistUserToWorksData) {
-      await updateAppliedMutation({
+      await deleteAppliedMutation({
         variables: {
           id: user?.sub || "",
           workId: Number(query.id),
-          application: true,
         },
       });
     } else {
@@ -99,7 +98,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
     if (!userToWorksData) return;
 
     const hasUserToWorksData = userToWorksData.some((item) => {
-      return item.work_id === Number(query.id);
+      return item.workId === Number(query.id);
     });
 
     setIsExsistUserToWorksData(hasUserToWorksData);

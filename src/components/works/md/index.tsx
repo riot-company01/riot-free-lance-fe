@@ -30,17 +30,13 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
   useEffect(() => {
     if (!favoriteData || !worksData || !appliedData) return;
 
-    const userFavoriteWorkData = favoriteData.users[0].user_to_works.map((item) => {
-      if (item.favorite) {
-        return item.work_id;
-      }
+    const userFavoriteWorkData = favoriteData.users[0].userToFavoritedWorks.map((item) => {
+      return item.workId;
     });
     setHasFavoriteIdArray(userFavoriteWorkData);
 
-    const userAppliedWorkData = appliedData.users[0].user_to_works.map((item) => {
-      if (item.application) {
-        return item.work_id;
-      }
+    const userAppliedWorkData = appliedData.users[0].userToApplyWorks.map((item) => {
+      return item.workId;
     });
     setHasAppliedIdArray(userAppliedWorkData);
   }, [favoriteData, worksData, appliedData]);
@@ -51,10 +47,8 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
       <Wrapper>
         {worksData
           ? worksData?.works.map((item, idx) => {
-              const isFavorite = favoriteData?.users[0].user_to_works.some(({ favorite, work_id }) => {
-                if (favorite) {
-                  return work_id === item.id;
-                }
+              const isFavorite = favoriteData?.users[0].userToFavoritedWorks.some(({ workId }) => {
+                return workId === item.id;
               });
 
               return (
@@ -62,7 +56,7 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
                   key={idx}
                   item={item}
                   hasFavorite={isFavorite}
-                  userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
+                  userToFavoriteWorksData={favoriteData?.users[0].userToFavoritedWorks}
                 />
               );
             })
@@ -83,7 +77,7 @@ export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
         <Detail
           defaultWorkId={worksData?.works[0].id}
           hasFavoriteIdArray={hasFavoriteIdArray}
-          userToFavoriteWorksData={favoriteData?.users[0].user_to_works}
+          userToFavoriteWorksData={favoriteData?.users[0].userToFavoritedWorks}
           hasAppliedIdArray={hasAppliedIdArray}
         />
       </Modal>

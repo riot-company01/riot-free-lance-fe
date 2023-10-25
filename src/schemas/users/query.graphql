@@ -11,11 +11,9 @@ query GetUserToWorks($id: String) {
   users(where: { id: { _eq: $id } }) {
     userToApplyWorks {
       workId
-      isApplicated
     }
-    userToFavoriteWorks {
+    userToFavoritedWorks {
       workId
-      isFavorited
     }
   }
 }

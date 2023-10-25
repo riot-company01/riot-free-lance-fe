@@ -1,7 +1,6 @@
 query GetFavoried($id: String) {
-  users(where: { userToFavoriteWorks: { userId: { _eq: $id }, isFavorited: { _eq: true } } }) {
-    userToFavoriteWorks {
-      isFavorited
+  users(where: { userToFavoritedWorks: { userId: { _eq: $id } } }) {
+    userToFavoritedWorks {
       workId
       work {
         contractType
@@ -30,8 +29,7 @@ query GetFavoried($id: String) {
 
 query GetFavoriteWorks($id: String) {
   users(where: { id: { _eq: $id } }) {
-    userToFavoriteWorks {
-      isFavorited
+    userToFavoritedWorks {
       workId
     }
   }

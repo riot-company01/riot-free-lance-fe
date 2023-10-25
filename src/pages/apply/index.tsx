@@ -17,7 +17,7 @@ function Apply() {
           display: { ...LG_BREAK_POINT },
         }}
       >
-        <ApplyLg userToWorksData={userToWorksData?.users[0].user_to_works} />
+        <ApplyLg userToWorksData={userToWorksData?.users[0].userToApplyWorks} />
       </Box>
       <Box
         component="div"
@@ -25,7 +25,7 @@ function Apply() {
           display: { ...MD_BREAK_POINT },
         }}
       >
-        <ApplyMd userToWorksData={userToWorksData?.users[0].user_to_works} />
+        <ApplyMd userToWorksData={userToWorksData?.users[0].userToApplyWorks} />
       </Box>
     </>
   );

@@ -1,11 +1,11 @@
 mutation InsertFavoriteMutation($id: String!, $workId: Int!) {
-  insert_user_to_favorite_works_one(object: { userId: $id, workId: $workId, isFavorited: true }) {
-    isFavorited
+  insert_user_to_favorite_works_one(object: { userId: $id, workId: $workId }) {
+    workId
   }
 }
 
 mutation DeleteFavoritedMutation($id: String!, $workId: Int!) {
   delete_user_to_favorite_works_by_pk(userId: $id, workId: $workId) {
-    isFavorited
+    workId
   }
 }

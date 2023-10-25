@@ -1,11 +1,11 @@
 mutation InsertAppliedMutation($id: String!, $workId: Int!) {
-  insert_user_to_apply_works_one(object: { userId: $id, workId: $workId, isApplicated: true }) {
-    isApplicated
+  insert_user_to_apply_works_one(object: { userId: $id, workId: $workId }) {
+    workId
   }
 }
 
 mutation DeleteApplicatedMutation($id: String!, $workId: Int!) {
   delete_user_to_apply_works_by_pk(userId: $id, workId: $workId) {
-    isApplicated
+    workId
   }
 }

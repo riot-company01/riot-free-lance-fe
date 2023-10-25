@@ -23,9 +23,9 @@ function Apply() {
 
   if (
     worksData?.users.length === 0 ||
-    worksData?.users[0].user_to_works.length === 0 ||
+    worksData?.users[0].userToApplyWorks.length === 0 ||
     favoriteData?.users.length === 0 ||
-    favoriteData?.users[0].user_to_works.length === 0
+    favoriteData?.users[0].userToFavoritedWorks.length === 0
   ) {
     return <NoItem pageTitle="apply" />;
   }

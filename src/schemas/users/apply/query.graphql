@@ -1,7 +1,6 @@
 query GetApplied($id: String) {
-  users(where: { userToApplyWorks: { userId: { _eq: $id }, isApplicated: { _eq: true } } }) {
+  users(where: { userToApplyWorks: { userId: { _eq: $id } } }) {
     userToApplyWorks {
-      isApplicated
       workId
       work {
         contractType
@@ -31,7 +30,6 @@ query GetApplied($id: String) {
 query GetAppliedWorks($id: String) {
   users(where: { id: { _eq: $id } }) {
     userToApplyWorks {
-      isApplicated
       workId
     }
   }

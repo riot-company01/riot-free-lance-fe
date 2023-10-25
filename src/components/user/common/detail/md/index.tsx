@@ -18,7 +18,7 @@ import { backToWorksUrlVar } from "@/stores";
 
 type Props = {
   defaultWorkId?: number;
-  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["userToFavoritedWorks"];
   hasFavoriteIdArray?: (number | undefined)[];
   hasAppliedIdArray?: (number | undefined)[];
 };

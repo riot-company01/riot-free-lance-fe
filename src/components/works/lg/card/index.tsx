@@ -20,7 +20,7 @@ export function CustomCard({
 }: {
   item: GetWorksQuery["works"][number];
   hasFavorite: boolean | undefined;
-  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["user_to_works"];
+  userToFavoriteWorksData?: GetFavoriteWorksQuery["users"][0]["userToFavoritedWorks"];
 }) {
   const { user } = useUser();
   const router = useRouter();
