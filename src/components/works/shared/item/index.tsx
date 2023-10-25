@@ -123,10 +123,10 @@ export function Item({ item, hasBookmark, userId }: Props) {
 
 const Card = styled(_Card)`
   position: relative;
+  margin-left: 2px;
   @media screen and (min-width: ${BREAK_POINT.md}px) {
     border-radius: 8px;
     cursor: pointer;
-    margin-left: 2px;
     :not(:first-of-type) {
       margin-top: 16px;
     }
