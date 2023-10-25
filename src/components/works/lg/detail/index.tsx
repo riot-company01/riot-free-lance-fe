@@ -110,7 +110,7 @@ export function Detail({ defaultWorkId }: Props) {
             </Icon>
           </FlexContainer>
           <ButtonWrapper>
-            <Button variant="contained" color="secondary">
+            <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
               案件の話を聞く
             </Button>
             <Button variant="outlined" color="secondary">
@@ -124,7 +124,7 @@ export function Detail({ defaultWorkId }: Props) {
         </Description>
 
         <ButtonWrapper>
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
             案件の話を聞く
           </Button>
           <Button variant="outlined" color="secondary">
