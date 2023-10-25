@@ -5,9 +5,9 @@ import { Pagination, Skeleton } from "@mui/material";
 
 import { useRouter } from "next/router";
 import { Modal } from "@/components/common/modal";
-import { Card } from "@/components/works/md/card";
 import { Detail } from "@/components/works/md/detail";
 import { Filter } from "@/components/works/md/filter";
+import { Item } from "@/components/works/shared/item";
 import { BREAK_POINT } from "@/constants";
 import { GetUserToWorksDocument, type GetSkillsQuery, type GetWorksQuery } from "@/lib/graphql/graphql";
 
@@ -34,7 +34,7 @@ export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
         {worksData && userData
           ? worksData?.works.map((item, idx) => {
               const hasBookmark = userData.users_by_pk?.userToWorks.some((i) => i.workId === item.id);
-              return <Card key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData.users_by_pk?.id} />;
+              return <Item key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData.users_by_pk?.id} />;
             })
           : [...Array(5)].map((_, idx) => {
               return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;
