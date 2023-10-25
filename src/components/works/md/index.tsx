@@ -1,3 +1,4 @@
+import { useQuery } from "@apollo/client";
 import type { UserProfile } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
@@ -8,7 +9,7 @@ import { Card } from "@/components/works/md/card";
 import { Detail } from "@/components/works/md/detail";
 import { Filter } from "@/components/works/md/filter";
 import { BREAK_POINT } from "@/constants";
-import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
+import { GetUserToWorksDocument, type GetSkillsQuery, type GetWorksQuery } from "@/lib/graphql/graphql";
 
 type Props = {
   skills?: GetSkillsQuery["skills"];
@@ -17,16 +18,23 @@ type Props = {
   user?: UserProfile;
 };
 
-export function WorksMd({ worksData, skills, selectedSkillIds }: Props) {
+export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
   const router = useRouter();
+  const { data: userData } = useQuery(GetUserToWorksDocument, {
+    skip: !user?.sub,
+    variables: {
+      id: user?.sub as string,
+    },
+  });
   const id = Number(router.query["work-id"]);
   return (
     <Div>
       <Filter defaultFilters={skills} selectedSkillIds={selectedSkillIds} worksLength={worksData?.works.length} />
       <Wrapper>
-        {worksData
+        {worksData && userData
           ? worksData?.works.map((item, idx) => {
-              return <Card key={idx} item={item} />;
+              const hasBookmark = userData.users_by_pk?.userToWorks.some((i) => i.workId === item.id);
+              return <Card key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData.users_by_pk?.id} />;
             })
           : [...Array(5)].map((_, idx) => {
               return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;

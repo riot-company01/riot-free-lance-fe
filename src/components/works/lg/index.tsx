@@ -45,7 +45,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
             {worksData && userData
               ? worksData?.works.map((item, idx) => {
                   const hasBookmark = userData.users_by_pk?.userToWorks.some((i) => i.workId === item.id);
-                  return <Item key={idx} item={item} hasBookmark={!!hasBookmark} />;
+                  return <Item key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData.users_by_pk?.id} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (

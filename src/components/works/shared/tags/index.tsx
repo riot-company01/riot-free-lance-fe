@@ -1,14 +1,43 @@
+import { useMutation } from "@apollo/client";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import type { MouseEventHandler } from "react";
 import { useState } from "react";
+import { AddFavoriteDocument, DeleteFavoriteDocument } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
-export function Tags({ isViewed, hasBookmark }: { isViewed: boolean; hasBookmark: boolean }) {
+type Props = {
+  isViewed: boolean;
+  hasBookmark: boolean;
+  userId?: string;
+  workId: number;
+};
+
+export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
   const [isFavorite, setIsFavorite] = useState(hasBookmark);
+  const [addFavorite] = useMutation(AddFavoriteDocument);
+  const [deleteFavorite] = useMutation(DeleteFavoriteDocument);
   const onClick: MouseEventHandler<HTMLDivElement> = (e) => {
+    if (userId && !isFavorite) {
+      addFavorite({
+        variables: {
+          userId,
+          workId,
+        },
+      });
+    }
+
+    if (userId && isFavorite) {
+      deleteFavorite({
+        variables: {
+          userId,
+          workId,
+        },
+      });
+    }
+
     e.stopPropagation();
     setIsFavorite((prev) => !prev);
   };

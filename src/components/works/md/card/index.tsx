@@ -6,7 +6,7 @@ import { CardActionArea, Chip, Card as MuiCard } from "@mui/material";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
-import { Tags } from "@/components/works/lg/item/tags";
+import { Tags } from "@/components/works/shared/tags";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 import { handleLocalStorage } from "@/util/handle-local-storage";
@@ -15,7 +15,13 @@ type Work = {
   workId: number;
 };
 
-export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
+type Props = {
+  item: GetWorksQuery["works"][number];
+  hasBookmark: boolean;
+  userId?: string;
+};
+
+export function Card({ item, hasBookmark, userId }: Props) {
   const { getLocalStorage, setLocalStorage } = handleLocalStorage();
   const viewedWorks = getLocalStorage<Work[]>("viewedWorks");
   const isViewed = viewedWorks?.some((i) => i.workId === item.id);
@@ -54,7 +60,7 @@ export function Card({ item }: { item: GetWorksQuery["works"][number] }) {
           padding: 2,
         }}
       >
-        <Tags isViewed={!!isViewed} />
+        <Tags isViewed={!!isViewed} hasBookmark={hasBookmark} userId={userId} workId={item.id} />
         <Title>
           <div>{item.title}</div>
         </Title>
