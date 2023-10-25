@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
-import { useState, useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
 import {
   EditProfileDocument,
@@ -66,6 +66,8 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
           workId: Number(query.id),
         },
       });
+    } else {
+      return;
     }
 
     await editProfileMutation({
