@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
 import {
   EditProfileDocument,
@@ -10,7 +10,6 @@ import {
   GetUserToWorksDocument,
   GetWorkDocument,
   InsertAppliedMutationDocument,
-  DeleteApplicatedMutationDocument,
 } from "@/lib/graphql/graphql";
 import type { GetUserToWorksQuery } from "@/lib/graphql/graphql";
 
@@ -31,9 +30,6 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
   });
 
   const [InsertAppliedMutation] = useMutation(InsertAppliedMutationDocument, {
-    refetchQueries: [GetUserToWorksDocument],
-  });
-  const [deleteAppliedMutation] = useMutation(DeleteApplicatedMutationDocument, {
     refetchQueries: [GetUserToWorksDocument],
   });
 
@@ -63,14 +59,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
       setOpenDialog(true);
     });
 
-    if (isExsistUserToWorksData) {
-      await deleteAppliedMutation({
-        variables: {
-          id: user?.sub || "",
-          workId: Number(query.id),
-        },
-      });
-    } else {
+    if (!isExsistUserToWorksData) {
       await InsertAppliedMutation({
         variables: {
           id: user?.sub || "",
