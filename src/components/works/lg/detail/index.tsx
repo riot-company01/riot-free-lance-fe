@@ -117,12 +117,7 @@ export function Detail({ defaultWorkId }: Props) {
           </FlexContainer>
           <ButtonWrapper>
             <Button variant="contained">話を聞く</Button>
-            <Button
-              variant="contained"
-              sx={{
-                background: `${COLOR.RED.code}`,
-              }}
-            >
+            <Button variant="contained" color="secondary">
               お気に入り
             </Button>
           </ButtonWrapper>

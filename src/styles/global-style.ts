@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { blue } from "@mui/material/colors";
 import { destyle } from "./destyle";
 import { COLOR } from "@/styles/colors";
 
@@ -18,7 +19,7 @@ export const GLOBAL_STYLE = css`
   }
 
   :is(input, textarea, button, select, a):focus-visible {
-    outline: 2px solid ${COLOR.BASE_COLOR.code};
+    outline: 2px solid ${blue[500]};
     outline-offset: -2px;
   }
   html,

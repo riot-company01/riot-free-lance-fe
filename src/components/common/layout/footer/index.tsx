@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import OutboundIcon from "@mui/icons-material/Outbound";
+import { blue } from "@mui/material/colors";
 import NextLink from "next/link";
 import { BREAK_POINT, COMMON_Z_INDEX, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
-import { COLOR } from "@/styles/colors";
 
 export const LayoutFooter: React.FC = () => {
   return (
@@ -38,7 +38,7 @@ const Wrapper = styled.footer`
   justify-content: space-around;
   width: 100%;
   align-items: center;
-  background-color: ${COLOR.BASE_COLOR.code};
+  background: ${blue[500]};
   color: white;
   font-size: 12px;
 

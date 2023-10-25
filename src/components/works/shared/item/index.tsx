@@ -3,6 +3,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
 import { Card as _Card, CardActionArea as _CardActionArea, Chip } from "@mui/material";
+import { blue } from "@mui/material/colors";
 import router from "next/router";
 import removeMd from "remove-markdown";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
@@ -133,7 +134,7 @@ const Card = styled(_Card)`
     max-width: 480px;
     width: 100%;
     :hover {
-      outline: 1px solid ${COLOR.BASE_COLOR.code};
+      outline: 1px solid ${blue[500]};
     }
     :first-of-type {
       margin-top: 1px;

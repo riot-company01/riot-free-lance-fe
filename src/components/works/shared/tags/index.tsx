@@ -3,6 +3,7 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { blue } from "@mui/material/colors";
 import type { MouseEventHandler } from "react";
 import { useState } from "react";
 import { AddFavoriteDocument, DeleteFavoriteDocument } from "@/lib/graphql/graphql";
@@ -118,8 +119,8 @@ const FavoriteButton = styled.div`
 `;
 
 const CustomTag = styled.div`
-  color: ${COLOR.WHITE.code};
-  background: ${COLOR.BASE_COLOR.code};
+  color: white;
+  background: ${blue[500]};
   padding: 4px;
   font-size: 12px;
   border-radius: 4px;
