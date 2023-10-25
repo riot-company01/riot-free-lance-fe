@@ -10,6 +10,7 @@ import { Button, Card, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+import { useFavorite } from "@/hooks/use-favorite";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
@@ -20,6 +21,7 @@ type Props = {
 export function Detail({ defaultWorkId }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
+  const { addFavorite, deleteFavorite } = useFavorite();
   const id = Number(router.query["work-id"]) || defaultWorkId;
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);

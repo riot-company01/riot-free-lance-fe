@@ -1,8 +1,8 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { Box } from "@mui/material";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useApiRequest } from "@/components/works/hooks/use-api-request";
+import { useQueryParam } from "@/components/works/hooks/use-query-param";
 import { WorksLg } from "@/components/works/lg";
 import { WorksMd } from "@/components/works/md";
 import { NotResult } from "@/components/works/shared/not-result";
@@ -25,8 +25,7 @@ export const getServerSideProps = withPageAuthRequired({
 
 function Works() {
   const { skillsData, worksData, user } = useApiRequest();
-  const router = useRouter();
-  const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
+  const { selectedSkillIds } = useQueryParam();
   const [skills, setSkills] = useState<GetSkillsQuery["skills"] | undefined>([]);
 
   useEffect(() => {
@@ -36,6 +35,7 @@ function Works() {
   }, [skillsData?.skills]);
 
   if (worksData?.works.length === 0) return <NotResult />;
+
   return (
     <>
       <Box

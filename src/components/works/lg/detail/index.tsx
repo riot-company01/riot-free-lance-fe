@@ -10,17 +10,20 @@ import { Button, Card, Skeleton, styled as MuiStyled } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+import { useFavorite } from "@/hooks/use-favorite";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 type Props = {
   id?: number;
   hasBookmark: boolean;
+  userId?: string;
 };
 
-export function Detail({ id, hasBookmark }: Props) {
+export function Detail({ id, hasBookmark, userId }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
+  const { addFavorite, deleteFavorite } = useFavorite();
 
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
@@ -28,6 +31,22 @@ export function Detail({ id, hasBookmark }: Props) {
 
   const onClickFavorite = () => {
     console.log("onClickFavorite");
+    if (id && userId && !hasBookmark) {
+      addFavorite({
+        variables: {
+          workId: id,
+          userId,
+        },
+      });
+    }
+    if (id && userId && hasBookmark) {
+      deleteFavorite({
+        variables: {
+          workId: id,
+          userId,
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -118,7 +137,7 @@ export function Detail({ id, hasBookmark }: Props) {
             <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
               {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
             </Button>
-            <Button variant="outlined" color="secondary">
+            <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
               {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
             </Button>
           </ButtonWrapper>

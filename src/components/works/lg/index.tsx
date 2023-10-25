@@ -73,7 +73,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
           </Column>
 
           <DetailWrapper>
-            <Detail id={id} hasBookmark={!!focusItemHasBookmark} />
+            <Detail id={id} hasBookmark={!!focusItemHasBookmark} userId={userData?.users_by_pk?.id} />
           </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
