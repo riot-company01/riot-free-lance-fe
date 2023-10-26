@@ -9,8 +9,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
-import { useAuth } from "@/components/works/hooks/use-auth";
 import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
+import { useAuth } from "@/hooks/use-auth";
 import { removeObjectKey } from "@/util/remove-object-key";
 
 export function LayoutHeader() {

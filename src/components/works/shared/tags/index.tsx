@@ -4,6 +4,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { blue } from "@mui/material/colors";
 import type { MouseEventHandler } from "react";
+import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { COLOR } from "@/styles/colors";
 
@@ -16,8 +17,9 @@ type Props = {
 
 export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
   const { addFavorite, deleteFavorite } = useFavorite();
+  const { execLogin } = useAuth();
 
-  const onClick: MouseEventHandler<HTMLDivElement> = (e) => {
+  const onClick: MouseEventHandler<HTMLDivElement> = async (e) => {
     if (userId && !hasBookmark) {
       addFavorite({
         variables: {
@@ -35,6 +37,7 @@ export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
       });
     }
     e.stopPropagation();
+    await execLogin();
   };
   return (
     <Wrapper>

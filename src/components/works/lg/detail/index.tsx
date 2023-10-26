@@ -10,6 +10,7 @@ import { Button, Card, Skeleton, styled as MuiStyled } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
@@ -24,13 +25,13 @@ export function Detail({ id, hasBookmark, userId }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const { addFavorite, deleteFavorite } = useFavorite();
+  const { execLogin, execLogout } = useAuth();
 
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
 
-  const onClickFavorite = () => {
-    console.log("onClickFavorite");
+  const onClickFavorite = async () => {
     if (id && userId && !hasBookmark) {
       addFavorite({
         variables: {
@@ -38,6 +39,7 @@ export function Detail({ id, hasBookmark, userId }: Props) {
           userId,
         },
       });
+      return;
     }
     if (id && userId && hasBookmark) {
       deleteFavorite({
@@ -46,7 +48,9 @@ export function Detail({ id, hasBookmark, userId }: Props) {
           userId,
         },
       });
+      return;
     }
+    await execLogin();
   };
 
   useEffect(() => {
