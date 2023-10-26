@@ -1,5 +1,4 @@
 import { ApolloProvider } from "@apollo/client";
-import { Auth0Provider } from "@auth0/auth0-react";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { Global } from "@emotion/react";
 import styled from "@emotion/styled";
