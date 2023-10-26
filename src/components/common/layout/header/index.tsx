@@ -1,4 +1,3 @@
-import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import { alpha, Avatar, InputBase, Menu, MenuItem, styled as muiStyled, Toolbar } from "@mui/material";
@@ -10,13 +9,13 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
+import { useAuth } from "@/components/works/hooks/use-auth";
 import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
 import { removeObjectKey } from "@/util/remove-object-key";
 
 export function LayoutHeader() {
   const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
-  const { user } = useUser();
-  console.log(user);
+  const { execLogin, execLogout, user } = useAuth();
   const toolbarRef = useRef(null);
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
@@ -34,11 +33,11 @@ export function LayoutHeader() {
         }
       : { ...removeObjectKey(router.query, "keyword") };
 
-  const handleCloseNavMenu = (target?: string) => {
+  const handleCloseNavMenu = async (target?: string) => {
     if (target === "ログアウト") {
-      router.push("/api/auth/logout");
+      await execLogout();
     } else if (target === "ログイン") {
-      router.push("/api/auth/login");
+      await execLogin();
     } else {
       setAnchorElNav(null);
     }
