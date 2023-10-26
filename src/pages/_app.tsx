@@ -15,9 +15,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const client = useCustomApollo(pageProps);
   const { user } = pageProps;
 
-  const secret = process.env.AUTH0_SECRET || process.env.AUT0_CLIENT_SECRET;
-  console.log("Auth0 Secret:", secret);
-
   return (
     <UserProvider user={user}>
       <StyledEngineProvider injectFirst>
