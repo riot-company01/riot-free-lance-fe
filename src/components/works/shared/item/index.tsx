@@ -137,8 +137,7 @@ const Card = styled(_Card)<{ isSelected: boolean }>`
     :not(:first-of-type) {
       margin-top: 16px;
     }
-    max-width: 480px;
-    width: 100%;
+    width: 480px;
     :first-of-type {
       margin-top: 2px;
     }

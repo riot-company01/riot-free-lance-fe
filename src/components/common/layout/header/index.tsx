@@ -20,7 +20,7 @@ export function LayoutHeader() {
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
 
-  const pages = [user?.email, "LOGOUT"];
+  const pages = ["お気に入り", "応募済み", user?.email, "ログアウト"];
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
