@@ -7,7 +7,6 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
 import { Button, Card, Skeleton } from "@mui/material";
-import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { useFavorite } from "@/hooks/use-favorite";
@@ -15,22 +14,37 @@ import { GetWorkDocument } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 type Props = {
-  defaultWorkId?: number;
+  id?: number;
+  hasBookmark: boolean;
+  userId?: string;
 };
 
-export function Detail({ defaultWorkId }: Props) {
-  const router = useRouter();
+export function Detail({ id, hasBookmark, userId }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const { addFavorite, deleteFavorite } = useFavorite();
-  const id = Number(router.query["work-id"]) || defaultWorkId;
+
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
 
-  const copyUrlHandler = async () => {
-    const currentUrl = location.href;
-    await navigator.clipboard.writeText(currentUrl);
-    alert("urlがコピーされました");
+  const onClickFavorite = () => {
+    console.log("onClickFavorite");
+    if (id && userId && !hasBookmark) {
+      addFavorite({
+        variables: {
+          workId: id,
+          userId,
+        },
+      });
+    }
+    if (id && userId && hasBookmark) {
+      deleteFavorite({
+        variables: {
+          workId: id,
+          userId,
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -116,15 +130,27 @@ export function Detail({ defaultWorkId }: Props) {
           </Icon>
         </FlexContainer>
 
+        <ButtonWrapper>
+          <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
+            {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
+          </Button>
+          <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
+            {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
+          </Button>
+        </ButtonWrapper>
+
         <Description>
           <ReactMarkdown>{work.description}</ReactMarkdown>
         </Description>
 
-        <FlexContainer>
-          <Button variant="contained" onClick={copyUrlHandler}>
-            案件のURLをコピーする
+        <ButtonWrapper>
+          <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
+            {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
           </Button>
-        </FlexContainer>
+          <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
+            {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
+          </Button>
+        </ButtonWrapper>
       </CustomCardActionArea>
     </>
   );
@@ -183,4 +209,11 @@ const Description = styled.div`
 const CustomCardActionArea = styled(Card)`
   padding: 16px;
   background-color: white;
+  border-radius: 0px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  padding-top: 16px;
+  gap: 8px;
 `;

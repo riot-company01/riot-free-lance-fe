@@ -27,6 +27,7 @@ export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
     },
   });
   const id = Number(router.query["work-id"]);
+  const focusItemHasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
   return (
     <Div>
       <Filter defaultFilters={skills} selectedSkillIds={selectedSkillIds} worksLength={worksData?.works.length} />
@@ -50,7 +51,7 @@ export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
           router.back();
         }}
       >
-        <Detail defaultWorkId={id} />
+        <Detail id={id} hasBookmark={!!focusItemHasBookmark} userId={userData?.users_by_pk?.id} />
       </Modal>
     </Div>
   );
