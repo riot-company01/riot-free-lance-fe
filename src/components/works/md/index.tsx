@@ -32,10 +32,10 @@ export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
     <Div>
       <Filter defaultFilters={skills} selectedSkillIds={selectedSkillIds} worksLength={worksData?.works.length} />
       <Wrapper>
-        {worksData && userData
+        {worksData
           ? worksData?.works.map((item, idx) => {
-              const hasBookmark = userData.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
-              return <Item key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData.users_by_pk?.id} />;
+              const hasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
+              return <Item key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData?.users_by_pk?.id} />;
             })
           : [...Array(5)].map((_, idx) => {
               return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;

@@ -16,11 +16,12 @@ import { removeObjectKey } from "@/util/remove-object-key";
 export function LayoutHeader() {
   const [anchorElNav, setAnchorElNav] = useState<HTMLElement | null>(null);
   const { user } = useUser();
+  console.log(user);
   const toolbarRef = useRef(null);
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
 
-  const pages = ["お気に入り", "応募済み", user?.email, "ログアウト"];
+  const pages = user ? ["お気に入り一覧", "応募済み一覧", user && user?.email, "ログアウト"] : ["お気に入り一覧", "応募済み一覧", "ログイン"];
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -34,8 +35,10 @@ export function LayoutHeader() {
       : { ...removeObjectKey(router.query, "keyword") };
 
   const handleCloseNavMenu = (target?: string) => {
-    if (target === "LOGOUT") {
+    if (target === "ログアウト") {
       router.push("/api/auth/logout");
+    } else if (target === "ログイン") {
+      router.push("/api/auth/login");
     } else {
       setAnchorElNav(null);
     }

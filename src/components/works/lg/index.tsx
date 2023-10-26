@@ -48,10 +48,10 @@ export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
         </KeyWordFixed>
         <WorksContainer>
           <Column>
-            {worksData && userData
+            {worksData
               ? worksData?.works.map((item, idx) => {
-                  const hasBookmark = userData.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
-                  return <Item key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData.users_by_pk?.id} />;
+                  const hasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
+                  return <Item key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData?.users_by_pk?.id} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (
