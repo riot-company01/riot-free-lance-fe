@@ -6,6 +6,27 @@ on:
       - main
 
 jobs:
+    lint-and-test:
+    name: Dev / Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: "package.json"
+          cache: npm
+
+      - name: npm install
+        run: npm install
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Type Check
+        run: npm run ts:test
+        
   build:
     runs-on: ubuntu-latest
 
