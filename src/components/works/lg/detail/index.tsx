@@ -13,6 +13,7 @@ import ReactMarkdown from "react-markdown";
 import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { backToWorksUrlVar } from "@/stores";
 import { COLOR } from "@/styles/colors";
 
 type Props = {
@@ -25,7 +26,7 @@ export function Detail({ id, hasBookmark, userId }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const { addFavorite, deleteFavorite } = useFavorite();
-  const { execLogin, execLogout } = useAuth();
+  const { execLogin } = useAuth();
 
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
@@ -51,6 +52,17 @@ export function Detail({ id, hasBookmark, userId }: Props) {
       return;
     }
     await execLogin();
+  };
+
+  const handleClickApplied = () => {
+    backToWorksUrlVar(router.asPath);
+
+    router.push({
+      pathname: "apply",
+      query: {
+        id,
+      },
+    });
   };
 
   useEffect(() => {
@@ -99,7 +111,9 @@ export function Detail({ id, hasBookmark, userId }: Props) {
                 return (
                   <>
                     <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
-                    <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
+                    <Span>
+                      万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)
+                    </Span>
                   </>
                 );
               } else {
@@ -138,7 +152,7 @@ export function Detail({ id, hasBookmark, userId }: Props) {
             </Icon>
           </FlexContainer>
           <ButtonWrapper>
-            <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
+            <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
               {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
             </Button>
             <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
@@ -152,7 +166,7 @@ export function Detail({ id, hasBookmark, userId }: Props) {
         </Description>
 
         <ButtonWrapper>
-          <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
+          <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
             {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
           </Button>
           <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
