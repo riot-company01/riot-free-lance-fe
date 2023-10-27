@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Card as _Card, CardActionArea as _CardActionArea, Chip, css } from "@mui/material";
+import { Card as _Card, CardActionArea as _CardActionArea, Chip, css, styled as muiStyled } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { useRouter } from "next/router";
 import removeMd from "remove-markdown";
@@ -123,7 +123,7 @@ export function Item({ item, hasBookmark, userId }: Props) {
   );
 }
 
-const Card = styled(_Card)<{ isSelected: boolean }>`
+const Card = muiStyled(_Card)<{ isSelected: boolean }>`
   position: relative;
   margin-left: 2px;
   ${({ isSelected }) =>

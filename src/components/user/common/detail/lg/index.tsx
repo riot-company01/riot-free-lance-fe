@@ -51,10 +51,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksD
     backToWorksUrlVar(router.asPath);
 
     router.push({
-      pathname: "/apply",
-      query: {
-        id,
-      },
+      pathname: `/apply/${id}`,
     });
   };
 
@@ -105,9 +102,7 @@ export function Detail({ defaultWorkId, hasFavoriteIdArray, userToFavoriteWorksD
                   return (
                     <>
                       <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
-                      <Span>
-                        万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)
-                      </Span>
+                      <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
                     </>
                   );
                 } else {
