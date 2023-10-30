@@ -13,7 +13,7 @@ function Favorite() {
     },
   });
 
-  if (userToWorksData?.users_by_pk?.userToFavoritedWorks.length !== 0) {
+  if (userToWorksData?.users_by_pk?.userToFavoritedWorks.length === 0) {
     return <NoItem pageTitle="favorite" />;
   }
 
