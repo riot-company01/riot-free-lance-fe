@@ -61,7 +61,11 @@ export function LayoutHeader() {
   return (
     <CustomAppBar position="sticky">
       <Container maxWidth="xl">
-        <Toolbar disableGutters ref={toolbarRef} sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" }, justifyContent: "space-between" }}>
+        <Toolbar
+          disableGutters
+          ref={toolbarRef}
+          sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" }, justifyContent: "space-between" }}
+        >
           <Typography
             variant="h6"
             noWrap
@@ -77,7 +81,7 @@ export function LayoutHeader() {
               textDecoration: "none",
             }}
           >
-            <Logo src="images/Group-35.png" alt="ライオット" />
+            <Logo src="images/company-logo.png" alt="ライオット" />
           </Typography>
 
           <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "flex" }, alignItems: "center" }}>
