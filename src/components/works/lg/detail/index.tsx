@@ -18,11 +18,12 @@ import { COLOR } from "@/styles/colors";
 
 type Props = {
   id?: number;
-  hasBookmark: boolean;
+  isFavorite: boolean;
+  isApplied: boolean;
   userId?: string;
 };
 
-export function Detail({ id, hasBookmark, userId }: Props) {
+export function Detail({ id, isFavorite, userId, isApplied }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const { addFavorite, deleteFavorite } = useFavorite();
@@ -33,7 +34,7 @@ export function Detail({ id, hasBookmark, userId }: Props) {
   const work = data?.works_by_pk;
 
   const onClickFavorite = async () => {
-    if (id && userId && !hasBookmark) {
+    if (id && userId && !isFavorite) {
       addFavorite({
         variables: {
           workId: id,
@@ -42,7 +43,7 @@ export function Detail({ id, hasBookmark, userId }: Props) {
       });
       return;
     }
-    if (id && userId && hasBookmark) {
+    if (id && userId && isFavorite) {
       deleteFavorite({
         variables: {
           workId: id,
@@ -147,11 +148,11 @@ export function Detail({ id, hasBookmark, userId }: Props) {
             </Icon>
           </FlexContainer>
           <ButtonWrapper>
-            <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
-              {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
+            <Button variant="contained" disabled={isApplied} color={"secondary"} sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
+              {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
             </Button>
             <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
-              {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
+              {isFavorite ? "お気に入り解除" : "お気に入り登録"}
             </Button>
           </ButtonWrapper>
         </div>
@@ -162,10 +163,10 @@ export function Detail({ id, hasBookmark, userId }: Props) {
 
         <ButtonWrapper>
           <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
-            {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
+            {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
           </Button>
           <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
-            {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
+            {isFavorite ? "お気に入り解除" : "お気に入り登録"}
           </Button>
         </ButtonWrapper>
       </CustomCardActionArea>

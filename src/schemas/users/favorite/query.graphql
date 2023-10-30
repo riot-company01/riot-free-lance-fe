@@ -26,12 +26,3 @@ query GetFavoried($id: String) {
     }
   }
 }
-
-query GetUserToFavoritedWorks($id: String!) {
-  users_by_pk(id: $id) {
-    id
-    userToFavoritedWorks {
-      workId
-    }
-  }
-}

@@ -19,11 +19,11 @@ type Work = {
 
 type Props = {
   item: GetWorksQuery["works"][number];
-  hasBookmark: boolean;
+  isFavorite: boolean;
   userId?: string;
 };
 
-export function Item({ item, hasBookmark, userId }: Props) {
+export function Item({ item, isFavorite, userId }: Props) {
   const router = useRouter();
   const { getLocalStorage, setLocalStorage } = handleLocalStorage();
   const viewedWorks = getLocalStorage<Work[]>("viewedWorks");
@@ -60,7 +60,7 @@ export function Item({ item, hasBookmark, userId }: Props) {
         </Closed>
       )}
       <CardActionArea>
-        <Tags isViewed={!!isViewed} hasBookmark={hasBookmark} userId={userId} workId={item.id} />
+        <Tags isViewed={!!isViewed} isFavorite={isFavorite} userId={userId} workId={item.id} />
         <Title>
           <div>{item.title}</div>
         </Title>

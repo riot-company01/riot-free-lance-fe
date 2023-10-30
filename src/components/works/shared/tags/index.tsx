@@ -10,17 +10,17 @@ import { COLOR } from "@/styles/colors";
 
 type Props = {
   isViewed: boolean;
-  hasBookmark: boolean;
+  isFavorite: boolean;
   userId?: string;
   workId: number;
 };
 
-export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
+export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
   const { addFavorite, deleteFavorite } = useFavorite();
   const { execLogin } = useAuth();
 
   const onClick: MouseEventHandler<HTMLDivElement> = async (e) => {
-    if (userId && !hasBookmark) {
+    if (userId && !isFavorite) {
       addFavorite({
         variables: {
           userId,
@@ -28,7 +28,7 @@ export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
         },
       });
     }
-    if (userId && hasBookmark) {
+    if (userId && isFavorite) {
       deleteFavorite({
         variables: {
           userId,
@@ -48,7 +48,7 @@ export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
         <CustomTag>高単価</CustomTag>
       </CustomTagWrapper>
       <FavoriteButton onClick={onClick} role="button">
-        {hasBookmark ? (
+        {isFavorite ? (
           <FavoriteIcon
             fontSize="large"
             style={{

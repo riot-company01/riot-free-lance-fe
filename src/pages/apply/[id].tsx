@@ -1,12 +1,13 @@
 import { useQuery } from "@apollo/client";
-import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0/client";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import { Apply as _Apply } from "@/components/apply";
-import { GetUserToWorksDocument } from "@/lib/graphql/graphql";
+import { useAuth } from "@/hooks/use-auth";
+import { GetUserToApplyWorksDocument } from "@/lib/graphql/graphql";
 
 function Apply() {
-  const { user } = useUser();
-  const { data: userToWorksData } = useQuery(GetUserToWorksDocument, { variables: { id: user?.sub } });
+  const { user } = useAuth();
+  const { data: userToWorksData } = useQuery(GetUserToApplyWorksDocument, { variables: { id: user?.sub } });
 
   return (
     <Box component="div">

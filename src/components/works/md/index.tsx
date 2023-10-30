@@ -9,7 +9,7 @@ import { Detail } from "@/components/works/md/detail";
 import { Filter } from "@/components/works/md/filter";
 import { Item } from "@/components/works/shared/item";
 import { BREAK_POINT } from "@/constants";
-import { GetUserToFavoritedWorksDocument, type GetSkillsQuery, type GetWorksQuery } from "@/lib/graphql/graphql";
+import { type GetSkillsQuery, type GetWorksQuery, GetUserToWorksDocument } from "@/lib/graphql/graphql";
 
 type Props = {
   skills?: GetSkillsQuery["skills"];
@@ -20,12 +20,13 @@ type Props = {
 
 export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
   const router = useRouter();
-  const { data: userData } = useQuery(GetUserToFavoritedWorksDocument, {
+  const { data: userData } = useQuery(GetUserToWorksDocument, {
     skip: !user?.sub,
     variables: {
       id: user?.sub as string,
     },
   });
+  console.log(userData);
   const id = Number(router.query["work-id"]);
   const focusItemHasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
   return (
@@ -34,8 +35,9 @@ export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
       <Wrapper>
         {worksData
           ? worksData?.works.map((item, idx) => {
-              const hasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
-              return <Item key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData?.users_by_pk?.id} />;
+              const isFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
+
+              return <Item key={idx} item={item} isFavorite={!!isFavorite} userId={userData?.users_by_pk?.id} />;
             })
           : [...Array(5)].map((_, idx) => {
               return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;
@@ -51,7 +53,7 @@ export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
           router.back();
         }}
       >
-        <Detail id={id} hasBookmark={!!focusItemHasBookmark} userId={userData?.users_by_pk?.id} />
+        <Detail id={id} isFavorite={!!focusItemHasBookmark} userId={userData?.users_by_pk?.id} />
       </Modal>
     </Div>
   );

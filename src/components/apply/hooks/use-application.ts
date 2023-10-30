@@ -28,6 +28,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
   });
 
   const [openDialog, setOpenDialog] = useState(false);
+  const [sending, setSending] = useState(false);
   const [isExistUserToWorksData, setIsExistUserToWorksData] = useState(false);
   const [userName, setUserName] = useState(userData?.users[0].userName);
   const [userNameKana, setUserNameKana] = useState(userData?.users[0].userNameKana);
@@ -41,6 +42,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
   const [editProfileMutation] = useMutation(EditProfileDocument);
 
   const applicationWork = async () => {
+    setSending(true);
     const template_param = {
       work_title: workData?.works_by_pk?.title,
       user_name: userName,
@@ -52,7 +54,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
     send("service_3mxaipn", "template_lop0qms", template_param, "N0Z9VGngtSAYrSpz0").then(() => {
       setOpenDialog(true);
     });
-
+    setSending(false);
     if (!isExistUserToWorksData) {
       await InsertAppliedMutation({
         variables: {
@@ -81,7 +83,6 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
 
   useEffect(() => {
     if (!userToWorksData) return;
-
     const hasUserToWorksData = userToWorksData.some((item) => {
       return item.workId === Number(query.id);
     });
@@ -103,6 +104,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
     email,
     openDialog,
     workData,
+    sending,
     workLoading,
     userLoading,
     onChangeUserName,

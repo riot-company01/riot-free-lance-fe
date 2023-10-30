@@ -19,6 +19,7 @@ export const Apply = (props: ApplyLgProps) => {
     email,
     openDialog,
     workData,
+    sending,
     workLoading,
     userLoading,
     onChangeUserName,
@@ -29,7 +30,7 @@ export const Apply = (props: ApplyLgProps) => {
     backToWorkList,
   } = useApplication(userToWorksData);
 
-  if (workLoading || userLoading) return <CircularIndeterminate />;
+  if (workLoading || userLoading || sending) return <CircularIndeterminate />;
 
   return (
     <Wrapper>
@@ -57,7 +58,7 @@ export const Apply = (props: ApplyLgProps) => {
             <HeadContentTitle>メールアドレス</HeadContentTitle>
           </DivTitleWrapper>
 
-          <TextField fullWidth variant="outlined" type="text" name="mailAddres" value={email} onChange={onChangeEmail} />
+          <TextField fullWidth variant="outlined" type="text" name="mailAddres" value={email} onChange={onChangeEmail} color="primary" />
         </DivWrapper>
         <DivWrapper>
           <DivTitleWrapper>

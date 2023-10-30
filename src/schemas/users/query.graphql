@@ -1,4 +1,4 @@
-query GetUserToWorks($id: String) {
+query GetUserToWorks1($id: String) {
   users(where: { id: { _eq: $id } }) {
     userToApplyWorks {
       workId
@@ -15,5 +15,23 @@ query GetUser($id: String) @cached(ttl: 0) {
     userNameKana
     mail
     tel
+  }
+}
+
+query GetUserToApplyWorks($id: String!) {
+  users_by_pk(id: $id) {
+    id
+  }
+}
+
+query GetUserToWorks($id: String!) {
+  users_by_pk(id: $id) {
+    id
+    userToFavoritedWorks {
+      workId
+    }
+    userToApplyWorks {
+      workId
+    }
   }
 }
