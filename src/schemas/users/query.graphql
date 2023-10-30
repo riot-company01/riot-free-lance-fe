@@ -1,14 +1,3 @@
-query GetUserToWorks1($id: String) {
-  users(where: { id: { _eq: $id } }) {
-    userToApplyWorks {
-      workId
-    }
-    userToFavoritedWorks {
-      workId
-    }
-  }
-}
-
 query GetUser($id: String) @cached(ttl: 0) {
   users(where: { id: { _eq: $id } }) {
     userName

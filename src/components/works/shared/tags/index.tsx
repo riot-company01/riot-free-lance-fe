@@ -27,6 +27,7 @@ export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
           workId,
         },
       });
+      return;
     }
     if (userId && isFavorite) {
       deleteFavorite({
@@ -35,6 +36,7 @@ export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
           workId,
         },
       });
+      return;
     }
     e.stopPropagation();
     await execLogin();

@@ -3,15 +3,8 @@ import { Button, Dialog, DialogTitle, TextField as _TextField } from "@mui/mater
 import { Card } from "@/components/apply/card";
 import { useApplication } from "@/components/apply/hooks/use-application";
 import { CircularIndeterminate } from "@/components/common/progress";
-import type { GetUserToWorksQuery } from "@/lib/graphql/graphql";
 
-type ApplyLgProps = {
-  userToWorksData?: GetUserToWorksQuery["users"][0]["userToApplyWorks"];
-};
-
-export const Apply = (props: ApplyLgProps) => {
-  const { userToWorksData } = props;
-
+export const Apply = () => {
   const {
     userName,
     userNameKana,
@@ -28,12 +21,13 @@ export const Apply = (props: ApplyLgProps) => {
     onChangeEmail,
     applicationWork,
     backToWorkList,
-  } = useApplication(userToWorksData);
+  } = useApplication();
 
-  if (workLoading || userLoading || sending) return <CircularIndeterminate />;
+  if (workLoading || userLoading) return <CircularIndeterminate />;
 
   return (
     <Wrapper>
+      {sending && <CircularIndeterminate />}
       <Card item={workData?.works_by_pk} />
       <ProfileInfo>
         <ProfileInfo>

@@ -27,11 +27,11 @@ export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
       id: user?.sub as string,
     },
   });
-  console.log(userData);
+
   const id = Number(router.query["work-id"]) || worksData?.works[0].id;
   const focusItemIsFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
   const focusItemIsApplied = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
-  console.log(focusItemIsApplied);
+
   return (
     <Wrapper>
       <NavigContainer>

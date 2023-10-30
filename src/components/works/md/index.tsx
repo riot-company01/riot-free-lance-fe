@@ -26,7 +26,7 @@ export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
       id: user?.sub as string,
     },
   });
-  console.log(userData);
+
   const id = Number(router.query["work-id"]);
   const focusItemHasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
   return (

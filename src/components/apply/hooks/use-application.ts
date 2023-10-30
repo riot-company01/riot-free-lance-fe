@@ -1,14 +1,13 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
+import { useAuth } from "@/hooks/use-auth";
 import { EditProfileDocument, GetUserDocument, GetUserToWorksDocument, GetWorkDocument, InsertAppliedMutationDocument } from "@/lib/graphql/graphql";
-import type { GetUserToWorksQuery } from "@/lib/graphql/graphql";
 
-export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]["userToApplyWorks"]) => {
-  const { user } = useUser();
+export const useApplication = () => {
+  const { user } = useAuth();
   const { query } = useRouter();
 
   const { data: workData, loading: workLoading } = useQuery(GetWorkDocument, {
@@ -24,12 +23,18 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
   });
 
   const [InsertAppliedMutation] = useMutation(InsertAppliedMutationDocument, {
-    refetchQueries: [GetUserToWorksDocument],
+    refetchQueries: [
+      {
+        query: GetUserToWorksDocument,
+        variables: {
+          id: user?.sub,
+        },
+      },
+    ],
   });
 
   const [openDialog, setOpenDialog] = useState(false);
   const [sending, setSending] = useState(false);
-  const [isExistUserToWorksData, setIsExistUserToWorksData] = useState(false);
   const [userName, setUserName] = useState(userData?.users[0].userName);
   const [userNameKana, setUserNameKana] = useState(userData?.users[0].userNameKana);
   const [phoneNumber, setPhoneNumber] = useState(userData?.users[0].tel);
@@ -50,22 +55,13 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
       from_phone_number: phoneNumber,
       from_email: email,
     };
-
-    send("service_3mxaipn", "template_lop0qms", template_param, "N0Z9VGngtSAYrSpz0").then(() => {
-      setOpenDialog(true);
+    await send("service_3mxaipn", "template_lop0qms", template_param, "N0Z9VGngtSAYrSpz0");
+    await InsertAppliedMutation({
+      variables: {
+        id: user?.sub || "",
+        workId: Number(query.id),
+      },
     });
-    setSending(false);
-    if (!isExistUserToWorksData) {
-      await InsertAppliedMutation({
-        variables: {
-          id: user?.sub || "",
-          workId: Number(query.id),
-        },
-      });
-    } else {
-      return;
-    }
-
     await editProfileMutation({
       variables: {
         id: user?.sub || "",
@@ -75,20 +71,13 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
         tel: phoneNumber,
       },
     });
+    setSending(false);
+    setOpenDialog(true);
   };
 
   const backToWorkList = () => {
     router.back();
   };
-
-  useEffect(() => {
-    if (!userToWorksData) return;
-    const hasUserToWorksData = userToWorksData.some((item) => {
-      return item.workId === Number(query.id);
-    });
-
-    setIsExistUserToWorksData(hasUserToWorksData);
-  }, [userToWorksData]);
 
   useEffect(() => {
     setUserName(userData?.users[0].userName);
