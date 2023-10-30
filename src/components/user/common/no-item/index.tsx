@@ -23,6 +23,7 @@ export const NoItem = ({ pageTitle }: NoItemProps) => {
           maxWidth: 220,
           margin: "0 auto",
         }}
+        fullWidth
         onClick={() => {
           router.push({
             pathname: "/works",
@@ -52,6 +53,7 @@ const NotResultWrapper = styled.div`
 const As = styled.div`
   font-size: 24px;
   font-weight: bold;
+
   @media (max-width: ${BREAK_POINT.sm}px) {
     font-size: 18px;
   }
