@@ -6,10 +6,11 @@ import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
-import { Button, Card, Skeleton, styled as MuiStyled } from "@mui/material";
+import { Button, Card, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+
 import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
@@ -21,9 +22,10 @@ type Props = {
   isFavorite: boolean;
   isApplied: boolean;
   userId?: string;
+  page?: string;
 };
 
-export function Detail({ id, isFavorite, userId, isApplied }: Props) {
+export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const { addFavorite, deleteFavorite } = useFavorite();
@@ -78,99 +80,98 @@ export function Detail({ id, isFavorite, userId, isApplied }: Props) {
     });
   }, [work]);
 
-  if (!work)
+  if (!work) {
     return (
-      <CustomCardActionSkeletonArea selected={!!router.query["skill-ids"]} ref={ref}>
+      <CustomCardActionSkeletonArea selected={!!router.query["skill-ids"]} ref={ref} page={page}>
         <Skeleton variant="rectangular" height={"100vh"} />
       </CustomCardActionSkeletonArea>
     );
+  }
 
   return (
-    <>
-      <CustomCardActionArea selected={!!router.query["skill-ids"]} ref={ref}>
-        <Title>{work.title}</Title>
-        <div id="shimono">
-          <MonthlyPrice>
+    <CustomCardActionArea selected={!!router.query["skill-ids"]} ref={ref} page={page}>
+      <Title>{work.title}</Title>
+      <div>
+        <MonthlyPrice>
+          <Icon>
+            <MonetizationOnIcon fontSize="small" />
+          </Icon>
+
+          {(() => {
+            if (work.minMonthlyPrice && work.maxMonthlyPrice) {
+              return (
+                <>
+                  <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
+                  <Span>
+                    万円/月額 (想定年収: {work.minMonthlyPrice * 12}~{work.maxMonthlyPrice * 12}万円)
+                  </Span>
+                </>
+              );
+            } else if (work.minMonthlyPrice || work.maxMonthlyPrice) {
+              return (
+                <>
+                  <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
+                  <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
+                </>
+              );
+            } else {
+              return <Span>要相談</Span>;
+            }
+          })()}
+        </MonthlyPrice>
+
+        <FlexContainer>
+          <Info>
             <Icon>
-              <MonetizationOnIcon fontSize="small" />
+              <AccessTimeIcon fontSize="small" />
+              <Text>
+                {work.minWorkHours}~{work.maxWorkHours}時間
+              </Text>
             </Icon>
-
-            {(() => {
-              if (work.minMonthlyPrice && work.maxMonthlyPrice) {
-                return (
-                  <>
-                    <Strong>{work.minMonthlyPrice}</Strong>~<Strong>{work.maxMonthlyPrice}</Strong>
-                    <Span>
-                      万円/月額 (想定年収: {work.minMonthlyPrice * 12}~{work.maxMonthlyPrice * 12}万円)
-                    </Span>
-                  </>
-                );
-              } else if (work.minMonthlyPrice || work.maxMonthlyPrice) {
-                return (
-                  <>
-                    <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
-                    <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
-                  </>
-                );
-              } else {
-                return <Span>要相談</Span>;
-              }
-            })()}
-          </MonthlyPrice>
-
-          <FlexContainer>
-            <Info>
-              <Icon>
-                <AccessTimeIcon fontSize="small" />
-                <Text>
-                  {work.minWorkHours}~{work.maxWorkHours}時間
-                </Text>
-              </Icon>
-            </Info>
-            <Info>
-              <Icon>
-                <PaymentIcon fontSize="small" />
-                <Text>30日</Text>
-              </Icon>
-            </Info>
-            <Info>
-              <Icon>
-                <DocumentScannerIcon fontSize="small" />
-                <Text>{work.contractType}</Text>
-              </Icon>
-            </Info>
-          </FlexContainer>
-
-          <FlexContainer>
+          </Info>
+          <Info>
             <Icon>
-              <LocationOnIcon fontSize="small" />
-              <Text>{work.location}</Text>
+              <PaymentIcon fontSize="small" />
+              <Text>30日</Text>
             </Icon>
-          </FlexContainer>
-          <ButtonWrapper>
-            <Button variant="contained" disabled={isApplied} color={"secondary"} sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
-              {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
-            </Button>
-            <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
-              {isFavorite ? "お気に入り解除" : "お気に入り登録"}
-            </Button>
-          </ButtonWrapper>
-        </div>
+          </Info>
+          <Info>
+            <Icon>
+              <DocumentScannerIcon fontSize="small" />
+              <Text>{work.contractType}</Text>
+            </Icon>
+          </Info>
+        </FlexContainer>
 
-        <Description>
-          <ReactMarkdown>{work.description}</ReactMarkdown>
-        </Description>
-
+        <FlexContainer>
+          <Icon>
+            <LocationOnIcon fontSize="small" />
+            <Text>{work.location}</Text>
+          </Icon>
+        </FlexContainer>
         <ButtonWrapper>
-          <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
+          <Button variant="contained" disabled={isApplied} color={"secondary"} sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
             {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
           </Button>
           <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
             {isFavorite ? "お気に入り解除" : "お気に入り登録"}
           </Button>
         </ButtonWrapper>
-      </CustomCardActionArea>
-    </>
+      </div>
+
+      <Description>
+        <ReactMarkdown>{work.description}</ReactMarkdown>
+      </Description>
+
+      <ButtonWrapper>
+        <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
+          {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
+        </Button>
+        <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
+          {isFavorite ? "お気に入り解除" : "お気に入り登録"}
+        </Button>
+      </ButtonWrapper>
+    </CustomCardActionArea>
   );
 }
 
@@ -218,23 +219,23 @@ const Text = styled.div`
   font-size: 14px;
 `;
 
-const CustomCardActionArea = MuiStyled(Card)<{ selected: boolean }>`
+const CustomCardActionArea = styled(Card)<{ selected: boolean; page?: string }>`
   padding: 16px;
   border-radius: 8px;
-  max-height: ${({ selected }) => (selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  max-height: ${({ selected, page }) => (page === "favorite" ? "calc(100dvh - 113px)" : selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
   overflow: scroll;
   background-color: white;
   position: sticky;
-  top: ${({ selected }) => (selected ? "198px" : "166px")};
+  top: ${({ selected, page }) => (page === "favorite" ? "113px" : selected ? "198px" : "166px")};
 `;
 
-const CustomCardActionSkeletonArea = MuiStyled(Card)<{ selected: boolean }>`
+const CustomCardActionSkeletonArea = styled(Card)<{ selected: boolean; page?: string }>`
   border-radius: 8px;
-  max-height: ${({ selected }) => (selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  max-height: ${({ selected, page }) => (page === "favorite" ? "calc(100dvh - 113px)" : selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
   overflow: scroll;
   background-color: white;
   position: sticky;
-  top: ${({ selected }) => (selected ? "198px" : "166px")};
+  top: ${({ selected, page }) => (page === "favorite" ? "113px" : selected ? "198px" : "166px")};
 `;
 
 const Description = styled.div`
