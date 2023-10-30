@@ -70,6 +70,7 @@ const WorkInfo = muiStyled(_Card)(() => ({
   margin: "16px",
   padding: "16px",
   backgroundColor: `white`,
+  maxWidth: "700px",
 }));
 
 const Title = styled.div`

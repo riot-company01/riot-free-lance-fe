@@ -72,9 +72,11 @@ export const Apply = (props: ApplyLgProps) => {
           <p>マイページ作成後に実装</p>
         </DivWrapper>
 
-        <SendButton variant="contained" onClick={applicationWork} size="large" color="secondary">
-          案件に応募する
-        </SendButton>
+        <DivWrapper>
+          <SendButton variant="contained" onClick={applicationWork} size="large" color="secondary">
+            案件に応募する
+          </SendButton>
+        </DivWrapper>
       </ProfileInfo>
       <Dialog open={openDialog}>
         <DialogTitle>案件への応募が完了しました</DialogTitle>
@@ -87,7 +89,6 @@ export const Apply = (props: ApplyLgProps) => {
 };
 
 const Wrapper = styled.div`
-  max-width: 700px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -103,7 +104,6 @@ const ProfileInfo = styled.div`
 `;
 
 const SendButton = styled(Button)`
-  margin: 32px 16px;
   font-weight: bold;
   width: 100%;
 `;
@@ -126,6 +126,10 @@ const DivWrapper = styled.div`
   margin-top: 32px;
   padding: 0 16px 0 16px;
   width: 100%;
+  max-width: 700px;
+  :last-of-type {
+    margin-bottom: 32px;
+  }
 `;
 
 const TextField = styled(_TextField)`
