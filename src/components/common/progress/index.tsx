@@ -1,10 +1,17 @@
-import Box from "@mui/material/Box";
+import styled from "@emotion/styled";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export function CircularIndeterminate() {
   return (
-    <Box sx={{ display: "flex", height: "calc(100svh - 146px);", justifyContent: "center", alignItems: "center" }}>
+    <Wrapper>
       <CircularProgress />
-    </Box>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+`;

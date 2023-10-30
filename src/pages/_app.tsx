@@ -9,6 +9,7 @@ import { StyledEngineProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import { LayoutFooter } from "@/components/common/layout/footer";
 import { LayoutHeader } from "@/components/common/layout/header";
+import { BREAK_POINT } from "@/constants";
 import { useCustomApollo } from "@/lib/apollo/client";
 import { GLOBAL_STYLE } from "@/styles/global-style";
 import "large-small-dynamic-viewport-units-polyfill";
@@ -55,5 +56,8 @@ const MaxWidth = styled.main`
   width: 100%;
   max-width: 1320px;
   margin: auto;
-  min-height: calc(100svh - 146px);
+  min-height: calc(100svh - 128px);
+  @media screen and (min-width: ${BREAK_POINT.md}px) {
+    min-height: calc(100svh - 146px);
+  }
 `;
