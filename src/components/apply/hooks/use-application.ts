@@ -4,13 +4,7 @@ import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
-import {
-  EditProfileDocument,
-  GetUserDocument,
-  GetUserToWorksDocument,
-  GetWorkDocument,
-  InsertAppliedMutationDocument,
-} from "@/lib/graphql/graphql";
+import { EditProfileDocument, GetUserDocument, GetUserToWorksDocument, GetWorkDocument, InsertAppliedMutationDocument } from "@/lib/graphql/graphql";
 import type { GetUserToWorksQuery } from "@/lib/graphql/graphql";
 
 export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]["userToApplyWorks"]) => {
@@ -34,7 +28,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
   });
 
   const [openDialog, setOpenDialog] = useState(false);
-  const [isExsistUserToWorksData, setIsExsistUserToWorksData] = useState(false);
+  const [isExistUserToWorksData, setIsExistUserToWorksData] = useState(false);
   const [userName, setUserName] = useState(userData?.users[0].userName);
   const [userNameKana, setUserNameKana] = useState(userData?.users[0].userNameKana);
   const [phoneNumber, setPhoneNumber] = useState(userData?.users[0].tel);
@@ -59,7 +53,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
       setOpenDialog(true);
     });
 
-    if (!isExsistUserToWorksData) {
+    if (!isExistUserToWorksData) {
       await InsertAppliedMutation({
         variables: {
           id: user?.sub || "",
@@ -92,7 +86,7 @@ export const useApplication = (userToWorksData?: GetUserToWorksQuery["users"][0]
       return item.workId === Number(query.id);
     });
 
-    setIsExsistUserToWorksData(hasUserToWorksData);
+    setIsExistUserToWorksData(hasUserToWorksData);
   }, [userToWorksData]);
 
   useEffect(() => {

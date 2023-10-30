@@ -55,4 +55,5 @@ const MaxWidth = styled.main`
   width: 100%;
   max-width: 1320px;
   margin: auto;
+  min-height: calc(100svh - 146px);
 `;
