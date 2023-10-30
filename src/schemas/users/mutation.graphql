@@ -1,11 +1,26 @@
 mutation EditProfile($id: String!, $userName: String, $userNameKana: String, $mail: String, $tel: String) {
-  update_users_by_pk(
-    pk_columns: { id: $id }
-    _set: { userName: $userName, userNameKana: $userNameKana, mail: $mail, tel: $tel }
-  ) {
+  update_users_by_pk(pk_columns: { id: $id }, _set: { userName: $userName, userNameKana: $userNameKana, mail: $mail, tel: $tel }) {
     userName
     userNameKana
     mail
     tel
+  }
+}
+
+mutation InsertAppliedMutation($id: String!, $workId: Int!) {
+  insert_user_to_apply_works_one(object: { userId: $id, workId: $workId }) {
+    workId
+  }
+}
+
+mutation AddFavorite($userId: String!, $workId: Int!) {
+  insert_user_to_favorite_works_one(object: { userId: $userId, workId: $workId }) {
+    workId
+  }
+}
+
+mutation DeleteFavorite($userId: String!, $workId: Int!) {
+  delete_user_to_favorite_works_by_pk(userId: $userId, workId: $workId) {
+    workId
   }
 }

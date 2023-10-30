@@ -1,5 +1,0 @@
-mutation InsertAppliedMutation($id: String!, $workId: Int!) {
-  insert_user_to_apply_works_one(object: { userId: $id, workId: $workId }) {
-    workId
-  }
-}
