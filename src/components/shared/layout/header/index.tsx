@@ -9,7 +9,9 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
+import { RLogo } from "@/components/shared/logo";
 import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
+import { loadingVar } from "@/global-state";
 import { useAuth } from "@/hooks/use-auth";
 import { removeObjectKey } from "@/util/remove-object-key";
 
@@ -20,9 +22,7 @@ export function LayoutHeader() {
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
 
-  const pages = user
-    ? ["お気に入り一覧", "応募済み一覧", user && user?.email, "ログアウト"]
-    : ["お気に入り一覧", "応募済み一覧", "ログイン"];
+  const pages = user ? ["お気に入り一覧", "応募済み一覧", user && user?.email, "ログアウト"] : ["お気に入り一覧", "応募済み一覧", "ログイン"];
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -44,11 +44,15 @@ export function LayoutHeader() {
         await execLogin();
         break;
       case "お気に入り一覧":
+        loadingVar(true);
         router.push("/user/favorite");
+        loadingVar(false);
         setAnchorElNav(null);
         break;
       case "応募済み一覧":
+        loadingVar(true);
         router.push("/user/apply");
+        loadingVar(false);
         setAnchorElNav(null);
         break;
       default:
@@ -72,10 +76,12 @@ export function LayoutHeader() {
               fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
+              width: "64px",
+              height: "100%",
               textDecoration: "none",
             }}
           >
-            <Logo src="images/Group-35.png" alt="ライオット" />
+            <RLogo />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -177,10 +183,6 @@ export function LayoutHeader() {
     </CustomAppBar>
   );
 }
-
-const Logo = styled.img`
-  width: 68px;
-`;
 
 const CustomAppBar = styled(AppBar)`
   height: ${MD_GLOBAL_NAVIGATION.HEADER}px;
