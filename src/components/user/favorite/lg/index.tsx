@@ -2,9 +2,9 @@ import { useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
-import { NoItem } from "@/components/user/shared/no-item";
-import { Detail as _Detail } from "@/components/works/lg/detail";
+import { Detail as _Detail } from "@/components/shared/detail/lg";
 import { Item } from "@/components/shared/item";
+import { NoItem } from "@/components/user/shared/no-item";
 import { useAuth } from "@/hooks/use-auth";
 import { GetUserToWorksDocument } from "@/lib/graphql/graphql";
 
