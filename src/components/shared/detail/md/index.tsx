@@ -7,28 +7,33 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
 import { Button, Card, Skeleton } from "@mui/material";
+import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { backToWorksUrlVar } from "@/stores";
 import { COLOR } from "@/styles/colors";
 
 type Props = {
   id?: number;
   isFavorite: boolean;
+  isApplied: boolean;
   userId?: string;
 };
 
-export function Detail({ id, isFavorite, userId }: Props) {
+export function Detail({ id, isFavorite, userId, isApplied }: Props) {
   const ref = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const { execLogin } = useAuth();
   const { addFavorite, deleteFavorite } = useFavorite();
 
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
 
-  const onClickFavorite = () => {
-    console.log("onClickFavorite");
+  const onClickFavorite = async () => {
     if (id && userId && !isFavorite) {
       addFavorite({
         variables: {
@@ -36,6 +41,7 @@ export function Detail({ id, isFavorite, userId }: Props) {
           userId,
         },
       });
+      return;
     }
     if (id && userId && isFavorite) {
       deleteFavorite({
@@ -44,7 +50,17 @@ export function Detail({ id, isFavorite, userId }: Props) {
           userId,
         },
       });
+      return;
     }
+    await execLogin();
+  };
+
+  const handleClickApplied = () => {
+    backToWorksUrlVar(router.asPath);
+
+    router.push({
+      pathname: `apply/${id}`,
+    });
   };
 
   useEffect(() => {
@@ -131,8 +147,8 @@ export function Detail({ id, isFavorite, userId }: Props) {
         </FlexContainer>
 
         <ButtonWrapper>
-          <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
-            {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
+          <Button variant="contained" disabled={isApplied} color="secondary" sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
+            {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
           </Button>
           <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
             {isFavorite ? "お気に入り解除" : "お気に入り登録"}
@@ -144,8 +160,8 @@ export function Detail({ id, isFavorite, userId }: Props) {
         </Description>
 
         <ButtonWrapper>
-          <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
-            {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
+          <Button variant="contained" disabled={isApplied} color="secondary" sx={{ fontWeight: "bold" }}>
+            {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
           </Button>
           <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
             {isFavorite ? "お気に入り解除" : "お気に入り登録"}
