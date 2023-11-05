@@ -1,4 +1,4 @@
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 
@@ -9,7 +9,9 @@ import { StyledEngineProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import { LayoutFooter } from "@/components/shared/layout/footer";
 import { LayoutHeader } from "@/components/shared/layout/header";
+import { CircularIndeterminate } from "@/components/shared/progress";
 import { BREAK_POINT } from "@/constants";
+import { loadingVar } from "@/global-state";
 import { useCustomApollo } from "@/lib/apollo/client";
 import { GLOBAL_STYLE } from "@/styles/global-style";
 import "large-small-dynamic-viewport-units-polyfill";
@@ -24,6 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       secondary: pink,
     },
   });
+  const loading = useReactiveVar(loadingVar);
   return (
     <ThemeProvider theme={theme}>
       <Auth0Provider
@@ -40,6 +43,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <LayoutHeader />
               <MaxWidth>
                 <Component {...pageProps} />
+                {loading && <CircularIndeterminate />}
               </MaxWidth>
               <LayoutFooter />
             </ApolloProvider>

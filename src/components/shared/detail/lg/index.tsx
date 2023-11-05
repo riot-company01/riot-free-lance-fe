@@ -14,7 +14,6 @@ import ReactMarkdown from "react-markdown";
 import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
-import { backToWorksUrlVar } from "@/stores";
 import { COLOR } from "@/styles/colors";
 
 type Props = {
@@ -58,8 +57,6 @@ export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
   };
 
   const handleClickApplied = () => {
-    backToWorksUrlVar(router.asPath);
-
     router.push({
       pathname: `apply/${id}`,
     });

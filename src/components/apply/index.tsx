@@ -12,7 +12,6 @@ export const Apply = () => {
     email,
     openDialog,
     workData,
-    sending,
     workLoading,
     userLoading,
     onChangeUserName,
@@ -27,7 +26,6 @@ export const Apply = () => {
 
   return (
     <Wrapper>
-      {sending && <CircularIndeterminate />}
       <Card item={workData?.works_by_pk} />
       <ProfileInfo>
         <ProfileInfo>

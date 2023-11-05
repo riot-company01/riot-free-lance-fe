@@ -3,6 +3,7 @@ import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
+import { loadingVar } from "@/global-state";
 import { useAuth } from "@/hooks/use-auth";
 import { EditProfileDocument, GetUserDocument, GetUserToWorksDocument, GetWorkDocument, InsertAppliedMutationDocument } from "@/lib/graphql/graphql";
 
@@ -34,7 +35,6 @@ export const useApplication = () => {
   });
 
   const [openDialog, setOpenDialog] = useState(false);
-  const [sending, setSending] = useState(false);
   const [userName, setUserName] = useState(userData?.users[0].userName);
   const [userNameKana, setUserNameKana] = useState(userData?.users[0].userNameKana);
   const [phoneNumber, setPhoneNumber] = useState(userData?.users[0].tel);
@@ -47,7 +47,7 @@ export const useApplication = () => {
   const [editProfileMutation] = useMutation(EditProfileDocument);
 
   const applicationWork = async () => {
-    setSending(true);
+    loadingVar(true);
     const template_param = {
       work_title: workData?.works_by_pk?.title,
       user_name: userName,
@@ -71,7 +71,7 @@ export const useApplication = () => {
         tel: phoneNumber,
       },
     });
-    setSending(false);
+    loadingVar(false);
     setOpenDialog(true);
   };
 
@@ -93,7 +93,6 @@ export const useApplication = () => {
     email,
     openDialog,
     workData,
-    sending,
     workLoading,
     userLoading,
     onChangeUserName,
