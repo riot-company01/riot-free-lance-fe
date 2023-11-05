@@ -21,6 +21,7 @@ export function FavoriteMd() {
 
   const id = Number(router.query["work-id"]);
   const focusItemHasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
+  const focusItemIsApplied = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
 
   return (
     <Div>
@@ -45,7 +46,7 @@ export function FavoriteMd() {
           router.back();
         }}
       >
-        <Detail id={id} isFavorite={!!focusItemHasBookmark} userId={userData?.users_by_pk?.id} />
+        <Detail isApplied={!!focusItemIsApplied} id={id} isFavorite={!!focusItemHasBookmark} userId={userData?.users_by_pk?.id} />
       </Modal>
     </Div>
   );
