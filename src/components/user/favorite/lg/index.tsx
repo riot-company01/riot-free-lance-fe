@@ -22,7 +22,7 @@ export function FavoriteLg() {
   const focusItemIsFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
   const focusItemIsApplied = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
 
-  if (!id) return <NoItem pageTitle="favorite" />;
+  if (userData?.users_by_pk?.userToFavoritedWorks.length === 0) return <NoItem pageTitle="favorite" />;
 
   return (
     <Wrapper>

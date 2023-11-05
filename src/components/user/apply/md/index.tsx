@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { Detail } from "@/components/shared/detail/md";
 import { Item } from "@/components/shared/item";
 import { Modal } from "@/components/shared/modal";
+import { NoItem } from "@/components/user/shared/no-item";
 import { BREAK_POINT } from "@/constants";
 import { useAuth } from "@/hooks/use-auth";
 import { GetUserToWorksDocument } from "@/lib/graphql/graphql";
@@ -22,6 +23,8 @@ export function AppliedMd() {
   const id = Number(router.query["work-id"]);
   const focusItemHasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
   const focusItemIsApplied = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
+
+  if (userData?.users_by_pk?.userToApplyWorks.length === 0) return <NoItem pageTitle="apply" />;
 
   return (
     <Div>
