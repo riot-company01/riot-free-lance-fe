@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { CardActionArea } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import type { MouseEventHandler } from "react";
 import { useAuth } from "@/hooks/use-auth";
@@ -19,7 +20,8 @@ export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
   const { addFavorite, deleteFavorite } = useFavorite();
   const { execLogin } = useAuth();
 
-  const onClick: MouseEventHandler<HTMLDivElement> = async (e) => {
+  const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.stopPropagation();
     if (userId && !isFavorite) {
       addFavorite({
         variables: {
@@ -38,7 +40,6 @@ export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
       });
       return;
     }
-    e.stopPropagation();
     await execLogin();
   };
   return (
@@ -49,7 +50,7 @@ export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
         <CustomTag>面談一回</CustomTag>
         <CustomTag>高単価</CustomTag>
       </CustomTagWrapper>
-      <FavoriteButton onClick={onClick} role="button">
+      <FavoriteButton onClick={onClick} role="button" data-identify-name="favoriteButton">
         {isFavorite ? (
           <FavoriteIcon
             fontSize="large"
@@ -106,7 +107,7 @@ const CustomTagWrapper = styled.div`
   padding-left: 48px;
 `;
 
-const FavoriteButton = styled.div`
+const FavoriteButton = styled(CardActionArea)`
   position: absolute;
   top: 0;
   right: 0;
@@ -115,6 +116,7 @@ const FavoriteButton = styled.div`
   justify-content: center;
   height: 50px;
   width: 50px;
+  border-radius: 50%;
 `;
 
 const CustomTag = styled.div`

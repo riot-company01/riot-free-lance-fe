@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Card as _Card, CardActionArea as _CardActionArea, Chip, css, styled as muiStyled } from "@mui/material";
+import { Card as _Card, Chip, css, styled as muiStyled } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { useRouter } from "next/router";
+import type { MouseEventHandler } from "react";
 import removeMd from "remove-markdown";
 import { Tags } from "@/components/shared/item/tags";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
@@ -30,7 +31,7 @@ export function Item({ item, isFavorite, userId }: Props) {
   const isViewed = viewedWorks?.some((i) => i.workId === item.id);
   const isSelected = Number(router.query["work-id"]) === item.id;
 
-  function onItemClick() {
+  const onItemClick: MouseEventHandler<HTMLDivElement> = () => {
     router.push(
       {
         query: {
@@ -50,7 +51,7 @@ export function Item({ item, isFavorite, userId }: Props) {
       const viewedWork = { workId: item.id };
       setLocalStorage("viewedWorks", [viewedWork]);
     }
-  }
+  };
 
   return (
     <Card onClick={onItemClick} isSelected={isSelected}>
@@ -59,7 +60,7 @@ export function Item({ item, isFavorite, userId }: Props) {
           <Msg>この案件の募集は終了しました。</Msg>
         </Closed>
       )}
-      <CardActionArea>
+      <ContentWrapper>
         <Tags isViewed={!!isViewed} isFavorite={isFavorite} userId={userId} workId={item.id} />
         <Title>
           <div>{item.title}</div>
@@ -118,7 +119,7 @@ export function Item({ item, isFavorite, userId }: Props) {
         </FlexContainerLabel>
         <MdWrapper>{removeMd(item.description)}</MdWrapper>
         <PublicationDate>掲載日:{item.createAt}</PublicationDate>
-      </CardActionArea>
+      </ContentWrapper>
     </Card>
   );
 }
@@ -126,6 +127,11 @@ export function Item({ item, isFavorite, userId }: Props) {
 const Card = muiStyled(_Card)<{ isSelected: boolean }>`
   position: relative;
   margin-left: 2px;
+  @media (hover: hover) {
+    &:hover {
+      outline: 2px solid ${COLOR.GRAY.code};
+    }
+  }
   ${({ isSelected }) =>
     isSelected &&
     css`
@@ -144,7 +150,7 @@ const Card = muiStyled(_Card)<{ isSelected: boolean }>`
   }
 `;
 
-const CardActionArea = styled(_CardActionArea)`
+const ContentWrapper = styled.div`
   padding: 16px;
   display: flex;
   flex-direction: column;
