@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Button, Dialog, DialogTitle, TextField as _TextField } from "@mui/material";
 import { Card } from "@/components/apply/card";
 import { useApplication } from "@/components/apply/hooks/use-application";
-import { CircularIndeterminate } from "@/components/common/progress";
+import { CircularIndeterminate } from "@/components/shared/progress";
 
 export const Apply = () => {
   const {

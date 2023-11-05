@@ -6,8 +6,8 @@ import { Card as _Card, CardActionArea as _CardActionArea, Chip, css, styled as 
 import { blue } from "@mui/material/colors";
 import { useRouter } from "next/router";
 import removeMd from "remove-markdown";
+import { Tags } from "@/components/shared/item/tags";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
-import { Tags } from "@/components/works/shared/tags";
 import { BREAK_POINT } from "@/constants";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";

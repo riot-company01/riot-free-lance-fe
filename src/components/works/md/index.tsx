@@ -4,11 +4,11 @@ import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 
 import { useRouter } from "next/router";
-import { Detail } from "@/components/common/detail/md";
-import { Modal } from "@/components/common/modal";
+import { Detail } from "@/components/shared/detail/md";
+import { Modal } from "@/components/shared/modal";
 
 import { Filter } from "@/components/works/md/filter";
-import { Item } from "@/components/works/shared/item";
+import { Item } from "@/components/shared/item";
 import { BREAK_POINT } from "@/constants";
 import { type GetSkillsQuery, type GetWorksQuery, GetUserToWorksDocument } from "@/lib/graphql/graphql";
 
