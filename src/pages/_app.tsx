@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 import { blue, pink } from "@mui/material/colors";
 import { StyledEngineProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
+import { useEffect } from "react";
 import { LayoutFooter } from "@/components/shared/layout/footer";
 import { LayoutHeader } from "@/components/shared/layout/header";
 import { CircularIndeterminate } from "@/components/shared/progress";
@@ -18,6 +19,7 @@ import "large-small-dynamic-viewport-units-polyfill";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const client = useCustomApollo(pageProps);
+  const loading = useReactiveVar(loadingVar);
   const { user } = pageProps;
   const redirect_uri = typeof window !== "undefined" ? `http://localhost:3000/works/api/auth/callback/` : undefined;
   const theme = createTheme({
@@ -26,7 +28,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       secondary: pink,
     },
   });
-  const loading = useReactiveVar(loadingVar);
+
+  useEffect(() => {
+    loadingVar(false);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <Auth0Provider
