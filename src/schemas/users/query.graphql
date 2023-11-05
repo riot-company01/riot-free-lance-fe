@@ -1,8 +1,62 @@
-query GetUserToFavoritedWorks($id: String!) {
+query GetUser($id: String) @cached(ttl: 0) {
+  users(where: { id: { _eq: $id } }) {
+    userName
+    userNameKana
+    mail
+    tel
+  }
+}
+
+query GetUserToWorks($id: String!) {
   users_by_pk(id: $id) {
     id
     userToFavoritedWorks {
       workId
+      work {
+        contractType
+        createAt
+        description
+        id
+        isClosed
+        location
+        maxMonthlyPrice
+        maxWorkHours
+        minMonthlyPrice
+        minWorkHours
+        title
+        isClosed
+        languages {
+          skill {
+            id
+            name
+            type
+          }
+        }
+      }
+    }
+    userToApplyWorks {
+      workId
+      work {
+        contractType
+        createAt
+        description
+        id
+        isClosed
+        location
+        maxMonthlyPrice
+        maxWorkHours
+        minMonthlyPrice
+        minWorkHours
+        title
+        isClosed
+        languages {
+          skill {
+            id
+            name
+            type
+          }
+        }
+      }
     }
   }
 }

@@ -3,13 +3,14 @@ import type { UserProfile } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
+import { Detail } from "@/components/shared/detail/lg";
+import { Item } from "@/components/shared/item";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
-import { Detail } from "@/components/works/lg/detail";
+
 import { Filter } from "@/components/works/lg/filter";
 import { LeftNavig } from "@/components/works/lg/left-navig";
-import { Item } from "@/components/works/shared/item";
 import { LG_GLOBAL_NAVIGATION } from "@/constants";
-import { type GetSkillsQuery, type GetWorksQuery, GetUserToFavoritedWorksDocument } from "@/lib/graphql/graphql";
+import { GetUserToWorksDocument, type GetSkillsQuery, type GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 
 type Props = {
@@ -21,7 +22,7 @@ type Props = {
 
 export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
   const router = useRouter();
-  const { data: userData } = useQuery(GetUserToFavoritedWorksDocument, {
+  const { data: userData } = useQuery(GetUserToWorksDocument, {
     skip: !user?.sub,
     variables: {
       id: user?.sub as string,
@@ -29,7 +30,8 @@ export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
   });
 
   const id = Number(router.query["work-id"]) || worksData?.works[0].id;
-  const focusItemHasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
+  const focusItemIsFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
+  const focusItemIsApplied = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
 
   return (
     <Wrapper>
@@ -50,8 +52,9 @@ export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  const hasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
-                  return <Item key={idx} item={item} hasBookmark={!!hasBookmark} userId={userData?.users_by_pk?.id} />;
+                  const isFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
+
+                  return <Item key={idx} item={item} isFavorite={!!isFavorite} userId={userData?.users_by_pk?.id} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (
@@ -73,7 +76,7 @@ export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
           </Column>
 
           <DetailWrapper>
-            <Detail id={id} hasBookmark={!!focusItemHasBookmark} userId={userData?.users_by_pk?.id} />
+            <Detail id={id} isFavorite={!!focusItemIsFavorite} isApplied={!!focusItemIsApplied} userId={userData?.users_by_pk?.id} />
           </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>

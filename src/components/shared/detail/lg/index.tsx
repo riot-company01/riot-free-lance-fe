@@ -7,44 +7,62 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
 import { Button, Card, Skeleton } from "@mui/material";
+import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+
+import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
+import { backToWorksUrlVar } from "@/stores";
 import { COLOR } from "@/styles/colors";
 
 type Props = {
   id?: number;
-  hasBookmark: boolean;
+  isFavorite: boolean;
+  isApplied: boolean;
   userId?: string;
+  page?: string;
 };
 
-export function Detail({ id, hasBookmark, userId }: Props) {
+export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
+  const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const { addFavorite, deleteFavorite } = useFavorite();
+  const { execLogin } = useAuth();
 
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
   const work = data?.works_by_pk;
 
-  const onClickFavorite = () => {
-    console.log("onClickFavorite");
-    if (id && userId && !hasBookmark) {
+  const onClickFavorite = async () => {
+    if (id && userId && !isFavorite) {
       addFavorite({
         variables: {
           workId: id,
           userId,
         },
       });
+      return;
     }
-    if (id && userId && hasBookmark) {
+    if (id && userId && isFavorite) {
       deleteFavorite({
         variables: {
           workId: id,
           userId,
         },
       });
+      return;
     }
+    await execLogin();
+  };
+
+  const handleClickApplied = () => {
+    backToWorksUrlVar(router.asPath);
+
+    router.push({
+      pathname: `apply/${id}`,
+    });
   };
 
   useEffect(() => {
@@ -62,17 +80,18 @@ export function Detail({ id, hasBookmark, userId }: Props) {
     });
   }, [work]);
 
-  if (!work)
+  if (!work) {
     return (
-      <CustomCardActionArea ref={ref}>
+      <CustomCardActionSkeletonArea selected={!!router.query["skill-ids"]} ref={ref} page={page}>
         <Skeleton variant="rectangular" height={"100vh"} />
-      </CustomCardActionArea>
+      </CustomCardActionSkeletonArea>
     );
+  }
 
   return (
-    <>
-      <CustomCardActionArea ref={ref}>
-        <Title>{work.title}</Title>
+    <CustomCardActionArea selected={!!router.query["skill-ids"]} ref={ref} page={page}>
+      <Title>{work.title}</Title>
+      <div>
         <MonthlyPrice>
           <Icon>
             <MonetizationOnIcon fontSize="small" />
@@ -100,6 +119,7 @@ export function Detail({ id, hasBookmark, userId }: Props) {
             }
           })()}
         </MonthlyPrice>
+
         <FlexContainer>
           <Info>
             <Icon>
@@ -129,35 +149,34 @@ export function Detail({ id, hasBookmark, userId }: Props) {
             <Text>{work.location}</Text>
           </Icon>
         </FlexContainer>
-
         <ButtonWrapper>
-          <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
-            {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
+          <Button variant="contained" disabled={isApplied} color={"secondary"} sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
+            {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
           </Button>
           <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
-            {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
+            {isFavorite ? "お気に入り解除" : "お気に入り登録"}
           </Button>
         </ButtonWrapper>
+      </div>
 
-        <Description>
-          <ReactMarkdown>{work.description}</ReactMarkdown>
-        </Description>
+      <Description>
+        <ReactMarkdown>{work.description}</ReactMarkdown>
+      </Description>
 
-        <ButtonWrapper>
-          <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }}>
-            {work.isClosed ? "似た案件がないか相談する" : "案件の話を聞く"}
-          </Button>
-          <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
-            {hasBookmark ? "お気に入り解除" : "お気に入り登録"}
-          </Button>
-        </ButtonWrapper>
-      </CustomCardActionArea>
-    </>
+      <ButtonWrapper>
+        <Button variant="contained" color="secondary" sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
+          {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
+        </Button>
+        <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
+          {isFavorite ? "お気に入り解除" : "お気に入り登録"}
+        </Button>
+      </ButtonWrapper>
+    </CustomCardActionArea>
   );
 }
 
 const Title = styled.div`
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
 `;
 
@@ -197,19 +216,32 @@ const FlexContainer = styled.div`
 
 const Text = styled.div`
   padding-left: 8px;
-  font-size: 12px;
+  font-size: 14px;
+`;
+
+const CustomCardActionArea = styled(Card)<{ selected: boolean; page?: string }>`
+  padding: 16px;
+  border-radius: 8px;
+  max-height: ${({ selected, page }) => (page === "favorite" ? "calc(100dvh - 113px)" : selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  overflow: scroll;
+  background-color: white;
+  position: sticky;
+  top: ${({ selected, page }) => (page === "favorite" ? "113px" : selected ? "198px" : "166px")};
+`;
+
+const CustomCardActionSkeletonArea = styled(Card)<{ selected: boolean; page?: string }>`
+  border-radius: 8px;
+  max-height: ${({ selected, page }) => (page === "favorite" ? "calc(100dvh - 113px)" : selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  overflow: scroll;
+  background-color: white;
+  position: sticky;
+  top: ${({ selected, page }) => (page === "favorite" ? "113px" : selected ? "198px" : "166px")};
 `;
 
 const Description = styled.div`
   * {
     all: revert;
   }
-`;
-
-const CustomCardActionArea = styled(Card)`
-  padding: 16px;
-  background-color: white;
-  border-radius: 0px;
 `;
 
 const ButtonWrapper = styled.div`

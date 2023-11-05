@@ -1,4 +1,4 @@
-import { runningInBrowser } from "@/hooks/use-match-media";
+const runningInBrowser = typeof window !== "undefined";
 
 export const handleLocalStorage = () => {
   const setLocalStorage = (key: string, data: unknown) => {

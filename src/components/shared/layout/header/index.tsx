@@ -20,7 +20,9 @@ export function LayoutHeader() {
   const router = useRouter();
   const [inputValue, setInputValue] = useState("");
 
-  const pages = user ? ["お気に入り一覧", "応募済み一覧", user && user?.email, "ログアウト"] : ["お気に入り一覧", "応募済み一覧", "ログイン"];
+  const pages = user
+    ? ["お気に入り一覧", "応募済み一覧", user && user?.email, "ログアウト"]
+    : ["お気に入り一覧", "応募済み一覧", "ログイン"];
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -34,12 +36,23 @@ export function LayoutHeader() {
       : { ...removeObjectKey(router.query, "keyword") };
 
   const handleCloseNavMenu = async (target?: string) => {
-    if (target === "ログアウト") {
-      await execLogout();
-    } else if (target === "ログイン") {
-      await execLogin();
-    } else {
-      setAnchorElNav(null);
+    switch (target) {
+      case "ログアウト":
+        await execLogout();
+        break;
+      case "ログイン":
+        await execLogin();
+        break;
+      case "お気に入り一覧":
+        router.push("/user/favorite");
+        setAnchorElNav(null);
+        break;
+      case "応募済み一覧":
+        router.push("/user/apply");
+        setAnchorElNav(null);
+        break;
+      default:
+        setAnchorElNav(null);
     }
   };
 

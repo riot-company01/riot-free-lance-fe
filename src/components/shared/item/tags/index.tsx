@@ -2,6 +2,7 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { CardActionArea } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import type { MouseEventHandler } from "react";
 import { useAuth } from "@/hooks/use-auth";
@@ -10,33 +11,35 @@ import { COLOR } from "@/styles/colors";
 
 type Props = {
   isViewed: boolean;
-  hasBookmark: boolean;
+  isFavorite: boolean;
   userId?: string;
   workId: number;
 };
 
-export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
+export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
   const { addFavorite, deleteFavorite } = useFavorite();
   const { execLogin } = useAuth();
 
-  const onClick: MouseEventHandler<HTMLDivElement> = async (e) => {
-    if (userId && !hasBookmark) {
+  const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.stopPropagation();
+    if (userId && !isFavorite) {
       addFavorite({
         variables: {
           userId,
           workId,
         },
       });
+      return;
     }
-    if (userId && hasBookmark) {
+    if (userId && isFavorite) {
       deleteFavorite({
         variables: {
           userId,
           workId,
         },
       });
+      return;
     }
-    e.stopPropagation();
     await execLogin();
   };
   return (
@@ -47,8 +50,8 @@ export function Tags({ isViewed, hasBookmark, userId, workId }: Props) {
         <CustomTag>面談一回</CustomTag>
         <CustomTag>高単価</CustomTag>
       </CustomTagWrapper>
-      <FavoriteButton onClick={onClick} role="button">
-        {hasBookmark ? (
+      <FavoriteButton onClick={onClick} role="button" data-identify-name="favoriteButton">
+        {isFavorite ? (
           <FavoriteIcon
             fontSize="large"
             style={{
@@ -104,7 +107,7 @@ const CustomTagWrapper = styled.div`
   padding-left: 48px;
 `;
 
-const FavoriteButton = styled.div`
+const FavoriteButton = styled(CardActionArea)`
   position: absolute;
   top: 0;
   right: 0;
@@ -113,6 +116,7 @@ const FavoriteButton = styled.div`
   justify-content: center;
   height: 50px;
   width: 50px;
+  border-radius: 50%;
 `;
 
 const CustomTag = styled.div`

@@ -1,12 +1,28 @@
 import { useMutation } from "@apollo/client";
-import { AddFavoriteDocument, GetUserToFavoritedWorksDocument, DeleteFavoriteDocument } from "@/lib/graphql/graphql";
+import { useAuth } from "@/hooks/use-auth";
+import { AddFavoriteDocument, DeleteFavoriteDocument, GetUserToWorksDocument } from "@/lib/graphql/graphql";
 
 export function useFavorite() {
+  const { user } = useAuth();
   const [addFavorite] = useMutation(AddFavoriteDocument, {
-    refetchQueries: [GetUserToFavoritedWorksDocument],
+    refetchQueries: [
+      {
+        query: GetUserToWorksDocument,
+        variables: {
+          id: user?.sub,
+        },
+      },
+    ],
   });
   const [deleteFavorite] = useMutation(DeleteFavoriteDocument, {
-    refetchQueries: [GetUserToFavoritedWorksDocument],
+    refetchQueries: [
+      {
+        query: GetUserToWorksDocument,
+        variables: {
+          id: user?.sub,
+        },
+      },
+    ],
   });
   return {
     addFavorite,
