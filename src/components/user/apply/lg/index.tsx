@@ -1,114 +1,77 @@
 import { useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import { CustomCard } from "@/components/user/common/card/lg";
-import { Detail } from "@/components/user/common/detail/lg";
-import { GetAppliedWorksDocument } from "@/lib/graphql/graphql";
-import type { GetUserToFavoritedWorksQuery, GetAppliedQuery } from "@/lib/graphql/graphql";
+import { Detail as _Detail } from "@/components/works/lg/detail";
+import { Item } from "@/components/works/shared/item";
+import { useAuth } from "@/hooks/use-auth";
+import { GetUserToWorksDocument } from "@/lib/graphql/graphql";
 
-type AppliedListProps = {
-  worksData: GetAppliedQuery | undefined;
-  favoriteData: GetUserToFavoritedWorksQuery["users_by_pk"] | undefined;
-};
-
-function AppliedLg({ worksData, favoriteData }: AppliedListProps) {
+export function AppliedLg() {
   const router = useRouter();
-  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
-  const [hasAppliedIdArray, setHasAppliedIdArray] = useState<(number | undefined)[]>([]);
-  const { user } = useUser();
-  const { data: appliedData } = useQuery(GetAppliedWorksDocument, { variables: { id: user?.sub } });
+  const { user } = useAuth();
+  const { data: userData } = useQuery(GetUserToWorksDocument, {
+    skip: !user?.sub,
+    variables: {
+      id: user?.sub as string,
+    },
+  });
 
-  useEffect(() => {
-    if (!favoriteData || !worksData || !appliedData) return;
-
-    const userFavoriteWorkData = favoriteData.userToFavoritedWorks.map((item) => {
-      return item.workId;
-    });
-    setHasFavoriteIdArray(userFavoriteWorkData);
-
-    const userAppliedWorkData = appliedData.users[0].userToApplyWorks.map((item) => {
-      return item.workId;
-    });
-    setHasAppliedIdArray(userAppliedWorkData);
-  }, [favoriteData, worksData, appliedData]);
-
-  useEffect(() => {
-    // ページをリロード時に指定のURLに遷移させる
-    const isReloaded = performance.navigation.type === 1;
-
-    if (isReloaded) {
-      const currentUrl = router.asPath;
-
-      const targetURL = "/user/apply";
-      if (currentUrl !== targetURL) {
-        router.push("/user/apply");
-      }
-    }
-  }, []);
+  const id = Number(router.query["work-id"]) || userData?.users_by_pk?.userToApplyWorks[0].workId;
+  const focusItemIsFavorite = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
+  const focusItemIsApplied = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
 
   return (
-    <WorksContainer>
-      <Column>
-        {worksData
-          ? worksData?.users[0].userToApplyWorks.map(({ work }, idx) => {
-              if (!work) return;
-              const isFavorite = favoriteData?.userToFavoritedWorks.some(({ workId }) => {
-                return workId === work?.id;
-              });
-              return (
-                <CustomCard key={idx} item={work} hasFavorite={isFavorite} userToFavoriteWorksData={favoriteData} />
-              );
-            })
-          : [...Array(5)].map((_, idx) => {
-              return (
-                <WrapperSkeleton key={idx}>
-                  <CustomSkeleton key={idx} variant="rectangular" height={"100%"} />
-                </WrapperSkeleton>
-              );
-            })}
-        <PaginationWrapper>
-          <Pagination count={1} variant="outlined" shape="rounded" size="large" />
-        </PaginationWrapper>
-      </Column>
+    <Wrapper>
+      <WorksContainer>
+        <Column>
+          {userData && userData.users_by_pk && userData.users_by_pk.userToApplyWorks
+            ? userData.users_by_pk.userToApplyWorks.map((item, idx) => {
+                if (!item.work) return;
+                const isFavorite = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === item.workId);
+                return <Item key={idx} item={item.work} isFavorite={!!isFavorite} userId={userData?.users_by_pk?.id} />;
+              })
+            : [...Array(5)].map((_, idx) => {
+                return (
+                  <WrapperSkeleton key={idx}>
+                    <CustomSkeleton
+                      key={idx}
+                      variant="rectangular"
+                      height={400}
+                      sx={{
+                        borderRadius: 2,
+                      }}
+                    />
+                  </WrapperSkeleton>
+                );
+              })}
+          <PaginationWrapper>
+            <Pagination count={1} variant="outlined" shape="rounded" size="large" />
+          </PaginationWrapper>
+        </Column>
 
-      <DetailWrapper>
-        <Detail
-          defaultWorkId={worksData?.users[0].userToApplyWorks[0].workId}
-          hasFavoriteIdArray={hasFavoriteIdArray}
-          userToFavoriteWorksData={favoriteData}
-          hasAppliedIdArray={hasAppliedIdArray}
-        />
-      </DetailWrapper>
-    </WorksContainer>
+        <DetailWrapper>
+          <Detail page="favorite" id={id} isFavorite={!!focusItemIsFavorite} isApplied={!!focusItemIsApplied} userId={userData?.users_by_pk?.id} />
+        </DetailWrapper>
+      </WorksContainer>
+    </Wrapper>
   );
 }
-
-const WorksContainer = styled.div`
-  position: sticky;
+const Wrapper = styled.div`
   display: flex;
-  justify-content: space-evenly;
-  margin-bottom: 40px;
-`;
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 1170px;
-  margin-top: 40px;
+  justify-content: center;
+  margin: 40px 0;
 `;
 
 const WrapperSkeleton = styled.div`
-  border: 1px solid rgb(224, 224, 224);
   width: 480px;
+  margin-left: 2px;
   :not(:first-of-type) {
     margin-top: 16px;
   }
   max-width: 480px;
   background-color: white;
-  height: 428px;
+  height: 400px;
   border-radius: 8px;
 `;
 
@@ -116,13 +79,30 @@ const CustomSkeleton = styled(Skeleton)`
   border-radius: 8px;
 `;
 
+const DetailWrapper = styled.div`
+  width: 100%;
+  max-width: calc(1320px - 400px);
+  margin: 0 32px;
+`;
+
+const Detail = styled(_Detail)`
+  & > div {
+    top: 0px;
+  }
+`;
+
+const WorksContainer = styled.div`
+  position: sticky;
+  display: flex;
+  width: 100%;
+  max-width: 1320px;
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const PaginationWrapper = styled.div`
   padding: 40px 0;
 `;
-
-const DetailWrapper = styled.div`
-  width: 100%;
-  max-width: calc(1320px - 200px - 400px);
-`;
-
-export default AppliedLg;

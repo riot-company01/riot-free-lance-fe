@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
+import { NoItem } from "@/components/user/common/no-item";
 import { Detail as _Detail } from "@/components/works/lg/detail";
 import { Item } from "@/components/works/shared/item";
 import { useAuth } from "@/hooks/use-auth";
@@ -17,9 +18,11 @@ export function FavoriteLg() {
     },
   });
 
-  const id = Number(router.query["work-id"]) || userData?.users_by_pk?.userToFavoritedWorks[0].workId;
+  const id = Number(router.query["work-id"]) || userData?.users_by_pk?.userToFavoritedWorks[0]?.workId;
   const focusItemIsFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
   const focusItemIsApplied = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
+
+  if (!id) return <NoItem pageTitle="favorite" />;
 
   return (
     <Wrapper>

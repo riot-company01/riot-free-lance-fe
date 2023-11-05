@@ -5,10 +5,6 @@ import { FavoriteMd } from "@/components/user/favorite/md";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
 
 function Favorite() {
-  // if (userToWorksData?.users_by_pk?.userToFavoritedWorks.length === 0) {
-  //   return <NoItem pageTitle="favorite" />;
-  // }
-
   return (
     <>
       <Box
