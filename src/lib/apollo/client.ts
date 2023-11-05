@@ -28,7 +28,10 @@ export const initializeApollo = (initialState?: unknown) => {
   if (initialState) {
     const existingCache = _apolloClient.cache.extract();
     const data = deepMerge(initialState, existingCache, {
-      arrayMerge: (destinationArray, sourceArray) => [...sourceArray, ...destinationArray.filter((d) => sourceArray.every((s) => !isEqual(d, s)))],
+      arrayMerge: (destinationArray, sourceArray) => [
+        ...sourceArray,
+        ...destinationArray.filter((d) => sourceArray.every((s) => !isEqual(d, s))),
+      ],
     });
 
     _apolloClient.cache.restore(data);

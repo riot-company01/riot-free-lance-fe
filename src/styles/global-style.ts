@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { blue } from "@mui/material/colors";
 import { destyle } from "./destyle";
 import { COLOR } from "@/styles/colors";
 
@@ -18,15 +19,15 @@ export const GLOBAL_STYLE = css`
   }
 
   :is(input, textarea, button, select, a):focus-visible {
-    outline: 2px solid ${COLOR.BASE_COLOR.code};
+    outline: 2px solid ${blue[500]};
     outline-offset: -2px;
   }
   html,
   body {
-    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", sans-serif;
     line-height: 1.6;
     overscroll-behavior: none;
-    font-weight: 300;
+    font-weight: 500;
     background-color: ${COLOR.WHITE.code};
   }
 `;

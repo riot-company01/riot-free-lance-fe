@@ -11,7 +11,7 @@ import { sortBy, map, groupBy } from "lodash-es";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Modal } from "@/components/common/modal";
+import { Modal } from "@/components/shared/modal";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
 import { MD_GLOBAL_NAVIGATION } from "@/constants";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";

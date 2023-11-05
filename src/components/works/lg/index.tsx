@@ -1,20 +1,38 @@
+import { useQuery } from "@apollo/client";
+import type { UserProfile } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
+import { useRouter } from "next/router";
+import { Detail } from "@/components/shared/detail/lg";
+import { Item } from "@/components/shared/item";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
-import { CustomCard } from "@/components/works/lg/card";
-import { Detail } from "@/components/works/lg/detail";
+
 import { Filter } from "@/components/works/lg/filter";
 import { LeftNavig } from "@/components/works/lg/left-navig";
 import { LG_GLOBAL_NAVIGATION } from "@/constants";
-import type { GetSkillsQuery, GetWorksQuery } from "@/lib/graphql/graphql";
+import { GetUserToWorksDocument, type GetSkillsQuery, type GetWorksQuery } from "@/lib/graphql/graphql";
+import { COLOR } from "@/styles/colors";
 
 type Props = {
   skills?: GetSkillsQuery["skills"];
   selectedSkillIds: string[];
   worksData?: GetWorksQuery;
+  user?: UserProfile;
 };
 
-export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
+export function WorksLg({ skills, selectedSkillIds, worksData, user }: Props) {
+  const router = useRouter();
+  const { data: userData } = useQuery(GetUserToWorksDocument, {
+    skip: !user?.sub,
+    variables: {
+      id: user?.sub as string,
+    },
+  });
+
+  const id = Number(router.query["work-id"]) || worksData?.works[0].id;
+  const focusItemIsFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
+  const focusItemIsApplied = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
+
   return (
     <Wrapper>
       <NavigContainer>
@@ -34,7 +52,9 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
           <Column>
             {worksData
               ? worksData?.works.map((item, idx) => {
-                  return <CustomCard key={idx} item={item} />;
+                  const isFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
+
+                  return <Item key={idx} item={item} isFavorite={!!isFavorite} userId={userData?.users_by_pk?.id} />;
                 })
               : [...Array(5)].map((_, idx) => {
                   return (
@@ -55,7 +75,9 @@ export function WorksLg({ skills, selectedSkillIds, worksData }: Props) {
             </PaginationWrapper>
           </Column>
 
-          <DetailWrapper>{<Detail defaultWorkId={worksData?.works[0].id} />}</DetailWrapper>
+          <DetailWrapper>
+            <Detail id={id} isFavorite={!!focusItemIsFavorite} isApplied={!!focusItemIsApplied} userId={userData?.users_by_pk?.id} />
+          </DetailWrapper>
         </WorksContainer>
       </KeyWordContainer>
     </Wrapper>
@@ -68,8 +90,8 @@ const Wrapper = styled.div`
 `;
 
 const WrapperSkeleton = styled.div`
-  border: 1px solid rgb(224, 224, 224);
   width: 480px;
+  margin-left: 2px;
   :not(:first-of-type) {
     margin-top: 16px;
   }
@@ -113,8 +135,7 @@ const KeyWordFixed = styled.div`
   top: ${LG_GLOBAL_NAVIGATION.HEADER}px;
   padding: 16px 0;
   z-index: ${WORKS_Z_INDEX.FILTER};
-
-  background-color: #f5f5f5;
+  background: ${COLOR.WHITE.code};
   max-width: calc(1320px - 200px);
 `;
 

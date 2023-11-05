@@ -1,26 +1,17 @@
 import { useQuery } from "@apollo/client";
-import type { UserProfile } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
-
 import { useRouter } from "next/router";
 import { Detail } from "@/components/shared/detail/md";
 import { Item } from "@/components/shared/item";
 import { Modal } from "@/components/shared/modal";
-
-import { Filter } from "@/components/works/md/filter";
 import { BREAK_POINT } from "@/constants";
-import { type GetSkillsQuery, type GetWorksQuery, GetUserToWorksDocument } from "@/lib/graphql/graphql";
+import { useAuth } from "@/hooks/use-auth";
+import { GetUserToWorksDocument } from "@/lib/graphql/graphql";
 
-type Props = {
-  skills?: GetSkillsQuery["skills"];
-  selectedSkillIds: string[];
-  worksData?: GetWorksQuery;
-  user?: UserProfile;
-};
-
-export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
+export function FavoriteMd() {
   const router = useRouter();
+  const { user } = useAuth();
   const { data: userData } = useQuery(GetUserToWorksDocument, {
     skip: !user?.sub,
     variables: {
@@ -30,15 +21,15 @@ export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
 
   const id = Number(router.query["work-id"]);
   const focusItemHasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
+
   return (
     <Div>
-      <Filter defaultFilters={skills} selectedSkillIds={selectedSkillIds} worksLength={worksData?.works.length} />
       <Wrapper>
-        {worksData
-          ? worksData?.works.map((item, idx) => {
-              const isFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.id);
-
-              return <Item key={idx} item={item} isFavorite={!!isFavorite} userId={userData?.users_by_pk?.id} />;
+        {userData && userData.users_by_pk && userData.users_by_pk.userToFavoritedWorks
+          ? userData?.users_by_pk.userToFavoritedWorks.map(({ work }, idx) => {
+              if (!work) return;
+              const isFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === work.id);
+              return <Item key={idx} item={work} isFavorite={!!isFavorite} userId={userData?.users_by_pk?.id} />;
             })
           : [...Array(5)].map((_, idx) => {
               return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;
@@ -63,7 +54,8 @@ export function WorksMd({ worksData, skills, selectedSkillIds, user }: Props) {
 const Wrapper = styled.div`
   display: grid;
   grid-gap: 16px;
-  @media (min-width: ${BREAK_POINT.md}px) {
+  margin-top: 40px;
+  @media (min-width: ${BREAK_POINT.sm}px) {
     grid-template-columns: 1fr 1fr;
   }
 `;

@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import { GetWorksDocument, GetSkillsDocument, Order_By } from "@/lib/graphql/graphql";
 
@@ -24,6 +25,7 @@ const title = (keyword: string) => {
 
 export function useApiRequest() {
   const router = useRouter();
+  const { user } = useUser();
   const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
   const inputKeyword = (router.query["keyword"] as string) || "";
   const sort = (router.query["sort"] as string) || "";
@@ -93,5 +95,6 @@ export function useApiRequest() {
       },
     },
   });
-  return { skillsData, worksData };
+
+  return { skillsData, worksData, user };
 }

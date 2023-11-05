@@ -1,32 +1,29 @@
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { Box } from "@mui/material";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useApiRequest } from "@/components/works/hooks/use-api-request";
+import { useQueryParam } from "@/components/works/hooks/use-query-param";
 import { WorksLg } from "@/components/works/lg";
 import { WorksMd } from "@/components/works/md";
 import { NotResult } from "@/components/works/shared/not-result";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
-import { initializeApollo, addApolloState } from "@/lib/apollo/client";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 
-export const getServerSideProps = withPageAuthRequired({
-  // @ts-ignore
-  async getServerSideProps() {
-    const client = initializeApollo({});
-    const documentProps = addApolloState(client, {
-      props: {},
-    });
-    return {
-      props: documentProps.props,
-    };
-  },
-});
+// export const getServerSideProps = withPageAuthRequired({
+//   // @ts-ignore
+//   async getServerSideProps() {
+//     const client = initializeApollo({});
+//     const documentProps = addApolloState(client, {
+//       props: {},
+//     });
+//     return {
+//       props: documentProps.props,
+//     };
+//   },
+// });
 
 function Works() {
-  const { skillsData, worksData } = useApiRequest();
-  const router = useRouter();
-  const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
+  const { skillsData, worksData, user } = useApiRequest();
+  const { selectedSkillIds } = useQueryParam();
   const [skills, setSkills] = useState<GetSkillsQuery["skills"] | undefined>([]);
 
   useEffect(() => {
@@ -35,9 +32,7 @@ function Works() {
     }
   }, [skillsData?.skills]);
 
-  if (worksData?.works.length === 0) {
-    return <NotResult />;
-  }
+  if (worksData?.works.length === 0) return <NotResult />;
 
   return (
     <>
@@ -47,7 +42,7 @@ function Works() {
           display: { ...LG_BREAK_POINT },
         }}
       >
-        <WorksLg skills={skills} selectedSkillIds={selectedSkillIds} worksData={worksData} />
+        <WorksLg skills={skills} selectedSkillIds={selectedSkillIds} worksData={worksData} user={user} />
       </Box>
       <Box
         component="div"
@@ -55,7 +50,7 @@ function Works() {
           display: { ...MD_BREAK_POINT },
         }}
       >
-        <WorksMd skills={skills} selectedSkillIds={selectedSkillIds} worksData={worksData} />
+        <WorksMd skills={skills} selectedSkillIds={selectedSkillIds} worksData={worksData} user={user} />
       </Box>
     </>
   );
