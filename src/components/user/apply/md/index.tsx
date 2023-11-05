@@ -20,7 +20,7 @@ export function AppliedMd() {
   });
 
   const id = Number(router.query["work-id"]);
-  const focusItemHasBookmark = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
+  const focusItemHasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
   const focusItemIsApplied = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
 
   return (
@@ -29,7 +29,7 @@ export function AppliedMd() {
         {userData && userData.users_by_pk && userData.users_by_pk.userToApplyWorks
           ? userData?.users_by_pk.userToApplyWorks.map(({ work }, idx) => {
               if (!work) return;
-              const isFavorite = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === work.id);
+              const isFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === work.id);
               return <Item key={idx} item={work} isFavorite={!!isFavorite} userId={userData?.users_by_pk?.id} />;
             })
           : [...Array(5)].map((_, idx) => {
