@@ -1,6 +1,8 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import { Box } from "@mui/material";
 import { FavoriteLg } from "@/components/user/favorite/lg";
+import { FavoriteMd } from "@/components/user/favorite/md";
+import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
 
 function Favorite() {
   // if (userToWorksData?.users_by_pk?.userToFavoritedWorks.length === 0) {
@@ -11,20 +13,20 @@ function Favorite() {
     <>
       <Box
         component="div"
-        // sx={{
-        //   display: { ...LG_BREAK_POINT },
-        // }}
+        sx={{
+          display: { ...LG_BREAK_POINT },
+        }}
       >
         <FavoriteLg />
       </Box>
-      {/* <Box
+      <Box
         component="div"
         sx={{
           display: { ...MD_BREAK_POINT },
         }}
       >
-        <FavoriteMd userToFavoritedWorks={userToWorksData?.users_by_pk?.userToFavoritedWorks} />
-      </Box> */}
+        <FavoriteMd />
+      </Box>
     </>
   );
 }

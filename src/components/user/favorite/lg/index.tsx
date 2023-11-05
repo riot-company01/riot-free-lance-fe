@@ -27,9 +27,8 @@ export function FavoriteLg() {
         <Column>
           {userData && userData.users_by_pk && userData.users_by_pk.userToFavoritedWorks
             ? userData.users_by_pk.userToFavoritedWorks.map((item, idx) => {
+                if (!item.work) return;
                 const isFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.workId);
-                console.log(item);
-
                 return <Item key={idx} item={item.work} isFavorite={!!isFavorite} userId={userData?.users_by_pk?.id} />;
               })
             : [...Array(5)].map((_, idx) => {

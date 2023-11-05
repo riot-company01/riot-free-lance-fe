@@ -1,68 +1,35 @@
 import { useQuery } from "@apollo/client";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
 import { Modal } from "@/components/common/modal";
-import { Card } from "@/components/user/common/card/md";
-import { Detail } from "@/components/user/common/detail/md";
+import { Detail } from "@/components/works/md/detail";
+import { Item } from "@/components/works/shared/item";
 import { BREAK_POINT } from "@/constants";
-import { GetAppliedWorksDocument } from "@/lib/graphql/graphql";
-import type { GetFavoriedQuery, GetUserToFavoritedWorksQuery } from "@/lib/graphql/graphql";
+import { useAuth } from "@/hooks/use-auth";
+import { GetUserToWorksDocument } from "@/lib/graphql/graphql";
 
-type Props = {
-  worksData: GetFavoriedQuery | undefined;
-  favoriteData: GetUserToFavoritedWorksQuery["users_by_pk"] | undefined;
-};
-
-export function FavoriteMd({ worksData, favoriteData }: Props) {
+export function FavoriteMd() {
   const router = useRouter();
+  const { user } = useAuth();
+  const { data: userData } = useQuery(GetUserToWorksDocument, {
+    skip: !user?.sub,
+    variables: {
+      id: user?.sub as string,
+    },
+  });
+
   const id = Number(router.query["work-id"]);
-  const [hasFavoriteIdArray, setHasFavoriteIdArray] = useState<(number | undefined)[]>([]);
-  const [hasAppliedIdArray, setHasAppliedIdArray] = useState<(number | undefined)[]>([]);
-  const { user } = useUser();
-  const { data: appliedData } = useQuery(GetAppliedWorksDocument, { variables: { id: user?.sub } });
-
-  useEffect(() => {
-    if (!favoriteData || !worksData || !appliedData) return;
-
-    const userFavoriteWorkData = favoriteData.userToFavoritedWorks.map((item) => {
-      return item.workId;
-    });
-    setHasFavoriteIdArray(userFavoriteWorkData);
-
-    const userAppliedWorkData = appliedData.users[0].userToApplyWorks.map((item) => {
-      return item.workId;
-    });
-    setHasAppliedIdArray(userAppliedWorkData);
-  }, [favoriteData, worksData, appliedData]);
-
-  useEffect(() => {
-    // ページをリロード時に指定のURLに遷移させる
-    const isReloaded = performance.navigation.type === 1;
-
-    if (isReloaded) {
-      const currentUrl = router.asPath;
-
-      const targetURL = "/user/favorite";
-      if (currentUrl !== targetURL) {
-        router.push("/user/favorite");
-      }
-    }
-  }, []);
+  const focusItemHasBookmark = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
 
   return (
     <Div>
       <Wrapper>
-        {worksData
-          ? worksData?.users[0].userToFavoritedWorks.map(({ work }, idx) => {
+        {userData && userData.users_by_pk && userData.users_by_pk.userToFavoritedWorks
+          ? userData?.users_by_pk.userToFavoritedWorks.map(({ work }, idx) => {
               if (!work) return;
-              const isFavorite = favoriteData?.userToFavoritedWorks.some(({ workId }) => {
-                return workId === work.id;
-              });
-
-              return <Card key={idx} item={work} hasFavorite={isFavorite} userToFavoriteWorksData={favoriteData} />;
+              const isFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === work.id);
+              return <Item key={idx} item={work} isFavorite={!!isFavorite} userId={userData?.users_by_pk?.id} />;
             })
           : [...Array(5)].map((_, idx) => {
               return <Skeleton key={idx} variant="rectangular" height={400} sx={{ borderRadius: 2 }} />;
@@ -78,12 +45,7 @@ export function FavoriteMd({ worksData, favoriteData }: Props) {
           router.back();
         }}
       >
-        <Detail
-          defaultWorkId={worksData?.users[0].userToFavoritedWorks[0].workId}
-          hasFavoriteIdArray={hasFavoriteIdArray}
-          userToFavoriteWorksData={favoriteData}
-          hasAppliedIdArray={hasAppliedIdArray}
-        />
+        <Detail id={id} isFavorite={!!focusItemHasBookmark} userId={userData?.users_by_pk?.id} />
       </Modal>
     </Div>
   );
