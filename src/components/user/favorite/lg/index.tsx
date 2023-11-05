@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
-import { NoItem } from "@/components/user/common/no-item";
+import { NoItem } from "@/components/user/shared/no-item";
 import { Detail as _Detail } from "@/components/works/lg/detail";
 import { Item } from "@/components/works/shared/item";
 import { useAuth } from "@/hooks/use-auth";
