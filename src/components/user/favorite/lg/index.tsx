@@ -83,7 +83,7 @@ const CustomSkeleton = styled(Skeleton)`
 
 const DetailWrapper = styled.div`
   width: 100%;
-  max-width: calc(1320px - 200px - 400px);
+  max-width: calc(1320px - 400px);
   margin: 0 32px;
 `;
 
@@ -96,8 +96,8 @@ const Detail = styled(_Detail)`
 const WorksContainer = styled.div`
   position: sticky;
   display: flex;
-
-  max-width: calc(1320px - 200px);
+  width: 100%;
+  max-width: 1320px;
 `;
 
 const Column = styled.div`
