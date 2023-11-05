@@ -8,19 +8,6 @@ import { NotResult } from "@/components/works/shared/not-result";
 import { LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
 import type { GetSkillsQuery } from "@/lib/graphql/graphql";
 
-// export const getServerSideProps = withPageAuthRequired({
-//   // @ts-ignore
-//   async getServerSideProps() {
-//     const client = initializeApollo({});
-//     const documentProps = addApolloState(client, {
-//       props: {},
-//     });
-//     return {
-//       props: documentProps.props,
-//     };
-//   },
-// });
-
 function Works() {
   const { skillsData, worksData, user } = useApiRequest();
   const { selectedSkillIds } = useQueryParam();
