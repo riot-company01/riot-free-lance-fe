@@ -4,8 +4,9 @@ import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 
 import { useRouter } from "next/router";
+import { Detail } from "@/components/common/detail/md";
 import { Modal } from "@/components/common/modal";
-import { Detail } from "@/components/works/md/detail";
+
 import { Filter } from "@/components/works/md/filter";
 import { Item } from "@/components/works/shared/item";
 import { BREAK_POINT } from "@/constants";

@@ -3,8 +3,9 @@ import type { UserProfile } from "@auth0/nextjs-auth0/client";
 import styled from "@emotion/styled";
 import { Pagination, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
+import { Detail } from "@/components/common/detail/lg";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
-import { Detail } from "@/components/works/lg/detail";
+
 import { Filter } from "@/components/works/lg/filter";
 import { LeftNavig } from "@/components/works/lg/left-navig";
 import { Item } from "@/components/works/shared/item";
