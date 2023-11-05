@@ -10,6 +10,7 @@ import { Button, Card, Skeleton } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+import { loadingVar } from "@/global-state";
 import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
@@ -26,7 +27,7 @@ type Props = {
 export function Detail({ id, isFavorite, userId, isApplied }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const { execLogin } = useAuth();
+  const { execLogin, user } = useAuth();
   const { addFavorite, deleteFavorite } = useFavorite();
 
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
@@ -56,6 +57,7 @@ export function Detail({ id, isFavorite, userId, isApplied }: Props) {
   };
 
   const handleClickApplied = () => {
+    !user && loadingVar(true);
     router.push({
       pathname: `apply/${id}`,
     });

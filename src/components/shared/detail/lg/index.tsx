@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
+import { loadingVar } from "@/global-state";
 import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { GetWorkDocument } from "@/lib/graphql/graphql";
@@ -28,7 +29,8 @@ export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const { addFavorite, deleteFavorite } = useFavorite();
-  const { execLogin } = useAuth();
+  const { execLogin, user } = useAuth();
+  console.log(user);
 
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
@@ -57,6 +59,7 @@ export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
   };
 
   const handleClickApplied = () => {
+    !user && loadingVar(true);
     router.push({
       pathname: `apply/${id}`,
     });

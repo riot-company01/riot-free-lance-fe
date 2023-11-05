@@ -7,14 +7,12 @@ export function useAuth() {
   const { user } = useUser();
 
   async function execLogin() {
-    loadingVar(true);
+    !user && loadingVar(true);
     await router.push("/api/auth/login");
-    loadingVar(false);
   }
   async function execLogout() {
-    loadingVar(true);
+    user && loadingVar(true);
     await router.push("/api/auth/logout");
-    loadingVar(false);
   }
   return {
     execLogin,

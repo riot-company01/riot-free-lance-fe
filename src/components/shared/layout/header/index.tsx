@@ -44,15 +44,13 @@ export function LayoutHeader() {
         await execLogin();
         break;
       case "お気に入り一覧":
-        loadingVar(true);
+        !user && loadingVar(true);
         router.push("/user/favorite");
-        loadingVar(false);
         setAnchorElNav(null);
         break;
       case "応募済み一覧":
-        loadingVar(true);
+        !user && loadingVar(true);
         router.push("/user/apply");
-        loadingVar(false);
         setAnchorElNav(null);
         break;
       default:
