@@ -9,7 +9,7 @@ import { EditProfileDocument, GetUserDocument, GetUserToWorksDocument, GetWorkDo
 
 export const useApplication = () => {
   const { user } = useAuth();
-  const { query } = useRouter();
+  const { query, asPath } = useRouter();
 
   const { data: workData, loading: workLoading } = useQuery(GetWorkDocument, {
     variables: {
@@ -55,13 +55,16 @@ export const useApplication = () => {
       from_phone_number: phoneNumber,
       from_email: email,
     };
-    await send("service_3mxaipn", "template_lop0qms", template_param, "N0Z9VGngtSAYrSpz0");
-    await InsertAppliedMutation({
-      variables: {
-        id: user?.sub || "",
-        workId: Number(query.id),
-      },
-    });
+    if (asPath !== "/my") {
+      await send("service_3mxaipn", "template_lop0qms", template_param, "N0Z9VGngtSAYrSpz0");
+      await InsertAppliedMutation({
+        variables: {
+          id: user?.sub || "",
+          workId: Number(query.id),
+        },
+      });
+    }
+
     await editProfileMutation({
       variables: {
         id: user?.sub || "",
@@ -101,5 +104,6 @@ export const useApplication = () => {
     onChangeEmail,
     applicationWork,
     backToWorkList,
+    setOpenDialog,
   };
 };

@@ -1,38 +1,33 @@
 import styled from "@emotion/styled";
-import { Button, Dialog, DialogTitle, TextField as _TextField } from "@mui/material";
-import { Card } from "@/components/apply/card";
+import { Button, Snackbar, TextField as _TextField } from "@mui/material";
 import { useApplication } from "@/components/apply/hooks/use-application";
 import { CircularIndeterminate } from "@/components/shared/progress";
 
-export const Apply = () => {
+export const Profile = () => {
   const {
     userName,
     userNameKana,
     phoneNumber,
     email,
     openDialog,
-    workData,
-    workLoading,
     userLoading,
     onChangeUserName,
     onChangeUserNameKana,
     onChangePhoneNumber,
     onChangeEmail,
+    setOpenDialog,
     applicationWork,
-    backToWorkList,
   } = useApplication();
 
-  if (workLoading || userLoading) return <CircularIndeterminate />;
+  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+    setOpenDialog(false);
+  };
+
+  if (userLoading) return <CircularIndeterminate />;
 
   return (
     <Wrapper>
-      <Card item={workData?.works_by_pk} />
       <ProfileInfo>
-        <ProfileInfo>
-          <p>上記の案件に応募します</p>
-          <p>下記のボタンより案件へご応募ください</p>
-        </ProfileInfo>
-
         <DivWrapper>
           <DivTitleWrapper>
             <HeadContentTitle>名前</HeadContentTitle>
@@ -67,16 +62,11 @@ export const Apply = () => {
 
         <DivWrapper>
           <SendButton variant="contained" onClick={applicationWork} size="large" color="secondary">
-            案件に応募する
+            保存する
           </SendButton>
         </DivWrapper>
       </ProfileInfo>
-      <Dialog open={openDialog}>
-        <DialogTitle>案件への応募が完了しました</DialogTitle>
-        <BackButton variant="outlined" onClick={backToWorkList}>
-          一覧に戻る
-        </BackButton>
-      </Dialog>
+      <Snackbar open={openDialog} autoHideDuration={5000} message="更新が完了しました" onClose={handleClose} />
     </Wrapper>
   );
 };
@@ -99,10 +89,6 @@ const ProfileInfo = styled.div`
 const SendButton = styled(Button)`
   font-weight: bold;
   width: 100%;
-`;
-
-const BackButton = styled(Button)`
-  margin: 0 16px 16px 16px;
 `;
 
 const DivTitleWrapper = styled.div`

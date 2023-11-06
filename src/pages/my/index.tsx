@@ -8,6 +8,7 @@ import { AppliedLg } from "@/components/user/apply/lg";
 import { AppliedMd } from "@/components/user/apply/md";
 import { FavoriteLg } from "@/components/user/favorite/lg";
 import { FavoriteMd } from "@/components/user/favorite/md";
+import { Profile } from "@/components/user/profile";
 import { BREAK_POINT, COMMON_Z_INDEX, LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
 import { initializeApollo, addApolloState } from "@/lib/apollo/client";
 import { COLOR } from "@/styles/colors";
@@ -67,11 +68,15 @@ function My() {
         })}
       >
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="お気に入り" {...a11yProps(0)} />
-          <Tab label="応募済み" {...a11yProps(1)} />
+          <Tab label="プロフィール" {...a11yProps(0)} />
+          <Tab label="お気に入り" {...a11yProps(1)} />
+          <Tab label="応募済み" {...a11yProps(2)} />
         </Tabs>
       </CustomBox>
       <CustomTabPanel value={value} index={0}>
+        <Profile />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
         <>
           <Box
             component="div"
@@ -91,7 +96,7 @@ function My() {
           </Box>
         </>
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
+      <CustomTabPanel value={value} index={2}>
         <>
           <Box
             component="div"
