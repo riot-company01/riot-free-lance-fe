@@ -30,7 +30,6 @@ export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const { addFavorite, deleteFavorite } = useFavorite();
   const { execLogin, user } = useAuth();
-  console.log(user);
 
   // TODO:検索を切り替えた時にときにdetail検索が維持されるのだめ
   const [exec, { data }] = useLazyQuery(GetWorkDocument);
