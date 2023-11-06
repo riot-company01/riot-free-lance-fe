@@ -26,8 +26,10 @@ export const BREAK_POINT = {
 };
 
 export const COMMON_Z_INDEX = {
-  HEADER: responsiveFontSizes(createTheme()).zIndex.appBar as 1100,
-  MODAL: responsiveFontSizes(createTheme()).zIndex.modal as 1300,
+  HEADER: 1100,
+  TAB: 1000,
+  MODAL: 1300,
+  LOADING: 9999,
 } as const;
 
 export const LG_GLOBAL_NAVIGATION = {

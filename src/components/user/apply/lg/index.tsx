@@ -19,7 +19,7 @@ export function AppliedLg() {
   });
 
   const id = Number(router.query["work-id"]) || userData?.users_by_pk?.userToApplyWorks[0].workId;
-  const focusItemIsFavorite = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
+  const focusItemIsFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === id);
   const focusItemIsApplied = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === id);
 
   if (userData?.users_by_pk?.userToApplyWorks.length === 0) return <NoItem pageTitle="apply" />;
@@ -31,7 +31,7 @@ export function AppliedLg() {
           {userData && userData.users_by_pk && userData.users_by_pk.userToApplyWorks
             ? userData.users_by_pk.userToApplyWorks.map((item, idx) => {
                 if (!item.work) return;
-                const isFavorite = userData?.users_by_pk?.userToApplyWorks.some((i) => i.workId === item.workId);
+                const isFavorite = userData?.users_by_pk?.userToFavoritedWorks.some((i) => i.workId === item.workId);
                 return <Item key={idx} item={item.work} isFavorite={!!isFavorite} userId={userData?.users_by_pk?.id} />;
               })
             : [...Array(5)].map((_, idx) => {
