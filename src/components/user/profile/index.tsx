@@ -19,7 +19,7 @@ export const Profile = () => {
     applicationWork,
   } = useApplication();
 
-  const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+  const handleClose = () => {
     setOpenDialog(false);
   };
 
