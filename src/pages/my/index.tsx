@@ -1,3 +1,4 @@
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { styled } from "@mui/material";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
@@ -8,6 +9,7 @@ import { AppliedMd } from "@/components/user/apply/md";
 import { FavoriteLg } from "@/components/user/favorite/lg";
 import { FavoriteMd } from "@/components/user/favorite/md";
 import { BREAK_POINT, COMMON_Z_INDEX, LG_BREAK_POINT, MD_BREAK_POINT } from "@/constants";
+import { initializeApollo, addApolloState } from "@/lib/apollo/client";
 import { COLOR } from "@/styles/colors";
 
 interface TabPanelProps {
@@ -33,7 +35,20 @@ function a11yProps(index: number) {
   };
 }
 
-export default function BasicTabs() {
+export const getServerSideProps = withPageAuthRequired({
+  // @ts-ignore
+  async getServerSideProps() {
+    const client = initializeApollo({});
+    const documentProps = addApolloState(client, {
+      props: {},
+    });
+    return {
+      props: documentProps.props,
+    };
+  },
+});
+
+function My() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -106,3 +121,5 @@ const CustomBox = styled(Box)`
     top: 73px;
   }
 `;
+
+export default My;
