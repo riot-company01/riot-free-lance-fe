@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import OutboundIcon from "@mui/icons-material/Outbound";
 import { blue } from "@mui/material/colors";
 import NextLink from "next/link";
-import { BREAK_POINT, COMMON_Z_INDEX, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
+import { BREAK_POINT, COMMON_Z_INDEX, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION, PATHS } from "@/constants";
 
 export const LayoutFooter: React.FC = () => {
   return (
@@ -13,11 +13,11 @@ export const LayoutFooter: React.FC = () => {
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        <NextLink href="/terms">利用規約</NextLink>
+        <NextLink href={PATHS.TERMS}>利用規約</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />
-        <NextLink href="/privacy">プライバシーポリシー</NextLink>
+        <NextLink href={PATHS.PRIVACY}>プライバシーポリシー</NextLink>
       </div>
       <div>
         <OutboundIcon fontSize="small" />

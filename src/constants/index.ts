@@ -41,3 +41,12 @@ export const MD_GLOBAL_NAVIGATION = {
   HEADER: 64,
   FOOTER: 64,
 };
+
+export const PATHS = {
+  USER_PROFILE: "/user/profile",
+  USER_APPLY: "/user/apply",
+  USER_FAVORITE: "/user/favorite",
+  WORKS: "/works",
+  PRIVACY: "/privacy",
+  TERMS: "/terms",
+};

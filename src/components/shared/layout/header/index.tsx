@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
 import { RLogo } from "@/components/shared/logo";
-import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
+import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION, PATHS } from "@/constants";
 import { loadingVar } from "@/global-state";
 import { useAuth } from "@/hooks/use-auth";
 import { removeObjectKey } from "@/util/remove-object-key";
@@ -61,7 +61,7 @@ export function LayoutHeader() {
             variant="h6"
             noWrap
             component="a"
-            href="/works"
+            href={PATHS.WORKS}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
