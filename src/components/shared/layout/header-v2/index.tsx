@@ -66,7 +66,7 @@ export function HeaderV2() {
               if (e.code === "Enter") {
                 e.preventDefault();
                 router.push({
-                  pathname: "works/",
+                  pathname: `${PATHS.WORKS}`,
                   query: {
                     ...filteredQuery,
                   },
