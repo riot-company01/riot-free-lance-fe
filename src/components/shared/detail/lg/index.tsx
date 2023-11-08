@@ -59,7 +59,7 @@ export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
 
   const handleClickApplied = () => {
     !user && loadingVar(true);
-    const current = sessionStorage.setItem("currentUrl", router.asPath);
+    sessionStorage.setItem("currentUrl", router.asPath);
     router.push({
       pathname: `apply/${id}`,
     });
