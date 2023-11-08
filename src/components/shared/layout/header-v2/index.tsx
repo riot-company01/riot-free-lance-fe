@@ -5,6 +5,7 @@ import { blue } from "@mui/material/colors";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { RLogo } from "@/components/shared/logo";
 import { BREAK_POINT, COMMON_Z_INDEX, PATHS } from "@/constants";
 import { removeObjectKey } from "@/util/remove-object-key";
 
@@ -23,8 +24,12 @@ export function HeaderV2() {
   console.log(asPath);
   return (
     <Wrapper>
-      <RightWrapper className="left">
-        <LogoWrapper>logo</LogoWrapper>
+      <RightWrapper>
+        <LogoWrapper>
+          <NextLink href={PATHS.WORKS}>
+            <RLogo />
+          </NextLink>
+        </LogoWrapper>
         <NavigWrapper>
           <NextLink href={PATHS.USER_PROFILE}>
             <List selected={asPath.startsWith(PATHS.USER_PROFILE)}>プロフィール</List>
@@ -37,7 +42,7 @@ export function HeaderV2() {
           </NextLink>
         </NavigWrapper>
       </RightWrapper>
-      <LeftWrapper className="right">
+      <LeftWrapper>
         <Search>
           <SearchIconWrapper>
             <SearchIcon
@@ -106,7 +111,7 @@ const NavigWrapper = styled.div`
 `;
 
 const LogoWrapper = styled.div`
-  width: 70px;
+  width: 45px;
 `;
 
 const Search = muiStyled("div")(({ theme }) => ({
@@ -161,6 +166,6 @@ const List = styled.div<{ selected: boolean }>`
       border-bottom: 4px solid yellow;
     `}
   @media (min-width: ${BREAK_POINT.sm}px) {
-    height: 48px;
+    height: 49px;
   }
 `;

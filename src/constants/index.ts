@@ -33,12 +33,12 @@ export const COMMON_Z_INDEX = {
 } as const;
 
 export const LG_GLOBAL_NAVIGATION = {
-  HEADER: 73,
+  HEADER: 49,
   FOOTER: 73,
 };
 
 export const MD_GLOBAL_NAVIGATION = {
-  HEADER: 64,
+  HEADER: 45,
   FOOTER: 64,
 };
 
