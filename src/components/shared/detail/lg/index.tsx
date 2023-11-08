@@ -59,6 +59,7 @@ export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
 
   const handleClickApplied = () => {
     !user && loadingVar(true);
+    const current = sessionStorage.setItem("currentUrl", router.asPath);
     router.push({
       pathname: `apply/${id}`,
     });
@@ -110,7 +111,9 @@ export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
               return (
                 <>
                   <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
-                  <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
+                  <Span>
+                    万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)
+                  </Span>
                 </>
               );
             } else {
@@ -149,7 +152,13 @@ export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
           </Icon>
         </FlexContainer>
         <ButtonWrapper>
-          <Button variant="contained" disabled={isApplied} color={"secondary"} sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
+          <Button
+            variant="contained"
+            disabled={isApplied}
+            color={"secondary"}
+            sx={{ fontWeight: "bold" }}
+            onClick={handleClickApplied}
+          >
             {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
           </Button>
           <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
@@ -221,7 +230,8 @@ const Text = styled.div`
 const CustomCardActionArea = styled(Card)<{ selected: boolean; page?: string }>`
   padding: 16px;
   border-radius: 8px;
-  max-height: ${({ selected, page }) => (page === "favorite" ? "calc(100dvh - 113px)" : selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  max-height: ${({ selected, page }) =>
+    page === "favorite" ? "calc(100dvh - 113px)" : selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)"};
   overflow: scroll;
   background-color: white;
   position: sticky;
@@ -230,7 +240,8 @@ const CustomCardActionArea = styled(Card)<{ selected: boolean; page?: string }>`
 
 const CustomCardActionSkeletonArea = styled(Card)<{ selected: boolean; page?: string }>`
   border-radius: 8px;
-  max-height: ${({ selected, page }) => (page === "favorite" ? "calc(100dvh - 113px)" : selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)")};
+  max-height: ${({ selected, page }) =>
+    page === "favorite" ? "calc(100dvh - 113px)" : selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)"};
   overflow: scroll;
   background-color: white;
   position: sticky;

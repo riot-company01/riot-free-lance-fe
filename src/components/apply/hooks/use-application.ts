@@ -5,7 +5,13 @@ import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
 import { loadingVar } from "@/global-state";
 import { useAuth } from "@/hooks/use-auth";
-import { EditProfileDocument, GetUserDocument, GetUserToWorksDocument, GetWorkDocument, InsertAppliedMutationDocument } from "@/lib/graphql/graphql";
+import {
+  EditProfileDocument,
+  GetUserDocument,
+  GetUserToWorksDocument,
+  GetWorkDocument,
+  InsertAppliedMutationDocument,
+} from "@/lib/graphql/graphql";
 
 export const useApplication = () => {
   const { user } = useAuth();
@@ -18,6 +24,7 @@ export const useApplication = () => {
   });
 
   const { data: userData, loading: userLoading } = useQuery(GetUserDocument, {
+    fetchPolicy: "network-only",
     variables: {
       id: user?.sub,
     },
@@ -79,7 +86,12 @@ export const useApplication = () => {
   };
 
   const backToWorkList = () => {
-    router.back();
+    const currentUrl = sessionStorage.getItem("currentUrl");
+    if (currentUrl) {
+      router.push(currentUrl);
+    } else {
+      router.push("/works");
+    }
   };
 
   useEffect(() => {
