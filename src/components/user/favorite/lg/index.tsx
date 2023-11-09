@@ -54,7 +54,13 @@ export function FavoriteLg() {
         </Column>
 
         <DetailWrapper>
-          <Detail page="favorite" id={id} isFavorite={!!focusItemIsFavorite} isApplied={!!focusItemIsApplied} userId={userData?.users_by_pk?.id} />
+          <Detail
+            page="favorite"
+            id={id}
+            isFavorite={!!focusItemIsFavorite}
+            isApplied={!!focusItemIsApplied}
+            userId={userData?.users_by_pk?.id}
+          />
         </DetailWrapper>
       </WorksContainer>
     </Wrapper>

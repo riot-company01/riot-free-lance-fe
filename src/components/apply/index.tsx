@@ -186,7 +186,6 @@ const DivTitleWrapper = styled.div`
   margin-top: 32px;
   margin-bottom: 16px;
   display: flex;
-
   :last-of-type {
     margin-bottom: 32px;
   }
