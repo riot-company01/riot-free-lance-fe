@@ -36,7 +36,7 @@ export const Apply = () => {
           </ProfileInfo>
           <DivWrapper>
             <Stack component="form" noValidate onSubmit={handleSubmit(applicationWork)}>
-              <DivContener>
+              <DivContainer>
                 <DivTitleWrapper>
                   <HeadContentTitle>名前</HeadContentTitle>
                 </DivTitleWrapper>
@@ -58,8 +58,8 @@ export const Apply = () => {
                     />
                   )}
                 />
-              </DivContener>
-              <DivContener>
+              </DivContainer>
+              <DivContainer>
                 <DivTitleWrapper>
                   <HeadContentTitle>なまえ</HeadContentTitle>
                 </DivTitleWrapper>
@@ -81,8 +81,8 @@ export const Apply = () => {
                     />
                   )}
                 />
-              </DivContener>
-              <DivContener>
+              </DivContainer>
+              <DivContainer>
                 <DivTitleWrapper>
                   <HeadContentTitle>メールアドレス</HeadContentTitle>
                 </DivTitleWrapper>
@@ -104,8 +104,8 @@ export const Apply = () => {
                     />
                   )}
                 />
-              </DivContener>
-              <DivContener>
+              </DivContainer>
+              <DivContainer>
                 <DivTitleWrapper>
                   <HeadContentTitle>電話番号(ハイフンなし)</HeadContentTitle>
                 </DivTitleWrapper>
@@ -127,7 +127,7 @@ export const Apply = () => {
                     />
                   )}
                 />
-              </DivContener>
+              </DivContainer>
             </Stack>
           </DivWrapper>
 
@@ -204,7 +204,7 @@ const DivWrapper = styled.div`
   }
 `;
 
-const DivContener = styled.div`
+const DivContainer = styled.div`
   :last-of-type {
     margin-bottom: 32px;
   }
