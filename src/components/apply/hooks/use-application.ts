@@ -64,6 +64,9 @@ export const useApplication = () => {
     userName: {
       required: "名前を入力してください。",
     },
+    userNameKana: {
+      required: "名前()を入力してください。",
+    },
   };
 
   const [openDialog, setOpenDialog] = useState(false);
