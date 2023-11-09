@@ -1,10 +1,9 @@
 import styled from "@emotion/styled";
-import { Button, Dialog, DialogTitle, TextField } from "@mui/material";
+import { Button, Dialog, DialogTitle, TextField, Stack } from "@mui/material";
+import { Controller } from "react-hook-form";
 import { Card } from "@/components/apply/card";
 import { useApplication } from "@/components/apply/hooks/use-application";
 import { CircularIndeterminate } from "@/components/shared/progress";
-import { Stack } from "@mui/material";
-import { Controller } from "react-hook-form";
 import { BREAK_POINT } from "@/constants";
 
 export const Apply = () => {

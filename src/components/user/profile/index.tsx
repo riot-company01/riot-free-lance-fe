@@ -1,24 +1,13 @@
 import styled from "@emotion/styled";
 import { Button, Snackbar, Stack, TextField } from "@mui/material";
-import { CircularIndeterminate } from "@/components/shared/progress";
 import { Controller } from "react-hook-form";
+import { CircularIndeterminate } from "@/components/shared/progress";
 import { useProfile } from "@/components/user/profile/hooks/use-profile";
 import { BREAK_POINT } from "@/constants";
 
 export const Profile = () => {
-  const {
-    control,
-    userName,
-    userNameKana,
-    email,
-    phoneNumber,
-    validationRules,
-    openDialog,
-    userLoading,
-    handleSubmit,
-    editProfile,
-    setOpenDialog,
-  } = useProfile();
+  const { control, userName, userNameKana, email, phoneNumber, validationRules, openDialog, userLoading, handleSubmit, editProfile, setOpenDialog } =
+    useProfile();
 
   const handleClose = () => {
     setOpenDialog(false);

@@ -1,18 +1,10 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { send } from "emailjs-com";
-import router, { useRouter } from "next/router";
 import { useState } from "react";
-import { loadingVar } from "@/global-state";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useAuth } from "@/hooks/use-auth";
-import { useForm, SubmitHandler } from "react-hook-form";
 
-import {
-  EditProfileDocument,
-  GetUserDocument,
-  GetUserToWorksDocument,
-  GetWorkDocument,
-  InsertAppliedMutationDocument,
-} from "@/lib/graphql/graphql";
+import { EditProfileDocument, GetUserDocument } from "@/lib/graphql/graphql";
 
 type Inputs = {
   userName: string | null;
