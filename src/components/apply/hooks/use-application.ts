@@ -1,11 +1,26 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { send } from "emailjs-com";
 import router, { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import type { ChangeEvent } from "react";
+import { useState } from "react";
 import { loadingVar } from "@/global-state";
 import { useAuth } from "@/hooks/use-auth";
-import { EditProfileDocument, GetUserDocument, GetUserToWorksDocument, GetWorkDocument, InsertAppliedMutationDocument } from "@/lib/graphql/graphql";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+import {
+  EditProfileDocument,
+  GetUserDocument,
+  GetUserToWorksDocument,
+  GetWorkDocument,
+  InsertAppliedMutationDocument,
+} from "@/lib/graphql/graphql";
+
+// 1. 入力値の定義を作成します。
+type Inputs = {
+  userName: string;
+  userNameKana: string;
+  email: string;
+  phoneNumber: string;
+};
 
 export const useApplication = () => {
   const { user } = useAuth();
@@ -34,26 +49,36 @@ export const useApplication = () => {
     ],
   });
 
-  const [openDialog, setOpenDialog] = useState(false);
-  const [userName, setUserName] = useState(userData?.users[0].userName);
-  const [userNameKana, setUserNameKana] = useState(userData?.users[0].userNameKana);
-  const [phoneNumber, setPhoneNumber] = useState(userData?.users[0].tel);
-  const [email, setEmail] = useState(userData?.users[0].mail);
+  // 2. useFormで必要な関数を取得し、デフォルト値を指定します。
+  const { control, handleSubmit } = useForm<Inputs>({
+    defaultValues: {
+      userName: userData?.users[0].userName || "",
+      userNameKana: userData?.users[0].userNameKana || "",
+      email: userData?.users[0].mail || "",
+      phoneNumber: userData?.users[0].tel || "",
+    },
+  });
 
-  const onChangeUserName = (e: ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
-  const onChangeUserNameKana = (e: ChangeEvent<HTMLInputElement>) => setUserNameKana(e.target.value);
-  const onChangePhoneNumber = (e: ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value);
-  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+  // 3. 検証ルールを指定します。
+  const validationRules = {
+    userName: {
+      required: "名前を入力してください。",
+    },
+  };
+
+  const [openDialog, setOpenDialog] = useState(false);
+
   const [editProfileMutation] = useMutation(EditProfileDocument);
 
-  const applicationWork = async () => {
+  const applicationWork: SubmitHandler<Inputs> = async (data: Inputs) => {
+    console.log(data);
     loadingVar(true);
     const template_param = {
       work_title: workData?.works_by_pk?.title,
-      user_name: userName,
-      user_name_kana: userNameKana,
-      from_phone_number: phoneNumber,
-      from_email: email,
+      user_name: data.userName,
+      user_name_kana: data.userNameKana,
+      from_phone_number: data.phoneNumber,
+      from_email: data.email,
     };
     if (asPath !== "/my") {
       await send("service_3mxaipn", "template_lop0qms", template_param, "N0Z9VGngtSAYrSpz0");
@@ -68,10 +93,10 @@ export const useApplication = () => {
     await editProfileMutation({
       variables: {
         id: user?.sub || "",
-        userName: userName,
-        userNameKana: userNameKana,
-        mail: email,
-        tel: phoneNumber,
+        userName: data.userName,
+        userNameKana: data.userNameKana,
+        mail: data.email,
+        tel: data.phoneNumber,
       },
     });
     loadingVar(false);
@@ -82,28 +107,19 @@ export const useApplication = () => {
     router.back();
   };
 
-  useEffect(() => {
-    setUserName(userData?.users[0].userName);
-    setUserNameKana(userData?.users[0].userNameKana);
-    setPhoneNumber(userData?.users[0].tel);
-    setEmail(userData?.users[0].mail);
-  }, [userData]);
-
   return {
-    userName,
-    userNameKana,
-    phoneNumber,
-    email,
+    control,
+    userName: userData?.users[0].userName || "",
+    userNameKana: userData?.users[0].userNameKana || "",
+    email: userData?.users[0].mail || "",
+    phoneNumber: userData?.users[0].tel || "",
+    validationRules,
     openDialog,
     workData,
     workLoading,
     userLoading,
-    onChangeUserName,
-    onChangeUserNameKana,
-    onChangePhoneNumber,
-    onChangeEmail,
+    handleSubmit,
     applicationWork,
     backToWorkList,
-    setOpenDialog,
   };
 };
