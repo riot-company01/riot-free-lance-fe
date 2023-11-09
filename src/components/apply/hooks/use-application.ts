@@ -16,10 +16,10 @@ import {
 
 // 1. 入力値の定義を作成します。
 type Inputs = {
-  userName: string;
-  userNameKana: string;
-  email: string;
-  phoneNumber: string;
+  userName: string | null;
+  userNameKana: string | null;
+  email: string | null;
+  phoneNumber: string | null;
 };
 
 export const useApplication = () => {
@@ -49,23 +49,32 @@ export const useApplication = () => {
     ],
   });
 
-  // 2. useFormで必要な関数を取得し、デフォルト値を指定します。
-  const { control, handleSubmit } = useForm<Inputs>({
-    defaultValues: {
-      userName: userData?.users[0].userName || "",
-      userNameKana: userData?.users[0].userNameKana || "",
-      email: userData?.users[0].mail || "",
-      phoneNumber: userData?.users[0].tel || "",
-    },
-  });
+  const { control, handleSubmit } = useForm<Inputs>({});
 
-  // 3. 検証ルールを指定します。
   const validationRules = {
     userName: {
       required: "名前を入力してください。",
     },
     userNameKana: {
-      required: "名前()を入力してください。",
+      required: "名前(かな)を入力してください。",
+      pattern: {
+        value: /^[\u3040-\u309F]+$/,
+        message: "ひらがなで入力してください",
+      },
+    },
+    email: {
+      required: "メールアドレスを入力してください。",
+      pattern: {
+        value: /\S+@\S+\.\S+/,
+        message: "メールアドレスの形式が違います",
+      },
+    },
+    phoneNumber: {
+      required: "電話番号を入力してください",
+      pattern: {
+        value: /^0\d{9,10}$/,
+        message: "電話番号の形式が違います",
+      },
     },
   };
 
@@ -112,10 +121,10 @@ export const useApplication = () => {
 
   return {
     control,
-    userName: userData?.users[0].userName || "",
-    userNameKana: userData?.users[0].userNameKana || "",
-    email: userData?.users[0].mail || "",
-    phoneNumber: userData?.users[0].tel || "",
+    userName: userData?.users[0].userName,
+    userNameKana: userData?.users[0].userNameKana,
+    email: userData?.users[0].mail,
+    phoneNumber: userData?.users[0].tel,
     validationRules,
     openDialog,
     workData,
