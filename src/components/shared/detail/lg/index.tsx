@@ -225,38 +225,38 @@ const CustomCardActionArea = styled(Card)<{ selected: boolean; page?: string }>`
   border-radius: 8px;
   max-height: ${({ selected, page }) =>
     page === "favorite"
-      ? `calc(100dvh - ${SELECTED_FILTER + USER_PAGE})`
+      ? `calc(100dvh - ${LG_GLOBAL_NAVIGATION.HEADER + USER_PAGE}px)`
       : selected
-      ? `calc(100dvh - ${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}`
-      : `calc(100dvh - ${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER})`};
+      ? `calc(100dvh - ${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px)`
+      : `calc(100dvh - ${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px)`};
   overflow: scroll;
   background-color: white;
   position: sticky;
   top: ${({ selected, page }) =>
     page === "favorite"
-      ? `${SELECTED_FILTER + USER_PAGE}`
+      ? `${LG_GLOBAL_NAVIGATION.HEADER + USER_PAGE}px`
       : selected
-      ? `${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}`
-      : `${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}`};
+      ? `${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px`
+      : `${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px`};
 `;
 
 const CustomCardActionSkeletonArea = styled(Card)<{ selected: boolean; page?: string }>`
   border-radius: 8px;
   max-height: ${({ selected, page }) =>
     page === "favorite"
-      ? `calc(100dvh - ${SELECTED_FILTER + USER_PAGE})`
+      ? `calc(100dvh - ${LG_GLOBAL_NAVIGATION.HEADER + USER_PAGE}px)`
       : selected
-      ? `calc(100dvh - ${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}`
-      : `calc(100dvh - ${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER})`};
+      ? `calc(100dvh - ${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px)`
+      : `calc(100dvh - ${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px)`};
   overflow: scroll;
   background-color: white;
   position: sticky;
   top: ${({ selected, page }) =>
     page === "favorite"
-      ? `${SELECTED_FILTER + USER_PAGE}`
+      ? `${LG_GLOBAL_NAVIGATION.HEADER + USER_PAGE}px`
       : selected
-      ? `${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}`
-      : `${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}`};
+      ? `${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px`
+      : `${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px`};
 `;
 
 const Description = styled.div`

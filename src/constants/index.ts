@@ -37,7 +37,7 @@ export const LG_GLOBAL_NAVIGATION = {
   FOOTER: 73,
   NO_SELECTED_FILTER: 88,
   SELECTED_FILTER: 120,
-};
+} as const;
 
 export const NO_SELECTED_FILTER = 88;
 export const SELECTED_FILTER = 120;
