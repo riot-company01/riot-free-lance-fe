@@ -7,11 +7,13 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { RLogo } from "@/components/shared/logo";
 import { BREAK_POINT, COMMON_Z_INDEX, PATHS } from "@/constants";
+import { useAuth } from "@/hooks/use-auth";
 import { removeObjectKey } from "@/util/remove-object-key";
 
 export function HeaderV2() {
   const [inputValue, setInputValue] = useState("");
   const router = useRouter();
+  const { user } = useAuth();
   const filteredQuery =
     inputValue !== ""
       ? {
@@ -39,6 +41,9 @@ export function HeaderV2() {
           </NextLink>
           <NextLink href={PATHS.USER_APPLY}>
             <List selected={asPath.startsWith(PATHS.USER_APPLY)}>応募済み</List>
+          </NextLink>
+          <NextLink href={user ? "/api/auth/logout" : "/api/auth/login"}>
+            <List selected={false}>{user ? "ログアウト" : "ログイン"}</List>
           </NextLink>
         </NavigWrapper>
       </RightWrapper>
@@ -147,9 +152,9 @@ const StyledInputBase = muiStyled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "20ch",
+      width: "30ch",
       "&:focus": {
-        width: "20ch",
+        width: "30ch",
       },
     },
   },

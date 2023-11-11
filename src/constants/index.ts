@@ -35,7 +35,13 @@ export const COMMON_Z_INDEX = {
 export const LG_GLOBAL_NAVIGATION = {
   HEADER: 49,
   FOOTER: 73,
+  NO_SELECTED_FILTER: 88,
+  SELECTED_FILTER: 120,
 };
+
+export const NO_SELECTED_FILTER = 88;
+export const SELECTED_FILTER = 120;
+export const USER_PAGE = 40;
 
 export const MD_GLOBAL_NAVIGATION = {
   HEADER: 45,
