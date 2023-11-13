@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
+import { NO_SELECTED_FILTER, LG_GLOBAL_NAVIGATION, SELECTED_FILTER, USER_PAGE } from "@/constants";
 import { loadingVar } from "@/global-state";
 import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
@@ -111,9 +112,7 @@ export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
               return (
                 <>
                   <Strong>{work.minMonthlyPrice || work.maxMonthlyPrice}</Strong>
-                  <Span>
-                    万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)
-                  </Span>
+                  <Span>万円/月額 (想定年収:{((work.minMonthlyPrice || work.maxMonthlyPrice) as number) * 12}万円)</Span>
                 </>
               );
             } else {
@@ -152,13 +151,7 @@ export function Detail({ id, isFavorite, userId, isApplied, page }: Props) {
           </Icon>
         </FlexContainer>
         <ButtonWrapper>
-          <Button
-            variant="contained"
-            disabled={isApplied}
-            color={"secondary"}
-            sx={{ fontWeight: "bold" }}
-            onClick={handleClickApplied}
-          >
+          <Button variant="contained" disabled={isApplied} color={"secondary"} sx={{ fontWeight: "bold" }} onClick={handleClickApplied}>
             {work.isClosed ? "似た案件がないか相談する" : isApplied ? "応募済み" : "案件の話を聞く"}
           </Button>
           <Button variant="outlined" color="secondary" onClick={onClickFavorite}>
@@ -231,21 +224,39 @@ const CustomCardActionArea = styled(Card)<{ selected: boolean; page?: string }>`
   padding: 16px;
   border-radius: 8px;
   max-height: ${({ selected, page }) =>
-    page === "favorite" ? "calc(100dvh - 113px)" : selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)"};
+    page === "favorite"
+      ? `calc(100dvh - ${LG_GLOBAL_NAVIGATION.HEADER + USER_PAGE}px)`
+      : selected
+      ? `calc(100dvh - ${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px)`
+      : `calc(100dvh - ${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px)`};
   overflow: scroll;
   background-color: white;
   position: sticky;
-  top: ${({ selected, page }) => (page === "favorite" ? "113px" : selected ? "198px" : "166px")};
+  top: ${({ selected, page }) =>
+    page === "favorite"
+      ? `${LG_GLOBAL_NAVIGATION.HEADER + USER_PAGE}px`
+      : selected
+      ? `${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px`
+      : `${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px`};
 `;
 
 const CustomCardActionSkeletonArea = styled(Card)<{ selected: boolean; page?: string }>`
   border-radius: 8px;
   max-height: ${({ selected, page }) =>
-    page === "favorite" ? "calc(100dvh - 113px)" : selected ? "calc(100dvh - 198px)" : "calc(100dvh  - 166px)"};
+    page === "favorite"
+      ? `calc(100dvh - ${LG_GLOBAL_NAVIGATION.HEADER + USER_PAGE}px)`
+      : selected
+      ? `calc(100dvh - ${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px)`
+      : `calc(100dvh - ${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px)`};
   overflow: scroll;
   background-color: white;
   position: sticky;
-  top: ${({ selected, page }) => (page === "favorite" ? "113px" : selected ? "198px" : "166px")};
+  top: ${({ selected, page }) =>
+    page === "favorite"
+      ? `${LG_GLOBAL_NAVIGATION.HEADER + USER_PAGE}px`
+      : selected
+      ? `${SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px`
+      : `${NO_SELECTED_FILTER + LG_GLOBAL_NAVIGATION.HEADER}px`};
 `;
 
 const Description = styled.div`

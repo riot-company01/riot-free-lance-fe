@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
-import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION } from "@/constants";
+import { BREAK_POINT, LG_GLOBAL_NAVIGATION, MD_GLOBAL_NAVIGATION, PATHS } from "@/constants";
 
 type NoItemProps = {
   pageTitle: "apply" | "favorite";
@@ -26,7 +26,7 @@ export const NoItem = ({ pageTitle }: NoItemProps) => {
         fullWidth
         onClick={() => {
           router.push({
-            pathname: "/works",
+            pathname: `${PATHS.WORKS}`,
           });
         }}
       >
