@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+  experimental: {
+    scrollRestoration: true,
+  },
   async redirects() {
     return [
       {

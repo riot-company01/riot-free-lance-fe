@@ -118,7 +118,7 @@ export const Apply = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      type="number"
+                      type="text"
                       variant="outlined"
                       name="phoneNumber"
                       sx={{ marginBottom: fieldState.invalid ? "-22.914px" : "0px" }}

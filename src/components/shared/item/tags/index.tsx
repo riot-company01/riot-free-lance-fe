@@ -4,7 +4,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { CardActionArea } from "@mui/material";
 import { blue } from "@mui/material/colors";
-import type { MouseEventHandler } from "react";
+import { type MouseEventHandler } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { COLOR } from "@/styles/colors";
@@ -17,22 +17,25 @@ type Props = {
 };
 
 export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
-  const { addFavorite, deleteFavorite } = useFavorite();
+  const { addFavorite, favoriteLoading, deleteFavorite, unFavoriteLoading } = useFavorite();
   const { execLogin } = useAuth();
 
   const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.stopPropagation();
     if (userId && !isFavorite) {
-      addFavorite({
+      if (favoriteLoading) return;
+      await addFavorite({
         variables: {
           userId,
           workId,
         },
       });
+
       return;
     }
     if (userId && isFavorite) {
-      deleteFavorite({
+      if (unFavoriteLoading) return;
+      await deleteFavorite({
         variables: {
           userId,
           workId,

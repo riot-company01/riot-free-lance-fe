@@ -1,5 +1,5 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { Apply as _Apply } from "@/components/apply";
+import { Profile } from "@/components/user/profile";
 import { initializeApollo, addApolloState } from "@/lib/apollo/client";
 
 export const getServerSideProps = withPageAuthRequired({
@@ -15,8 +15,8 @@ export const getServerSideProps = withPageAuthRequired({
   },
 });
 
-function Apply() {
-  return <_Apply />;
+function UserProfile() {
+  return <Profile />;
 }
 
-export default Apply;
+export default UserProfile;

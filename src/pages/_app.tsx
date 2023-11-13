@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { LayoutFooter } from "@/components/shared/layout/footer";
 import { LayoutHeader } from "@/components/shared/layout/header";
 import { CircularIndeterminate } from "@/components/shared/progress";
-import { BREAK_POINT } from "@/constants";
+import { LG_GLOBAL_NAVIGATION, BREAK_POINT, MD_GLOBAL_NAVIGATION } from "@/constants";
 import { loadingVar } from "@/global-state";
 import { useCustomApollo } from "@/lib/apollo/client";
 import { GLOBAL_STYLE } from "@/styles/global-style";
@@ -32,6 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     loadingVar(false);
   }, []);
+  LG_GLOBAL_NAVIGATION;
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,8 +67,8 @@ const MaxWidth = styled.main`
   width: 100%;
   max-width: 1320px;
   margin: auto;
-  min-height: calc(100svh - 128px);
+  min-height: calc(100svh - ${MD_GLOBAL_NAVIGATION.HEADER + MD_GLOBAL_NAVIGATION.FOOTER}px);
   @media screen and (min-width: ${BREAK_POINT.md}px) {
-    min-height: calc(100svh - 146px);
+    min-height: calc(100svh - ${LG_GLOBAL_NAVIGATION.HEADER + LG_GLOBAL_NAVIGATION.FOOTER}px);
   }
 `;

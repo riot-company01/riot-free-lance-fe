@@ -27,6 +27,7 @@ export const useApplication = () => {
   });
 
   const { data: userData, loading: userLoading } = useQuery(GetUserDocument, {
+    fetchPolicy: "network-only",
     variables: {
       id: user?.sub,
     },

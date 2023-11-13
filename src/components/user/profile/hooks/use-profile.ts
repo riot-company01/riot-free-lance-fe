@@ -17,6 +17,7 @@ export const useProfile = () => {
   const { user } = useAuth();
 
   const { data: userData, loading: userLoading } = useQuery(GetUserDocument, {
+    fetchPolicy: "network-only",
     variables: {
       id: user?.sub,
     },

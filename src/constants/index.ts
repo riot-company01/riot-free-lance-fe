@@ -33,11 +33,26 @@ export const COMMON_Z_INDEX = {
 } as const;
 
 export const LG_GLOBAL_NAVIGATION = {
-  HEADER: 73,
+  HEADER: 49,
   FOOTER: 73,
-};
+  NO_SELECTED_FILTER: 88,
+  SELECTED_FILTER: 120,
+} as const;
+
+export const NO_SELECTED_FILTER = 88;
+export const SELECTED_FILTER = 120;
+export const USER_PAGE = 40;
 
 export const MD_GLOBAL_NAVIGATION = {
-  HEADER: 64,
+  HEADER: 45,
   FOOTER: 64,
+};
+
+export const PATHS = {
+  USER_PROFILE: "/user/profile",
+  USER_APPLY: "/user/apply",
+  USER_FAVORITE: "/user/favorite",
+  WORKS: "/works",
+  PRIVACY: "/privacy",
+  TERMS: "/terms",
 };

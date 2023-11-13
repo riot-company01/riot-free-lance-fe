@@ -14,7 +14,7 @@ export const Profile = () => {
   };
 
   if (userLoading) return <CircularIndeterminate />;
-
+  console.log(phoneNumber);
   return (
     <Wrapper>
       <ProfileInfo>
@@ -102,7 +102,7 @@ export const Profile = () => {
                   <TextField
                     {...field}
                     fullWidth
-                    type="number"
+                    type="text"
                     variant="outlined"
                     name="phoneNumber"
                     sx={{ marginBottom: fieldState.invalid ? "-22.914px" : "0px" }}
