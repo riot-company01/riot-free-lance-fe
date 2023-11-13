@@ -1,5 +1,4 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { Box } from "@mui/material";
 import { Apply as _Apply } from "@/components/apply";
 import { initializeApollo, addApolloState } from "@/lib/apollo/client";
 
@@ -17,11 +16,7 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 function Apply() {
-  return (
-    <Box component="div">
-      <_Apply />
-    </Box>
-  );
+  return <_Apply />;
 }
 
 export default Apply;

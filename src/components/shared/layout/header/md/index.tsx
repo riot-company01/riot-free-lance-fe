@@ -75,7 +75,11 @@ export function HeaderMd() {
         </LeftWrapper>
       </Wrapper>
       <ButtonNavig>
-        <NavigWrapper>
+        <NavigWrapper
+          style={{
+            width: "100%",
+          }}
+        >
           <NextLink href={PATHS.USER_PROFILE}>
             <List selected={asPath.startsWith(PATHS.USER_PROFILE)}>
               <PersonIcon />
