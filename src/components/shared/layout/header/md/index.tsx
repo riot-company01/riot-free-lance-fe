@@ -75,30 +75,46 @@ export function HeaderMd() {
         </LeftWrapper>
       </Wrapper>
       <ButtonNavig>
-        <NavigWrapper
-          style={{
-            width: "100%",
-          }}
-        >
-          <NextLink href={PATHS.USER_PROFILE}>
+        <NavigWrapper>
+          <NextLink
+            href={PATHS.USER_PROFILE}
+            style={{
+              width: "100%",
+            }}
+          >
             <List selected={asPath.startsWith(PATHS.USER_PROFILE)}>
               <PersonIcon />
               <Text>プロフィール</Text>
             </List>
           </NextLink>
-          <NextLink href={PATHS.USER_FAVORITE}>
+          <NextLink
+            href={PATHS.USER_FAVORITE}
+            style={{
+              width: "100%",
+            }}
+          >
             <List selected={asPath.startsWith(PATHS.USER_FAVORITE)}>
               <FavoriteIcon />
               <Text>お気に入り</Text>
             </List>
           </NextLink>
-          <NextLink href={PATHS.USER_APPLY}>
+          <NextLink
+            href={PATHS.USER_APPLY}
+            style={{
+              width: "100%",
+            }}
+          >
             <List selected={asPath.startsWith(PATHS.USER_APPLY)}>
               <SubscriptionsIcon />
               <Text>応募済み</Text>
             </List>
           </NextLink>
-          <NextLink href={user ? "/api/auth/logout" : "/api/auth/login"}>
+          <NextLink
+            href={user ? "/api/auth/logout" : "/api/auth/login"}
+            style={{
+              width: "100%",
+            }}
+          >
             <List selected={false}>
               {user ? (
                 <>
