@@ -24,7 +24,6 @@ export function HeaderLd() {
       : { ...removeObjectKey(router.query, "keyword") };
 
   const { asPath } = router;
-  console.log(asPath);
   return (
     <Wrapper>
       <RightWrapper>

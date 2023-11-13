@@ -116,7 +116,6 @@ export function Item({ item, isFavorite, userId }: Props) {
                 onClick={(e) => {
                   const strId = value.skill?.id.toString() as string;
                   const skillIds = selectedSkillIds.includes(strId) ? selectedSkillIds.filter((i) => i !== strId) : [...selectedSkillIds, strId];
-                  console.log(router.query);
                   router.push({
                     pathname: PATHS.WORKS,
                     query:
