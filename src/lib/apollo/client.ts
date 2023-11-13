@@ -12,6 +12,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 const createApolloClient = () => {
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
+    queryDeduplication: false,
     connectToDevTools: true,
     link: new HttpLink({
       uri: "https://famous-walrus-45.hasura.app/v1/graphql",
@@ -19,7 +20,9 @@ const createApolloClient = () => {
         "x-hasura-admin-secret": "tKvU0cHFeIRFtuXaqCD4bW6U7y3ocW16e6l8KphpYFZE8xVBotoglTsC7QKYDnBt",
       },
     }),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {},
+    }),
   });
 };
 export const initializeApollo = (initialState?: unknown) => {
@@ -28,10 +31,7 @@ export const initializeApollo = (initialState?: unknown) => {
   if (initialState) {
     const existingCache = _apolloClient.cache.extract();
     const data = deepMerge(initialState, existingCache, {
-      arrayMerge: (destinationArray, sourceArray) => [
-        ...sourceArray,
-        ...destinationArray.filter((d) => sourceArray.every((s) => !isEqual(d, s))),
-      ],
+      arrayMerge: (destinationArray, sourceArray) => [...sourceArray, ...destinationArray.filter((d) => sourceArray.every((s) => !isEqual(d, s)))],
     });
 
     _apolloClient.cache.restore(data);
