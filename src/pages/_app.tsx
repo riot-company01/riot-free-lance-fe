@@ -67,8 +67,8 @@ const MaxWidth = styled.main`
   width: 100%;
   max-width: 1320px;
   margin: auto;
-  min-height: calc(100svh - ${MD_GLOBAL_NAVIGATION.HEADER + MD_GLOBAL_NAVIGATION.FOOTER}px);
+  min-height: calc(100dvh - ${MD_GLOBAL_NAVIGATION.HEADER + MD_GLOBAL_NAVIGATION.FOOTER}px);
   @media screen and (min-width: ${BREAK_POINT.md}px) {
-    min-height: calc(100svh - ${LG_GLOBAL_NAVIGATION.HEADER + LG_GLOBAL_NAVIGATION.FOOTER}px);
+    min-height: calc(100dvh - ${LG_GLOBAL_NAVIGATION.HEADER + LG_GLOBAL_NAVIGATION.FOOTER}px);
   }
 `;
