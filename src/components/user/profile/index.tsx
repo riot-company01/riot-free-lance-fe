@@ -102,7 +102,7 @@ export const Profile = () => {
                   <TextField
                     {...field}
                     fullWidth
-                    type="tel"
+                    type="number"
                     variant="outlined"
                     name="phoneNumber"
                     sx={{ marginBottom: fieldState.invalid ? "-22.914px" : "0px" }}
