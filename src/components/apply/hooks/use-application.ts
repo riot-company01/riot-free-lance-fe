@@ -110,7 +110,12 @@ export const useApplication = () => {
   };
 
   const backToWorkList = () => {
-    router.back();
+    const currentUrl = sessionStorage.getItem("currentUrl");
+    if (currentUrl) {
+      router.push(currentUrl);
+    } else {
+      router.push("/works");
+    }
   };
 
   return {
