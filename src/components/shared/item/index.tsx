@@ -4,7 +4,6 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
 import { Card as _Card, Chip, css, styled as muiStyled } from "@mui/material";
 import { blue } from "@mui/material/colors";
-import NextLink from "next/link";
 import { useRouter } from "next/router";
 import type { MouseEventHandler } from "react";
 import removeMd from "remove-markdown";
@@ -33,6 +32,16 @@ export function Item({ item, isFavorite, userId }: Props) {
   const isSelected = Number(router.query["work-id"]) === item.id;
 
   const onItemClick: MouseEventHandler<HTMLDivElement> = () => {
+    router.push(
+      {
+        query: {
+          ...router.query,
+          "work-id": item.id,
+        },
+      },
+      undefined,
+      { scroll: false }
+    );
     if (viewedWorks && viewedWorks?.length !== 0) {
       const viewedWork = { workId: item.id };
       if (viewedWorks.some((i) => i.workId === item.id)) return;
@@ -46,81 +55,71 @@ export function Item({ item, isFavorite, userId }: Props) {
 
   return (
     <Card onClick={onItemClick} isSelected={isSelected}>
-      <NextLink
-        href={{
-          query: {
-            ...router.query,
-            "work-id": item.id,
-          },
-        }}
-        scroll={false}
-      >
-        {item.isClosed && (
-          <Closed>
-            <Msg>この案件の募集は終了しました。</Msg>
-          </Closed>
-        )}
-        <ContentWrapper>
-          <Tags isViewed={!!isViewed} isFavorite={isFavorite} userId={userId} workId={item.id} />
-          <Title>
-            <div>{item.title}</div>
-          </Title>
-          <MonthlyPrice>
-            <Icon>
-              <MonetizationOnIcon fontSize="small" />
-            </Icon>
-            {(() => {
-              if (item.minMonthlyPrice && item.maxMonthlyPrice) {
-                return (
-                  <>
-                    <Strong>{item.minMonthlyPrice}</Strong>~<Strong>{item.maxMonthlyPrice}</Strong>
-                    <Span>
-                      万円/月額 (想定年収: {item.minMonthlyPrice * 12}~{item.maxMonthlyPrice * 12}万円)
-                    </Span>
-                  </>
-                );
-              } else if (item.minMonthlyPrice || item.maxMonthlyPrice) {
-                return (
-                  <>
-                    <Strong>{item.minMonthlyPrice || item.maxMonthlyPrice}</Strong>
-                    <Span>万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)</Span>
-                  </>
-                );
-              } else {
-                return <Span>要相談</Span>;
-              }
-            })()}
-          </MonthlyPrice>
-          <FlexContainer>
-            <Icon>
-              <ReportIcon />
-            </Icon>
-            <div>{item.contractType}</div>
-          </FlexContainer>
-          <FlexContainer>
-            <Icon>
-              <LocationOnIcon />
-            </Icon>
-            <div>{item.location}</div>
-          </FlexContainer>
-          <FlexContainerLabel>
-            {item.languages.map((value, idx) => {
+      {item.isClosed && (
+        <Closed>
+          <Msg>この案件の募集は終了しました。</Msg>
+        </Closed>
+      )}
+      <ContentWrapper>
+        <Tags isViewed={!!isViewed} isFavorite={isFavorite} userId={userId} workId={item.id} />
+        <Title>
+          <div>{item.title}</div>
+        </Title>
+        <MonthlyPrice>
+          <Icon>
+            <MonetizationOnIcon fontSize="small" />
+          </Icon>
+          {(() => {
+            if (item.minMonthlyPrice && item.maxMonthlyPrice) {
               return (
-                <Chip
-                  key={idx}
-                  label={value.skill?.name}
-                  sx={{
-                    borderRadius: 0,
-                    fontWeight: "bold",
-                  }}
-                />
+                <>
+                  <Strong>{item.minMonthlyPrice}</Strong>~<Strong>{item.maxMonthlyPrice}</Strong>
+                  <Span>
+                    万円/月額 (想定年収: {item.minMonthlyPrice * 12}~{item.maxMonthlyPrice * 12}万円)
+                  </Span>
+                </>
               );
-            })}
-          </FlexContainerLabel>
-          <MdWrapper>{removeMd(item.description)}</MdWrapper>
-          <PublicationDate>掲載日:{item.createAt}</PublicationDate>
-        </ContentWrapper>
-      </NextLink>
+            } else if (item.minMonthlyPrice || item.maxMonthlyPrice) {
+              return (
+                <>
+                  <Strong>{item.minMonthlyPrice || item.maxMonthlyPrice}</Strong>
+                  <Span>万円/月額 (想定年収: {((item.minMonthlyPrice || item.maxMonthlyPrice) as number) * 12}万円)</Span>
+                </>
+              );
+            } else {
+              return <Span>要相談</Span>;
+            }
+          })()}
+        </MonthlyPrice>
+        <FlexContainer>
+          <Icon>
+            <ReportIcon />
+          </Icon>
+          <div>{item.contractType}</div>
+        </FlexContainer>
+        <FlexContainer>
+          <Icon>
+            <LocationOnIcon />
+          </Icon>
+          <div>{item.location}</div>
+        </FlexContainer>
+        <FlexContainerLabel>
+          {item.languages.map((value, idx) => {
+            return (
+              <Chip
+                key={idx}
+                label={value.skill?.name}
+                sx={{
+                  borderRadius: 0,
+                  fontWeight: "bold",
+                }}
+              />
+            );
+          })}
+        </FlexContainerLabel>
+        <MdWrapper>{removeMd(item.description)}</MdWrapper>
+        <PublicationDate>掲載日:{item.createAt}</PublicationDate>
+      </ContentWrapper>
     </Card>
   );
 }
