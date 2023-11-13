@@ -2,17 +2,18 @@ import styled from "@emotion/styled";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import ReportIcon from "@mui/icons-material/Report";
-import { Card as _Card, Chip, css, styled as muiStyled } from "@mui/material";
+import { Card as _Card, CardActionArea, Chip, css, styled as muiStyled } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { useRouter } from "next/router";
 import type { MouseEventHandler } from "react";
 import removeMd from "remove-markdown";
 import { Tags } from "@/components/shared/item/tags";
 import { WORKS_Z_INDEX } from "@/components/works/constants";
-import { BREAK_POINT } from "@/constants";
+import { BREAK_POINT, PATHS } from "@/constants";
 import type { GetWorksQuery } from "@/lib/graphql/graphql";
 import { COLOR } from "@/styles/colors";
 import { handleLocalStorage } from "@/util/handle-local-storage";
+import { removeObjectKey } from "@/util/remove-object-key";
 
 type Work = {
   workId: number;
@@ -28,6 +29,7 @@ export function Item({ item, isFavorite, userId }: Props) {
   const router = useRouter();
   const { getLocalStorage, setLocalStorage } = handleLocalStorage();
   const viewedWorks = getLocalStorage<Work[]>("viewedWorks");
+  const selectedSkillIds = (router.query["skill-ids"] as string | undefined)?.split(",") || [];
   const isViewed = viewedWorks?.some((i) => i.workId === item.id);
   const isSelected = Number(router.query["work-id"]) === item.id;
 
@@ -106,14 +108,38 @@ export function Item({ item, isFavorite, userId }: Props) {
         <FlexContainerLabel>
           {item.languages.map((value, idx) => {
             return (
-              <Chip
+              <CardActionArea
                 key={idx}
-                label={value.skill?.name}
                 sx={{
-                  borderRadius: 0,
-                  fontWeight: "bold",
+                  width: "auto",
                 }}
-              />
+                onClick={(e) => {
+                  const strId = value.skill?.id.toString() as string;
+                  const skillIds = selectedSkillIds.includes(strId) ? selectedSkillIds.filter((i) => i !== strId) : [...selectedSkillIds, strId];
+                  console.log(router.query);
+                  router.push({
+                    pathname: PATHS.WORKS,
+                    query:
+                      skillIds.length !== 0
+                        ? {
+                            ...router.query,
+                            [`skill-ids`]: `${skillIds.join()}`,
+                          }
+                        : {
+                            ...removeObjectKey(router.query, "skill-ids"),
+                          },
+                  });
+                  e.stopPropagation();
+                }}
+              >
+                <Chip
+                  label={value.skill?.name}
+                  sx={{
+                    borderRadius: 0,
+                    fontWeight: "bold",
+                  }}
+                />
+              </CardActionArea>
             );
           })}
         </FlexContainerLabel>

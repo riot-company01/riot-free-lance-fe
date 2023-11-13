@@ -73,6 +73,7 @@ function Accordion({ nodes, selectedSkillIds }: PropsAccordion) {
             paddingBottom: 2,
           }}
         >
+          {/* TODO */}
           {nodes.word.map((keyword) => {
             const strId = keyword.id.toString();
             const skillIds = selectedSkillIds.includes(strId) ? selectedSkillIds.filter((i) => i !== strId) : [...selectedSkillIds, strId];
