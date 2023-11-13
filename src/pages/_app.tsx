@@ -9,7 +9,7 @@ import { StyledEngineProvider, createTheme } from "@mui/material/styles";
 import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { LayoutFooter } from "@/components/shared/layout/footer";
-import { HeaderV2 } from "@/components/shared/layout/header-v2";
+import { LayoutHeader } from "@/components/shared/layout/header";
 import { CircularIndeterminate } from "@/components/shared/progress";
 import { BREAK_POINT } from "@/constants";
 import { loadingVar } from "@/global-state";
@@ -46,7 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <StyledEngineProvider injectFirst>
             <ApolloProvider client={client}>
               <Global styles={GLOBAL_STYLE} />
-              <HeaderV2 />
+              <LayoutHeader />
               <MaxWidth>
                 <Component {...pageProps} />
                 {loading && <CircularIndeterminate />}

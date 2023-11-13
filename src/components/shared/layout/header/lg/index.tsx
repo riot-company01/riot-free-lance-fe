@@ -1,17 +1,18 @@
+import { useReactiveVar } from "@apollo/client";
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputBase, alpha, styled as muiStyled } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { inputValueVar } from "@/components/shared/layout/header/shared-state";
 import { RLogo } from "@/components/shared/logo";
 import { BREAK_POINT, COMMON_Z_INDEX, PATHS } from "@/constants";
 import { useAuth } from "@/hooks/use-auth";
 import { removeObjectKey } from "@/util/remove-object-key";
 
-export function HeaderV2() {
-  const [inputValue, setInputValue] = useState("");
+export function HeaderLd() {
+  const inputValue = useReactiveVar(inputValueVar);
   const router = useRouter();
   const { user } = useAuth();
   const filteredQuery =
@@ -65,7 +66,7 @@ export function HeaderV2() {
             placeholder="キーワード検索..."
             inputProps={{ "aria-label": "search" }}
             onChange={(e) => {
-              setInputValue(e.target.value);
+              inputValueVar(e.target.value);
             }}
             onKeyDown={(e) => {
               if (e.code === "Enter") {
@@ -84,22 +85,6 @@ export function HeaderV2() {
     </Wrapper>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  position: sticky;
-  background-color: ${blue[500]};
-  color: white;
-  font-size: 14px;
-  top: 0;
-  z-index: ${COMMON_Z_INDEX.HEADER};
-  justify-content: space-around;
-  align-items: center;
-  height: 45px;
-  @media (min-width: ${BREAK_POINT.sm}px) {
-    height: 49px;
-  }
-`;
 
 const RightWrapper = styled.div`
   display: flex;
@@ -146,6 +131,7 @@ const SearchIconWrapper = muiStyled("div")(({ theme }) => ({
 
 const StyledInputBase = muiStyled(InputBase)(({ theme }) => ({
   color: "inherit",
+  height: "2rem",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
@@ -170,6 +156,22 @@ const List = styled.div<{ selected: boolean }>`
       font-weight: 700;
       border-bottom: 4px solid yellow;
     `}
+  @media (min-width: ${BREAK_POINT.sm}px) {
+    height: 49px;
+  }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  position: sticky;
+  background-color: ${blue[500]};
+  color: white;
+  font-size: 14px;
+  top: 0;
+  z-index: ${COMMON_Z_INDEX.HEADER};
+  justify-content: space-around;
+  align-items: center;
+  height: 45px;
   @media (min-width: ${BREAK_POINT.sm}px) {
     height: 49px;
   }
