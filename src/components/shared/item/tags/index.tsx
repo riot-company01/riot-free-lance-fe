@@ -4,7 +4,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { CardActionArea } from "@mui/material";
 import { blue } from "@mui/material/colors";
-import { useState, type MouseEventHandler, useEffect } from "react";
+import { type MouseEventHandler } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useFavorite } from "@/hooks/use-favorite";
 import { COLOR } from "@/styles/colors";
@@ -17,18 +17,13 @@ type Props = {
 };
 
 export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
-  const { addFavorite, deleteFavorite } = useFavorite();
+  const { addFavorite, favoriteLoading, deleteFavorite, unFavoriteLoading } = useFavorite();
   const { execLogin } = useAuth();
-  const [localIsFavorite, setLocalIsFavorite] = useState(false);
-
-  useEffect(() => {
-    setLocalIsFavorite(isFavorite);
-  }, []);
 
   const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.stopPropagation();
-    if (userId && !localIsFavorite) {
-      setLocalIsFavorite(true);
+    if (userId && !isFavorite) {
+      if (favoriteLoading) return;
       await addFavorite({
         variables: {
           userId,
@@ -38,8 +33,8 @@ export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
 
       return;
     }
-    if (userId && localIsFavorite) {
-      setLocalIsFavorite(false);
+    if (userId && isFavorite) {
+      if (unFavoriteLoading) return;
       await deleteFavorite({
         variables: {
           userId,
@@ -59,7 +54,7 @@ export function Tags({ isViewed, isFavorite, userId, workId }: Props) {
         <CustomTag>高単価</CustomTag>
       </CustomTagWrapper>
       <FavoriteButton onClick={onClick} role="button" data-identify-name="favoriteButton">
-        {localIsFavorite ? (
+        {isFavorite ? (
           <FavoriteIcon
             fontSize="large"
             style={{

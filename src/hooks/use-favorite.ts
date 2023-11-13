@@ -5,7 +5,7 @@ import { AddFavoriteDocument, DeleteFavoriteDocument } from "@/lib/graphql/graph
 
 export function useFavorite() {
   const { user } = useAuth();
-  const [addFavorite] = useMutation(AddFavoriteDocument, {
+  const [addFavorite, { loading: favoriteLoading }] = useMutation(AddFavoriteDocument, {
     update(cache, { data }) {
       if (!data?.insert_user_to_favorite_works_one?.workId) return;
       const workId = data.insert_user_to_favorite_works_one.workId;
@@ -24,7 +24,7 @@ export function useFavorite() {
       });
     },
   });
-  const [deleteFavorite] = useMutation(DeleteFavoriteDocument, {
+  const [deleteFavorite, { loading: unFavoriteLoading }] = useMutation(DeleteFavoriteDocument, {
     update(cache, { data }) {
       if (!data?.delete_user_to_favorite_works_by_pk?.workId) return;
       const workId = data.delete_user_to_favorite_works_by_pk.workId;
@@ -42,5 +42,7 @@ export function useFavorite() {
   return {
     addFavorite,
     deleteFavorite,
+    favoriteLoading,
+    unFavoriteLoading,
   };
 }
