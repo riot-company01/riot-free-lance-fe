@@ -29,9 +29,10 @@ export const LayoutFooter: React.FC = () => {
 
 const Wrapper = styled.footer`
   z-index: ${COMMON_Z_INDEX.HEADER};
-
+  margin-bottom: ${MD_GLOBAL_NAVIGATION.HEADER}px;
   height: ${MD_GLOBAL_NAVIGATION.FOOTER}px;
   @media screen and (min-width: ${BREAK_POINT.md}px) {
+    margin-bottom: 0px;
     height: ${LG_GLOBAL_NAVIGATION.FOOTER}px;
   }
   display: flex;
