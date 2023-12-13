@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       secondary: pink,
     },
   });
-
+  console.log(process.env.process);
   useEffect(() => {
     loadingVar(false);
   }, []);
