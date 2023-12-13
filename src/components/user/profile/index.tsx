@@ -14,7 +14,6 @@ export const Profile = () => {
   };
 
   if (userLoading) return <CircularIndeterminate />;
-  console.log(phoneNumber);
   return (
     <Wrapper>
       <ProfileInfo>
